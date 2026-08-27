@@ -351,9 +351,9 @@
           </div>
           <div
             style="position:absolute;left:1094px;top:500px;width:394px;height:284px;overflow:hidden;border-radius:4px">
-            <img src="assets/figures/robosheaf-3-agent-1-target-frame.png"
-              alt="Three-agent one-target tracking demonstration, midpoint frame"
-              style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover">
+            <video data-autoplay src="assets/video/robotarium.mp4#t=22" autoplay="autoplay" loop="loop"
+              muted="muted" playsinline="playsinline" onloadedmetadata="this.currentTime=22"
+              style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover"></video>
           </div>
 
         </div>
@@ -396,7 +396,7 @@
             <img src="assets/photos/collaborators-6.jpg" alt="" style="width:100%;height:100%;object-fit:cover">
           </div>
 
-          <div class="ds-slide-num">3</div>
+          <div class="ds-slide-num" style="color:#fff;text-shadow:0 1px 4px rgb(0 0 0 / .6)">3</div>
         </div>
       </section>
 
@@ -531,9 +531,6 @@
             <div style="font-size:33px;line-height:1.22;text-wrap:pretty;color:#2C4B6A">
               Give the notation a formal semantics and the drawing becomes executable.
             </div>
-            <div style="margin-top:16px;font-size:24px;line-height:1.24;color:#2C4B6A;font-style:italic">
-              Figures from Fong and Spivak 2019
-            </div>
           </div>
           <div class="ds-slide-num">9</div>
 
@@ -572,11 +569,10 @@
             </div>
           </figure>
 
-          <div style="position:absolute;left:48px;right:48px;bottom:40px;font-size:34px;line-height:1.18;color:#2C4B6A">
-            Objectives, then dynamics, then the functor between them.</div>
           <div class="ds-slide-num">10</div>
 
         </div>
+        <aside class="notes">Objectives, then dynamics, then the functor between them.</aside>
       </section>
 
       <section data-label="11 · Composing Optimization Problems" data-slide-index="11" data-background-color="#ffffff"
@@ -595,12 +591,10 @@
           <img src="assets/figures/compose-objectives.png"
             alt="Contour plots of f on x1 and x2, g on x2 and x3, and their sum on the shared variable"
             style="position:absolute;left:48px;top:358px;width:1440px;height:335px;object-fit:contain">
-          <div style="position:absolute;left:48px;right:48px;bottom:64px;font-size:37px;line-height:1.18;color:#2C4B6A">
-            A subproblem does not change when it is plugged in. That is what makes ADMM and proximal gradient
-            distributed rather than merely parallel.</div>
           <div class="ds-slide-num">11</div>
 
         </div>
+        <aside class="notes">A subproblem does not change when it is plugged in. That is what makes ADMM and proximal gradient distributed rather than merely parallel.</aside>
       </section>
 
       <section data-label="12 · Composing Vector Fields" data-slide-index="12" data-background-color="#ffffff"
@@ -763,7 +757,7 @@
             style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
             Writing and Composing Decapodes in Julia</h1>
           <div
-            style="position:absolute;left:48px;top:120px;width:820px;height:600px;background:#F4F5F6;border-radius:4px;padding:28px;box-sizing:border-box;font-family:var(--font-mono);font-size:24px;line-height:1.42;color:#002A54;white-space:pre">Diffusion = <span style="color:#A85F19">@decapode</span> <span style="color:#002A54;font-weight:600">begin</span>
+            style="position:absolute;left:48px;top:120px;width:820px;height:600px;background:#F4F5F6;border-radius:4px;padding:28px;box-sizing:border-box;font-family:var(--font-mono);font-size:22px;line-height:1.42;color:#002A54;white-space:pre">Diffusion = <span style="color:#A85F19">@decapode</span> <span style="color:#002A54;font-weight:600">begin</span>
     (C, Ċ):<span style="color:#3F7A28">:Form0</span>
     ϕ:<span style="color:#3F7A28">:Form1</span>
 
@@ -915,14 +909,14 @@ f = <span style="color:#2C4B6A">sim</span>(mesh, generate)</div>
             <figcaption style="font-size:26px;line-height:1.24;color:#2C4B6A;font-style:italic">
               Speed and direction of the converged flow</figcaption>
           </figure>
-          <div
-            style="position:absolute;left:48px;right:112px;bottom:36px;display:flex;flex-direction:column;gap:10px">
-            <div style="font-size:36px;line-height:1.2;text-wrap:pretty">
-              The generated simulator lands on the benchmark points across both midlines, and recovers the primary vortex
-              with its corner recirculations.</div>
-            <div style="font-size:30px;line-height:1.2;color:#2C4B6A">
-              Quantitative agreement, from a specification with no hand-written discretization.</div>
-          </div>
+          <ul class="ds-bullet-list" style="position:absolute;left:48px;right:112px;bottom:36px;gap:10px">
+            <li class="size-body" style="font-size:32px"><span class="bullet-mark">●</span><span
+                class="bullet-text">The generated simulator lands on the benchmark points across both midlines, and
+                recovers the primary vortex with its corner recirculations</span></li>
+            <li class="size-body" style="font-size:32px"><span class="bullet-mark">●</span><span
+                class="bullet-text">Quantitative agreement, from a specification with no hand-written
+                discretization</span></li>
+          </ul>
           <div class="ds-slide-num">20</div>
 
         </div>
@@ -1009,7 +1003,7 @@ f = <span style="color:#2C4B6A">sim</span>(mesh, generate)</div>
             The fleet is a tree of <span style="font-family:var(--font-mono);font-size:0.85em">@include</span> calls:
             two wings, each built from the same reusable fragments, joined by a relay.</div>
           <div
-            style="position:absolute;left:48px;top:232px;width:700px;height:548px;background:#F4F5F6;border-radius:4px;padding:22px;box-sizing:border-box;overflow:hidden;font-family:var(--font-mono);font-size:22px;line-height:1.32;color:#002A54;white-space:pre">fleet = <span style="color:#A85F19">@nested_system</span> <span style="color:#002A54;font-weight:600">begin</span>
+            style="position:absolute;left:48px;top:232px;width:665px;height:548px;background:#F4F5F6;border-radius:4px;padding:22px;box-sizing:border-box;overflow:hidden;font-family:var(--font-mono);font-size:22px;line-height:1.32;color:#002A54;white-space:pre">fleet = <span style="color:#A85F19">@nested_system</span> <span style="color:#002A54;font-weight:600">begin</span>
   <span style="color:#A85F19">@system</span> wingA <span style="color:#002A54;font-weight:600">begin</span>
     <span style="color:#A85F19">@include</span> <span style="color:#2C4B6A">flight</span>(<span style="color:#3F7A28">:flight1</span>, elemsA, <span style="color:#3F7A28">:r1</span>)
     <span style="color:#A85F19">@include</span> <span style="color:#2C4B6A">escort</span>(<span style="color:#3F7A28">:charlie</span>, <span style="color:#8A6A3A">4</span>, <span style="color:#8A6A3A">0.6</span>, <span style="color:#3F7A28">:t3</span>)
@@ -1079,7 +1073,7 @@ f = <span style="color:#2C4B6A">sim</span>(mesh, generate)</div>
                 spaces across every agent</span></li>
             <li class="size-body" style=""><span class="bullet-mark">●</span><span class="bullet-text">A measurement
                 each pair of neighbors can compare directly</span></li>
-            <li class="size-body-sub" style="margin-left:48px;"><span class="bullet-mark">○</span><span
+            <li class="size-body" style=""><span class="bullet-mark">●</span><span
                 class="bullet-text">Two planar robots comparing positions in the same frame</span></li>
           </ul>
           <img src="assets/figures/ring-graph.png" alt="Sixteen agents arranged on a ring communication graph"
@@ -1113,12 +1107,13 @@ f = <span style="color:#2C4B6A">sim</span>(mesh, generate)</div>
                 records who talks to whom, and nothing about what they can compare</span></li>
           </ul>
           <figure
-            style="margin:0;position:absolute;left:788px;top:110px;width:700px;display:flex;flex-direction:column;align-items:center;gap:14px">
+            style="margin:0;position:absolute;left:788px;top:110px;width:700px;background:rgba(108,154,195,0.12);border-top:5px solid #002A54;border-radius:12px;padding:20px 24px;border-left:1px solid rgba(108,154,195,0.25);border-right:1px solid rgba(108,154,195,0.25);border-bottom:1px solid rgba(108,154,195,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04);box-sizing:border-box">
+            <figcaption style="font-size:26px;line-height:1.26;color:#002A54;margin-bottom:16px">
+              Drones, surface vessels and submarines share a mission but not a state space. Measurements must be
+              translated to be compared.</figcaption>
             <img src="assets/figures/vehicles-v2.svg"
               alt="Drones in the air, surface vessels on the water and submarines below, linked across all three layers"
-              style="width:100%;height:560px;object-fit:contain">
-            <figcaption style="font-size:26px;line-height:1.24;color:#2C4B6A;text-align:center;font-style:italic">
-              Drones, surface vessels and submarines share a mission but not a state space. Measurements must be translated to be compared.</figcaption>
+              style="width:100%;height:500px;object-fit:contain;display:block">
           </figure>
           <div class="ds-slide-num">26</div>
 
@@ -1148,11 +1143,9 @@ f = <span style="color:#2C4B6A">sim</span>(mesh, generate)</div>
 
           <figure
             style="margin:0;position:absolute;left:100px;right:100px;top:372px;bottom:36px;display:flex;align-items:center;justify-content:center">
-            <div style="width:100%;height:100%;background:rgba(108,154,195,0.06);border:1px solid rgba(108,154,195,0.25);border-radius:12px;padding:16px 28px;box-sizing:border-box;display:flex;align-items:center;justify-content:center">
-              <img src="assets/figures/sheaf-over-graph-planes.svg"
-                alt="Vector-space stalks drawn as planes standing over the vertices and edges of a base graph, connected by restriction maps"
-                style="width:100%;height:100%;object-fit:contain">
-            </div>
+            <img src="assets/figures/sheaf-over-graph-planes.svg"
+              alt="Vector-space stalks drawn as planes standing over the vertices and edges of a base graph, connected by restriction maps"
+              style="width:100%;height:100%;object-fit:contain">
           </figure>
 
           <div class="ds-slide-num">27</div>
@@ -1361,20 +1354,20 @@ f = <span style="color:#2C4B6A">sim</span>(mesh, generate)</div>
             style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
             Coordination Sheaves</h1>
 
-          <div style="position:absolute;left:48px;top:115px;width:560px;display:flex;flex-direction:column;gap:18px">
+          <div style="position:absolute;left:48px;right:48px;top:104px;font-size:34px;line-height:1.2;color:#2C4B6A;text-wrap:pretty">
+            A coordination sheaf provides a precise dictionary between geometry and control objectives.</div>
+
+          <div style="position:absolute;left:48px;top:172px;width:560px;display:flex;flex-direction:column;gap:18px">
             <div style="background:rgba(108,154,195,0.12);border-top:5px solid #002A54;border-radius:12px;padding:18px 22px;border-left:1px solid rgba(108,154,195,0.25);border-right:1px solid rgba(108,154,195,0.25);border-bottom:1px solid rgba(108,154,195,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04)">
               <div class="ds-theorem-block" style="font-size:27px;line-height:1.28">
                 <span class="theorem-head">Definition (Coordination Sheaf).</span>
                 <span class="theorem-body">A <strong>coordination sheaf</strong> on a graph <span class="katex-inline" data-tex="G=(V,E)">\(G=(V,E)\)</span> is a cellular sheaf <span class="katex-inline" data-tex="\mathcal{F}">\(\mathcal{F}\)</span> over <span class="katex-inline" data-tex="G">\(G\)</span> together with differentiable potential functions <span class="katex-inline" data-tex="U_{ij}\colon \mathcal{F}(ij)\to \mathbb{R}">\(U_{ij}\colon \mathcal{F}(ij)\to \mathbb{R}\)</span> for each edge <span class="katex-inline" data-tex="ij \in E">\(ij \in E\)</span>.</span>
               </div>
             </div>
-            <div style="font-size:28px;line-height:1.24;color:#2C4B6A">
-              Translates multi-agent systems (MAS) concepts directly into the algebraic language of cellular sheaves.
-            </div>
           </div>
 
           <div
-            style="position:absolute;left:648px;top:115px;width:840px;display:flex;flex-direction:column;align-items:center">
+            style="position:absolute;left:648px;top:172px;width:840px;display:flex;flex-direction:column;align-items:center">
             <div style="font-size:27px;font-weight:700;color:#2C4B6A;font-style:italic;margin-bottom:14px;text-align:center">
               MAS Interpretations for Coordination Sheaves
             </div>
@@ -1414,11 +1407,11 @@ f = <span style="color:#2C4B6A">sim</span>(mesh, generate)</div>
             </table>
           </div>
 
-          <div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:37px;line-height:1.18;color:#2C4B6A">
-            A coordination sheaf provides a precise dictionary between geometry and control objectives.</div>
+          
           <div class="ds-slide-num">31</div>
 
         </div>
+        <aside class="notes">Translates multi-agent systems (MAS) concepts directly into the algebraic language of cellular sheaves.</aside>
       </section>
 
       <section data-label="32 · Beyond Consensus: Edge Potentials" data-slide-index="32" data-background-color="#ffffff"
@@ -1605,44 +1598,25 @@ f = <span style="color:#2C4B6A">sim</span>(mesh, generate)</div>
           <h1
             style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
             Sheaf-Laplacian Feedback and Its Guarantee</h1>
-          <div style="position:absolute;left:48px;top:115px;width:730px;display:flex;flex-direction:column;gap:12px">
-            <div style="font-size:25px;color:#2C4B6A;font-weight:700;letter-spacing:1px">Local Sheaf Disagreement</div>
-            <div class="ds-math-block" style="margin:2px 0"
-              data-tex="\eta_i = \sum_{j \in \mathcal{N}_i} \mathcal{F}_{i \unlhd ij}^{\top}\big( \mathcal{F}_{i \unlhd ij} q_i - \mathcal{F}_{j \unlhd ij} x_j \big)">
-              \[ \eta_i = \sum_{j \in \mathcal{N}_i} \mathcal{F}_{i \unlhd ij}^{\top}\big( \mathcal{F}_{i \unlhd ij} q_i
-              - \mathcal{F}_{j \unlhd ij} x_j \big) \]</div>
-            <div style="font-size:25px;color:#2C4B6A;font-weight:700;letter-spacing:1px;margin-top:4px">Decentralized Controller</div>
-            <div class="ds-math-block" style="margin:2px 0" data-tex="u_i = -k_1\, g_i^{+} \eta_i">\[ u_i = -k_1\,
-              g_i^{+} \eta_i \]</div>
-            <div style="font-size:27px;line-height:1.26;color:#002A54">
-              where <span class="katex-inline" data-tex="k_1 > 0">\( k_1 > 0 \)</span> is the control gain and <span
-                class="katex-inline" data-tex="g_i^+">\( g_i^+ \)</span> maps the correction into the control space.
+          <div style="position:absolute;left:48px;right:48px;top:168px;display:flex;flex-direction:column;gap:30px">
+
+            <div style="background:rgba(108,154,195,0.12);border-top:5px solid #002A54;border-radius:12px;padding:18px 24px;border-left:1px solid rgba(108,154,195,0.25);border-right:1px solid rgba(108,154,195,0.25);border-bottom:1px solid rgba(108,154,195,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04)">
+              <div style="font-size:27px;color:#002A54;font-weight:700;letter-spacing:1px;margin-bottom:6px">Local Sheaf Disagreement</div>
+              <div class="ds-math-block" style="font-size:34px;margin:0"
+                data-tex="\eta_i = \sum_{j \in \mathcal{N}_i} \mathcal{F}_{i \unlhd ij}^{\top}\big( \mathcal{F}_{i \unlhd ij} q_i - \mathcal{F}_{j \unlhd ij} x_j \big)">
+                \[ \eta_i = \sum_{j \in \mathcal{N}_i} \mathcal{F}_{i \unlhd ij}^{\top}\big( \mathcal{F}_{i \unlhd ij} q_i - \mathcal{F}_{j \unlhd ij} x_j \big) \]</div>
             </div>
-            <div style="font-size:27px;line-height:1.26;color:#2C4B6A">
-              Each agent evaluates <span class="katex-inline" data-tex="u_i">\( u_i \)</span> solely from neighbor
-              measurements.
+
+            <div style="background:rgba(108,154,195,0.12);border-top:5px solid #2E7D32;border-radius:12px;padding:18px 24px;border-left:1px solid rgba(108,154,195,0.25);border-right:1px solid rgba(108,154,195,0.25);border-bottom:1px solid rgba(108,154,195,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04)">
+              <div style="font-size:27px;color:#2E7D32;font-weight:700;letter-spacing:1px;margin-bottom:6px">Decentralized Controller</div>
+              <div class="ds-math-block" style="font-size:34px;margin:0" data-tex="u_i = -k_1\, g_i^{+} \eta_i">\[ u_i = -k_1\, g_i^{+} \eta_i \]</div>
             </div>
+
           </div>
-          <div style="position:absolute;left:810px;top:115px;width:678px;display:flex;flex-direction:column;gap:18px">
-            <div style="background:rgba(128,190,99,0.12);border-top:5px solid #80BE63;border-radius:12px;padding:18px 22px;border-left:1px solid rgba(128,190,99,0.25);border-right:1px solid rgba(128,190,99,0.25);border-bottom:1px solid rgba(128,190,99,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04)">
-              <div class="ds-theorem-block" style="font-size:27px;line-height:1.28"><span class="theorem-head">Theorem
-                  (Semi-global exponential
-                  convergence).</span> <span class="theorem-body">Under the standing assumptions, the tracking error
-                  relative to the harmonic extension converges semi-globally uniformly exponentially to a bounded residual
-                  set. A larger gain <span class="katex-inline" data-tex="k_1">\( k_1 \)</span> shrinks the residual error
-                  arbitrarily.</span></div>
-            </div>
-            <div
-              style="font-size:27px;line-height:1.28;color:#002A54;padding:16px 20px;background:rgba(108,154,195,0.10);border-radius:12px;border-top:5px solid #2C4B6A;border-left:1px solid rgba(108,154,195,0.2);border-right:1px solid rgba(108,154,195,0.2);border-bottom:1px solid rgba(108,154,195,0.2);box-shadow:0 3px 10px rgba(0,42,84,0.04)">
-              Residual errors arise solely from dynamics mismatches and bounded disturbances, exactly matching classical
-              singular perturbation bounds.
-            </div>
-          </div>
-          <div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:37px;line-height:1.18;color:#2C4B6A">
-            The ordinary Lyapunov argument for Laplacian feedback, run in the sheaf’s coordinates.</div>
           <div class="ds-slide-num">35</div>
 
         </div>
+        <aside class="notes">k1 &gt; 0 is the control gain; g_i^+ maps the correction into the control space. Each agent evaluates u_i solely from neighbour measurements. Theorem (semi-global exponential convergence): under the standing assumptions the tracking error relative to the harmonic extension converges semi-globally uniformly exponentially to a bounded residual set, and a larger gain k1 shrinks that residual arbitrarily. Residual errors arise solely from dynamics mismatches and bounded disturbances, exactly matching classical singular perturbation bounds. This is the ordinary Lyapunov argument for Laplacian feedback, run in the sheaf&#39;s coordinates.</aside>
       </section>
 
       <section data-label="36 · Who Can Track Whom Is a Cohomological Question" data-slide-index="36"
@@ -1873,9 +1847,6 @@ f = <span style="color:#2C4B6A">sim</span>(mesh, generate)</div>
             style="position:absolute;left:48px;top:540px;width:700px;font-size:34px;line-height:1.22;text-wrap:pretty">
             Surface vehicles track their targets through a projection they can measure; the restriction maps carry the
             dimension change.</div>
-          <div style="position:absolute;left:48px;right:48px;bottom:64px;font-size:32px;line-height:1.2;color:#2C4B6A">
-            Heterogeneous multi-agent multi-target tracking using cellular sheaves — Hanks, Nino, Bou Barcelo, Copeland,
-            Dixon, Fairbanks. European Control Conference.</div>
           <div class="ds-slide-num">38</div>
 
         </div>
@@ -2049,7 +2020,7 @@ f = <span style="color:#2C4B6A">sim</span>(mesh, generate)</div>
             style="position:absolute;left:48px;top:130px;width:700px;font-size:43px;line-height:1.2;text-wrap:pretty">
             Next: the same sheaf and the same feedback law on physical differential-drive robots, using the Robotarium
             at Georgia Tech.</div>
-          <ul class="ds-bullet-list" style="position:absolute;left:48px;top:390px;width:700px">
+          <ul class="ds-bullet-list" style="position:absolute;left:48px;top:348px;width:700px">
             <li class="size-body" style=""><span class="bullet-mark">●</span><span class="bullet-text">Eight-agent wheel
                 and star sheaves under wind drift</span></li>
             <li class="size-body" style=""><span class="bullet-mark">●</span><span class="bullet-text">Mixed drone and
@@ -2072,13 +2043,13 @@ f = <span style="color:#2C4B6A">sim</span>(mesh, generate)</div>
         </div>
       </section>
 
-      <section data-label="44 · What This Talk Argued" data-slide-index="44" data-background-color="#ffffff"
+      <section data-label="44 · Conclusion" data-slide-index="44" data-background-color="#ffffff"
         style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
         <div class="slide-canvas">
 
           <h1
             style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:59px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
-            What This Talk Argued</h1>
+            Conclusion</h1>
 
           <div
             style="position:absolute;left:48px;top:114px;width:1440px;font-size:35px;line-height:1.22;text-wrap:pretty">
@@ -2086,34 +2057,25 @@ f = <span style="color:#2C4B6A">sim</span>(mesh, generate)</div>
 
           <div
             style="position:absolute;left:48px;top:186px;right:48px;display:grid;grid-template-columns:repeat(3,1fr);gap:32px">
-            <div class="ds-highlight-region tint-blue" style="height:470px">
-              <div class="ds-region-content"
-                style="padding:30px 26px;display:flex;flex-direction:column;gap:16px;box-sizing:border-box">
-                <div style="font-size:31px;font-weight:700;line-height:1.2;color:#002A54">Diagrams Denote Systems</div>
-                <div style="font-size:25px;line-height:1.34;color:#002A54">A wiring diagram is a formula. Optimization and dynamical semantics are two functors out of the same diagram, and Euler discretization commutes with composition, so modular verification is exact.</div>
+            <div class="ds-highlight-region tint-blue" style="height:556px;justify-content:flex-start;padding:20px 20px 22px">
+              <div style="font-size:29px;font-weight:700;line-height:1.2;color:#002A54;text-align:center;width:100%;margin-bottom:14px">Diagrams Denote Systems</div>
+              <div class="ds-region-content" style="align-items:center;justify-content:center">
+                <img src="assets/figures/copy-sharing-maps.png" alt="A map from two two-element sets onto three variables, and its pullback duplicating the shared coordinate" style="max-width:100%;max-height:100%;object-fit:contain">
               </div>
-              <div class="ds-region-label">Part One</div>
             </div>
-            <div class="ds-highlight-region tint-orange" style="height:470px">
-              <div class="ds-region-content"
-                style="padding:30px 26px;display:flex;flex-direction:column;gap:16px;box-sizing:border-box">
-                <div style="font-size:31px;font-weight:700;line-height:1.2;color:#002A54">Specifications Compile to Solvers</div>
-                <div style="font-size:25px;line-height:1.34;color:#002A54">Decapodes turns diagrammatic physics into simulators with no hand-written discretization &mdash; matched against Ghia at Re&nbsp;=&nbsp;1000, Kelvin&ndash;Helmholtz, Rayleigh&ndash;Taylor, and porous convection.</div>
+            <div class="ds-highlight-region tint-orange" style="height:556px;justify-content:flex-start;padding:20px 20px 22px">
+              <div style="font-size:29px;font-weight:700;line-height:1.2;color:#002A54;text-align:center;width:100%;margin-bottom:14px">Specifications Compile to Solvers</div>
+              <div class="ds-region-content" style="align-items:center;justify-content:center">
+                <video data-autoplay src="assets/video/rayleigh-taylor-3d.mp4" autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline" style="max-width:100%;max-height:100%;object-fit:contain;background:#fff"></video>
               </div>
-              <div class="ds-region-label">Part Two</div>
             </div>
-            <div class="ds-highlight-region tint-green" style="height:470px">
-              <div class="ds-region-content"
-                style="padding:30px 26px;display:flex;flex-direction:column;gap:16px;box-sizing:border-box">
-                <div style="font-size:31px;font-weight:700;line-height:1.2;color:#002A54">Sheaves Close the Loop</div>
-                <div style="font-size:25px;line-height:1.34;color:#002A54">Cellular sheaves carry Laplacian control to fleets that share no state space, with exponential tracking guarantees and a cohomological test for which agents can track which targets.</div>
+            <div class="ds-highlight-region tint-green" style="height:556px;justify-content:flex-start;padding:20px 20px 22px">
+              <div style="font-size:29px;font-weight:700;line-height:1.2;color:#002A54;text-align:center;width:100%;margin-bottom:14px">Sheaves Close the Loop</div>
+              <div class="ds-region-content" style="align-items:center;justify-content:center">
+                <img src="assets/figures/vehicles-v2.svg" alt="Drones in the air, surface vessels on the water and submarines below, linked across all three layers" style="max-width:100%;max-height:100%;object-fit:contain">
               </div>
-              <div class="ds-region-label">Part Three</div>
             </div>
           </div>
-
-          <div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:35px;line-height:1.2;color:#2C4B6A;text-wrap:pretty">
-            One representation carries modeling, simulation, and control &mdash; and each result is a theorem about composition rather than a special case.</div>
           <div class="ds-slide-num">44</div>
 
         </div>
@@ -2178,7 +2140,7 @@ f = <span style="color:#2C4B6A">sim</span>(mesh, generate)</div>
             saddle-point flows, and Riemannian descent are others, all landing in the same target.</div>
           <img src="assets/figures/optimization-functor-hierarchy.png"
             alt="Functors from Euclidean saddle, Euclidean, Riemannian, and general optimization categories into their dynamical counterparts, all landing in a common category of distributed dynamical systems"
-            style="position:absolute;left:218px;top:240px;width:1100px;height:380px;object-fit:contain">
+            style="position:absolute;left:218px;top:262px;width:1100px;height:380px;object-fit:contain">
           <div
             style="position:absolute;left:48px;right:48px;bottom:56px;font-size:37px;line-height:1.2;text-wrap:pretty">
             Tyler Hanks built a distributed algorithm for Riemannian optimization on this structure, extending
