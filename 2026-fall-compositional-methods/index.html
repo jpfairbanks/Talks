@@ -1011,23 +1011,23 @@ f = <span style="color:#2C4B6A">sim</span>(mesh, generate)</div>
             Hierarchy Is Specified, Not Hard-Coded</h1>
           <div
             style="position:absolute;left:48px;top:112px;width:700px;font-size:30px;line-height:1.22;text-wrap:pretty">
-            The fleet is a tree of <span style="font-family:var(--font-mono);font-size:0.85em">@include</span> calls:
+            The fleet is a tree of nested <span style="font-family:var(--font-mono);font-size:0.85em">@system</span> blocks:
             two wings, each built from the same reusable fragments, joined by a relay.</div>
           <div
             style="position:absolute;left:48px;top:232px;width:665px;height:548px;background:#F4F5F6;border-radius:4px;padding:22px;box-sizing:border-box;overflow:hidden;font-family:var(--font-mono);font-size:22px;line-height:1.32;color:#002A54;white-space:pre">fleet = <span style="color:#A85F19">@nested_system</span> <span style="color:#002A54;font-weight:600">begin</span>
   <span style="color:#A85F19">@system</span> wingA <span style="color:#002A54;font-weight:600">begin</span>
-    <span style="color:#A85F19">@include</span> <span style="color:#2C4B6A">flight</span>(<span style="color:#3F7A28">:flight1</span>, elemsA, <span style="color:#3F7A28">:r1</span>)
-    <span style="color:#A85F19">@include</span> <span style="color:#2C4B6A">escort</span>(<span style="color:#3F7A28">:charlie</span>, <span style="color:#8A6A3A">4</span>, <span style="color:#8A6A3A">0.6</span>, <span style="color:#3F7A28">:t3</span>)
-    <span style="color:#A85F19">@include</span> <span style="color:#2C4B6A">relay</span>(<span style="color:#3F7A28">:r2</span>)
+    flight1 = <span style="color:#2C4B6A">flight</span>(elemsA, <span style="color:#3F7A28">:r1</span>)
+    charlie = <span style="color:#2C4B6A">escort</span>(<span style="color:#8A6A3A">4</span>, <span style="color:#8A6A3A">0.6</span>, <span style="color:#3F7A28">:t3</span>)
+    r2 = <span style="color:#2C4B6A">relay</span>()
     <span style="color:#A85F19">@link</span> <span style="color:#2C4B6A">project</span>(flight1, <span style="color:#8A6A3A">1</span>) => r2
     <span style="color:#A85F19">@link</span> r2 => <span style="color:#2C4B6A">centroid</span>(charlie)
   <span style="color:#002A54;font-weight:600">end</span>
   <span style="color:#A85F19">@system</span> wingB <span style="color:#002A54;font-weight:600">begin</span>
-    <span style="color:#A85F19">@include</span> <span style="color:#2C4B6A">escort</span>(<span style="color:#3F7A28">:delta</span>, <span style="color:#8A6A3A">5</span>, <span style="color:#8A6A3A">0.7</span>, <span style="color:#3F7A28">:t4</span>)
-    <span style="color:#A85F19">@include</span> <span style="color:#2C4B6A">escort</span>(<span style="color:#3F7A28">:echo</span>, <span style="color:#8A6A3A">5</span>, <span style="color:#8A6A3A">0.7</span>, <span style="color:#3F7A28">:t5</span>)
-    <span style="color:#A85F19">@include</span> <span style="color:#2C4B6A">relay</span>(<span style="color:#3F7A28">:r3</span>)
+    delta = <span style="color:#2C4B6A">escort</span>(<span style="color:#8A6A3A">5</span>, <span style="color:#8A6A3A">0.7</span>, <span style="color:#3F7A28">:t4</span>)
+    echo = <span style="color:#2C4B6A">escort</span>(<span style="color:#8A6A3A">5</span>, <span style="color:#8A6A3A">0.7</span>, <span style="color:#3F7A28">:t5</span>)
+    r3 = <span style="color:#2C4B6A">relay</span>()
   <span style="color:#002A54;font-weight:600">end</span>
-  <span style="color:#A85F19">@include</span> <span style="color:#2C4B6A">relay</span>(<span style="color:#3F7A28">:r4</span>)
+  r4 = <span style="color:#2C4B6A">relay</span>()
   <span style="color:#A85F19">@link</span> <span style="color:#2C4B6A">project</span>(wingA, <span style="color:#8A6A3A">1</span>) => r4
   <span style="color:#A85F19">@link</span> r4 => <span style="color:#2C4B6A">project</span>(wingB, <span style="color:#8A6A3A">1</span>)
 <span style="color:#002A54;font-weight:600">end</span></div>
