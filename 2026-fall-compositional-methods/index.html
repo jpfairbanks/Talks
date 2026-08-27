@@ -387,8 +387,11 @@
             style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:59px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
             Students, Collaborators, and Family</h1>
 
+          <!-- 3 collaborator columns at 378x283 (4:3, so the photos are shown essentially
+               uncropped), and a 376px family column cropped to the same 570px height, which
+               takes sky off the top and grass off the bottom and squares off the block. -->
           <div
-            style="position:absolute;left:7px;top:96px;right:7px;bottom:8px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:4px">
+            style="position:absolute;left:7px;top:96px;width:1522px;height:570px;display:grid;grid-template-columns:378px 378px 378px 376px;grid-template-rows:283px 283px;gap:4px">
             <img src="assets/photos/family.jpg"
               alt="The presenter with his family in a field of lupines"
               style="grid-column:4;grid-row:1 / span 2;width:100%;height:100%;object-fit:cover">
@@ -400,7 +403,7 @@
             <img src="assets/photos/collaborators-6.jpg" alt="" style="width:100%;height:100%;object-fit:cover">
           </div>
 
-          <div class="ds-slide-num" style="color:#fff;text-shadow:0 1px 4px rgb(0 0 0 / .6)">3</div>
+          <div class="ds-slide-num">3</div>
         </div>
       </section>
 
@@ -586,13 +589,11 @@
           <h1
             style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
             Composing Optimization Problems</h1>
-          <div
-            style="position:absolute;left:48px;top:120px;width:880px;font-size:43px;line-height:1.2;text-wrap:pretty">
-            Share data by copying it. Compose objectives by adding them.</div>
           <img src="assets/figures/copy-sharing-maps.png"
             alt="A map phi from two two-element sets onto three variables, and its pullback duplicating the shared coordinate"
             style="position:absolute;left:1108px;top:112px;width:380px;height:240px;object-fit:contain">
-          <div style="position:absolute;left:48px;top:240px;width:1040px;padding:8px 20px;background:rgba(108,154,195,0.12);border-top:5px solid #002A54;border-radius:12px;border-left:1px solid rgba(108,154,195,0.25);border-right:1px solid rgba(108,154,195,0.25);border-bottom:1px solid rgba(108,154,195,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04);box-sizing:border-box">
+          <div style="position:absolute;left:48px;top:112px;width:1040px;padding:14px 20px 10px;background:rgba(108,154,195,0.12);border-top:5px solid #002A54;border-radius:12px;border-left:1px solid rgba(108,154,195,0.25);border-right:1px solid rgba(108,154,195,0.25);border-bottom:1px solid rgba(108,154,195,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04);box-sizing:border-box">
+            <div style="font-size:36px;line-height:1.18;color:#002A54;text-wrap:pretty;margin-bottom:6px">Share data by copying it. Compose objectives by adding them.</div>
             <div class="ds-math-block ds-math-tight" data-tex="f(x) \;=\; \mathbf{1}^{\top}\Big({\textstyle\bigoplus_i} f_i\Big)(Px) \;=\; {\textstyle\sum_i} f_i(P_i x)" style="font-size:27px;margin:0;line-height:1.2">\[ f(x) \;=\; \mathbf{1}^{\top}\Big({\textstyle\bigoplus_i} f_i\Big)(Px) \;=\; {\textstyle\sum_i} f_i(P_i x) \]</div>
             <div style="font-size:19px;line-height:1.25;color:#2C4B6A;text-align:center;white-space:nowrap"><span class="katex-inline" data-tex="P">\(P\)</span> copies shared variables to the boxes that use them; <span class="katex-inline" data-tex="\bigoplus">\(\bigoplus\)</span> runs them independently; <span class="katex-inline" data-tex="\mathbf{1}^{\top}">\(\mathbf{1}^{\top}\)</span> adds the results.</div>
           </div>
@@ -612,12 +613,10 @@
           <h1
             style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
             Composing Vector Fields</h1>
-          <div
-            style="position:absolute;left:48px;top:118px;width:1440px;font-size:43px;line-height:1.2;text-wrap:pretty">
-            Share state by copying it. Compose vector fields by adding them.</div>
-          <div style="position:absolute;left:48px;top:186px;width:1440px;padding:10px 22px;background:rgba(108,154,195,0.12);border-top:5px solid #002A54;border-radius:12px;border-left:1px solid rgba(108,154,195,0.25);border-right:1px solid rgba(108,154,195,0.25);border-bottom:1px solid rgba(108,154,195,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04);box-sizing:border-box">
+          <div style="position:absolute;left:48px;top:112px;width:1440px;padding:14px 22px 10px;background:rgba(108,154,195,0.12);border-top:5px solid #002A54;border-radius:12px;border-left:1px solid rgba(108,154,195,0.25);border-right:1px solid rgba(108,154,195,0.25);border-bottom:1px solid rgba(108,154,195,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04);box-sizing:border-box">
+            <div style="font-size:36px;line-height:1.18;color:#002A54;text-wrap:pretty;margin-bottom:6px">Share state by copying it. Compose vector fields by adding them.</div>
             <div class="ds-math-block ds-math-tight" data-tex="\dot{x} \;=\; P^{\top}\Big({\textstyle\bigoplus_i} v_i\Big)(Px)" style="font-size:28px;margin:0;line-height:1.2">\[ \dot{x} \;=\; P^{\top}\Big({\textstyle\bigoplus_i} v_i\Big)(Px) \]</div>
-            <div style="font-size:20px;line-height:1.25;color:#2C4B6A;text-align:center">Copy the shared state to each box, run the local fields independently, sum the contributions back. Taking <span class="katex-inline" data-tex="v_i = -\nabla f_i">\(v_i = -\nabla f_i\)</span> recovers the previous slide.</div>
+            <div style="font-size:20px;line-height:1.25;color:#2C4B6A;text-align:center">Copy the shared state to each box, run the local fields independently, sum the contributions back.</div>
           </div>
           <img src="assets/figures/vf-sources.png" alt="The source vector fields v and u, each on two variables"
             style="position:absolute;left:110px;top:300px;width:330px;height:396px;object-fit:contain">
