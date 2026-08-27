@@ -1,0 +1,2522 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Compositional Methods of Engineering Analysis — James Fairbanks</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <!-- Reveal.js & KaTeX Stylesheets -->
+  <link rel="stylesheet" href="vendor/reveal/reveal.css">
+  <link rel="stylesheet" href="vendor/katex/katex.min.css">
+
+  <!-- Design System Tokens & Fonts -->
+  <link rel="stylesheet" href="vendor/fira/fira-sans.css">
+  <link rel="stylesheet"
+    href="_ds/fairbanks-research-talk-design-system-7193341c-92ad-490d-a789-ef6442329aec/tokens/fonts.css">
+  <link rel="stylesheet"
+    href="_ds/fairbanks-research-talk-design-system-7193341c-92ad-490d-a789-ef6442329aec/tokens/colors.css">
+  <link rel="stylesheet"
+    href="_ds/fairbanks-research-talk-design-system-7193341c-92ad-490d-a789-ef6442329aec/tokens/typography.css">
+  <link rel="stylesheet"
+    href="_ds/fairbanks-research-talk-design-system-7193341c-92ad-490d-a789-ef6442329aec/tokens/spacing.css">
+  <link rel="stylesheet"
+    href="_ds/fairbanks-research-talk-design-system-7193341c-92ad-490d-a789-ef6442329aec/tokens/effects.css">
+  <link rel="stylesheet"
+    href="_ds/fairbanks-research-talk-design-system-7193341c-92ad-490d-a789-ef6442329aec/styles.css">
+
+  <style>
+    :root {
+      --slide-w: 1536px;
+      --slide-h: 864px;
+
+      /* Active Font Theme: Fira Sans + Fira Math */
+      --font-core: "Fira Sans", sans-serif;
+      --font-mono: "JuliaMono", ui-monospace, "SFMono-Regular", monospace;
+      --font-caption: "Fira Sans", sans-serif;
+      --font-math: "Fira Math", "Fira Sans", sans-serif;
+
+      /* [TO REVERT]: Uncomment the 3 lines below to switch back to XITS (Serif):
+      --font-core: "XITS", "STIX Two Text", "Times New Roman", serif;
+      --font-caption: "XITS", "STIX Two Text", "Times New Roman", serif;
+      --font-math: "XITS Math", "XITS", "STIX Two Math", serif;
+      */
+      --clr-dk1: #002A54;
+      --clr-lt1: #FFFFFF;
+      --clr-lt2: #FFEFCF;
+      --clr-accent1: #E28F41;
+      --clr-accent2: #BE9B69;
+      --clr-accent3: #CFDBCB;
+      --clr-accent4: #80BE63;
+      --clr-accent5: #B1B3B6;
+      --clr-accent6: #6C9AC3;
+      --clr-accent6-dark: #2C4B6A;
+      --clr-slide-number: #888B97;
+      --tint-orange: rgb(226 143 65 / .28);
+      --tint-green: rgb(128 190 99 / .28);
+      --tint-blue: rgb(108 154 195 / .28);
+      --tint-tan: rgb(190 155 105 / .28);
+      --radius-region: 32px;
+      --stroke-figure-w: 7px;
+      --leading-tight: 1;
+      --leading-body: 1.18;
+      --size-body: 37px;
+      --size-body-sub: 29px;
+      --size-label: 27px;
+      --size-step: 32px;
+      --size-math: 40px;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background: #1B2430;
+      font-family: var(--font-core);
+      overflow: hidden;
+      color: #002A54;
+    }
+
+    .reveal {
+      font-family: var(--font-core);
+      color: #002A54;
+    }
+
+    .reveal .slides {
+      text-align: left;
+    }
+
+    .reveal .slides section {
+      padding: 0;
+      width: 1536px !important;
+      height: 864px !important;
+      top: 0 !important;
+      left: 0 !important;
+      margin: 0 !important;
+      box-sizing: border-box;
+      position: absolute;
+      overflow: hidden;
+      font-family: var(--font-core);
+    }
+
+    .slide-canvas {
+      position: relative;
+      width: 1536px;
+      height: 864px;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    /* Component Styles */
+    .ds-title-banner {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 131px;
+      object-fit: cover;
+      object-position: left center;
+      display: block;
+    }
+
+    .ds-highlight-region {
+      position: relative;
+      box-sizing: border-box;
+      border-radius: 14px;
+      border: 1px solid rgba(0, 42, 84, 0.15);
+      box-shadow: 0 3px 10px rgba(0, 42, 84, 0.04);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 24px;
+      overflow: hidden;
+    }
+
+    .ds-highlight-region.tint-blue {
+      background: rgba(108, 154, 195, 0.12);
+      border-top: 5px solid #002A54;
+      border-color: rgba(108, 154, 195, 0.25);
+    }
+
+    .ds-highlight-region.tint-orange {
+      background: rgba(226, 143, 65, 0.12);
+      border-top: 5px solid #E28F41;
+      border-color: rgba(226, 143, 65, 0.25);
+    }
+
+    .ds-highlight-region.tint-green {
+      background: rgba(128, 190, 99, 0.12);
+      border-top: 5px solid #80BE63;
+      border-color: rgba(128, 190, 99, 0.25);
+    }
+
+    .ds-highlight-region.tint-tan {
+      background: rgba(190, 155, 105, 0.12);
+      border-top: 5px solid #BE9B69;
+      border-color: rgba(190, 155, 105, 0.25);
+    }
+
+    .ds-region-content {
+      flex: 1;
+      min-height: 0;
+      min-width: 0;
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .ds-region-label {
+      flex-shrink: 0;
+      white-space: nowrap;
+      max-width: 100%;
+      font-family: var(--font-core);
+      font-size: var(--size-label);
+      font-weight: 700;
+      color: var(--clr-dk1);
+      text-align: center;
+      line-height: var(--leading-tight);
+    }
+
+    .ds-outlined-region {
+      position: relative;
+      box-sizing: border-box;
+      border-radius: 14px;
+      border: 1px solid rgba(0, 42, 84, 0.15);
+      box-shadow: 0 3px 10px rgba(0, 42, 84, 0.04);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 16px;
+      overflow: hidden;
+    }
+
+    .ds-outlined-region.stroke-blue {
+      background: rgba(108, 154, 195, 0.08);
+      border-top: 5px solid #002A54;
+      border-color: rgba(108, 154, 195, 0.25);
+    }
+
+    .ds-outlined-region.stroke-orange {
+      background: rgba(226, 143, 65, 0.08);
+      border-top: 5px solid #E28F41;
+      border-color: rgba(226, 143, 65, 0.25);
+    }
+
+    .ds-outlined-region.stroke-green {
+      background: rgba(128, 190, 99, 0.08);
+      border-top: 5px solid #80BE63;
+      border-color: rgba(128, 190, 99, 0.25);
+    }
+
+    .ds-outlined-region.stroke-tan {
+      background: rgba(190, 155, 105, 0.08);
+      border-top: 5px solid #BE9B69;
+      border-color: rgba(190, 155, 105, 0.25);
+    }
+
+    .ds-outlined-content {
+      flex: 1;
+      min-height: 0;
+      min-width: 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ds-bullet-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      font-family: var(--font-core);
+      color: var(--clr-dk1);
+      text-wrap: pretty;
+    }
+
+    .ds-bullet-list li {
+      display: flex;
+      gap: 24px;
+      flex-shrink: 0;
+      align-items: flex-start;
+      line-height: var(--leading-body);
+    }
+
+    .ds-bullet-list li.size-body {
+      font-size: var(--size-body);
+    }
+
+    .ds-bullet-list li.size-body-sub {
+      font-size: var(--size-body-sub);
+    }
+
+    .ds-bullet-list .bullet-mark {
+      flex: none;
+      font-size: 0.62em;
+      position: relative;
+      top: 0.25em;
+    }
+
+    .ds-bullet-list .bullet-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .ds-theorem-block {
+      font-family: var(--font-core);
+      font-size: 29px;
+      line-height: 1.25;
+      color: var(--clr-dk1);
+      font-style: italic;
+      text-wrap: pretty;
+    }
+
+    .ds-theorem-block .theorem-head {
+      font-style: normal;
+      font-weight: 700;
+    }
+
+    .ds-theorem-block .theorem-body {
+      font-style: italic;
+    }
+
+    .ds-math-block {
+      font-size: 36px;
+      color: var(--clr-dk1);
+      text-align: center;
+    }
+
+    .katex-inline {
+      font-size: inherit;
+      color: inherit;
+      display: inline;
+      text-align: left;
+    }
+
+    .ds-slide-num {
+      position: absolute;
+      right: 48px;
+      bottom: 16px;
+      font-size: 21px;
+      color: var(--clr-slide-number);
+    }
+
+    .reveal .controls {
+      color: #FA4616;
+    }
+
+    .reveal .progress {
+      color: #FA4616;
+      height: 4px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section data-label="1 · Title" data-slide-index="1" data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <img src="assets/brand/uf-banner.jpg" alt="University of Florida" class="ds-title-banner">
+          <div style="position:absolute;left:96px;top:165px;width:940px;color:#002A54">
+            <div style="font-size:70px;line-height:1.06;font-weight:700">Compositional Methods of Engineering Analysis
+            </div>
+            <div style="margin-top:36px;font-size:46px;line-height:1.18">James Fairbanks</div>
+            <div style="font-size:35px;line-height:1.22;color:#2C4B6A">Department of Mechanical &amp; Aerospace
+              Engineering, University of Florida</div>
+            <div style="margin-top:22px;font-size:33px;line-height:1.22;color:#2C4B6A">Fall 2026 Department Seminar
+            </div>
+          </div>
+
+          <img src="assets/brand/codac-digicams-shield.png" alt="CODAC DIGICAMS Shield"
+            style="position:absolute;left:96px;top:570px;width:175px;height:195px;object-fit:contain">
+          <img src="assets/brand/gatas-lockup.png" alt="UF · GATAS Lab"
+            style="position:absolute;left:295px;top:595px;width:440px;height:145px;object-fit:contain">
+
+          <div
+            style="position:absolute;left:1094px;top:180px;width:394px;height:296px;overflow:hidden;border-radius:4px">
+            <video data-autoplay src="assets/video/rayleigh-taylor-volume.mp4" autoplay="autoplay"
+              loop="loop" muted="muted" playsinline="playsinline"
+              style="position:absolute;top:0;left:0;width:126%;height:100%;object-fit:cover;object-position:0% 50%"></video>
+          </div>
+          <div
+            style="position:absolute;left:1094px;top:500px;width:394px;height:284px;overflow:hidden;border-radius:4px">
+            <img src="assets/figures/robosheaf-3-agent-1-target-frame.png"
+              alt="Three-agent one-target tracking demonstration, midpoint frame"
+              style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover">
+          </div>
+
+        </div>
+      </section>
+
+      <section data-label="2 · Curriculum Vitae" data-slide-index="2"
+        data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:59px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Curriculum Vitae</h1>
+          <img src="assets/figures/career-walk-of-life.svg"
+            alt="Mathematics at the University of Florida, then Georgia Tech with NSA, NDSEG, IDA and LLNL support, then the Georgia Tech Research Institute sponsored by DARPA and ONR, then UF's Herbert Wertheim College of Engineering (CISE and MAE) sponsored by DARPA, ONR, ARO, and AFRL"
+            style="position:absolute;left:48px;top:96px;width:1440px;height:720px;object-fit:contain">
+          <div class="ds-slide-num">2</div>
+
+        </div>
+      </section>
+
+      <section data-label="3 · Students, Collaborators, and Family" data-slide-index="3" data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:59px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Students, Collaborators, and Family</h1>
+
+          <div
+            style="position:absolute;left:7px;top:96px;right:7px;bottom:8px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:4px">
+            <img src="assets/photos/family.jpg"
+              alt="The presenter with his family in a field of lupines"
+              style="grid-column:4;grid-row:1 / span 2;width:100%;height:100%;object-fit:cover">
+            <img src="assets/photos/collaborators-1.jpg" alt="" style="width:100%;height:100%;object-fit:cover">
+            <img src="assets/photos/collaborators-2.jpg" alt="" style="width:100%;height:100%;object-fit:cover">
+            <img src="assets/photos/collaborators-3.jpg" alt="" style="width:100%;height:100%;object-fit:cover">
+            <img src="assets/photos/collaborators-4.jpg" alt="" style="width:100%;height:100%;object-fit:cover">
+            <img src="assets/photos/collaborators-5.jpg" alt="" style="width:100%;height:100%;object-fit:cover">
+            <img src="assets/photos/collaborators-6.jpg" alt="" style="width:100%;height:100%;object-fit:cover">
+          </div>
+
+          <div class="ds-slide-num">3</div>
+        </div>
+      </section>
+
+      <section data-label="4 · The Program at a Glance: DIGICAMS for CODAC" data-slide-index="4"
+        data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:59px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            The Program at a Glance: DIGICAMS for CODAC</h1>
+          <img src="assets/figures/digicams-for-codac.png"
+            alt="DIGICAMS for CODAC research thrusts, outcomes, workforce, and partners"
+            style="position:absolute;left:108px;top:104px;width:1320px;height:575px;object-fit:contain">
+          <div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:37px;line-height:1.18;color:#2C4B6A">
+            Five interconnected thrusts bridging computational sheaf theory, open systems control, and scalable digital
+            engineering.</div>
+          <div class="ds-slide-num">4</div>
+
+        </div>
+      </section>
+
+      <section data-label="5 · A Categorical Architecture for Systems and Control" data-slide-index="5"
+        data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            A Categorical Architecture for Systems and Control</h1>
+          <img src="assets/figures/categories-systems-dynamics-decisions.png"
+            alt="Categories of Systems, Optimization, Dynamics & Control Systems, and Decisions & Outcomes"
+            style="position:absolute;left:88px;top:104px;width:1360px;height:575px;object-fit:contain">
+          <div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:37px;line-height:1.18;color:#2C4B6A">
+            Category theory provides the functorial bridge connecting how systems are structured to how they behave and
+            decide.</div>
+          <div class="ds-slide-num">5</div>
+
+        </div>
+      </section>
+
+      <section data-label="6 · Sheaves Are Fundamental for Complex Systems" data-slide-index="6"
+        data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Sheaves Are Fundamental for Complex Systems</h1>
+          <div style="position:absolute;left:48px;top:125px;width:680px;display:flex;flex-direction:column;gap:22px">
+            <div style="font-size:32px;line-height:1.24;color:#002A54">
+              Grids, flow fields, robot teams, and colorings share the same underlying structure:
+            </div>
+            <div style="display:flex;flex-direction:column;gap:18px;font-size:27px;line-height:1.28;color:#002A54">
+              <div><strong>A/B:</strong> Domain Decomposition in FEA mesh and in the smooth solutions</div>
+              <div><strong>C/D:</strong> Interacting subsystems in Multiagent Autonomy and the closed loop dynamics
+              </div>
+              <div><strong>E/F:</strong> A Cellular Sheaf Visualized Geometrically and Algebraically</div>
+              <div><strong>G:</strong> A structured decomposition of a graph and its space of 3-colorings</div>
+            </div>
+          </div>
+          <img src="assets/figures/sheaf-master-panels.jpg"
+            alt="Seven panels: grid decomposition, PDE field, layered multi-agent domains, vector fields, a cellular sheaf diagram, and graph colorings"
+            style="position:absolute;left:768px;top:100px;width:720px;height:720px;object-fit:contain">
+          <div class="ds-slide-num">6</div>
+
+        </div>
+      </section>
+
+      <section data-label="7 · Model-Aware Scientific Computing" data-slide-index="7" data-background-color="#002A54"
+        style="background:#002A54;overflow:hidden;color:#FFEFCF;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <div style="position:absolute;left:120px;top:277px;width:1060px">
+            <div style="font-size:29px;letter-spacing:3px;opacity:.85;font-weight:700">PART ONE
+            </div>
+            <div style="margin-top:24px;font-size:110px;line-height:1.02">Model-Aware Scientific Computing</div>
+            <div style="margin-top:32px;width:860px;height:2px;background:rgb(255 239 207 / .35)"></div>
+            <div style="margin-top:32px;font-size:43px;line-height:1.2;opacity:.9">Syntactic Systems That Compile to
+              Executable Models</div>
+            <div style="margin-top:22px;display:flex;align-items:flex-start;gap:12px">
+                <div style="flex:0 0 52px;padding-top:34px;font-size:20px;letter-spacing:2px;font-weight:700;opacity:.72">WITH</div>
+                <div style="flex:0 0 166px;text-align:center"><img src="assets/photos/sophie-libkind.jpg" alt="Sophie Libkind" style="width:88px;height:88px;border-radius:50%;border:2px solid rgb(255 239 207 / .5);box-shadow:0 3px 12px rgb(0 0 0 / .3);object-fit:cover;display:block;margin:0 auto"><div style="margin-top:9px;font-size:19px;line-height:1.15;opacity:.9">Sophie Libkind</div></div>
+                <div style="flex:0 0 166px;text-align:center"><img src="assets/photos/evan-patterson.jpg" alt="Evan Patterson" style="width:88px;height:88px;border-radius:50%;border:2px solid rgb(255 239 207 / .5);box-shadow:0 3px 12px rgb(0 0 0 / .3);object-fit:cover;display:block;margin:0 auto"><div style="margin-top:9px;font-size:19px;line-height:1.15;opacity:.9">Evan Patterson</div></div>
+                <div style="flex:0 0 166px;text-align:center"><img src="assets/photos/owen-lynch.jpg" alt="Owen Lynch" style="width:88px;height:88px;border-radius:50%;border:2px solid rgb(255 239 207 / .5);box-shadow:0 3px 12px rgb(0 0 0 / .3);object-fit:cover;display:block;margin:0 auto"><div style="margin-top:9px;font-size:19px;line-height:1.15;opacity:.9">Owen Lynch</div></div>
+                <div style="flex:0 0 166px;text-align:center"><img src="assets/photos/kristopher-brown.jpg" alt="Kristopher Brown" style="width:88px;height:88px;border-radius:50%;border:2px solid rgb(255 239 207 / .5);box-shadow:0 3px 12px rgb(0 0 0 / .3);object-fit:cover;display:block;margin:0 auto"><div style="margin-top:9px;font-size:19px;line-height:1.15;opacity:.9">Kristopher Brown</div></div>
+                <div style="flex:0 0 166px;text-align:center"><img src="assets/photos/benjamin-bumpus.jpg" alt="Benjamin Bumpus" style="width:88px;height:88px;border-radius:50%;border:2px solid rgb(255 239 207 / .5);box-shadow:0 3px 12px rgb(0 0 0 / .3);object-fit:cover;display:block;margin:0 auto"><div style="margin-top:9px;font-size:19px;line-height:1.15;opacity:.9">Benjamin Bumpus</div></div>
+              </div>
+          </div>
+          <img src="assets/brand/gatas-mark-onnavy.png" alt=""
+            style="position:absolute;right:96px;bottom:88px;width:220px;height:220px;object-fit:contain;opacity:.85">
+          <div class="ds-slide-num">7</div>
+
+        </div>
+      </section>
+
+      <section data-label="8 · Semantics and Solvers Are Functors" data-slide-index="8"
+        data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Semantics and Solvers Are Functors</h1>
+          <img src="assets/figures/modeling-framework-layers.png"
+            alt="System specification, model semantics, and simulation for an SIR model"
+            style="position:absolute;left:48px;top:130px;width:1440px;height:340px;object-fit:contain">
+          <div
+            style="position:absolute;left:48px;top:510px;width:1440px;font-size:37px;line-height:1.22;text-wrap:pretty">
+            Write the model once as structured data. Semantics, solvers, and analyses are functors out of that
+            specification, so a new domain reuses the machinery instead of starting over.</div>
+          <div class="ds-slide-num">8</div>
+
+        </div>
+      </section>
+
+      <section data-label="9 · Wiring Diagrams Are Formulas for Systems" data-slide-index="9"
+        data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:59px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Wiring Diagrams Are Formulas for Systems</h1>
+          <img src="assets/figures/wiring-diagram-formulas.png"
+            alt="Wiring diagrams in circuits, signal processing, chemistry, manufacturing, controls, and engineering design"
+            style="position:absolute;left:48px;top:104px;width:1000px;height:590px;object-fit:contain">
+          <div style="position:absolute;left:1090px;top:140px;width:400px;display:flex;flex-direction:column;gap:20px">
+            <div style="font-size:35px;line-height:1.22;text-wrap:pretty;color:#002A54">
+              Every one of these fields already draws boxes and wires. Each drawing is a formula that denotes a system.
+            </div>
+            <div style="font-size:33px;line-height:1.22;text-wrap:pretty;color:#2C4B6A">
+              Give the notation a formal semantics and the drawing becomes executable.
+            </div>
+            <div style="margin-top:16px;font-size:24px;line-height:1.24;color:#2C4B6A;font-style:italic">
+              Figures from Fong and Spivak 2019
+            </div>
+          </div>
+          <div class="ds-slide-num">9</div>
+
+        </div>
+      </section>
+
+      <section data-label="10 · One Diagram, Two Semantics" data-slide-index="10" data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            One Diagram, Two Semantics</h1>
+
+          <div style="position:absolute;left:48px;top:106px;width:620px;display:flex;flex-direction:column;gap:18px">
+            <div style="background:rgba(108,154,195,0.12);border-top:5px solid #002A54;border-radius:12px;padding:20px 24px;border-left:1px solid rgba(108,154,195,0.25);border-right:1px solid rgba(108,154,195,0.25);border-bottom:1px solid rgba(108,154,195,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04)">
+              <div style="font-size:26px;font-weight:700;color:#002A54;margin-bottom:6px">1. Optimization Semantics</div>
+              <div style="font-size:24px;line-height:1.32;color:#002A54">Boxes are local objective functions; wires share variable coordinates. Composition yields the sum <span class="katex-inline" data-tex="f(x_1,x_2) + g(x_2,x_3)">\(f(x_1,x_2) + g(x_2,x_3)\)</span>.</div>
+            </div>
+
+            <div style="background:rgba(108,154,195,0.12);border-top:5px solid #2E7D32;border-radius:12px;padding:20px 24px;border-left:1px solid rgba(108,154,195,0.25);border-right:1px solid rgba(108,154,195,0.25);border-bottom:1px solid rgba(108,154,195,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04)">
+              <div style="font-size:26px;font-weight:700;color:#2E7D32;margin-bottom:6px">2. Dynamical Semantics</div>
+              <div style="font-size:24px;line-height:1.32;color:#002A54">Boxes are vector fields; wires couple state coordinates. Composition superposes forces on the shared variable <span class="katex-inline" data-tex="x_2">\(x_2\)</span>.</div>
+            </div>
+
+            <div style="background:rgba(230,126,34,0.08);border-left:4px solid #D35400;border-radius:8px;padding:14px 20px">
+              <div style="font-size:22px;line-height:1.3;color:#873600"><strong>Functorial Translation:</strong> Gradient flow maps composite optimization directly into composite dynamics.</div>
+            </div>
+          </div>
+
+          <figure style="margin:0;position:absolute;left:700px;top:106px;width:800px;height:630px;display:flex;align-items:center;justify-content:center">
+            <div style="width:100%;height:100%;background:rgba(108,154,195,0.06);border:1px solid rgba(108,154,195,0.25);border-radius:12px;padding:16px;box-sizing:border-box;display:flex;align-items:center;justify-content:center">
+              <img src="assets/figures/two-semantics-gradient-descent.png"
+                alt="A wiring diagram read twice: as a composite objective function, and as a composite dynamical system, with gradient descent carrying the first to the second"
+                style="width:100%;height:100%;object-fit:contain">
+            </div>
+          </figure>
+
+          <div style="position:absolute;left:48px;right:48px;bottom:40px;font-size:34px;line-height:1.18;color:#2C4B6A">
+            Objectives, then dynamics, then the functor between them.</div>
+          <div class="ds-slide-num">10</div>
+
+        </div>
+      </section>
+
+      <section data-label="11 · Composing Optimization Problems" data-slide-index="11" data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Composing Optimization Problems</h1>
+          <div
+            style="position:absolute;left:48px;top:120px;width:880px;font-size:43px;line-height:1.2;text-wrap:pretty">
+            Share data by copying it. Compose objectives by adding them.</div>
+          <img src="assets/figures/copy-sharing-maps.png"
+            alt="A map phi from two two-element sets onto three variables, and its pullback duplicating the shared coordinate"
+            style="position:absolute;left:1108px;top:112px;width:380px;height:240px;object-fit:contain">
+          <img src="assets/figures/compose-objectives.png"
+            alt="Contour plots of f on x1 and x2, g on x2 and x3, and their sum on the shared variable"
+            style="position:absolute;left:48px;top:358px;width:1440px;height:335px;object-fit:contain">
+          <div style="position:absolute;left:48px;right:48px;bottom:64px;font-size:37px;line-height:1.18;color:#2C4B6A">
+            A subproblem does not change when it is plugged in. That is what makes ADMM and proximal gradient
+            distributed rather than merely parallel.</div>
+          <div class="ds-slide-num">11</div>
+
+        </div>
+      </section>
+
+      <section data-label="12 · Composing Vector Fields" data-slide-index="12" data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Composing Vector Fields</h1>
+          <div
+            style="position:absolute;left:48px;top:118px;width:1440px;font-size:43px;line-height:1.2;text-wrap:pretty">
+            Two fields that share a variable superpose on the overlap and pass through elsewhere.</div>
+          <img src="assets/figures/vf-sources.png" alt="The source vector fields v and u, each on two variables"
+            style="position:absolute;left:110px;top:230px;width:330px;height:470px;object-fit:contain">
+          <img src="assets/figures/vf-composed.png"
+            alt="The composed field on three variables, shown as slices at fixed z3 and z1"
+            style="position:absolute;left:600px;top:280px;width:830px;height:392px;object-fit:contain">
+          <div style="position:absolute;left:48px;right:48px;bottom:64px;font-size:37px;line-height:1.18;color:#2C4B6A">
+            Same diagram, different semantics. The composition rule comes from the diagram, not from the fields.</div>
+          <div class="ds-slide-num">12</div>
+
+        </div>
+      </section>
+
+      <section data-label="13 · Euler's Method Is Functorial" data-slide-index="13" data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:59px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Euler's Method Is Functorial</h1>
+
+          <img src="assets/figures/euler-gradient-flow.png"
+            alt="An objective f maps to its gradient flow and then to the Euler discretization; the contour plot of f beside the stream plot of the flow"
+            style="position:absolute;left:48px;top:100px;width:1440px;height:420px;object-fit:contain">
+
+          <div
+            style="position:absolute;left:48px;right:48px;top:540px;background:rgba(108,154,195,0.12);border-top:5px solid #2E7D32;border-radius:12px;padding:18px 32px;border-left:1px solid rgba(108,154,195,0.25);border-right:1px solid rgba(108,154,195,0.25);border-bottom:1px solid rgba(108,154,195,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04)">
+            <div class="ds-theorem-block" style="font-size:26px;line-height:1.36">
+              <div class="theorem-head" style="font-size:26px;font-weight:700;color:#2E7D32;margin-bottom:6px">Theorem (Functorial Discretization).</div>
+              <div class="theorem-body">Gradient flow <span class="katex-inline" data-tex="\mathcal{G}\colon \mathbf{Opt} \to \mathbf{DynSys}">\(\mathcal{G}\colon \mathbf{Opt} \to \mathbf{DynSys}\)</span> and Euler integration <span class="katex-inline" data-tex="\mathcal{E}_h\colon \mathbf{DynSys} \to \mathbf{DiscreteDynSys}">\(\mathcal{E}_h\colon \mathbf{DynSys} \to \mathbf{DiscreteDynSys}\)</span> are monoidal functors:</div>
+              <div class="ds-math-block" data-tex="\mathcal{E}_h(\mathcal{G}(f \oplus g)) = \mathcal{E}_h(\mathcal{G}(f)) \oplus \mathcal{E}_h(\mathcal{G}(g))" style="font-size:28px;margin:6px 0;text-align:center">\[\mathcal{E}_h(\mathcal{G}(f \oplus g)) = \mathcal{E}_h(\mathcal{G}(f)) \oplus \mathcal{E}_h(\mathcal{G}(g))\]</div>
+              <div style="font-size:23px;color:#2C4B6A">Discretizing a composite problem equals composing the discrete solvers. Modular verification is exact.</div>
+            </div>
+          </div>
+
+          <div class="ds-slide-num">13</div>
+
+        </div>
+      </section>
+
+      <section data-label="14 · Computational Physics" data-slide-index="14" data-background-color="#002A54"
+        style="background:#002A54;overflow:hidden;color:#FFEFCF;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <div style="position:absolute;left:120px;top:226px;width:1060px">
+            <div style="font-size:29px;letter-spacing:3px;opacity:.85;font-weight:700">PART TWO
+            </div>
+            <div style="margin-top:24px;font-size:110px;line-height:1.02">Computational Physics</div>
+            <div style="margin-top:32px;width:860px;height:2px;background:rgb(255 239 207 / .35)"></div>
+            <div style="margin-top:32px;font-size:43px;line-height:1.2;opacity:.9">Directly Simulating Multiphysics
+              Systems
+              from Hierarchical Specifications</div>
+            <div style="margin-top:22px;display:flex;align-items:flex-start;gap:12px">
+                <div style="flex:0 0 52px;padding-top:34px;font-size:20px;letter-spacing:2px;font-weight:700;opacity:.72">WITH</div>
+                <div style="flex:0 0 148px;text-align:center"><img src="assets/photos/luke-morris.jpg" alt="Luke Morris" style="width:88px;height:88px;border-radius:50%;border:2px solid rgb(255 239 207 / .5);box-shadow:0 3px 12px rgb(0 0 0 / .3);object-fit:cover;display:block;margin:0 auto"><div style="margin-top:9px;font-size:19px;line-height:1.15;opacity:.9">Luke Morris</div></div>
+                <div style="flex:0 0 148px;text-align:center"><img src="assets/photos/evan-patterson.jpg" alt="Evan Patterson" style="width:88px;height:88px;border-radius:50%;border:2px solid rgb(255 239 207 / .5);box-shadow:0 3px 12px rgb(0 0 0 / .3);object-fit:cover;display:block;margin:0 auto"><div style="margin-top:9px;font-size:19px;line-height:1.15;opacity:.9">Evan Patterson</div></div>
+                <div style="flex:0 0 148px;text-align:center"><img src="assets/photos/george-rauta.jpg" alt="George Rauta" style="width:88px;height:88px;border-radius:50%;border:2px solid rgb(255 239 207 / .5);box-shadow:0 3px 12px rgb(0 0 0 / .3);object-fit:cover;display:block;margin:0 auto"><div style="margin-top:9px;font-size:19px;line-height:1.15;opacity:.9">George Rauta</div></div>
+                <div style="flex:0 0 148px;text-align:center"><img src="assets/photos/matthew-cuffaro.jpg" alt="Matthew Cuffaro" style="width:88px;height:88px;border-radius:50%;border:2px solid rgb(255 239 207 / .5);box-shadow:0 3px 12px rgb(0 0 0 / .3);object-fit:cover;display:block;margin:0 auto"><div style="margin-top:9px;font-size:19px;line-height:1.15;opacity:.9">Matthew Cuffaro</div></div>
+              </div>
+          </div>
+          <img src="assets/brand/decapodes_logo.svg" alt="Decapodes logo"
+            style="position:absolute;right:96px;bottom:88px;width:240px;height:240px;object-fit:contain">
+          <div class="ds-slide-num">14</div>
+
+        </div>
+      </section>
+
+      <section data-label="15 · Encoding Equations as Diagrams" data-slide-index="15" data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:59px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Encoding Equations as Diagrams</h1>
+          <ul class="ds-bullet-list" style="position:absolute;left:48px;top:130px;width:1440px">
+            <li class="size-body" style=""><span class="bullet-mark">●</span><span class="bullet-text">Vertices carry a
+                variable and the space it lives in</span></li>
+            <li class="size-body" style=""><span class="bullet-mark">●</span><span class="bullet-text">Edges carry the
+                differential operators</span></li>
+            <li class="size-body" style=""><span class="bullet-mark">●</span><span class="bullet-text">A physical theory
+                becomes a labelled graph, and a graph is something a program can read</span></li>
+          </ul>
+          <figure
+            style="margin:0;position:absolute;left:48px;top:340px;right:48px;display:flex;flex-direction:column;align-items:center;gap:18px">
+            <img src="assets/figures/diffusion-decapode.png"
+              alt="Three scalar equations rewritten as a typed diagram of variables and operators"
+              style="width:100%;max-width:1200px;height:220px;object-fit:contain">
+            <figcaption style="font-size:26px;line-height:1.24;color:#2C4B6A;text-align:center;font-style:italic">
+              Diffusion, written equation notation vs diagrammatic notation.</figcaption>
+          </figure>
+          <div style="position:absolute;left:48px;right:48px;bottom:64px;font-size:37px;line-height:1.18;color:#2C4B6A">
+            The same content, in a form that supports type checking, rewriting, and composition.</div>
+          <div class="ds-slide-num">15</div>
+
+        </div>
+      </section>
+
+      <section data-label="16 · Building Multiphysics with Wiring Diagrams" data-slide-index="16"
+        data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Building Multiphysics with Wiring Diagrams</h1>
+
+          <div
+            style="position:absolute;left:48px;top:104px;right:48px;height:650px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:20px 32px">
+            <div style="background:rgba(108,154,195,0.06);border:1px solid rgba(108,154,195,0.25);border-radius:12px;padding:12px 16px;box-sizing:border-box;display:flex;flex-direction:column;gap:8px;align-items:center">
+              <div style="font-size:21px;font-weight:700;color:#002A54;width:100%;text-align:left">1. Physical Principles (Decapodes)</div>
+              <img src="assets/figures/physical-principles.png"
+                alt="Fick's law of diffusion, scalar transport by advection, conservation of mass, and superposition of flux, each as a typed diagram"
+                style="width:100%;height:220px;object-fit:contain">
+            </div>
+
+            <div style="background:rgba(108,154,195,0.06);border:1px solid rgba(108,154,195,0.25);border-radius:12px;padding:12px 16px;box-sizing:border-box;display:flex;flex-direction:column;gap:8px;align-items:center">
+              <div style="font-size:21px;font-weight:700;color:#002A54;width:100%;text-align:left">2. Composition Syntax (Wiring Diagram)</div>
+              <img src="assets/figures/decapode-composition-diagram-only.png"
+                alt="An undirected wiring diagram gluing diffusion, advection, flux superposition, and mass conservation along shared variables"
+                style="width:100%;height:220px;object-fit:contain">
+            </div>
+
+            <div
+              style="background:rgba(108,154,195,0.12);border-top:4px solid #002A54;border-radius:12px;padding:18px 22px;border-left:1px solid rgba(108,154,195,0.25);border-right:1px solid rgba(108,154,195,0.25);border-bottom:1px solid rgba(108,154,195,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04);display:flex;flex-direction:column;justify-content:center;gap:6px">
+              <div style="font-size:22px;font-weight:700;color:#002A54;margin-bottom:2px">Wiring Diagram Semantics</div>
+              <div style="font-size:19px;line-height:1.32;color:#002A54"><strong>Junctions:</strong> Shared variable domains (e.g. ambient space)</div>
+              <div style="font-size:19px;line-height:1.32;color:#002A54"><strong>Boxes:</strong> Physical sub-theories (diffusion, advection)</div>
+              <div style="font-size:19px;line-height:1.32;color:#002A54"><strong>Wires:</strong> Equality constraints on shared ports</div>
+              <div style="font-size:19px;line-height:1.32;color:#002A54"><strong>Outer Ports:</strong> Interface to next level of hierarchy</div>
+            </div>
+
+            <div style="background:rgba(108,154,195,0.06);border:1px solid rgba(108,154,195,0.25);border-radius:12px;padding:12px 16px;box-sizing:border-box;display:flex;flex-direction:column;gap:8px;align-items:center">
+              <div style="font-size:21px;font-weight:700;color:#002A54;width:100%;text-align:left">3. Composed Multiphysics Model</div>
+              <img src="assets/figures/advection-diffusion-composite.png"
+                alt="The composed advection-diffusion decapode, with temperature, velocity, and two flux terms"
+                style="width:100%;height:220px;object-fit:contain">
+            </div>
+          </div>
+          <div class="ds-slide-num">16</div>
+        </div>
+      </section>
+
+      <section data-label="17 · Writing and Composing Decapodes in Julia" data-slide-index="17"
+        data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Writing and Composing Decapodes in Julia</h1>
+          <div
+            style="position:absolute;left:48px;top:120px;width:820px;height:600px;background:#F4F5F6;border-radius:4px;padding:28px;box-sizing:border-box;font-family:var(--font-mono);font-size:24px;line-height:1.42;color:#002A54;white-space:pre">Diffusion = <span style="color:#A85F19">@decapode</span> <span style="color:#002A54;font-weight:600">begin</span>
+    (C, Ċ):<span style="color:#3F7A28">:Form0</span>
+    ϕ:<span style="color:#3F7A28">:Form1</span>
+
+    ϕ  ==  k * <span style="color:#2C4B6A">d</span>(C)
+    Ċ  ==  <span style="color:#2C4B6A">⋆</span>(<span style="color:#2C4B6A">d</span>(<span style="color:#2C4B6A">⋆</span>(ϕ)))
+    <span style="color:#2C4B6A">∂ₜ</span>(C) == Ċ
+<span style="color:#002A54;font-weight:600">end</span>
+
+DiffusionAdvection = <span style="color:#A85F19">@relation</span> (C, V) <span style="color:#002A54;font-weight:600">begin</span>
+    <span style="color:#2C4B6A">diffusion</span>(C, ϕ₁)
+    <span style="color:#2C4B6A">advection</span>(C, V, ϕ₂)
+    <span style="color:#2C4B6A">superposition</span>(ϕ₁, ϕ₂, ϕ, C)
+<span style="color:#002A54;font-weight:600">end</span>
+
+sim = <span style="color:#2C4B6A">evalsim</span>(<span style="color:#2C4B6A">apex</span>(<span style="color:#2C4B6A">oapply</span>(DiffusionAdvection, physics)))
+f = <span style="color:#2C4B6A">sim</span>(mesh, generate)</div>
+          <div style="position:absolute;left:908px;top:132px;width:580px;display:flex;flex-direction:column;gap:26px">
+            <div>
+              <div style="font-family:var(--font-mono);font-size:26px;color:#2C4B6A">(C, Ċ)::Form0</div>
+              <div style="margin-top:6px;font-size:30px;line-height:1.24;text-wrap:pretty">declares which differential
+                forms the variables are</div>
+            </div>
+            <div>
+              <div style="font-family:var(--font-mono);font-size:26px;color:#2C4B6A">d, ⋆</div>
+              <div style="margin-top:6px;font-size:30px;line-height:1.24;text-wrap:pretty">exterior derivative and Hodge
+                star, not finite differences</div>
+            </div>
+            <div>
+              <div style="font-family:var(--font-mono);font-size:26px;color:#2C4B6A">@relation</div>
+              <div style="margin-top:6px;font-size:30px;line-height:1.24;text-wrap:pretty">the wiring diagram, written
+                as text</div>
+            </div>
+            <div>
+              <div style="font-family:var(--font-mono);font-size:26px;color:#2C4B6A">evalsim</div>
+              <div style="margin-top:6px;font-size:30px;line-height:1.24;text-wrap:pretty">generates the simulator from
+                the composite</div>
+            </div>
+          </div>
+          <div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:37px;line-height:1.18;color:#2C4B6A">
+            The macro is the syntax; the diagram is what it denotes.</div>
+          <div class="ds-slide-num">17</div>
+
+        </div>
+      </section>
+
+      <section data-label="18 · From Advection–Diffusion to Porous Media Convection" data-slide-index="18"
+        data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            From Advection&#8211;Diffusion to Porous Media Convection</h1>
+          <div
+            style="position:absolute;left:48px;top:112px;width:740px;height:600px;background:#F4F5F6;border-radius:4px;padding:22px;box-sizing:border-box;font-family:var(--font-mono);font-size:21px;line-height:1.34;color:#002A54;white-space:pre">Porous_Convection = <span style="color:#A85F19">@decapode</span> <span style="color:#002A54;font-weight:600">begin</span>
+  (λ_ρ₀Cp, αρ₀, k_ηf, ϕ):<span style="color:#3F7A28">:Constant</span>
+  (P, T, Adv, bound_T, bound_Ṫ):<span style="color:#3F7A28">:Form0</span>
+  (g, <span style="color:#002A54">qD</span>):<span style="color:#3F7A28">:Form1</span>
+
+  bound_T == <span style="color:#2C4B6A">adiabatic</span>(T)
+
+  <span style="color:#888B97"># Darcy flux</span>
+  ρ == g ∧ (αρ₀ * bound_T)
+  P == <span style="color:#2C4B6A">Δ⁻¹</span>(<span style="color:#2C4B6A">δ</span>(ρ))
+  <span style="color:#002A54">qD</span> == -k_ηf * (<span style="color:#2C4B6A">d</span>(P) - ρ)
+
+  Adv == <span style="color:#2C4B6A">⋆</span>(<span style="color:#2C4B6A">interpolate</span>(<span style="color:#2C4B6A">∧ᵈᵖ₁₁</span>(<span style="color:#2C4B6A">⋆</span>(<span style="color:#2C4B6A">d</span>(bound_T)), <span style="color:#002A54">qD</span>)))
+  Ṫ == -<span style="color:#8A6A3A">1</span>/ϕ * Adv + λ_ρ₀Cp * <span style="color:#2C4B6A">Δ</span>(bound_T)
+
+  bound_Ṫ == <span style="color:#2C4B6A">tb_bc</span>(Ṫ)
+
+  <span style="color:#2C4B6A">∂ₜ</span>(T) == bound_Ṫ
+<span style="color:#002A54;font-weight:600">end</span></div>
+          <video data-autoplay src="assets/video/porous-convection.mp4" autoplay="autoplay" loop="loop" muted="muted"
+            playsinline="playsinline"
+            style="position:absolute;left:820px;top:112px;width:668px;height:600px;object-fit:contain;background:#fff"></video>
+          <div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:37px;line-height:1.18;color:#2C4B6A">
+            Real multiphysics fits on one screen, and the compiler checks it.</div>
+          <div class="ds-slide-num">18</div>
+
+        </div>
+      </section>
+
+      <section data-label="19 · Verified Against the Literature, at Scale" data-slide-index="19"
+        data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Verified Against the Literature, at Scale</h1>
+
+          <div style="position:absolute;left:48px;top:104px;right:48px;display:grid;grid-template-columns:1.15fr 0.85fr 1fr;gap:24px">
+            <div style="background:rgba(108,154,195,0.06);border:1px solid rgba(108,154,195,0.25);border-top:4px solid #002A54;border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:8px">
+              <div style="font-size:24px;font-weight:700;color:#002A54">Kelvin–Helmholtz Instability</div>
+              <div style="position:relative;width:100%;height:490px;overflow:hidden;border-radius:6px">
+                <video data-autoplay src="assets/video/kelvin-helmholtz.mp4" autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline"
+                  style="position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;background:#fff"></video>
+              </div>
+            </div>
+
+            <div style="background:rgba(108,154,195,0.06);border:1px solid rgba(108,154,195,0.25);border-top:4px solid #002A54;border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:8px">
+              <div style="font-size:24px;font-weight:700;color:#002A54">Rayleigh–Taylor in 3D</div>
+              <div style="position:relative;width:100%;height:490px;overflow:hidden;border-radius:6px">
+                <video data-autoplay src="assets/video/rayleigh-taylor-3d.mp4" autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline"
+                  style="position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;background:#fff"></video>
+              </div>
+            </div>
+
+            <div style="background:rgba(108,154,195,0.06);border:1px solid rgba(108,154,195,0.25);border-top:4px solid #002A54;border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:8px">
+              <div style="font-size:24px;font-weight:700;color:#002A54">Rising Thermal Bubble</div>
+              <div style="position:relative;width:100%;height:490px;overflow:hidden;border-radius:6px">
+                <video data-autoplay src="assets/video/rising-thermal-bubble.mp4" autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline"
+                  style="position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;background:#fff"></video>
+              </div>
+            </div>
+          </div>
+
+          <div style="position:absolute;left:48px;right:112px;bottom:36px;background:rgba(108,154,195,0.12);border-left:4px solid #002A54;border-radius:8px;padding:12px 24px;font-size:26px;line-height:1.24;color:#002A54">
+            <strong>Verification Portfolio:</strong> Also verified against porous convection, Cahn–Hilliard on GPU, and multigrid convergence on generic subdivision.
+          </div>
+
+          <div class="ds-slide-num">19</div>
+
+        </div>
+      </section>
+
+      <section data-label="20 · Lid-Driven Cavity Flow, Against a Benchmark" data-slide-index="20"
+        data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Lid-Driven Cavity Flow, Against a Benchmark</h1>
+          <figure
+            style="margin:0;position:absolute;left:48px;top:118px;width:900px;display:flex;flex-direction:column;gap:12px">
+            <img src="assets/figures/cavity-ghia-comparison.png"
+              alt="Simulated v-velocity across the x-midline and u-velocity across the y-midline at Re = 1000, plotted against the Ghia et al. 1982 benchmark points"
+              style="width:900px;height:452px;object-fit:contain">
+            <figcaption style="font-size:26px;line-height:1.24;color:#2C4B6A;font-style:italic">
+              Midline velocity profiles at Re = 1000, against Ghia et al. (1982)</figcaption>
+          </figure>
+          <figure
+            style="margin:0;position:absolute;left:990px;top:118px;width:498px;display:flex;flex-direction:column;gap:12px">
+            <img src="assets/figures/cavity-velocity-magnitude.png"
+              alt="Velocity magnitude field with direction arrows, showing the primary vortex and the corner recirculations"
+              style="width:498px;height:452px;object-fit:contain">
+            <figcaption style="font-size:26px;line-height:1.24;color:#2C4B6A;font-style:italic">
+              Speed and direction of the converged flow</figcaption>
+          </figure>
+          <div
+            style="position:absolute;left:48px;right:112px;bottom:36px;display:flex;flex-direction:column;gap:10px">
+            <div style="font-size:36px;line-height:1.2;text-wrap:pretty">
+              The generated simulator lands on the benchmark points across both midlines, and recovers the primary vortex
+              with its corner recirculations.</div>
+            <div style="font-size:30px;line-height:1.2;color:#2C4B6A">
+              Quantitative agreement, from a specification with no hand-written discretization.</div>
+          </div>
+          <div class="ds-slide-num">20</div>
+
+        </div>
+      </section>
+
+      <section data-label="21 · Control and Autonomy" data-slide-index="21" data-background-color="#002A54"
+        style="background:#002A54;overflow:hidden;color:#FFEFCF;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <div style="position:absolute;left:120px;top:277px;width:1060px">
+            <div style="font-size:29px;letter-spacing:3px;opacity:.85;font-weight:700">PART THREE
+            </div>
+            <div style="margin-top:24px;font-size:110px;line-height:1.02">Control and Autonomy</div>
+            <div style="margin-top:32px;width:860px;height:2px;background:rgb(255 239 207 / .35)"></div>
+            <div style="margin-top:32px;font-size:43px;line-height:1.2;opacity:.9">Sheaves as the Bridge from Diagrams
+              to Real Robots</div>
+            <div style="margin-top:22px;display:flex;align-items:flex-start;gap:10px">
+                <div style="flex:0 0 52px;padding-top:34px;font-size:20px;letter-spacing:2px;font-weight:700;opacity:.72">WITH</div>
+                <div style="flex:0 0 132px;text-align:center"><img src="assets/photos/tyler-hanks.jpg" alt="Tyler Hanks" style="width:88px;height:88px;border-radius:50%;border:2px solid rgb(255 239 207 / .5);box-shadow:0 3px 12px rgb(0 0 0 / .3);object-fit:cover;display:block;margin:0 auto"><div style="margin-top:9px;font-size:18px;line-height:1.15;opacity:.9">Tyler Hanks</div></div>
+                <div style="flex:0 0 132px;text-align:center"><img src="assets/photos/joana-bou-barcelo.jpg" alt="Joana Bou Barcelo" style="width:88px;height:88px;border-radius:50%;border:2px solid rgb(255 239 207 / .5);box-shadow:0 3px 12px rgb(0 0 0 / .3);object-fit:cover;display:block;margin:0 auto"><div style="margin-top:9px;font-size:18px;line-height:1.15;opacity:.9">Joana Bou Barcelo</div></div>
+                <div style="flex:0 0 132px;text-align:center"><img src="assets/photos/wilmer-leal.jpg" alt="Wilmer Leal" style="width:88px;height:88px;border-radius:50%;border:2px solid rgb(255 239 207 / .5);box-shadow:0 3px 12px rgb(0 0 0 / .3);object-fit:cover;display:block;margin:0 auto"><div style="margin-top:9px;font-size:18px;line-height:1.15;opacity:.9">Wilmer Leal</div></div>
+                <div style="flex:0 0 132px;text-align:center"><img src="assets/photos/itay-kadosh.jpg" alt="Itay Kadosh" style="width:88px;height:88px;border-radius:50%;border:2px solid rgb(255 239 207 / .5);box-shadow:0 3px 12px rgb(0 0 0 / .3);object-fit:cover;display:block;margin:0 auto"><div style="margin-top:9px;font-size:18px;line-height:1.15;opacity:.9">Itay Kadosh</div></div>
+                <div style="flex:0 0 132px;text-align:center"><img src="assets/photos/hans-riess.jpg" alt="Hans Riess" style="width:88px;height:88px;border-radius:50%;border:2px solid rgb(255 239 207 / .5);box-shadow:0 3px 12px rgb(0 0 0 / .3);object-fit:cover;display:block;margin:0 auto"><div style="margin-top:9px;font-size:18px;line-height:1.15;opacity:.9">Hans Riess</div></div>
+                <div style="flex:0 0 132px;text-align:center"><img src="assets/photos/matthew-hale.jpg" alt="Matthew Hale" style="width:88px;height:88px;border-radius:50%;border:2px solid rgb(255 239 207 / .5);box-shadow:0 3px 12px rgb(0 0 0 / .3);object-fit:cover;display:block;margin:0 auto"><div style="margin-top:9px;font-size:18px;line-height:1.15;opacity:.9">Matthew Hale</div></div>
+                <div style="flex:0 0 132px;text-align:center"><img src="assets/photos/warren-dixon.jpg" alt="Warren Dixon" style="width:88px;height:88px;border-radius:50%;border:2px solid rgb(255 239 207 / .5);box-shadow:0 3px 12px rgb(0 0 0 / .3);object-fit:cover;display:block;margin:0 auto"><div style="margin-top:9px;font-size:18px;line-height:1.15;opacity:.9">Warren Dixon</div></div>
+              </div>
+          </div>
+          <img src="assets/brand/gatas-mark-onnavy.png" alt=""
+            style="position:absolute;right:96px;bottom:88px;width:220px;height:220px;object-fit:contain;opacity:.85">
+          <div class="ds-slide-num">21</div>
+
+        </div>
+      </section>
+
+      <section data-label="22 · One Framework, Three Problems" data-slide-index="22" data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            One Framework, Three Problems</h1>
+          <div
+            style="position:absolute;left:48px;top:200px;right:48px;display:grid;grid-template-columns:repeat(3,1fr);gap:40px">
+            <div class="ds-highlight-region tint-blue" style="height:360px">
+              <div class="ds-region-content"
+                style="padding:36px 32px;display:flex;flex-direction:column;gap:18px;box-sizing:border-box">
+                <div style="font-size:34px;font-weight:700;line-height:1.2;color:#002A54">Optimization</div>
+                <div style="font-size:28px;line-height:1.36;color:#002A54">
+                  Local objectives glued along shared variables, solved by ADMM or proximal gradient.</div>
+              </div>
+            </div>
+            <div class="ds-highlight-region tint-orange" style="height:360px">
+              <div class="ds-region-content"
+                style="padding:36px 32px;display:flex;flex-direction:column;gap:18px;box-sizing:border-box">
+                <div style="font-size:34px;font-weight:700;line-height:1.2;color:#002A54">Predictive Control</div>
+                <div style="font-size:28px;line-height:1.36;color:#002A54">
+                  Use reference tracking cost and dynamic constraints over a horizon to do MPC.</div>
+              </div>
+            </div>
+            <div class="ds-highlight-region tint-green" style="height:360px">
+              <div class="ds-region-content"
+                style="padding:36px 32px;display:flex;flex-direction:column;gap:18px;box-sizing:border-box">
+                <div style="font-size:34px;font-weight:700;line-height:1.2;color:#002A54">Coordination</div>
+                <div style="font-size:28px;line-height:1.36;color:#002A54">
+                  Minimizing Dirichlet energy of a cellular sheaf drives agents to aligned behavior.</div>
+              </div>
+            </div>
+          </div>
+          <div class="ds-slide-num">22</div>
+
+        </div>
+      </section>
+
+      <section data-label="23 · Hierarchy Is Specified, Not Hard-Coded" data-slide-index="23"
+        data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Hierarchy Is Specified, Not Hard-Coded</h1>
+          <div
+            style="position:absolute;left:48px;top:112px;width:700px;font-size:30px;line-height:1.22;text-wrap:pretty">
+            The fleet is a tree of <span style="font-family:var(--font-mono);font-size:0.85em">@include</span> calls:
+            two wings, each built from the same reusable fragments, joined by a relay.</div>
+          <div
+            style="position:absolute;left:48px;top:232px;width:700px;height:548px;background:#F4F5F6;border-radius:4px;padding:22px;box-sizing:border-box;overflow:hidden;font-family:var(--font-mono);font-size:22px;line-height:1.32;color:#002A54;white-space:pre">fleet = <span style="color:#A85F19">@nested_system</span> <span style="color:#002A54;font-weight:600">begin</span>
+  <span style="color:#A85F19">@system</span> wingA <span style="color:#002A54;font-weight:600">begin</span>
+    <span style="color:#A85F19">@include</span> <span style="color:#2C4B6A">flight</span>(<span style="color:#3F7A28">:flight1</span>, elemsA, <span style="color:#3F7A28">:r1</span>)
+    <span style="color:#A85F19">@include</span> <span style="color:#2C4B6A">escort</span>(<span style="color:#3F7A28">:charlie</span>, <span style="color:#8A6A3A">4</span>, <span style="color:#8A6A3A">0.6</span>, <span style="color:#3F7A28">:t3</span>)
+    <span style="color:#A85F19">@include</span> <span style="color:#2C4B6A">relay</span>(<span style="color:#3F7A28">:r2</span>)
+    <span style="color:#A85F19">@link</span> <span style="color:#2C4B6A">project</span>(flight1, <span style="color:#8A6A3A">1</span>) => r2
+    <span style="color:#A85F19">@link</span> r2 => <span style="color:#2C4B6A">centroid</span>(charlie)
+  <span style="color:#002A54;font-weight:600">end</span>
+  <span style="color:#A85F19">@system</span> wingB <span style="color:#002A54;font-weight:600">begin</span>
+    <span style="color:#A85F19">@include</span> <span style="color:#2C4B6A">escort</span>(<span style="color:#3F7A28">:delta</span>, <span style="color:#8A6A3A">5</span>, <span style="color:#8A6A3A">0.7</span>, <span style="color:#3F7A28">:t4</span>)
+    <span style="color:#A85F19">@include</span> <span style="color:#2C4B6A">escort</span>(<span style="color:#3F7A28">:echo</span>, <span style="color:#8A6A3A">5</span>, <span style="color:#8A6A3A">0.7</span>, <span style="color:#3F7A28">:t5</span>)
+    <span style="color:#A85F19">@include</span> <span style="color:#2C4B6A">relay</span>(<span style="color:#3F7A28">:r3</span>)
+  <span style="color:#002A54;font-weight:600">end</span>
+  <span style="color:#A85F19">@include</span> <span style="color:#2C4B6A">relay</span>(<span style="color:#3F7A28">:r4</span>)
+  <span style="color:#A85F19">@link</span> <span style="color:#2C4B6A">project</span>(wingA, <span style="color:#8A6A3A">1</span>) => r4
+  <span style="color:#A85F19">@link</span> r4 => <span style="color:#2C4B6A">project</span>(wingB, <span style="color:#8A6A3A">1</span>)
+<span style="color:#002A54;font-weight:600">end</span></div>
+          <div
+            style="position:absolute;left:750px;top:120px;width:738px;height:555px;overflow:hidden;border-radius:4px">
+            <img src="assets/figures/hierarchical-fleet.gif"
+              alt="A four-level fleet of nested escort teams tracking orbiting targets, hierarchy tower compiled from the DSL"
+              style="width:100%;height:100%;object-fit:contain">
+          </div>
+          <div
+            style="position:absolute;left:750px;top:688px;width:738px;font-size:25px;line-height:1.24;color:#2C4B6A;font-style:italic">
+            A four-level fleet — root → wing → flight → escort team — compiled from this DSL. CellularSheaves.jl,
+            AlgebraicJulia.</div>
+          <div style="position:absolute;left:48px;right:112px;bottom:22px;font-size:37px;line-height:1.18;color:#2C4B6A">
+            The spec records the hierarchy; the solver exploits it.</div>
+          <div class="ds-slide-num">23</div>
+
+        </div>
+      </section>
+
+      <section data-label="24 · Sheaf Theory Studies Local-to-Global Phenomena" data-slide-index="24"
+        data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Sheaf Theory Studies Local-to-Global Phenomena</h1>
+          <img src="assets/figures/local-to-global.png"
+            alt="Four sheaves: continuous functions on a space, 3-colorings of a graph, a cellular sheaf of vector spaces, and solutions to a PDE"
+            style="position:absolute;left:203px;top:104px;width:1130px;height:600px;object-fit:contain">
+          <div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:37px;line-height:1.18;color:#2C4B6A">
+            In every case: data attached locally, agreement conditions where the pieces overlap, and a question about
+            what glues.</div>
+          <div class="ds-slide-num">24</div>
+
+        </div>
+      </section>
+
+      <section data-label="25 · Graph-Laplacian Control, and Its Assumptions" data-slide-index="25"
+        data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Graph-Laplacian Control, and Its Assumptions</h1>
+          <div
+            style="position:absolute;left:48px;top:130px;width:740px;font-size:37px;line-height:1.24;text-wrap:pretty">
+            Agents are nodes, sensing or communication links are edges. Each agent compares its state with its
+            neighbors', and local disagreement drives the network toward a global objective.</div>
+          <ul class="ds-bullet-list" style="position: absolute; left: 54px; top: 358px; width: 740px">
+            <li class="size-body" style=""><span class="bullet-mark">●</span><span class="bullet-text">Compatible state
+                spaces across every agent</span></li>
+            <li class="size-body" style=""><span class="bullet-mark">●</span><span class="bullet-text">A measurement
+                each pair of neighbors can compare directly</span></li>
+            <li class="size-body-sub" style="margin-left:48px;"><span class="bullet-mark">○</span><span
+                class="bullet-text">Two planar robots comparing positions in the same frame</span></li>
+          </ul>
+          <img src="assets/figures/ring-graph.png" alt="Sixteen agents arranged on a ring communication graph"
+            style="position:absolute;left:1030px;top:126px;width:200px;height:200px;object-fit:contain">
+          <img src="assets/figures/ring-consensus.gif"
+            alt="The agent states on the ring evolving under Laplacian feedback"
+            style="position:absolute;left:932px;top:350px;width:477px;height:340px;object-fit:contain">
+          <div style="position:absolute;left:48px;right:48px;bottom:64px;font-size:37px;line-height:1.18;color:#2C4B6A">
+            Natural for consensus, formation control, and leader–follower tracking — as long as the states are
+            comparable.</div>
+          <div class="ds-slide-num">25</div>
+
+        </div>
+      </section>
+
+      <section data-label="26 · Real Systems Are Heterogeneous" data-slide-index="26" data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Real Systems Are Heterogeneous</h1>
+          <ul class="ds-bullet-list" style="position:absolute;left:48px;top:140px;width:700px">
+            <li class="size-body"><span class="bullet-mark">●</span><span class="bullet-text">Agents and
+                targets need not live in the same dimension</span></li>
+            <li class="size-body"><span class="bullet-mark">●</span><span class="bullet-text">Only partial or
+                projected measurements may be available</span></li>
+            <li class="size-body"><span class="bullet-mark">●</span><span class="bullet-text">Sensing models
+                differ across a fleet</span></li>
+            <li class="size-body"><span class="bullet-mark">●</span><span class="bullet-text">The graph
+                records who talks to whom, and nothing about what they can compare</span></li>
+          </ul>
+          <figure
+            style="margin:0;position:absolute;left:788px;top:110px;width:700px;display:flex;flex-direction:column;align-items:center;gap:14px">
+            <img src="assets/figures/vehicles-v2.svg"
+              alt="Drones in the air, surface vessels on the water and submarines below, linked across all three layers"
+              style="width:100%;height:560px;object-fit:contain">
+            <figcaption style="font-size:26px;line-height:1.24;color:#2C4B6A;text-align:center;font-style:italic">
+              Drones, surface vessels and submarines share a mission but not a state space. Measurements must be translated to be compared.</figcaption>
+          </figure>
+          <div class="ds-slide-num">26</div>
+
+        </div>
+      </section>
+
+      <section data-label="27 · Cellular Sheaves Over Graphs" data-slide-index="27" data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Cellular Sheaves Over Graphs</h1>
+
+          <div
+            style="position:absolute;left:48px;right:48px;top:106px;background:rgba(108,154,195,0.12);border-top:5px solid #002A54;border-radius:12px;padding:20px 32px;border-left:1px solid rgba(108,154,195,0.25);border-right:1px solid rgba(108,154,195,0.25);border-bottom:1px solid rgba(108,154,195,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04)">
+            <div class="ds-theorem-block" style="font-size:28px;line-height:1.36">
+              <div class="theorem-head" style="font-size:28px;font-weight:700;color:#002A54;margin-bottom:10px">Definition (Cellular Sheaf)</div>
+              <div class="theorem-body" style="font-size:27px;line-height:1.36;color:#002A54">A <strong>cellular sheaf</strong> <span class="katex-inline" data-tex="\mathcal{F}">\(\mathcal{F}\)</span> over a graph <span class="katex-inline" data-tex="G = (V, E)">\(G = (V, E)\)</span> consists of:</div>
+              <ul style="margin:10px 0 0 28px;padding:0;list-style-type:disc;font-size:27px;line-height:1.4">
+                <li>A <strong>vertex stalk</strong> (vector space) <span class="katex-inline" data-tex="\mathcal{F}(v)">\(\mathcal{F}(v)\)</span> for each vertex <span class="katex-inline" data-tex="v \in V">\(v \in V\)</span></li>
+                <li>An <strong>edge stalk</strong> (vector space) <span class="katex-inline" data-tex="\mathcal{F}(e)">\(\mathcal{F}(e)\)</span> for each edge <span class="katex-inline" data-tex="e \in E">\(e \in E\)</span></li>
+                <li>A linear <strong>restriction map</strong> <span class="katex-inline" data-tex="\mathcal{F}_{v \unlhd e}\colon \mathcal{F}(v) \to \mathcal{F}(e)">\(\mathcal{F}_{v \unlhd e}\colon \mathcal{F}(v) \to \mathcal{F}(e)\)</span> for each incident pair <span class="katex-inline" data-tex="v \unlhd e">\(v \unlhd e\)</span></li>
+              </ul>
+            </div>
+          </div>
+
+          <figure
+            style="margin:0;position:absolute;left:100px;right:100px;top:372px;bottom:36px;display:flex;align-items:center;justify-content:center">
+            <div style="width:100%;height:100%;background:rgba(108,154,195,0.06);border:1px solid rgba(108,154,195,0.25);border-radius:12px;padding:16px 28px;box-sizing:border-box;display:flex;align-items:center;justify-content:center">
+              <img src="assets/figures/sheaf-over-graph-planes.svg"
+                alt="Vector-space stalks drawn as planes standing over the vertices and edges of a base graph, connected by restriction maps"
+                style="width:100%;height:100%;object-fit:contain">
+            </div>
+          </figure>
+
+          <div class="ds-slide-num">27</div>
+
+        </div>
+      </section>
+
+      <section data-label="28 · Incidence Matrix vs Exterior Derivative" data-slide-index="28"
+        data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Incidence Matrix vs Exterior Derivative</h1>
+          <div class="ds-outlined-region stroke-blue"
+            style="position:absolute;left:48px;top:104px;width:700px;height:636px;align-items:stretch;gap:12px;padding:16px 20px">
+            <div class="ds-region-label">Graph</div>
+            <div style="height:215px;display:flex;align-items:center;justify-content:center"><img src="assets/figures/example-graph-5v7e.png"
+                alt="A five-vertex, seven-edge graph with a scalar value at each vertex"
+                style="max-width:100%;max-height:100%;object-fit:contain"></div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="font-size:24px;color:#2C4B6A;font-weight:700">Incidence Matrix: One
+                Signed Scalar per Incidence</div>
+              <div style="width:1190px;height:268px;transform:scale(0.55);transform-origin:top left">
+                <div class="ds-math-block" style=""
+                  data-tex="\delta = \left[\begin{array}{cccccc} &amp; v_1 &amp; v_2 &amp; v_3 &amp; v_4 &amp; v_5 \\ e_1 &amp; -1 &amp; 1 &amp;  &amp;  &amp;  \\ e_2 &amp;  &amp; -1 &amp; 1 &amp;  &amp;  \\ e_3 &amp; 1 &amp;  &amp; -1 &amp;  &amp;  \\ e_4 &amp; -1 &amp;  &amp;  &amp; 1 &amp;  \\ e_5 &amp;  &amp;  &amp; -1 &amp; 1 &amp;  \\ e_6 &amp;  &amp;  &amp; -1 &amp;  &amp; 1 \\ e_7 &amp;  &amp;  &amp;  &amp; -1 &amp; 1 \end{array}\right]">
+                  \[ \delta = \left[\begin{array}{cccccc} & v_1 & v_2 & v_3 & v_4 & v_5 \\ e_1 & -1 & 1 & & & \\ e_2 & &
+                  -1 & 1 & & \\ e_3 & 1 & & -1 & & \\ e_4 & -1 & & & 1 & \\ e_5 & & & -1 & 1 & \\ e_6 & & & -1 & & 1 \\
+                  e_7 & & & & -1 & 1 \end{array}\right] \]</div>
+              </div>
+            </div>
+          </div>
+          <div class="ds-outlined-region stroke-orange"
+            style="position:absolute;left:788px;top:104px;width:700px;height:636px;align-items:stretch;gap:12px;padding:16px 20px">
+            <div class="ds-region-label">Sheaf</div>
+            <div style="height:215px;display:flex;align-items:center;justify-content:center"><img src="assets/figures/sheaf-over-graph-planes.svg"
+                alt="Vector-space stalks drawn as planes standing over the vertices and edges of a base graph"
+                style="max-width:100%;max-height:100%;object-fit:contain"></div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="font-size:24px;color:#2C4B6A;font-weight:700">Exterior Derivative: A
+                Block of Restriction Maps per Incidence</div>
+              <div style="width:1190px;height:268px;transform:scale(0.55);transform-origin:top left">
+                <div class="ds-math-block" style=""
+                  data-tex="\delta = \left[\begin{array}{cccccc} &amp; v_1 &amp; v_2 &amp; v_3 &amp; v_4 &amp; v_5 \\ e_1 &amp; -F_{1 \lhd 12} &amp; F_{2 \lhd 12} &amp;  &amp;  &amp;  \\ e_2 &amp;  &amp; -F_{2 \lhd 23} &amp; F_{3 \lhd 23} &amp;  &amp;  \\ e_3 &amp; -F_{1 \lhd 13} &amp;  &amp; F_{3 \lhd 13} &amp;  &amp;  \\ e_4 &amp; -F_{1 \lhd 14} &amp;  &amp;  &amp; F_{4 \lhd 14} &amp;  \\ e_5 &amp;  &amp;  &amp; -F_{3 \lhd 34} &amp; F_{4 \lhd 34} &amp;  \\ e_6 &amp;  &amp;  &amp; -F_{3 \lhd 35} &amp;  &amp; F_{5 \lhd 35} \\ e_7 &amp;  &amp;  &amp;  &amp; -F_{4 \lhd 45} &amp; F_{5 \lhd 45} \end{array}\right]">
+                  \[ \delta = \left[\begin{array}{cccccc} & v_1 & v_2 & v_3 & v_4 & v_5 \\ e_1 & -F_{1 \lhd 12} & F_{2
+                  \lhd 12} & & & \\ e_2 & & -F_{2 \lhd 23} & F_{3 \lhd 23} & & \\ e_3 & -F_{1 \lhd 13} & & F_{3 \lhd 13} &
+                  & \\ e_4 & -F_{1 \lhd 14} & & & F_{4 \lhd 14} & \\ e_5 & & & -F_{3 \lhd 34} & F_{4 \lhd 34} & \\ e_6 & &
+                  & -F_{3 \lhd 35} & & F_{5 \lhd 35} \\ e_7 & & & & -F_{4 \lhd 45} & F_{5 \lhd 45} \end{array}\right] \]
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:37px;line-height:1.18;color:#2C4B6A">
+            Both Laplacians are <span style="font-family:var(--font-math)">δ<sup style="font-size:.7em">T</sup>δ</span>;
+            the graph is the sheaf whose restriction maps are all 1.</div>
+          <div class="ds-slide-num">28</div>
+
+        </div>
+      </section>
+
+      <section data-label="29 · Three Agents Tracking One Target" data-slide-index="29" data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Three Agents Tracking One Target</h1>
+          <div
+            style="position:absolute;left:48px;top:104px;right:48px;display:grid;grid-template-columns:1fr 1fr;gap:48px">
+            <figure style="margin:0;display:flex;flex-direction:column;gap:10px">
+              <svg viewBox="0 0 520 400" style="width:100%;height:462px">
+                <g stroke="#B1B3B6" stroke-width="2.5" stroke-dasharray="7 7">
+                  <line x1="20" y1="330" x2="500" y2="330"></line>
+                  <line x1="90" y1="20" x2="90" y2="390"></line>
+                  <line x1="40" y1="31.8" x2="480" y2="368.2"></line>
+                </g>
+                <g stroke="#002A54" stroke-width="3">
+                  <line x1="200" y1="230" x2="430" y2="330"></line>
+                  <line x1="200" y1="230" x2="90" y2="330"></line>
+                  <line x1="200" y1="230" x2="90" y2="70"></line>
+                </g>
+                <circle cx="430" cy="330" r="34" fill="rgb(108 154 195 / .28)"></circle>
+                <circle cx="90" cy="330" r="34" fill="rgb(226 143 65 / .28)"></circle>
+                <circle cx="90" cy="70" r="34" fill="rgb(128 190 99 / .28)"></circle>
+                <circle cx="200" cy="230" r="34" fill="rgb(190 155 105 / .28)"></circle>
+                <g fill="#fff" stroke="#002A54" stroke-width="3">
+                  <circle cx="430" cy="330" r="12"></circle>
+                  <circle cx="90" cy="330" r="12"></circle>
+                  <circle cx="90" cy="70" r="12"></circle>
+                  <circle cx="200" cy="230" r="12"></circle>
+                </g>
+                <g fill="#002A54" font-size="28" font-style="italic" text-anchor="middle"
+                  font-family="var(--font-math)"><text x="477.7" y="360.7">ℝ²</text><text x="51.5"
+                    y="375.0">ℝ²</text><text x="60.5" y="37.1">ℝ²</text><text x="200" y="192">ℝ²</text></g>
+                <g fill="#2C4B6A" font-size="26" font-style="italic" text-anchor="middle"
+                  font-family="var(--font-math)"><text x="323.8" y="268.8">ℝ</text><text x="159.8"
+                    y="305.3">ℝ</text><text x="126.9" y="171.5">ℝ</text></g><text x="200" y="160" text-anchor="middle"
+                  font-family="var(--font-core)" font-style="italic" font-size="24"
+                  fill="#2C4B6A">target</text>
+              </svg>
+              <figcaption style="font-size:26px;line-height:1.24;color:#2C4B6A;font-style:italic">
+                Initial configuration: one agent per line, target inside</figcaption>
+            </figure>
+            <figure style="margin:0;display:flex;flex-direction:column;gap:10px">
+              <svg viewBox="0 0 520 400" style="width:100%;height:462px">
+                <g stroke="#B1B3B6" stroke-width="2.5" stroke-dasharray="7 7">
+                  <line x1="20" y1="330" x2="500" y2="330"></line>
+                  <line x1="90" y1="20" x2="90" y2="390"></line>
+                  <line x1="40" y1="31.8" x2="480" y2="368.2"></line>
+                </g>
+                <g stroke="#002A54" stroke-width="3">
+                  <line x1="200" y1="230" x2="200" y2="330"></line>
+                  <line x1="200" y1="230" x2="90" y2="230"></line>
+                  <line x1="200" y1="230" x2="236.3" y2="181.9"></line>
+                </g>
+                <circle cx="200" cy="330" r="34" fill="rgb(108 154 195 / .28)"></circle>
+                <circle cx="90" cy="230" r="34" fill="rgb(226 143 65 / .28)"></circle>
+                <circle cx="236.3" cy="181.9" r="34" fill="rgb(128 190 99 / .28)"></circle>
+                <circle cx="200" cy="230" r="34" fill="rgb(190 155 105 / .28)"></circle>
+                <g fill="#fff" stroke="#002A54" stroke-width="3">
+                  <circle cx="200" cy="330" r="12"></circle>
+                  <circle cx="90" cy="230" r="12"></circle>
+                  <circle cx="236.3" cy="181.9" r="12"></circle>
+                  <circle cx="200" cy="230" r="12"></circle>
+                </g><text x="200" y="160" text-anchor="middle" font-family="var(--font-core)"
+                  font-style="italic" font-size="24" fill="#2C4B6A">target</text>
+                <g fill="none" stroke="#2C4B6A" stroke-width="2.5">
+                  <path d="M200,316 h14 v14"></path>
+                  <path d="M104,230 v-14 h-14"></path>
+                  <path d="M247.4,190.4 L239.0,201.6 L227.9,193.1"></path>
+                </g>
+              </svg>
+              <figcaption style="font-size:26px;line-height:1.24;color:#2C4B6A;font-style:italic">
+                Equilibrium: each agent at a perpendicular foot</figcaption>
+            </figure>
+          </div>
+          <div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:37px;line-height:1.18;color:#2C4B6A">
+            Every agent stalk is ℝ², every edge stalk ℝ: each edge compares the target against the line its agent moves
+            along. This is the sheaf behind a Robotarium demo.</div>
+          <div class="ds-slide-num">29</div>
+
+        </div>
+      </section>
+
+      <section data-label="30 · Sheaf Laplacians Compute Global Sections" data-slide-index="30"
+        data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Sheaf Laplacians Compute Global Sections</h1>
+
+          <div style="position:absolute;left:48px;top:110px;right:48px;display:flex;flex-direction:column;gap:24px">
+            <div style="font-size:35px;line-height:1.25;color:#002A54">
+              The sheaf Laplacian is <span class="katex-inline" data-tex="L_\mathcal{F} \triangleq \delta^\top \delta">\(L_\mathcal{F} \triangleq \delta^\top \delta\)</span> where <span class="katex-inline" data-tex="(\delta \mathbf{x})_{ij} \triangleq \mathcal{F}_{i \unlhd ij} x_i - \mathcal{F}_{j \unlhd ij} x_j">\((\delta \mathbf{x})_{ij} \triangleq \mathcal{F}_{i \unlhd ij} x_i - \mathcal{F}_{j \unlhd ij} x_j\)</span>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1.32fr;gap:28px;align-items:stretch">
+              <div class="ds-outlined-region stroke-blue" style="padding:20px 24px;align-items:flex-start;justify-content:center;gap:10px;min-height:180px">
+                <div style="font-size:30px;font-weight:700;color:#002A54">Graph Laplacian:</div>
+                <div class="ds-math-block" style="width:100%;font-size:32px;margin:auto 0"
+                  data-tex="(L_G \mathbf{x})_i = \sum_{j \in N_i} (x_i - x_j)">
+                  \[ (L_G \mathbf{x})_i = \sum_{j \in N_i} (x_i - x_j) \]
+                </div>
+              </div>
+              <div class="ds-outlined-region stroke-orange" style="padding:20px 24px;align-items:flex-start;justify-content:center;gap:10px;min-height:180px;overflow:visible">
+                <div style="font-size:30px;font-weight:700;color:#002A54">Sheaf Laplacian:</div>
+                <div class="ds-math-block" style="width:100%;font-size:30px;margin:auto 0"
+                  data-tex="(L_\mathcal{F} \mathbf{x})_i = \sum_{j \in N_i} \mathcal{F}_{i \unlhd ij}^\top \left( \mathcal{F}_{i \unlhd ij}(x_i) - \mathcal{F}_{j \unlhd ij}(x_j) \right)">
+                  \[ (L_\mathcal{F} \mathbf{x})_i = \sum_{j \in N_i} \mathcal{F}_{i \unlhd ij}^\top \left( \mathcal{F}_{i \unlhd ij}(x_i) - \mathcal{F}_{j \unlhd ij}(x_j) \right) \]
+                </div>
+              </div>
+            </div>
+
+            <div style="background:rgba(108,154,195,0.12);border-top:5px solid #002A54;border-radius:12px;padding:16px 24px;border-left:1px solid rgba(108,154,195,0.25);border-right:1px solid rgba(108,154,195,0.25);border-bottom:1px solid rgba(108,154,195,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04)">
+              <div class="ds-theorem-block" style="font-size:27px;line-height:1.3">
+                <span class="theorem-head">Proposition (Global Sections as Kernel).</span>
+                <span class="theorem-body">The space of <strong>global sections</strong> satisfies <span class="katex-inline" data-tex="\Gamma(G; \mathcal{F}) \triangleq \ker \delta = \ker L_\mathcal{F}">\(\Gamma(G; \mathcal{F}) \triangleq \ker \delta = \ker L_\mathcal{F}\)</span>.</span>
+              </div>
+            </div>
+
+            <div style="background:rgba(128,190,99,0.12);border-top:5px solid #80BE63;border-radius:12px;padding:16px 24px;border-left:1px solid rgba(128,190,99,0.25);border-right:1px solid rgba(128,190,99,0.25);border-bottom:1px solid rgba(128,190,99,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04)">
+              <div class="ds-theorem-block" style="font-size:27px;line-height:1.3">
+                <span class="theorem-head">Theorem (Sheaf Diffusion Convergence).</span>
+                <span class="theorem-body">Sheaf diffusion <span class="katex-inline" data-tex="\dot{\mathbf{x}} = -L_\mathcal{F} \mathbf{x}">\(\dot{\mathbf{x}} = -L_\mathcal{F} \mathbf{x}\)</span> converges to the orthogonal projection of <span class="katex-inline" data-tex="\mathbf{x}(0)">\(\mathbf{x}(0)\)</span> onto <span class="katex-inline" data-tex="\Gamma(G; \mathcal{F})">\(\Gamma(G; \mathcal{F})\)</span> [2].</span>
+              </div>
+            </div>
+          </div>
+
+          <div
+            style="position:absolute;left:48px;right:48px;bottom:56px;font-size:37px;line-height:1.2;text-wrap:pretty;color:#2C4B6A">
+            The operator that drives consensus on a graph has an exact analogue for heterogeneous agents, and its kernel
+            is the space of global sections.</div>
+          <div class="ds-slide-num">30</div>
+
+        </div>
+      </section>
+
+      <section data-label="31 · Coordination Sheaves" data-slide-index="31" data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Coordination Sheaves</h1>
+
+          <div style="position:absolute;left:48px;top:115px;width:560px;display:flex;flex-direction:column;gap:18px">
+            <div style="background:rgba(108,154,195,0.12);border-top:5px solid #002A54;border-radius:12px;padding:18px 22px;border-left:1px solid rgba(108,154,195,0.25);border-right:1px solid rgba(108,154,195,0.25);border-bottom:1px solid rgba(108,154,195,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04)">
+              <div class="ds-theorem-block" style="font-size:27px;line-height:1.28">
+                <span class="theorem-head">Definition (Coordination Sheaf).</span>
+                <span class="theorem-body">A <strong>coordination sheaf</strong> on a graph <span class="katex-inline" data-tex="G=(V,E)">\(G=(V,E)\)</span> is a cellular sheaf <span class="katex-inline" data-tex="\mathcal{F}">\(\mathcal{F}\)</span> over <span class="katex-inline" data-tex="G">\(G\)</span> together with differentiable potential functions <span class="katex-inline" data-tex="U_{ij}\colon \mathcal{F}(ij)\to \mathbb{R}">\(U_{ij}\colon \mathcal{F}(ij)\to \mathbb{R}\)</span> for each edge <span class="katex-inline" data-tex="ij \in E">\(ij \in E\)</span>.</span>
+              </div>
+            </div>
+            <div style="font-size:28px;line-height:1.24;color:#2C4B6A">
+              Translates multi-agent systems (MAS) concepts directly into the algebraic language of cellular sheaves.
+            </div>
+          </div>
+
+          <div
+            style="position:absolute;left:648px;top:115px;width:840px;display:flex;flex-direction:column;align-items:center">
+            <div style="font-size:27px;font-weight:700;color:#2C4B6A;font-style:italic;margin-bottom:14px;text-align:center">
+              MAS Interpretations for Coordination Sheaves
+            </div>
+            <table style="width:100%;border-collapse:collapse;font-size:25px;line-height:1.32;color:#002A54">
+              <thead>
+                <tr style="border-top:2.5px solid #002A54;border-bottom:1.5px solid #002A54">
+                  <th style="padding:12px 16px;text-align:left;font-family:var(--font-core);font-weight:700">Sheaf Concept</th>
+                  <th style="padding:12px 16px;text-align:left;font-family:var(--font-core);font-weight:700">MAS Interpretation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom:1px solid #E2E6EC">
+                  <td style="padding:12px 16px">Graph <span class="katex-inline" data-tex="G">\(G\)</span></td>
+                  <td style="padding:12px 16px">Bidirectional communication topology</td>
+                </tr>
+                <tr style="border-bottom:1px solid #E2E6EC">
+                  <td style="padding:12px 16px">Vertex stalk <span class="katex-inline" data-tex="\mathcal{F}(i)">\(\mathcal{F}(i)\)</span></td>
+                  <td style="padding:12px 16px">State space of agent <span class="katex-inline" data-tex="i">\(i\)</span></td>
+                </tr>
+                <tr style="border-bottom:1px solid #E2E6EC">
+                  <td style="padding:12px 16px">0-cochains <span class="katex-inline" data-tex="C^0(G;\mathcal{F})">\(C^0(G;\mathcal{F})\)</span></td>
+                  <td style="padding:12px 16px">Global state space</td>
+                </tr>
+                <tr style="border-bottom:1px solid #E2E6EC">
+                  <td style="padding:12px 16px">Edge stalk <span class="katex-inline" data-tex="\mathcal{F}(ij)">\(\mathcal{F}(ij)\)</span></td>
+                  <td style="padding:12px 16px">Communication space between <span class="katex-inline" data-tex="i">\(i\)</span> and <span class="katex-inline" data-tex="j">\(j\)</span></td>
+                </tr>
+                <tr style="border-bottom:1px solid #E2E6EC">
+                  <td style="padding:12px 16px">Restriction map <span class="katex-inline" data-tex="\mathcal{F}_{i \unlhd ij}">\(\mathcal{F}_{i \unlhd ij}\)</span></td>
+                  <td style="padding:12px 16px">Registers state between agents</td>
+                </tr>
+                <tr style="border-bottom:2.5px solid #002A54">
+                  <td style="padding:12px 16px">Potential <span class="katex-inline" data-tex="U_{ij}">\(U_{ij}\)</span></td>
+                  <td style="padding:12px 16px">Coordination goal between <span class="katex-inline" data-tex="i">\(i\)</span> and <span class="katex-inline" data-tex="j">\(j\)</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:37px;line-height:1.18;color:#2C4B6A">
+            A coordination sheaf provides a precise dictionary between geometry and control objectives.</div>
+          <div class="ds-slide-num">31</div>
+
+        </div>
+      </section>
+
+      <section data-label="32 · Beyond Consensus: Edge Potentials" data-slide-index="32" data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:59px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Beyond Consensus: Edge Potentials</h1>
+          <div style="position:absolute;left:48px;top:120px;width:660px;display:flex;flex-direction:column;gap:20px">
+            <div style="font-size:32px;line-height:1.26;text-wrap:pretty">
+              Minimizing the potential over an edge corresponds to satisfying a coordination goal between the agents incident to that edge.
+            </div>
+            <div class="ds-math-block" style="margin:4px 0"
+              data-tex="U(x) = \sum_{e \in E} U_e\big( (\delta x)_e \big)">
+              \[ U(x) = \sum_{e \in E} U_e\big( (\delta x)_e \big) \]</div>
+            <div style="font-size:30px;line-height:1.26;color:#002A54">
+              Let <span class="katex-inline" data-tex="y \coloneqq \mathcal{F}_{i \unlhd ij} x_i - \mathcal{F}_{j \unlhd ij} x_j">\(y \coloneqq \mathcal{F}_{i \unlhd ij} x_i - \mathcal{F}_{j \unlhd ij} x_j\)</span> be the edge disagreement between neighbors.
+            </div>
+          </div>
+          <div
+            style="position:absolute;left:750px;top:120px;width:738px;display:flex;flex-direction:column;align-items:center">
+            <div style="font-size:27px;font-weight:700;color:#2C4B6A;font-style:italic;margin-bottom:18px;text-align:center">
+              Potential Functions and Coordination Goals
+            </div>
+            <table style="width:100%;border-collapse:collapse;font-size:26px;line-height:1.35;color:#002A54">
+              <thead>
+                <tr style="border-top:2.5px solid #002A54;border-bottom:1.5px solid #002A54">
+                  <th style="padding:14px 18px;text-align:left;font-family:var(--font-core);font-weight:700">Potential Function</th>
+                  <th style="padding:14px 18px;text-align:left;font-family:var(--font-core);font-weight:700">Coordination Goal</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom:1px solid #E2E6EC">
+                  <td style="padding:15px 18px"><span class="katex-inline" data-tex="\frac{1}{2}\|y\|_2^2">\(\frac{1}{2}\|y\|_2^2\)</span></td>
+                  <td style="padding:15px 18px">Consensus</td>
+                </tr>
+                <tr style="border-bottom:1px solid #E2E6EC">
+                  <td style="padding:15px 18px"><span class="katex-inline" data-tex="y^\top A y">\(y^\top A y\)</span></td>
+                  <td style="padding:15px 18px">Matrix-weighted consensus</td>
+                </tr>
+                <tr style="border-bottom:1px solid #E2E6EC">
+                  <td style="padding:15px 18px"><span class="katex-inline" data-tex="-\frac{1}{2}\|y\|_2^2">\(-\frac{1}{2}\|y\|_2^2\)</span></td>
+                  <td style="padding:15px 18px">Dissensus</td>
+                </tr>
+                <tr style="border-bottom:1px solid #E2E6EC">
+                  <td style="padding:15px 18px"><span class="katex-inline" data-tex="\frac{1}{2}\|y - b\|_2^2">\(\frac{1}{2}\|y - b\|_2^2\)</span></td>
+                  <td style="padding:15px 18px">Reach displacement of <span class="katex-inline" data-tex="b">\(b\)</span></td>
+                </tr>
+                <tr style="border-bottom:2.5px solid #002A54">
+                  <td style="padding:15px 18px"><span class="katex-inline" data-tex="(\|y\|_2^2 - r^2)^2">\((\|y\|_2^2 - r^2)^2\)</span></td>
+                  <td style="padding:15px 18px">Reach distance of <span class="katex-inline" data-tex="r">\(r\)</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:37px;line-height:1.18;color:#2C4B6A">
+            Choosing the edge potential chooses the coordination behavior of the fleet.</div>
+          <div class="ds-slide-num">32</div>
+
+        </div>
+      </section>
+
+      <section data-label="33 · Homological Programs and Their Guarantees" data-slide-index="33"
+        data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Homological Programs and Their Guarantees</h1>
+
+          <div style="position:absolute;left:48px;top:98px;width:700px;display:flex;flex-direction:column;gap:16px">
+            <div style="background:rgba(108,154,195,0.12);border-top:5px solid #002A54;border-radius:12px;padding:16px 20px;border-left:1px solid rgba(108,154,195,0.25);border-right:1px solid rgba(108,154,195,0.25);border-bottom:1px solid rgba(108,154,195,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04)">
+              <div class="ds-theorem-block" style="font-size:24px;line-height:1.24">
+                <span class="theorem-head">Definition (Nonlinear Homological Program).</span>
+                <span class="theorem-body">Data <span class="katex-inline" data-tex="\mathsf{P} = (V, E, \mathcal{F}, \{f_i\}, \{U_e\})">\( \mathsf{P} = (V, E, \mathcal{F}, \{f_i\}, \{U_e\}) \)</span> with graph <span class="katex-inline" data-tex="G">\(G\)</span>, sheaf <span class="katex-inline" data-tex="\mathcal{F}">\(\mathcal{F}\)</span>, objectives <span class="katex-inline" data-tex="\{f_i\}">\(\{f_i\}\)</span>, and potentials <span class="katex-inline" data-tex="\{U_e\}">\(\{U_e\}\)</span>:</span>
+              </div>
+              <div class="ds-math-block" style="margin:8px 0 2px;font-size:28px"
+                data-tex="\begin{aligned} \underset{\mathbf{x} \in C^0(G;\mathcal{F})}{\text{minimize}} \quad &amp; \sum_{i \in V} f_i(x_i) \\ \text{subject to} \quad &amp; L_\mathcal{F}^{\nabla U} \mathbf{x} = 0 \end{aligned}">
+                \[ \begin{aligned} \underset{\mathbf{x} \in C^0(G;\mathcal{F})}{\text{minimize}} \quad & \sum_{i \in V} f_i(x_i) \\ \text{subject to} \quad & L_\mathcal{F}^{\nabla U} \mathbf{x} = 0 \end{aligned} \]
+              </div>
+            </div>
+
+            <div style="background:rgba(128,190,99,0.12);border-top:5px solid #80BE63;border-radius:12px;padding:16px 20px;border-left:1px solid rgba(128,190,99,0.25);border-right:1px solid rgba(128,190,99,0.25);border-bottom:1px solid rgba(128,190,99,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04)">
+              <div class="ds-theorem-block" style="font-size:24px;line-height:1.26">
+                <span class="theorem-head">Theorem (Convexity &amp; Tractability).</span>
+                <span class="theorem-body">If each edge potential <span class="katex-inline" data-tex="U_e">\(U_e\)</span> is differentiable and convex, and each agent objective <span class="katex-inline" data-tex="f_i">\(f_i\)</span> is convex, then <span class="katex-inline" data-tex="\mathsf{P}">\(\mathsf{P}\)</span> is a convex optimization problem.</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="position:absolute;left:788px;top:98px;width:700px;display:flex;flex-direction:column;gap:16px">
+            <div style="background:rgba(226,143,65,0.12);border-top:5px solid #E28F41;border-radius:12px;padding:16px 20px;border-left:1px solid rgba(226,143,65,0.25);border-right:1px solid rgba(226,143,65,0.25);border-bottom:1px solid rgba(226,143,65,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04)">
+              <div class="ds-theorem-block" style="font-size:24px;line-height:1.24">
+                <span class="theorem-head">Theorem (Decentralized ADMM Convergence).</span>
+                <span class="theorem-body">For convex <span class="katex-inline" data-tex="\mathsf{P}">\(\mathsf{P}\)</span> with quadratic potentials and a Lagrangian saddle point:</span>
+                <ul style="margin:8px 0 0 0;padding-left:22px;font-style:normal;font-size:23px;line-height:1.3;display:flex;flex-direction:column;gap:4px">
+                  <li><strong>Residual convergence:</strong> <span class="katex-inline" data-tex="\mathbf{x}^k - \mathbf{z}^k \to 0">\(\mathbf{x}^k - \mathbf{z}^k \to 0\)</span></li>
+                  <li><strong>Objective convergence:</strong> <span class="katex-inline" data-tex="\sum_i f_i(x_i^k) + \chi_\mathcal{C}(\mathbf{z}^k) \to p^\star">\(\sum_i f_i(x_i^k) + \chi_\mathcal{C}(\mathbf{z}^k) \to p^\star\)</span></li>
+                  <li><strong>Dual variable convergence:</strong> <span class="katex-inline" data-tex="\mathbf{y}^k \to \mathbf{y}^\star">\(\mathbf{y}^k \to \mathbf{y}^\star\)</span> (dual optimal point)</li>
+                </ul>
+              </div>
+            </div>
+
+            <div style="background:rgba(190,155,105,0.12);border-top:5px solid #BE9B69;border-radius:12px;padding:16px 20px;border-left:1px solid rgba(190,155,105,0.25);border-right:1px solid rgba(190,155,105,0.25);border-bottom:1px solid rgba(190,155,105,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04)">
+              <div class="ds-theorem-block" style="font-size:24px;line-height:1.26">
+                <span class="theorem-head">Theorem (Nonlinear Sheaf Diffusion).</span>
+                <span class="theorem-body">For single-integrator dynamics <span class="katex-inline" data-tex="\dot{\mathbf{x}} = \mathbf{u} = -L_\mathcal{F}^{\nabla U}\mathbf{x}">\( \dot{\mathbf{x}} = \mathbf{u} = -L_\mathcal{F}^{\nabla U}\mathbf{x} \)</span> with strongly convex edge potentials, trajectories converge exponentially to <span class="katex-inline" data-tex="\arg\min_{\mathbf{x} \in C^0(G;\mathcal{F})} U(\delta_\mathcal{F}\mathbf{x})">\( \arg\min_{\mathbf{x} \in C^0(G;\mathcal{F})} U(\delta_\mathcal{F}\mathbf{x}) \)</span>.</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="position:absolute;left:48px;right:48px;bottom:50px;font-size:35px;line-height:1.18;color:#2C4B6A">
+            Local gradient flow on the sheaf potential computes the global coordination state with provable convergence.</div>
+          <div class="ds-slide-num">33</div>
+
+        </div>
+      </section>
+
+      <section data-label="34 · Harmonic Extension as Control Objective" data-slide-index="34"
+        data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Harmonic Extension as Control Objective</h1>
+
+          <div style="position:absolute;left:48px;top:104px;width:730px;display:flex;flex-direction:column;gap:16px">
+
+            <div style="background:rgba(108,154,195,0.12);border-top:5px solid #002A54;border-radius:12px;padding:16px 20px;border-left:1px solid rgba(108,154,195,0.25);border-right:1px solid rgba(108,154,195,0.25);border-bottom:1px solid rgba(108,154,195,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04)">
+              <div style="font-size:26px;font-weight:700;margin-bottom:8pxcolor:#002A54">Finding a Global Section</div>
+              <div class="ds-math-block" style="font-size:30px;margin:0"
+                data-tex="\mathcal{L}_{\mathcal{F}} \begin{bmatrix} q \\ p \end{bmatrix} = \begin{bmatrix} \mathcal{H} &amp; -\mathcal{B} \\ -\mathcal{B}^\top &amp; \mathcal{L}_P \end{bmatrix} \begin{bmatrix} q \\ p \end{bmatrix} = 0">
+                \[ \mathcal{L}_{\mathcal{F}} \begin{bmatrix} q \\ p \end{bmatrix} = \begin{bmatrix} \mathcal{H} & -\mathcal{B} \\ -\mathcal{B}^\top & \mathcal{L}_P \end{bmatrix} \begin{bmatrix} q \\ p \end{bmatrix} = 0 \]</div>
+            </div>
+
+            <div style="background:rgba(108,154,195,0.12);border-top:5px solid #2E7D32;border-radius:12px;padding:16px 20px;border-left:1px solid rgba(108,154,195,0.25);border-right:1px solid rgba(108,154,195,0.25);border-bottom:1px solid rgba(108,154,195,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04)">
+              <div style="font-size:26px;font-weight:700;margin-bottom:8pxcolor:#2E7D32">Harmonic Extension</div>
+              <div class="ds-math-block" style="font-size:30px;margin:0"
+                data-tex="\mathcal{H} q = \mathcal{B} p \quad \Longrightarrow \quad q^\star = \mathcal{H}^{-1}\mathcal{B} p">
+                \[ \mathcal{H} q = \mathcal{B} p \quad \Longrightarrow \quad q^\star = \mathcal{H}^{-1}\mathcal{B} p \]</div>
+            </div>
+
+            <div style="background:rgba(108,154,195,0.12);border-top:5px solid #6C9AC3;border-radius:12px;padding:16px 20px;border-left:1px solid rgba(108,154,195,0.25);border-right:1px solid rgba(108,154,195,0.25);border-bottom:1px solid rgba(108,154,195,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04)">
+              <div style="font-size:26px;font-weight:700;margin-bottom:8pxcolor:#002A54">What the Blocks Mean</div>
+              <div style="display:flex;flex-direction:column;gap:9px;font-size:25px;line-height:1.26;color:#002A54">
+                <div><span class="katex-inline" data-tex="\mathcal{H} = \mathcal{L}_Q + D">\( \mathcal{H} = \mathcal{L}_Q + D \)</span> &nbsp;total agent interaction map</div>
+                <div><span class="katex-inline" data-tex="\mathcal{B}">\( \mathcal{B} \)</span> &nbsp;agent&#8211;target sensing map</div>
+                <div><span class="katex-inline" data-tex="\eta = \mathcal{H}q - \mathcal{B}p">\( \eta = \mathcal{H}q - \mathcal{B}p \)</span> &nbsp;agent disagreement relative to targets</div>
+              </div>
+            </div>
+
+          </div>
+
+          <div style="position:absolute;left:810px;top:104px;width:678px;background:rgba(226,143,65,0.12);border-top:5px solid #E28F41;border-radius:12px;padding:18px 22px;border-left:1px solid rgba(226,143,65,0.25);border-right:1px solid rgba(226,143,65,0.25);border-bottom:1px solid rgba(226,143,65,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04)">
+            <div class="ds-theorem-block" style="font-size:25px;line-height:1.26"><span class="theorem-head">Standing
+                Assumption (Control Authority).</span> <span class="theorem-body">Target dynamics <span
+                  class="katex-inline" data-tex="\dot{p} = f_p(p, t)">\( \dot{p} = f_p(p, t) \)</span> induce motion on
+                the harmonic extension <span class="katex-inline"
+                  data-tex="\dot{q}^\star = \mathcal{H}^{-1}\mathcal{B}\dot{p}">\( \dot{q}^\star =
+                  \mathcal{H}^{-1}\mathcal{B}\dot{p} \)</span>. Agents must have sufficient control authority to keep up
+                with the changing <span class="katex-inline" data-tex="q^\star(t)">\( q^\star(t) \)</span>.</span></div>
+            <figure style="margin:14px 0 0;display:flex;align-items:center;justify-content:center">
+              <img src="assets/figures/assumption-figure.svg"
+                alt="Target dynamics inducing velocity on the harmonic extension versus agent control authority"
+                style="width:100%;height:390px;object-fit:contain">
+            </figure>
+          </div>
+
+          <div style="position:absolute;left:48px;right:48px;bottom:48px;font-size:35px;line-height:1.18;color:#2C4B6A">
+            The harmonic extension <span class="katex-inline" data-tex="q^\star(t)">\( q^\star(t) \)</span> is the
+            dynamic target reference that agent feedback tracks.</div>
+          <div class="ds-slide-num">34</div>
+        </div>
+      </section>
+
+      <section data-label="35 · Sheaf-Laplacian Feedback and Its Guarantee" data-slide-index="35"
+        data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Sheaf-Laplacian Feedback and Its Guarantee</h1>
+          <div style="position:absolute;left:48px;top:115px;width:730px;display:flex;flex-direction:column;gap:12px">
+            <div style="font-size:25px;color:#2C4B6A;font-weight:700;letter-spacing:1px">Local Sheaf Disagreement</div>
+            <div class="ds-math-block" style="margin:2px 0"
+              data-tex="\eta_i = \sum_{j \in \mathcal{N}_i} \mathcal{F}_{i \unlhd ij}^{\top}\big( \mathcal{F}_{i \unlhd ij} q_i - \mathcal{F}_{j \unlhd ij} x_j \big)">
+              \[ \eta_i = \sum_{j \in \mathcal{N}_i} \mathcal{F}_{i \unlhd ij}^{\top}\big( \mathcal{F}_{i \unlhd ij} q_i
+              - \mathcal{F}_{j \unlhd ij} x_j \big) \]</div>
+            <div style="font-size:25px;color:#2C4B6A;font-weight:700;letter-spacing:1px;margin-top:4px">Decentralized Controller</div>
+            <div class="ds-math-block" style="margin:2px 0" data-tex="u_i = -k_1\, g_i^{+} \eta_i">\[ u_i = -k_1\,
+              g_i^{+} \eta_i \]</div>
+            <div style="font-size:27px;line-height:1.26;color:#002A54">
+              where <span class="katex-inline" data-tex="k_1 > 0">\( k_1 > 0 \)</span> is the control gain and <span
+                class="katex-inline" data-tex="g_i^+">\( g_i^+ \)</span> maps the correction into the control space.
+            </div>
+            <div style="font-size:27px;line-height:1.26;color:#2C4B6A">
+              Each agent evaluates <span class="katex-inline" data-tex="u_i">\( u_i \)</span> solely from neighbor
+              measurements.
+            </div>
+          </div>
+          <div style="position:absolute;left:810px;top:115px;width:678px;display:flex;flex-direction:column;gap:18px">
+            <div style="background:rgba(128,190,99,0.12);border-top:5px solid #80BE63;border-radius:12px;padding:18px 22px;border-left:1px solid rgba(128,190,99,0.25);border-right:1px solid rgba(128,190,99,0.25);border-bottom:1px solid rgba(128,190,99,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04)">
+              <div class="ds-theorem-block" style="font-size:27px;line-height:1.28"><span class="theorem-head">Theorem
+                  (Semi-global exponential
+                  convergence).</span> <span class="theorem-body">Under the standing assumptions, the tracking error
+                  relative to the harmonic extension converges semi-globally uniformly exponentially to a bounded residual
+                  set. A larger gain <span class="katex-inline" data-tex="k_1">\( k_1 \)</span> shrinks the residual error
+                  arbitrarily.</span></div>
+            </div>
+            <div
+              style="font-size:27px;line-height:1.28;color:#002A54;padding:16px 20px;background:rgba(108,154,195,0.10);border-radius:12px;border-top:5px solid #2C4B6A;border-left:1px solid rgba(108,154,195,0.2);border-right:1px solid rgba(108,154,195,0.2);border-bottom:1px solid rgba(108,154,195,0.2);box-shadow:0 3px 10px rgba(0,42,84,0.04)">
+              Residual errors arise solely from dynamics mismatches and bounded disturbances, exactly matching classical
+              singular perturbation bounds.
+            </div>
+          </div>
+          <div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:37px;line-height:1.18;color:#2C4B6A">
+            The ordinary Lyapunov argument for Laplacian feedback, run in the sheaf’s coordinates.</div>
+          <div class="ds-slide-num">35</div>
+
+        </div>
+      </section>
+
+      <section data-label="36 · Who Can Track Whom Is a Cohomological Question" data-slide-index="36"
+        data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Who Can Track Whom Is a Cohomological Question</h1>
+          <figure
+            style="margin:0;position:absolute;left:48px;top:104px;width:700px;display:flex;flex-direction:column;gap:12px">
+            <div style="font-size:29px;color:#2C4B6A;font-weight:700">Ships Tracking Submarines —
+              Determined</div>
+            <div style="position:relative;width:700px;height:352px">
+              <img src="assets/figures/usv-tracking-uuv.svg"
+                alt="Surface vessels on a plane sensing submarines moving in a three-dimensional volume below"
+                style="width:100%;height:100%;object-fit:contain">
+            </div>
+          </figure>
+          <figure
+            style="margin:0;position:absolute;left:788px;top:104px;width:700px;display:flex;flex-direction:column;gap:12px">
+            <div style="font-size:29px;color:#2C4B6A;font-weight:700">Quadcopters Tracking Ships
+              — Underdetermined</div>
+            <div style="position:relative;width:700px;height:352px">
+              <img src="assets/figures/uav-tracking-usv-2.svg"
+                alt="Aerial vehicles in a three-dimensional volume sensing surface vessels confined to a plane below"
+                style="width:100%;height:100%;object-fit:contain">
+            </div>
+          </figure>
+          <div
+            style="position:absolute;left:48px;top:520px;width:700px;font-size:32px;line-height:1.24;text-wrap:pretty">
+            A
+            ship is stuck on the surface, so the target’s three coordinates determine its two. The harmonic extension is
+            unique and the relative cohomology vanishes.</div>
+          <div
+            style="position:absolute;left:788px;top:520px;width:700px;font-size:32px;line-height:1.24;text-wrap:pretty">
+            A quadcopter also has an altitude, which nothing it measures about a surface vessel constrains. That spare
+            degree of freedom is the non-vanishing relative cohomology.</div>
+          <div style="position:absolute;left:48px;right:48px;bottom:44px;font-size:37px;line-height:1.18;color:#2C4B6A">
+            Trackability is whether the measurements pin down every degree of freedom the agents have. The cohomology
+            counts the ones they miss.</div>
+          <div class="ds-slide-num">36</div>
+
+        </div>
+      </section>
+
+      <section data-label="37 · Stability–Trackability Duality" data-slide-index="37" data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:59px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Stability–Trackability Duality</h1>
+          <div
+            style="position:absolute;left:48px;top:132px;right:48px;display:grid;grid-template-columns:1fr 1fr;gap:56px">
+            <div class="ds-outlined-region stroke-blue" style="height:470px">
+              <div class="ds-region-label">Stability</div>
+              <div class="ds-outlined-content">
+                <div
+                  style="padding:56px 32px 16px;display:flex;flex-direction:column;gap:10px;align-items:center;justify-content:center;height:100%;box-sizing:border-box">
+                  <div style="position:relative;width:96%;aspect-ratio:596 / 358">
+                    <img src="assets/figures/gradient-flow-streamplot.png"
+                      alt="Gradient-flow stream plot of a quadratic objective: every trajectory runs into the equilibrium"
+                      style="width:100%;height:100%;object-fit:contain">
+                    <div
+                      style="position:absolute;left:47.8%;top:48.3%;width:84px;height:84px;margin:-42px 0 0 -42px;border-radius:50%;background:rgb(108 154 195 / .28)">
+                    </div>
+                    <div
+                      style="position:absolute;left:47.8%;top:48.3%;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:#002A54">
+                    </div>
+                    <div
+                      style="position:absolute;left:47.8%;top:48.3%;margin:-17px 0 0 54px;padding:2px 10px;background:#fff;font-size:26px;line-height:1.24;color:#002A54;white-space:nowrap;font-style:italic;font-weight:700">
+                      Harmonic extension</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ds-outlined-region stroke-orange" style="height:470px">
+              <div class="ds-region-label">Trackability</div>
+              <div class="ds-outlined-content">
+                <div
+                  style="padding:56px 32px 16px;display:flex;flex-direction:column;gap:18px;align-items:center;justify-content:center;height:100%;box-sizing:border-box">
+                  <svg viewBox="0 0 600 200" style="width:100%;height:auto"
+                    aria-label="Three overlapping agent measurement subspaces together covering the whole target state space">
+                    <text x="300" y="21" text-anchor="middle" font-family="var(--font-core)" font-size="26"
+                      font-style="italic" fill="#2C4B6A">target state space</text>
+                    <rect x="40" y="28" width="520" height="112" rx="14" fill="none" stroke="#002A54" stroke-width="3"
+                      stroke-dasharray="8 7"></rect>
+                    <g rx="12">
+                      <rect x="44" y="40" width="220" height="88" rx="12" fill="rgb(108 154 195 / .28)"></rect>
+                      <rect x="190" y="40" width="220" height="88" rx="12" fill="rgb(226 143 65 / .28)"></rect>
+                      <rect x="336" y="40" width="220" height="88" rx="12" fill="rgb(128 190 99 / .28)"></rect>
+                    </g>
+                    <g font-family="var(--font-core)" font-size="28" font-weight="700" fill="#002A54"
+                      text-anchor="middle">
+                      <text x="112" y="168">agent 1</text>
+                      <text x="300" y="168">agent 2</text>
+                      <text x="488" y="168">agent 3</text>
+                    </g>
+                    <g stroke="#2C4B6A" stroke-width="2">
+                      <line x1="112" y1="128" x2="112" y2="150"></line>
+                      <line x1="300" y1="128" x2="300" y2="150"></line>
+                      <line x1="488" y1="128" x2="488" y2="150"></line>
+                    </g>
+                  </svg>
+                  <div style="font-size:26px;line-height:1.24;text-align:center">No agent sees the whole state; together
+                    they leave nothing unconstrained.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ul class="ds-bullet-list" style="position:absolute;left:48px;top:632px;width:1440px;font-size:34px">
+            <li class="size-body" style=""><span class="bullet-mark">●</span><span class="bullet-text">Relative
+                cohomology turns both questions, one analytic and one geometric, into linear algebra on the agent and
+                target subgraphs, answerable by an algorithm rather than by hand</span></li>
+            <li class="size-body" style=""><span class="bullet-mark">●</span><span class="bullet-text">A control
+                property and a sensing property are the same invariant</span></li>
+          </ul>
+          <div class="ds-slide-num">37</div>
+
+        </div>
+      </section>
+
+      <section data-label="38 · Thirteen Agents, Four Targets, Two Domains" data-slide-index="38"
+        data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Thirteen Agents, Four Targets, Two Domains</h1>
+          <ul class="ds-bullet-list" style="position:absolute;left:48px;top:120px;width:700px">
+            <li class="size-body" style="font-size:30px"><span class="bullet-mark">●</span><span class="bullet-text">Thirteen planar
+                agents with nonlinear dynamics</span></li>
+            <li class="size-body" style="font-size:30px"><span class="bullet-mark">●</span><span class="bullet-text">Four underwater
+                targets in a tetrahedron formation on figure-eight paths</span></li>
+            <li class="size-body" style="font-size:30px"><span class="bullet-mark">●</span><span class="bullet-text">Restriction maps
+                project three-dimensional target states into the plane</span></li>
+            <li class="size-body" style="font-size:30px"><span class="bullet-mark">●</span><span class="bullet-text">Decentralized
+                control under external disturbances</span></li>
+          </ul>
+          <div style="position:absolute;left:788px;top:140px;width:698px;height:394px;background:rgba(108,154,195,0.12);border-radius:14px;border-top:5px solid #002A54;border-left:1px solid rgba(108,154,195,0.25);border-right:1px solid rgba(108,154,195,0.25);border-bottom:1px solid rgba(108,154,195,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04)">
+            <svg viewBox="0 0 698 394" style="position:absolute;inset:0;width:100%;height:100%"
+              aria-label="Thirteen surface vessels in four clusters, each sensing one of four submarines">
+              <!-- Submarine Target Dark Blue Envelopes -->
+              <g id="sub-boundaries">
+                <ellipse cx="350" cy="66" rx="64" ry="32" fill="rgba(0, 42, 84, 0.22)" stroke="#002A54" stroke-width="2.5" />
+                <ellipse cx="350" cy="205" rx="64" ry="32" fill="rgba(0, 42, 84, 0.22)" stroke="#002A54" stroke-width="2.5" />
+                <ellipse cx="118" cy="315" rx="64" ry="32" fill="rgba(0, 42, 84, 0.22)" stroke="#002A54" stroke-width="2.5" />
+                <ellipse cx="582" cy="315" rx="64" ry="32" fill="rgba(0, 42, 84, 0.22)" stroke="#002A54" stroke-width="2.5" />
+              </g>
+
+              <g stroke="#B1B3B6" stroke-width="2.5" stroke-dasharray="7 7">
+                <line x1="350" y1="66" x2="350" y2="205"></line>
+                <line x1="350" y1="66" x2="118" y2="315"></line>
+                <line x1="350" y1="66" x2="582" y2="315"></line>
+                <line x1="118" y1="315" x2="582" y2="315"></line>
+                <line x1="298" y1="22" x2="402" y2="22"></line>
+                <line x1="402" y1="22" x2="244" y2="60"></line>
+                <line x1="244" y1="60" x2="456" y2="60"></line>
+                <line x1="456" y1="60" x2="298" y2="22"></line>
+                <line x1="350" y1="146" x2="298" y2="252"></line>
+                <line x1="298" y1="252" x2="402" y2="252"></line>
+                <line x1="402" y1="252" x2="350" y2="146"></line>
+                <line x1="54" y1="258" x2="34" y2="359"></line>
+                <line x1="34" y1="359" x2="152" y2="372"></line>
+                <line x1="152" y1="372" x2="54" y2="258"></line>
+                <line x1="646" y1="258" x2="666" y2="359"></line>
+                <line x1="666" y1="359" x2="548" y2="372"></line>
+                <line x1="548" y1="372" x2="646" y2="258"></line>
+              </g>
+              <g stroke="#002A54" stroke-width="2.5">
+                <line x1="298" y1="22" x2="350" y2="66"></line>
+                <line x1="402" y1="22" x2="350" y2="66"></line>
+                <line x1="244" y1="60" x2="350" y2="66"></line>
+                <line x1="456" y1="60" x2="350" y2="66"></line>
+                <line x1="350" y1="146" x2="350" y2="205"></line>
+                <line x1="298" y1="252" x2="350" y2="205"></line>
+                <line x1="402" y1="252" x2="350" y2="205"></line>
+                <line x1="54" y1="258" x2="118" y2="315"></line>
+                <line x1="34" y1="359" x2="118" y2="315"></line>
+                <line x1="152" y1="372" x2="118" y2="315"></line>
+                <line x1="646" y1="258" x2="582" y2="315"></line>
+                <line x1="666" y1="359" x2="582" y2="315"></line>
+                <line x1="548" y1="372" x2="582" y2="315"></line>
+              </g>
+            </svg><img src="assets/figures/icon-ship.svg" alt=""
+              style="position:absolute;left:242px;top:3px;width:60px;height:42px;object-fit:contain"><img
+              src="assets/figures/icon-ship.svg" alt=""
+              style="position:absolute;left:398px;top:3px;width:60px;height:42px;object-fit:contain"><img
+              src="assets/figures/icon-ship.svg" alt=""
+              style="position:absolute;left:188px;top:49px;width:60px;height:42px;object-fit:contain"><img
+              src="assets/figures/icon-ship.svg" alt=""
+              style="position:absolute;left:452px;top:49px;width:60px;height:42px;object-fit:contain"><img
+              src="assets/figures/icon-ship.svg" alt=""
+              style="position:absolute;left:320px;top:121px;width:60px;height:42px;object-fit:contain"><img
+              src="assets/figures/icon-ship.svg" alt=""
+              style="position:absolute;left:262px;top:237px;width:60px;height:42px;object-fit:contain"><img
+              src="assets/figures/icon-ship.svg" alt=""
+              style="position:absolute;left:378px;top:237px;width:60px;height:42px;object-fit:contain"><img
+              src="assets/figures/icon-ship.svg" alt=""
+              style="position:absolute;left:24px;top:237px;width:60px;height:42px;object-fit:contain"><img
+              src="assets/figures/icon-ship.svg" alt=""
+              style="position:absolute;left:4px;top:338px;width:60px;height:42px;object-fit:contain"><img
+              src="assets/figures/icon-ship.svg" alt=""
+              style="position:absolute;left:122px;top:351px;width:60px;height:42px;object-fit:contain"><img
+              src="assets/figures/icon-ship.svg" alt=""
+              style="position:absolute;left:616px;top:237px;width:60px;height:42px;object-fit:contain"><img
+              src="assets/figures/icon-ship.svg" alt=""
+              style="position:absolute;left:636px;top:338px;width:60px;height:42px;object-fit:contain"><img
+              src="assets/figures/icon-ship.svg" alt=""
+              style="position:absolute;left:518px;top:351px;width:60px;height:42px;object-fit:contain"><img
+              src="assets/figures/icon-sub.svg" alt=""
+              style="position:absolute;left:304px;top:38.5px;width:92px;height:55px;object-fit:contain"><img
+              src="assets/figures/icon-sub.svg" alt=""
+              style="position:absolute;left:304px;top:177.5px;width:92px;height:55px;object-fit:contain"><img
+              src="assets/figures/icon-sub.svg" alt=""
+              style="position:absolute;left:72px;top:287.5px;width:92px;height:55px;object-fit:contain"><img
+              src="assets/figures/icon-sub.svg" alt=""
+              style="position:absolute;left:536px;top:287.5px;width:92px;height:55px;object-fit:contain">
+          </div>
+          <div
+            style="position:absolute;left:790px;top:545px;width:700px;font-size:26px;line-height:1.24;color:#2C4B6A;font-style:italic">
+            Each cluster senses one submerged target; dashed links carry agent-to-agent and target-to-target
+            communication.</div>
+          <div
+            style="position:absolute;left:48px;top:540px;width:700px;font-size:34px;line-height:1.22;text-wrap:pretty">
+            Surface vehicles track their targets through a projection they can measure; the restriction maps carry the
+            dimension change.</div>
+          <div style="position:absolute;left:48px;right:48px;bottom:64px;font-size:32px;line-height:1.2;color:#2C4B6A">
+            Heterogeneous multi-agent multi-target tracking using cellular sheaves — Hanks, Nino, Bou Barcelo, Copeland,
+            Dixon, Fairbanks. European Control Conference.</div>
+          <div class="ds-slide-num">38</div>
+
+        </div>
+      </section>
+
+      <section data-label="39 · The Agents Reach and Hold the Formation" data-slide-index="39"
+        data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            The Agents Reach and Hold the Formation</h1>
+
+          <div style="position:absolute;left:48px;top:100px;right:48px;display:grid;grid-template-columns:repeat(3, 1fr);gap:24px;align-items:stretch">
+            <div style="background:rgba(108,154,195,0.08);border-top:5px solid #002A54;border-radius:14px;padding:16px 18px;border-left:1px solid rgba(108,154,195,0.25);border-right:1px solid rgba(108,154,195,0.25);border-bottom:1px solid rgba(108,154,195,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04);display:flex;flex-direction:column;align-items:center;height:550px;box-sizing:border-box">
+              <div style="font-size:25px;color:#002A54;font-weight:700;margin-bottom:8px;text-align:center">Formations, in the Plane</div>
+              <div style="position:relative;width:100%;flex:1;overflow:hidden;border-radius:8px">
+                <video data-autoplay src="assets/video/formation-tracking.mp4" autoplay="autoplay" loop="loop" muted="muted"
+                  playsinline="playsinline"
+                  style="position:absolute;left:-26px;top:0;width:112%;height:100%;object-fit:fill;background:#fff"></video>
+              </div>
+            </div>
+
+            <div style="background:rgba(226,143,65,0.08);border-top:5px solid #E28F41;border-radius:14px;padding:16px 18px;border-left:1px solid rgba(226,143,65,0.25);border-right:1px solid rgba(226,143,65,0.25);border-bottom:1px solid rgba(226,143,65,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04);display:flex;flex-direction:column;align-items:center;height:550px;box-sizing:border-box">
+              <div style="font-size:25px;color:#002A54;font-weight:700;margin-bottom:8px;text-align:center">Agent and Target Trajectories</div>
+              <div style="width:100%;flex:1;display:flex;align-items:center;justify-content:center">
+                <img src="assets/figures/formation-3d-trajectories.png"
+                  alt="Agent orbits above and target figure-eight paths below, in three dimensions"
+                  style="max-width:100%;max-height:100%;object-fit:contain;border-radius:8px">
+              </div>
+            </div>
+
+            <div style="background:rgba(128,190,99,0.08);border-top:5px solid #80BE63;border-radius:14px;padding:16px 18px;border-left:1px solid rgba(128,190,99,0.25);border-right:1px solid rgba(128,190,99,0.25);border-bottom:1px solid rgba(128,190,99,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04);display:flex;flex-direction:column;align-items:center;height:550px;box-sizing:border-box">
+              <div style="font-size:25px;color:#002A54;font-weight:700;margin-bottom:8px;text-align:center">Tracking Error by Gain</div>
+              <div style="width:100%;height:320px;display:flex;align-items:center;justify-content:center">
+                <img src="assets/figures/tracking-error-gains-2x.png"
+                  alt="Tracking error norm against time for six control gains from k = 0.001 to k = 100"
+                  style="max-width:100%;max-height:100%;object-fit:contain;border-radius:8px">
+              </div>
+              <div style="font-size:24px;line-height:1.24;color:#002A54;margin-top:10px;text-align:center;text-wrap:pretty">
+                A larger gain shrinks the residual error, exactly matching the convergence bound.
+              </div>
+            </div>
+          </div>
+
+          <div
+            style="position:absolute;left:48px;right:48px;bottom:48px;font-size:35px;line-height:1.2;color:#2C4B6A;text-wrap:pretty">
+            Agents converge from arbitrary initial positions into the square and triangle formations, and hold them as
+            the targets move.</div>
+          <div class="ds-slide-num">39</div>
+
+        </div>
+      </section>
+
+      <section data-label="40 · Toward Compositional Digital Engineering" data-slide-index="40"
+        data-background-color="#002A54"
+        style="background:#002A54;overflow:hidden;color:#FFEFCF;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <div style="position:absolute;left:120px;top:280px;width:1060px">
+            <div style="font-size:29px;letter-spacing:3px;opacity:.85;font-weight:700">PART FOUR
+            </div>
+            <div style="margin-top:24px;font-size:96px;line-height:1.04">Toward Compositional Digital Engineering</div>
+            <div style="margin-top:32px;width:860px;height:2px;background:rgb(255 239 207 / .35)"></div>
+            <div style="margin-top:32px;font-size:43px;line-height:1.2;opacity:.9">Carrying the Framework to Hardware and Learning</div>
+          </div>
+          <img src="assets/brand/gatas-mark-onnavy.png" alt=""
+            style="position:absolute;right:96px;bottom:88px;width:220px;height:220px;object-fit:contain;opacity:.85">
+          <div class="ds-slide-num">40</div>
+
+        </div>
+      </section>
+
+      <section data-label="41 · Layered Control Architecture" data-slide-index="41"
+        data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Layered Control Architecture</h1>
+
+          <div style="position:absolute;left:48px;top:104px;width:700px;display:flex;flex-direction:column;gap:16px">
+            <div style="background:rgba(108,154,195,0.10);border-top:4px solid #002A54;border-radius:12px;padding:14px 20px;border-left:1px solid rgba(108,154,195,0.25);border-right:1px solid rgba(108,154,195,0.25);border-bottom:1px solid rgba(108,154,195,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04)">
+              <div style="font-size:24px;font-weight:700;color:#002A54;margin-bottom:4px">1. Harmonic Reference &amp; Velocity Solves (Sheaf)</div>
+              <div style="font-size:21px;line-height:1.3;color:#002A54">Computes harmonic position <span class="katex-inline" data-tex="H q^*(t) = -L_{AB} p(t)">\(H q^*(t) = -L_{AB} p(t)\)</span> and velocity <span class="katex-inline" data-tex="H \dot{q}^*(t) = -L_{AB} \dot{p}(t)">\(H \dot{q}^*(t) = -L_{AB} \dot{p}(t)\)</span> via distributed multifrontal tree solve.</div>
+            </div>
+
+            <div style="background:rgba(108,154,195,0.10);border-top:4px solid #2E7D32;border-radius:12px;padding:14px 20px;border-left:1px solid rgba(108,154,195,0.25);border-right:1px solid rgba(108,154,195,0.25);border-bottom:1px solid rgba(108,154,195,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04)">
+              <div style="font-size:24px;font-weight:700;color:#2E7D32;margin-bottom:4px">2. Joint Tikhonov Filtering (Boundary Layer)</div>
+              <div style="font-size:21px;line-height:1.3;color:#002A54">On-board filter <span class="katex-inline" data-tex="\epsilon \dot{x}_{\text{ref}} = -x_{\text{ref}} + q^*(t)">\(\epsilon \dot{x}_{\text{ref}} = -x_{\text{ref}} + q^*(t)\)</span>, <span class="katex-inline" data-tex="\epsilon \dot{v}_{\text{ref}} = -v_{\text{ref}} + \dot{q}^*(t)">\(\epsilon \dot{v}_{\text{ref}} = -v_{\text{ref}} + \dot{q}^*(t)\)</span> smooths discrete communication updates.</div>
+            </div>
+
+            <div style="background:rgba(230,126,34,0.08);border-left:4px solid #D35400;border-radius:8px;padding:14px 20px">
+              <div style="font-size:23px;font-weight:700;color:#873600;margin-bottom:4px">3. Feedforward + Feedback Control Law</div>
+              <div style="font-size:21px;line-height:1.3;color:#873600"><span class="katex-inline" data-tex="u = -K(x - x_{\text{ref}}) + B^\dagger (v_{\text{ref}} - A_c x)">\(u = -K(x - x_{\text{ref}}) + B^\dagger (v_{\text{ref}} - A_c x)\)</span>. Feedforward eliminates dynamic escort tracking lag while preserving input-to-state stability.</div>
+            </div>
+          </div>
+
+          <figure style="margin:0;position:absolute;left:778px;top:104px;width:722px;height:630px;display:flex;flex-direction:column;align-items:center;gap:10px">
+            <div style="width:100%;height:580px;background:rgba(108,154,195,0.06);border:1px solid rgba(108,154,195,0.25);border-radius:12px;padding:12px;box-sizing:border-box;display:flex;align-items:center;justify-content:center">
+              <img src="assets/figures/layered_escort_feedforward.gif"
+                alt="Layered escort feedforward simulation showing multi-agent escort formation tracking with feedforward compensation in CellularSheaves.jl"
+                style="width:100%;height:100%;object-fit:contain;border-radius:8px">
+            </div>
+            <figcaption style="font-size:22px;line-height:1.24;color:#2C4B6A;text-align:center;font-style:italic">
+              6-Agent Escort Formation with Feedforward Layered Control in CellularSheaves.jl
+            </figcaption>
+          </figure>
+
+          <div style="position:absolute;left:48px;right:48px;bottom:40px;font-size:34px;line-height:1.18;color:#2C4B6A">
+            Topological coordination at the fleet scale, feedforward tracking at the vehicle scale.</div>
+          <div class="ds-slide-num">41</div>
+
+        </div>
+      </section>
+
+      <section data-label="42 · Learning Helps, and Resists Certification" data-slide-index="42"
+        data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Learning Helps, and Resists Certification</h1>
+
+          <div
+            style="position:absolute;left:48px;top:104px;right:48px;height:420px;display:grid;grid-template-columns:repeat(2,1fr);gap:36px;align-items:stretch">
+            <div style="background:rgba(108,154,195,0.08);border-top:5px solid #002A54;border-radius:14px;padding:16px 20px;border-left:1px solid rgba(108,154,195,0.25);border-right:1px solid rgba(108,154,195,0.25);border-bottom:1px solid rgba(108,154,195,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04);display:flex;flex-direction:column;align-items:center;height:420px;box-sizing:border-box">
+              <div style="font-size:26px;color:#002A54;font-weight:700;margin-bottom:10px;text-align:center">Homogeneous Formation</div>
+              <div style="position:relative;width:100%;flex:1;overflow:hidden;border-radius:8px;display:flex;align-items:center;justify-content:center">
+                <video data-autoplay src="assets/video/robot-sim-2.mp4" autoplay="autoplay" loop="loop"
+                  muted="muted" playsinline="playsinline"
+                  style="width:100%;height:100%;object-fit:contain;background:#fff;border-radius:6px"></video>
+              </div>
+            </div>
+
+            <div style="background:rgba(226,143,65,0.08);border-top:5px solid #E28F41;border-radius:14px;padding:16px 20px;border-left:1px solid rgba(226,143,65,0.25);border-right:1px solid rgba(226,143,65,0.25);border-bottom:1px solid rgba(226,143,65,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04);display:flex;flex-direction:column;align-items:center;height:420px;box-sizing:border-box">
+              <div style="font-size:26px;color:#002A54;font-weight:700;margin-bottom:10px;text-align:center">Heterogeneous Swarm</div>
+              <div style="position:relative;width:100%;flex:1;overflow:hidden;border-radius:8px;display:flex;align-items:center;justify-content:center">
+                <video data-autoplay src="assets/video/robot-sim-1.mp4" autoplay="autoplay" loop="loop" muted="muted"
+                  playsinline="playsinline"
+                  style="width:100%;height:100%;object-fit:contain;background:#fff;border-radius:6px"></video>
+              </div>
+            </div>
+          </div>
+
+          <div
+            style="position:absolute;left:48px;right:112px;bottom:36px;display:flex;flex-direction:column;gap:10px">
+            <div style="font-size:33px;line-height:1.22;text-wrap:pretty">
+              Learned policies raise performance, and certifying their stability and safety is the hard part. Next:
+              distributed RL techniques inside the sheaf, where the guarantees already live.</div>
+            <div style="font-size:28px;line-height:1.2;color:#2C4B6A">
+              Simulations by Itay Kadosh. Formation first, then the heterogeneous case where the agents cannot compare states
+              directly. Targeting ACC 2027.</div>
+          </div>
+          <div class="ds-slide-num">42</div>
+
+        </div>
+      </section>
+
+      <section data-label="43 · From Theorem to Hardware" data-slide-index="43" data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:59px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            From Theorem to Hardware</h1>
+          <div
+            style="position:absolute;left:48px;top:130px;width:700px;font-size:43px;line-height:1.2;text-wrap:pretty">
+            Next: the same sheaf and the same feedback law on physical differential-drive robots, using the Robotarium
+            at Georgia Tech.</div>
+          <ul class="ds-bullet-list" style="position:absolute;left:48px;top:390px;width:700px">
+            <li class="size-body" style=""><span class="bullet-mark">●</span><span class="bullet-text">Eight-agent wheel
+                and star sheaves under wind drift</span></li>
+            <li class="size-body" style=""><span class="bullet-mark">●</span><span class="bullet-text">Mixed drone and
+                ground-vehicle teams with a three-to-two dimensional projection</span></li>
+            <li class="size-body" style=""><span class="bullet-mark">●</span><span class="bullet-text">Next: integration
+                with reinforcement learning for unknown agent dynamics</span></li>
+          </ul>
+          <video data-autoplay src="assets/video/robotarium.mp4#t=22" autoplay="autoplay" loop="loop" muted="muted"
+            playsinline="playsinline" onloadedmetadata="this.currentTime=22"
+            style="position:absolute;left:814px;top:130px;width:660px;height:300px;object-fit:cover;border:1px solid #B1B3B6"></video>
+          <video data-autoplay src="assets/video/robotarium-hexagon.mp4" autoplay="autoplay" loop="loop" muted="muted"
+            playsinline="playsinline"
+            style="position:absolute;left:814px;top:454px;width:660px;height:300px;object-fit:cover;border:1px solid #B1B3B6"></video>
+          <img src="assets/brand/robotarium-logo.png" alt="Robotarium by Georgia Tech"
+            style="position:absolute;left:48px;top:688px;width:161px;height:66px;object-fit:contain">
+          <div style="position:absolute;left:48px;right:48px;bottom:64px;font-size:37px;line-height:1.18;color:#2C4B6A">
+            In progress with the Robotarium team and Matt Hale’s lab. Targeting CDC 2027.</div>
+          <div class="ds-slide-num">43</div>
+
+        </div>
+      </section>
+
+      <section data-label="44 · What This Talk Argued" data-slide-index="44" data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:59px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            What This Talk Argued</h1>
+
+          <div
+            style="position:absolute;left:48px;top:114px;width:1440px;font-size:35px;line-height:1.22;text-wrap:pretty">
+            Write the system as structured data; the analysis is a functor out of it.</div>
+
+          <div
+            style="position:absolute;left:48px;top:186px;right:48px;display:grid;grid-template-columns:repeat(3,1fr);gap:32px">
+            <div class="ds-highlight-region tint-blue" style="height:470px">
+              <div class="ds-region-content"
+                style="padding:30px 26px;display:flex;flex-direction:column;gap:16px;box-sizing:border-box">
+                <div style="font-size:31px;font-weight:700;line-height:1.2;color:#002A54">Diagrams Denote Systems</div>
+                <div style="font-size:25px;line-height:1.34;color:#002A54">A wiring diagram is a formula. Optimization and dynamical semantics are two functors out of the same diagram, and Euler discretization commutes with composition, so modular verification is exact.</div>
+              </div>
+              <div class="ds-region-label">Part One</div>
+            </div>
+            <div class="ds-highlight-region tint-orange" style="height:470px">
+              <div class="ds-region-content"
+                style="padding:30px 26px;display:flex;flex-direction:column;gap:16px;box-sizing:border-box">
+                <div style="font-size:31px;font-weight:700;line-height:1.2;color:#002A54">Specifications Compile to Solvers</div>
+                <div style="font-size:25px;line-height:1.34;color:#002A54">Decapodes turns diagrammatic physics into simulators with no hand-written discretization &mdash; matched against Ghia at Re&nbsp;=&nbsp;1000, Kelvin&ndash;Helmholtz, Rayleigh&ndash;Taylor, and porous convection.</div>
+              </div>
+              <div class="ds-region-label">Part Two</div>
+            </div>
+            <div class="ds-highlight-region tint-green" style="height:470px">
+              <div class="ds-region-content"
+                style="padding:30px 26px;display:flex;flex-direction:column;gap:16px;box-sizing:border-box">
+                <div style="font-size:31px;font-weight:700;line-height:1.2;color:#002A54">Sheaves Close the Loop</div>
+                <div style="font-size:25px;line-height:1.34;color:#002A54">Cellular sheaves carry Laplacian control to fleets that share no state space, with exponential tracking guarantees and a cohomological test for which agents can track which targets.</div>
+              </div>
+              <div class="ds-region-label">Part Three</div>
+            </div>
+          </div>
+
+          <div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:35px;line-height:1.2;color:#2C4B6A;text-wrap:pretty">
+            One representation carries modeling, simulation, and control &mdash; and each result is a theorem about composition rather than a special case.</div>
+          <div class="ds-slide-num">44</div>
+
+        </div>
+      </section>
+
+      <section data-label="45 · References" data-slide-index="45" data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:59px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            References</h1>
+
+          <div style="position:absolute;left:48px;top:118px;right:48px;display:grid;grid-template-columns:1fr 1fr;gap:24px 48px;align-items:start">
+            <ol style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:14px">
+              <li style="display:flex;gap:14px;font-size:22px;line-height:1.29;color:#002A54"><span style="flex:none;font-weight:700;color:#2C4B6A">[1]</span><span style="flex:1;min-width:0;text-wrap:pretty">B. Fong and D. I. Spivak. <em>An Invitation to Applied Category Theory: Seven Sketches in Compositionality.</em> Cambridge University Press, 2019.</span></li>
+              <li style="display:flex;gap:14px;font-size:22px;line-height:1.29;color:#002A54"><span style="flex:none;font-weight:700;color:#2C4B6A">[2]</span><span style="flex:1;min-width:0;text-wrap:pretty">J. Hansen and R. Ghrist. Toward a spectral theory of cellular sheaves. <em>Journal of Applied and Computational Topology,</em> 3(4):315&ndash;358, 2019.</span></li>
+              <li style="display:flex;gap:14px;font-size:22px;line-height:1.29;color:#002A54"><span style="flex:none;font-weight:700;color:#2C4B6A">[3]</span><span style="flex:1;min-width:0;text-wrap:pretty">J. Hansen and R. Ghrist. Distributed optimization with sheaf homological constraints. <em>Allerton Conference on Communication, Control, and Computing,</em> pp. 565&ndash;571, 2019.</span></li>
+              <li style="display:flex;gap:14px;font-size:22px;line-height:1.29;color:#002A54"><span style="flex:none;font-weight:700;color:#2C4B6A">[4]</span><span style="flex:1;min-width:0;text-wrap:pretty">T. Hanks, H. Riess, S. Cohen, T. Gross, M. Hale, and J. Fairbanks. Distributed multi-agent coordination over cellular sheaves. arXiv:2504.02049, 2025.</span></li>
+              <li style="display:flex;gap:14px;font-size:22px;line-height:1.29;color:#002A54"><span style="flex:none;font-weight:700;color:#2C4B6A">[5]</span><span style="flex:1;min-width:0;text-wrap:pretty">T. Hanks, C. F. Nino, J. Bou Barcelo, A. Copeland, W. E. Dixon, and J. Fairbanks. Heterogeneous multi-agent multi-target tracking using cellular sheaves. <em>European Control Conference.</em> arXiv:2512.24886.</span></li>
+            </ol>
+            <ol style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:14px">
+              <li style="display:flex;gap:14px;font-size:22px;line-height:1.29;color:#002A54"><span style="flex:none;font-weight:700;color:#2C4B6A">[6]</span><span style="flex:1;min-width:0;text-wrap:pretty">L. Morris, A. Baas, J. Arias, M. Gatlin, E. Patterson, and J. Fairbanks. Decapodes: a diagrammatic tool for representing, composing, and computing spatialized partial differential equations. <em>Journal of Computational Science,</em> 81, 2024.</span></li>
+              <li style="display:flex;gap:14px;font-size:22px;line-height:1.29;color:#002A54"><span style="flex:none;font-weight:700;color:#2C4B6A">[7]</span><span style="flex:1;min-width:0;text-wrap:pretty">E. Patterson, O. Lynch, and J. Fairbanks. Categorical data structures for technical computing. <em>Compositionality,</em> 4(5), 2022.</span></li>
+              <li style="display:flex;gap:14px;font-size:22px;line-height:1.29;color:#002A54"><span style="flex:none;font-weight:700;color:#2C4B6A">[8]</span><span style="flex:1;min-width:0;text-wrap:pretty">U. Ghia, K. N. Ghia, and C. T. Shin. High-Re solutions for incompressible flow using the Navier&ndash;Stokes equations and a multigrid method. <em>Journal of Computational Physics,</em> 48(3):387&ndash;411, 1982.</span></li>
+              <li style="display:flex;gap:14px;font-size:22px;line-height:1.29;color:#002A54"><span style="flex:none;font-weight:700;color:#2C4B6A">[9]</span><span style="flex:1;min-width:0;text-wrap:pretty">S. Boyd, N. Parikh, E. Chu, B. Peleato, and J. Eckstein. Distributed optimization and statistical learning via the alternating direction method of multipliers. <em>Foundations and Trends in Machine Learning,</em> 3(1), 2011.</span></li>
+              <li style="display:flex;gap:14px;font-size:22px;line-height:1.29;color:#002A54"><span style="flex:none;font-weight:700;color:#2C4B6A">[10]</span><span style="flex:1;min-width:0;text-wrap:pretty">AlgebraicJulia. <span style="font-family:var(--font-mono);font-size:.92em">CellularSheaves.jl</span>, <span style="font-family:var(--font-mono);font-size:.92em">Decapodes.jl</span>, and <span style="font-family:var(--font-mono);font-size:.92em">CombinatorialSpaces.jl</span>. algebraicjulia.github.io</span></li>
+            </ol>
+          </div>
+          <div class="ds-slide-num">45</div>
+
+        </div>
+      </section>
+
+      <section data-label="46 · Additional Material" data-slide-index="46" data-background-color="#002A54"
+        style="background:#002A54;overflow:hidden;color:#FFEFCF;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <div style="position:absolute;left:120px;top:310px;width:1060px">
+            <div style="font-size:29px;letter-spacing:3px;opacity:.85;font-weight:700">BACKUP</div>
+            <div style="margin-top:24px;font-size:96px;line-height:1.02">Additional Material</div>
+            <div style="margin-top:32px;width:860px;height:2px;background:rgb(255 239 207 / .35)"></div>
+            <div style="margin-top:32px;font-size:43px;line-height:1.2;opacity:.9">Slides Held in Reserve for Questions</div>
+          </div>
+          <img src="assets/brand/gatas-mark-onnavy.png" alt=""
+            style="position:absolute;right:96px;bottom:88px;width:220px;height:220px;object-fit:contain;opacity:.85">
+          <div class="ds-slide-num">46</div>
+
+        </div>
+      </section>
+
+      <section data-label="47 · Beyond Euclidean Gradient Descent" data-slide-index="47" data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Beyond Euclidean Gradient Descent</h1>
+          <div
+            style="position:absolute;left:48px;top:118px;width:1440px;font-size:37px;line-height:1.24;text-wrap:pretty">
+            Gradient descent is one functor from optimization problems to dynamical systems. Accelerated methods,
+            saddle-point flows, and Riemannian descent are others, all landing in the same target.</div>
+          <img src="assets/figures/optimization-functor-hierarchy.png"
+            alt="Functors from Euclidean saddle, Euclidean, Riemannian, and general optimization categories into their dynamical counterparts, all landing in a common category of distributed dynamical systems"
+            style="position:absolute;left:218px;top:240px;width:1100px;height:380px;object-fit:contain">
+          <div
+            style="position:absolute;left:48px;right:48px;bottom:56px;font-size:37px;line-height:1.2;text-wrap:pretty">
+            Tyler Hanks built a distributed algorithm for Riemannian optimization on this structure, extending
+            distributed gradient descent to variables on manifolds.</div>
+          <div class="ds-slide-num">47</div>
+
+        </div>
+      </section>
+
+      <section data-label="48 · Why Exact Tracking Fails, and What Replaces It" data-slide-index="48" data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:59px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Why Exact Tracking Fails, and What Replaces It</h1>
+          <div style="position:absolute;left:48px;top:115px;width:730px;display:flex;flex-direction:column;gap:14px">
+            <div style="font-size:31px;line-height:1.24;text-wrap:pretty">
+              Exact tracking asks the agent assignment to be a global section. An agent linked to two targets in
+              different states cannot satisfy both edge constraints.
+            </div>
+            <div style="font-size:25px;color:#2C4B6A;letter-spacing:1px;font-weight:700">The Canonical Relaxation</div>
+            <div style="font-size:31px;line-height:1.24">
+              Fix targets as boundary values and choose agent states that minimize total disagreement:
+            </div>
+            <div class="ds-math-block" style="margin:2px 0"
+              data-tex="x_A^{\star} = \arg\min_{x_A} \; \tfrac12 \big\| \delta \,[\,x_A \, ; \, x_T\,] \big\|^2">\[
+              x_A^{\star} = \arg\min_{x_A} \; \tfrac12 \big\| \delta \,[\,x_A \, ; \, x_T\,] \big\|^2 \]</div>
+          </div>
+          <svg viewBox="0 0 620 520" style="position:absolute;left:830px;top:115px;width:650px;height:520px"
+            aria-label="One agent linked to two targets in different states; the best it can do is the mean of the two">
+            <g stroke="#B1B3B6" stroke-width="2.5" stroke-dasharray="7 7">
+              <line x1="40" y1="150" x2="580" y2="150"></line>
+            </g>
+            <g stroke="#002A54" stroke-width="3">
+              <line x1="310" y1="400" x2="110" y2="150"></line>
+              <line x1="310" y1="400" x2="510" y2="150"></line>
+            </g>
+            <line x1="310" y1="400" x2="310" y2="150" stroke="#2C4B6A" stroke-width="2.5" stroke-dasharray="8 8"></line>
+            <circle cx="110" cy="150" r="34" fill="rgb(226 143 65 / .28)"></circle>
+            <circle cx="510" cy="150" r="34" fill="rgb(128 190 99 / .28)"></circle>
+            <circle cx="310" cy="400" r="34" fill="rgb(108 154 195 / .28)"></circle>
+            <circle cx="310" cy="150" r="28" fill="rgb(190 155 105 / .28)"></circle>
+            <g fill="#fff" stroke="#002A54" stroke-width="3">
+              <circle cx="110" cy="150" r="12"></circle>
+              <circle cx="510" cy="150" r="12"></circle>
+              <circle cx="310" cy="400" r="12"></circle>
+              <circle cx="310" cy="150" r="10"></circle>
+            </g>
+            <g fill="#002A54" font-size="30" font-style="italic" text-anchor="middle"
+              font-family="var(--font-math)"><text x="110" y="212">t₁</text><text x="510" y="212">t₂</text><text
+                x="310" y="462">a</text></g>
+            <g fill="#2C4B6A" font-family="var(--font-core)" font-style="italic" font-size="24"
+              text-anchor="middle"><text x="110" y="86">target 1</text><text x="510" y="86">target 2</text><text x="310"
+                y="502">agent</text><text x="310" y="112">mean of t₁ and t₂</text></g>
+          </svg>
+          <div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:37px;line-height:1.18;color:#2C4B6A">
+            Exact consensus is impossible across mismatched domains; the harmonic extension is the canonical, optimal
+            relaxation.</div>
+          <div class="ds-slide-num">48</div>
+
+        </div>
+      </section>
+
+      <section data-label="49 · Decapodes: Directly Computable Physics" data-slide-index="49"
+        data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Decapodes: Directly Computable Physics</h1>
+          <div
+            style="position:absolute;left:48px;top:130px;width:820px;font-size:37px;line-height:1.24;text-wrap:pretty">
+            Discrete exterior calculus supplies the operators; the diagram supplies the equations. The specification
+            compiles to a simulator with no hand-written discretization.</div>
+          <ul class="ds-bullet-list" style="position:absolute;left:48px;top:340px;width:820px">
+            <li class="size-body" style=""><span class="bullet-mark">●</span><span class="bullet-text">Specifications
+                are data: type-checked, rewritten, and composed before compilation</span></li>
+            <li class="size-body" style=""><span class="bullet-mark">●</span><span class="bullet-text">Custom operators
+                supply their own matrices against any mesh</span></li>
+            <li class="size-body" style=""><span class="bullet-mark">●</span><span class="bullet-text">Generic
+                subdivision gives geometric multigrid for free</span></li>
+            <li class="size-body" style=""><span class="bullet-mark">●</span><span class="bullet-text">Sparse DEC
+                operators map cleanly onto GPUs</span></li>
+          </ul>
+          <img src="assets/figures/decapodes-4-panel.png"
+            alt="Exterior calculus operators, a discrete geometric domain, physical equations, and the generated simulation"
+            style="position:absolute;left:930px;top:150px;width:530px;height:500px;object-fit:contain">
+          <div style="position:absolute;left:48px;right:48px;bottom:64px;font-size:37px;line-height:1.18;color:#2C4B6A">
+            Built on CombinatorialSpaces.jl, part of the AlgebraicJulia ecosystem.</div>
+          <div class="ds-slide-num">49</div>
+
+        </div>
+      </section>
+      <section data-label="50 · The Spectrum of Scientific Computing Technology" data-slide-index="50"
+        data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:59px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            The Spectrum of Scientific Computing Technology</h1>
+          <img src="assets/figures/spectrum-scientific-computing.png"
+            alt="A spectrum from arbitrary code through domain-specific languages and modeling frameworks to computer algebra systems, ordered by how explicitly the model is represented"
+            style="position:absolute;left:78px;top:110px;width:1380px;height:610px;object-fit:contain">
+          <div style="position:absolute;left:48px;right:48px;bottom:64px;font-size:37px;line-height:1.18;color:#2C4B6A">
+            The compositional program moves right on this axis without giving up generality.</div>
+          <div class="ds-slide-num">50</div>
+
+        </div>
+      </section>
+
+      <section data-label="51 · One Structure, Four Activities" data-slide-index="51" data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:59px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            One Structure, Four Activities</h1>
+          <div
+            style="position:absolute;left:48px;top:120px;right:48px;display:grid;grid-template-columns:repeat(4,1fr);gap:28px">
+            <div class="ds-highlight-region tint-blue" style="height:290px">
+              <div class="ds-region-content">
+                <div style="box-sizing:border-box;height:100%;padding:22px 24px 60px;font-size:26px;line-height:1.28">
+                  Specifications as structured data, composed along interfaces</div>
+              </div>
+              <div class="ds-region-label">Modeling</div>
+            </div>
+            <div class="ds-highlight-region tint-orange" style="height:290px">
+              <div class="ds-region-content">
+                <div style="box-sizing:border-box;height:100%;padding:22px 24px 60px;font-size:26px;line-height:1.28">
+                  Solvers generated from the specification, verified against the literature</div>
+              </div>
+              <div class="ds-region-label">Simulation</div>
+            </div>
+            <div class="ds-highlight-region tint-green" style="height:290px">
+              <div class="ds-region-content">
+                <div style="box-sizing:border-box;height:100%;padding:22px 24px 60px;font-size:26px;line-height:1.28">
+                  Surrogates and calibration constrained by the model's own structure</div>
+              </div>
+              <div class="ds-region-label">Learning</div>
+            </div>
+            <div class="ds-highlight-region tint-tan" style="height:290px">
+              <div class="ds-region-content">
+                <div style="box-sizing:border-box;height:100%;padding:22px 24px 60px;font-size:26px;line-height:1.28">
+                  Distributed optimization and control read off the same gluing</div>
+              </div>
+              <div class="ds-region-label">Decision</div>
+            </div>
+          </div>
+          <div
+            style="position:absolute;left:48px;top:450px;width:1440px;font-size:43px;line-height:1.2;text-wrap:pretty">
+            Each is usually a separate tool stack with its own model format. Written compositionally they share one
+            representation, so a change to the model propagates to the simulator, the surrogate, and the controller.
+          </div>
+          <div style="position:absolute;left:48px;right:48px;bottom:64px;font-size:37px;line-height:1.18;color:#2C4B6A">
+            That shared representation is what digital engineering needs and what scientific AI keeps discovering it is
+            missing.</div>
+          <div class="ds-slide-num">51</div>
+
+        </div>
+      </section>
+
+      <section data-label="52 · Scientific AI Needs the Structure" data-slide-index="52" data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Scientific AI Needs the Structure</h1>
+          <div
+            style="position:absolute;left:48px;top:118px;width:1440px;font-size:40px;line-height:1.2;text-wrap:pretty">
+            Learning components constrained by the model they sit inside.</div>
+
+          <div
+            style="position:absolute;left:48px;top:190px;right:48px;display:grid;grid-template-columns:repeat(3,1fr);gap:36px">
+            <div class="ds-highlight-region tint-blue" style="height:450px">
+              <div class="ds-region-content"
+                style="padding:28px 24px;display:flex;flex-direction:column;gap:16px;box-sizing:border-box">
+                <div style="font-size:32px;font-weight:700;line-height:1.2;color:#002A54">Structured Surrogates</div>
+                <div style="font-size:26px;line-height:1.32;color:#002A54">Neural operators and basis expansions
+                  parameterized directly over categorical model specifications rather than black-box grids.</div>
+              </div>
+              <div class="ds-region-label">Representation</div>
+            </div>
+
+            <div class="ds-highlight-region tint-orange" style="height:450px">
+              <div class="ds-region-content"
+                style="padding:28px 24px;display:flex;flex-direction:column;gap:16px;box-sizing:border-box">
+                <div style="font-size:32px;font-weight:700;line-height:1.2;color:#002A54">Automated Adjoints</div>
+                <div style="font-size:26px;line-height:1.32;color:#002A54">Differentiable calibration and parameter
+                  estimation generated automatically by functorial differentiation through the wiring diagram.</div>
+              </div>
+              <div class="ds-region-label">Calibration</div>
+            </div>
+
+            <div class="ds-highlight-region tint-green" style="height:450px">
+              <div class="ds-region-content"
+                style="padding:28px 24px;display:flex;flex-direction:column;gap:16px;box-sizing:border-box">
+                <div style="font-size:32px;font-weight:700;line-height:1.2;color:#002A54">Model Selection</div>
+                <div style="font-size:26px;line-height:1.32;color:#002A54">Searching spaces of morphisms between
+                  physical theories to discover missing terms and constitutive relations from observed data.</div>
+              </div>
+              <div class="ds-region-label">Discovery</div>
+            </div>
+          </div>
+
+          <div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:37px;line-height:1.18;color:#2C4B6A">
+            Scientific AI does not replace domain physics—it learns the unknown constitutive terms inside the structure.
+          </div>
+
+          <div class="ds-slide-num">52</div>
+        </div>
+      </section>
+
+      <section data-label="53 · Where This Goes Next" data-slide-index="53" data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1
+            style="position:absolute;left:48px;top:-8px;height:96px;margin:0;display:flex;align-items:center;white-space:nowrap;font-size:53px;font-weight:400;line-height:1;text-shadow:2px 2px 3px rgb(0 42 84 / .40)">
+            Where This Goes Next</h1>
+          <div
+            style="position:absolute;left:48px;top:118px;width:1440px;font-size:40px;line-height:1.2;text-wrap:pretty">
+            Digital engineering built on models that compose.</div>
+
+          <div
+            style="position:absolute;left:48px;top:178px;right:48px;display:grid;grid-template-columns:repeat(2,1fr);gap:28px">
+            <div class="ds-highlight-region tint-blue" style="height:256px">
+              <div class="ds-region-content"
+                style="padding:20px 24px;display:flex;flex-direction:column;gap:8px;box-sizing:border-box">
+                <div style="font-size:30px;font-weight:700;line-height:1.2;color:#002A54">Autonomous Mission Synthesis
+                </div>
+                <div style="font-size:24px;line-height:1.28;color:#002A54">Compiling verified, multi-domain fleet
+                  controllers directly from high-level mission specifications and spatio-temporal constraints.</div>
+              </div>
+              <div class="ds-region-label">Autonomy</div>
+            </div>
+
+            <div class="ds-highlight-region tint-orange" style="height:256px">
+              <div class="ds-region-content"
+                style="padding:20px 24px;display:flex;flex-direction:column;gap:8px;box-sizing:border-box">
+                <div style="font-size:30px;font-weight:700;line-height:1.2;color:#002A54">Certified Learning-in-the-Loop
+                </div>
+                <div style="font-size:24px;line-height:1.28;color:#002A54">Sheaf-theoretic multi-agent reinforcement
+                  learning with provable Lyapunov stability guarantees and Control Barrier Functions on hardware.</div>
+              </div>
+              <div class="ds-region-label">Safety &amp; RL</div>
+            </div>
+
+            <div class="ds-highlight-region tint-green" style="height:256px">
+              <div class="ds-region-content"
+                style="padding:20px 24px;display:flex;flex-direction:column;gap:8px;box-sizing:border-box">
+                <div style="font-size:30px;font-weight:700;line-height:1.2;color:#002A54">Model-Based Digital Twins
+                </div>
+                <div style="font-size:24px;line-height:1.28;color:#002A54">Unifying continuous finite-element
+                  multiphysics, reduced-order models, and live hardware sensor streams in one mathematical graph.</div>
+              </div>
+              <div class="ds-region-label">Digital Engineering</div>
+            </div>
+
+            <div class="ds-highlight-region tint-tan" style="height:256px">
+              <div class="ds-region-content"
+                style="padding:20px 24px;display:flex;flex-direction:column;gap:8px;box-sizing:border-box">
+                <div style="font-size:30px;font-weight:700;line-height:1.2;color:#002A54">AlgebraicJulia Ecosystem</div>
+                <div style="font-size:24px;line-height:1.28;color:#002A54">Scaling the open-source community into the
+                  standard national computational infrastructure for compositional science.</div>
+              </div>
+              <div class="ds-region-label">Infrastructure</div>
+            </div>
+          </div>
+
+          <div style="position:absolute;left:48px;right:112px;bottom:38px;font-size:37px;line-height:1.18;color:#2C4B6A">
+            Compositionality turns complex systems engineering into an algebraic, verifiable discipline.</div>
+
+          <div class="ds-slide-num">53</div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="vendor/reveal/reveal.js"></script>
+  <script src="vendor/reveal/plugin/notes/notes.js"></script>
+  <script src="vendor/reveal/plugin/highlight/highlight.js"></script>
+  <script src="vendor/katex/katex.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.ds-math-block, .katex-inline').forEach(el => {
+        const tex = el.getAttribute('data-tex');
+        const isInline = el.classList.contains('katex-inline');
+        if (tex && window.katex) {
+          try {
+            katex.render(tex, el, {
+              displayMode: !isInline,
+              throwOnError: false,
+              output: 'html'
+            });
+          } catch (err) {
+            console.error('KaTeX render error:', err);
+          }
+        }
+      });
+    });
+
+    Reveal.initialize({
+      width: 1536,
+      height: 864,
+      margin: 0.04,
+      minScale: 0.2,
+      maxScale: 2.0,
+      center: true,
+      hash: true,
+      history: true,
+      keyboard: true,
+      overview: true,
+      slideNumber: false,
+      transition: 'none',
+      plugins: [RevealNotes, RevealHighlight]
+    });
+
+    Reveal.on('slidechanged', event => {
+      if (event.previousSlide) {
+        event.previousSlide.querySelectorAll('video').forEach(v => {
+          v.pause();
+        });
+      }
+      if (event.currentSlide) {
+        event.currentSlide.querySelectorAll('video').forEach(v => {
+          v.currentTime = v.currentTime || 0;
+          v.play().catch(() => { });
+        });
+      }
+    });
+  </script>
+</body>
+
+</html>
