@@ -29,3 +29,7 @@ The `.nojekyll` file at the repository root is required. Decks keep their
 design-system tokens in a `_ds/` directory, and GitHub Pages' Jekyll pipeline
 strips underscore-prefixed paths unless Jekyll is disabled. Without it, decks
 render unstyled.
+
+The trade-off is that Jekyll also never renders this README into a landing
+page, so `index.html` at the repository root is hand-written. Add a row to it
+as well as to the table above when you add a deck.
