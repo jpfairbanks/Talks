@@ -5,12 +5,6 @@
   --font-caption:"Fira Sans",sans-serif;
   --font-math:"Fira Math","Fira Sans",sans-serif;
 
-  /* To revert back to XITS Serif Theme:
-  --font-core:"XITS","STIX Two Text","Times New Roman",serif;
-  --font-caption:Arial,Helvetica,sans-serif;
-  --font-math:"XITS Math","XITS","STIX Two Math",serif;
-  */
-
   /* Slide-scale sizes, in px at the deck's native 1536x864 canvas.
      (PowerPoint pt values x 4/3.) */
   --size-hero:110px;      /* ctrTitle default, 83.2pt */
