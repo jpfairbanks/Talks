@@ -9,6 +9,7 @@ with no network connection and does not rot when a CDN moves.
 | Talk | Venue | Deck |
 | --- | --- | --- |
 | Compositional Methods of Engineering Analysis | UF MAE Department Seminar, Fall 2026 | [`2026-fall-compositional-methods/`](2026-fall-compositional-methods/) |
+| Sheaves for Coordination Problems in Distributed Autonomous Systems | Georgia Tech DCL Seminar, 11 September 2026 | [`2026-09-11-gt-dcl-sheaves-coordination/`](2026-09-11-gt-dcl-sheaves-coordination/) |
 
 ## Viewing a deck
 

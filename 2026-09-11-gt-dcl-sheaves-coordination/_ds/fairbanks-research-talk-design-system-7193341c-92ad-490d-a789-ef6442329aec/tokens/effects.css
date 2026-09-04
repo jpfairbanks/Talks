@@ -1,0 +1,28 @@
+:root{
+  /* Radii. Highlight regions are roundRect adj=9184 => 9.184% of the short side.
+     At the sizes used in the deck that lands near 32px. */
+  --radius-region:32px;
+  --radius-pct:9.184%;
+  --radius-node:50%;      /* diagram nodes are circles */
+  --radius-none:0;
+
+  /* Strokes. Figure and diagram outlines are 7-8px at slide scale
+     (a:ln w="63500"/"88900" EMU). */
+  --stroke-thin:2px;
+  --stroke-figure-w:7px;
+  --stroke-heavy:8px;
+
+  /* The only shadow in the system: the title drop shadow from slideLayout1
+     (blurRad 38100, dist 19050, dir 45deg, dk1 @ 40%). */
+  --shadow-title:2px 2px 3px rgb(0 42 84 / .40);
+  --shadow-title-master:3px 3px 3px rgb(0 0 0 / .43);
+  --shadow-none:none;
+
+  /* Overlay used to protect cream type over the banner photograph */
+  --scrim-navy:linear-gradient(180deg,rgb(0 42 84 / .55),rgb(0 42 84 / .15)); /* @kind color */
+
+  /* Motion: the deck has no transitions. Only embedded simulation media moves. */
+  --motion-none:none; /* @kind other */
+  --ease-standard:cubic-bezier(.4,0,.2,1); /* @kind other */
+  --dur-quick:120ms; /* @kind other */
+}

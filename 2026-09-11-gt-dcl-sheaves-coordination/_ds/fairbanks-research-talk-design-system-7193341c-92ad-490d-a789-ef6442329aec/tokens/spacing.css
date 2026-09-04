@@ -1,0 +1,23 @@
+:root{
+  /* Canvas. sldSz 14630400 x 8229600 EMU = 1536 x 864 px. */
+  --slide-w:1536px;
+  --slide-h:864px;
+
+  /* Margins measured off the master/layout placeholders */
+  --gutter-x:48px;        /* 454028 EMU — title & body left edge */
+  --title-top:-8px;       /* titles sit slightly off the top edge */
+  --title-h:96px;
+  --content-top:98px;     /* body placeholder top on the content layout */
+  --banner-h:131px;       /* UF banner strip height on the title slide */
+  --caption-bottom:64px;
+
+  /* Step scale actually present in the deck's geometry */
+  --space-1:4px;
+  --space-2:8px;
+  --space-3:16px;
+  --space-4:24px;
+  --space-5:32px;
+  --space-6:48px;
+  --space-7:64px;
+  --space-8:96px;
+}
