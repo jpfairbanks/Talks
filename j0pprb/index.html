@@ -312,7 +312,7 @@
       position: absolute;
       left: 48px;
       bottom: 17px;
-      font-size: 18px;
+      font-size: 20px;
       line-height: 1;
       white-space: nowrap;
       color: var(--clr-slide-number);
@@ -565,7 +565,7 @@
     }
 
     .fig-col figcaption {
-      font-size: 21px;
+      font-size: 24px;
       line-height: 1.26;
       color: #2C4B6A;
       text-align: center;
@@ -694,7 +694,7 @@
     }
 
     .person .af {
-      font-size: 18px;
+      font-size: 20px;
       line-height: 1.2;
       color: #2C4B6A;
       margin: 3px 0 7px;
@@ -707,7 +707,7 @@
     }
 
     .person .chips .chip {
-      font-size: 14px;
+      font-size: 17px;
       padding: 2px 7px;
     }
 
@@ -739,7 +739,7 @@
       width: 900px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
 
     .plan-item {
@@ -747,15 +747,18 @@
       grid-template-columns: 1fr auto;
       gap: 4px 16px;
       align-items: start;
-      padding: 9px 16px 10px;
+      padding: 8px 16px 9px;
       border-left: 6px solid var(--thrust);
       background: var(--thrust-tint);
       border-radius: 8px;
-      font-size: 22px;
-      line-height: 1.25;
+      font-size: 25px;
+      line-height: 1.22;
       color: #002A54;
       text-wrap: pretty;
     }
+
+    .plan-list.tight { gap: 6px; }
+    .plan-list.tight .plan-item { padding: 6px 16px 7px; }
 
     .plan-item b {
       font-weight: 700;
@@ -763,7 +766,8 @@
 
     .plan-item .who {
       grid-column: 1;
-      font-size: 17px;
+      font-size: 21px;
+      line-height: 1.15;
       color: #5B6272;
     }
 
@@ -776,7 +780,7 @@
     }
 
     .plan-item .chips .chip {
-      font-size: 14px;
+      font-size: 17px;
       padding: 2px 7px;
     }
 
@@ -807,7 +811,7 @@
             <div style="font-size:29px;letter-spacing:3px;font-weight:700;color:#2C4B6A">AFOSR CENTER OF EXCELLENCE</div>
             <div style="margin-top:14px;font-size:66px;line-height:1.05;font-weight:700">DIGICAMS for CODAC</div>
             <div style="margin-top:10px;font-size:44px;line-height:1.12">Vision and Plan for the Year</div>
-            <div style="margin-top:38px;font-size:40px;line-height:1.18">James Fairbanks, Director</div>
+            <div style="margin-top:38px;font-size:40px;line-height:1.18">James Fairbanks, Principal Investigator</div>
             <div style="font-size:31px;line-height:1.22;color:#2C4B6A">Department of Mechanical &amp; Aerospace
               Engineering, University of Florida</div>
             <div style="margin-top:20px;font-size:31px;line-height:1.22;color:#2C4B6A">Center Kickoff Meeting
@@ -823,8 +827,36 @@
 
           <div
             style="position:absolute;left:1094px;top:180px;width:394px;height:296px;overflow:hidden;border-radius:4px;border:1px solid #E3E4E6">
-            <img src="../assets/figures/layered_escort_feedforward.gif" alt=""
-              style="width:100%;height:100%;object-fit:cover;display:block">
+            <svg viewBox="0 0 520 400" role="img" aria-label="Three agents, each confined to a dashed line in the plane, joined by edges to a target inside the triangle the lines form" style="width:100%;height:100%;display:block;background:#fff">
+              <g stroke="#B1B3B6" stroke-width="2.5" stroke-dasharray="7 7">
+                <line x1="20" y1="330" x2="500" y2="330"></line>
+                <line x1="90" y1="20" x2="90" y2="390"></line>
+                <line x1="40" y1="31.8" x2="480" y2="368.2"></line>
+              </g>
+              <g stroke="#002A54" stroke-width="3">
+                <line x1="200" y1="230" x2="430" y2="330"></line>
+                <line x1="200" y1="230" x2="90" y2="330"></line>
+                <line x1="200" y1="230" x2="90" y2="70"></line>
+              </g>
+              <circle cx="430" cy="330" r="34" fill="rgb(108 154 195 / .28)"></circle>
+              <circle cx="90" cy="330" r="34" fill="rgb(226 143 65 / .28)"></circle>
+              <circle cx="90" cy="70" r="34" fill="rgb(128 190 99 / .28)"></circle>
+              <circle cx="200" cy="230" r="34" fill="rgb(190 155 105 / .28)"></circle>
+              <g fill="#fff" stroke="#002A54" stroke-width="3">
+                <circle cx="430" cy="330" r="12"></circle>
+                <circle cx="90" cy="330" r="12"></circle>
+                <circle cx="90" cy="70" r="12"></circle>
+                <circle cx="200" cy="230" r="12"></circle>
+              </g>
+              <g fill="#002A54" font-size="28" font-style="italic" text-anchor="middle"
+                font-family="var(--font-math)"><text x="477.7" y="360.7">ℝ²</text><text x="51.5"
+                  y="375.0">ℝ²</text><text x="60.5" y="37.1">ℝ²</text><text x="200" y="192">ℝ²</text></g>
+              <g fill="#2C4B6A" font-size="26" font-style="italic" text-anchor="middle"
+                font-family="var(--font-math)"><text x="323.8" y="268.8">ℝ</text><text x="159.8"
+                  y="305.3">ℝ</text><text x="126.9" y="171.5">ℝ</text></g><text x="200" y="160" text-anchor="middle"
+                font-family="var(--font-core)" font-style="italic" font-size="24"
+                fill="#2C4B6A">target</text>
+            </svg>
           </div>
           <div
             style="position:absolute;left:1094px;top:500px;width:394px;height:284px;overflow:hidden;border-radius:4px">
@@ -877,19 +909,19 @@
               <line x1="560" y1="122" x2="262" y2="294"/>
               <line x1="304" y1="359" x2="494" y2="359"/>
             </g>
-            <g font-size="20" font-style="italic" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">
+            <g font-size="23" font-style="italic" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">
               <text x="400" y="46" text-anchor="middle">fleet size</text>
               <text x="162" y="214">fleet size</text>
               <text x="430" y="206" text-anchor="middle">routes</text>
               <text x="400" y="346" text-anchor="middle">delays</text>
             </g>
-            <rect x="0" y="0" width="300" height="118" rx="12" fill="#EFF6EB" stroke="#5E9E42" stroke-width="2"/><rect x="0" y="0" width="8" height="118" rx="4" fill="#5E9E42"/><text x="24" y="44" font-size="27" font-weight="700" fill="#002A54">How many drones</text><text x="24" y="76" font-size="20" fill="#2C4B6A">discrete optimization</text><rect x="500" y="0" width="300" height="118" rx="12" fill="#EFF6EB" stroke="#5E9E42" stroke-width="2"/><rect x="500" y="0" width="8" height="118" rx="4" fill="#5E9E42"/><text x="524" y="44" font-size="27" font-weight="700" fill="#002A54">Which routes</text><text x="524" y="76" font-size="20" fill="#2C4B6A">continuous optimization</text><rect x="0" y="300" width="300" height="118" rx="12" fill="#EDF2F8" stroke="#4F7FAE" stroke-width="2"/><rect x="0" y="300" width="8" height="118" rx="4" fill="#4F7FAE"/><text x="24" y="344" font-size="27" font-weight="700" fill="#002A54">Who talks to whom</text><text x="24" y="376" font-size="20" fill="#2C4B6A">communication pattern</text><rect x="500" y="300" width="300" height="118" rx="12" fill="#F6F1EA" stroke="#A5824F" stroke-width="2"/><rect x="500" y="300" width="8" height="118" rx="4" fill="#A5824F"/><text x="524" y="344" font-size="27" font-weight="700" fill="#002A54">How to adapt</text><text x="524" y="376" font-size="20" fill="#2C4B6A">weather, interlopers,</text><text x="524" y="398" font-size="20" fill="#2C4B6A">unmodeled effects</text>
+            <rect x="0" y="0" width="300" height="118" rx="12" fill="#EFF6EB" stroke="#5E9E42" stroke-width="2"/><rect x="0" y="0" width="8" height="118" rx="4" fill="#5E9E42"/><text x="24" y="44" font-size="27" font-weight="700" fill="#002A54">How many drones</text><text x="24" y="76" font-size="23" fill="#2C4B6A">discrete optimization</text><rect x="500" y="0" width="300" height="118" rx="12" fill="#EFF6EB" stroke="#5E9E42" stroke-width="2"/><rect x="500" y="0" width="8" height="118" rx="4" fill="#5E9E42"/><text x="524" y="44" font-size="27" font-weight="700" fill="#002A54">Which routes</text><text x="524" y="76" font-size="23" fill="#2C4B6A">continuous optimization</text><rect x="0" y="300" width="300" height="118" rx="12" fill="#EDF2F8" stroke="#4F7FAE" stroke-width="2"/><rect x="0" y="300" width="8" height="118" rx="4" fill="#4F7FAE"/><text x="24" y="344" font-size="27" font-weight="700" fill="#002A54">Who talks to whom</text><text x="24" y="376" font-size="23" fill="#2C4B6A">communication pattern</text><rect x="500" y="300" width="300" height="118" rx="12" fill="#F6F1EA" stroke="#A5824F" stroke-width="2"/><rect x="500" y="300" width="8" height="118" rx="4" fill="#A5824F"/><text x="524" y="344" font-size="27" font-weight="700" fill="#002A54">How to adapt</text><text x="524" y="374" font-size="23" fill="#2C4B6A">weather, interlopers,</text><text x="524" y="401" font-size="23" fill="#2C4B6A">unmodeled effects</text>
           </svg>
           <figure style="position:absolute;left:890px;top:118px;width:598px;margin:0">
             <img src="../assets/figures/multidomain-autonomy.png"
               alt="Drones, surface vessels and submarines in three layers, joined by communication links"
               style="width:100%;height:458px;object-fit:contain;display:block">
-            <figcaption style="margin-top:10px;font-size:21px;line-height:1.26;color:#2C4B6A;text-align:center;font-style:italic">
+            <figcaption style="margin-top:10px;font-size:24px;line-height:1.26;color:#2C4B6A;text-align:center;font-style:italic">
               Agents differ in dynamics, sensing, communication and computation.</figcaption>
           </figure>
           <div class="takeaway" style="bottom:48px">
@@ -916,23 +948,23 @@
             style="position:absolute;left:48px;top:300px;font-family:var(--font-core);overflow:visible">
             <defs><marker id="arr4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
               <path d="M0,0 L10,5 L0,10 z" fill="#2C4B6A"/></marker></defs>
-            <rect x="0" y="0" width="300" height="170" rx="14" fill="#EDF2F8" stroke="#4F7FAE" stroke-width="2.5"/><rect x="0" y="0" width="300" height="8" rx="4" fill="#4F7FAE"/><text x="24" y="54" font-size="28" font-weight="700" fill="#002A54">Engineering problem</text><text x="24" y="96" font-size="22" fill="#2C4B6A">optimization, dynamics,</text><text x="24" y="122" font-size="22" fill="#2C4B6A">control</text>
-            <rect x="380" y="0" width="300" height="170" rx="14" fill="#EDF2F8" stroke="#4F7FAE" stroke-width="2.5"/><rect x="380" y="0" width="300" height="8" rx="4" fill="#4F7FAE"/><text x="404" y="54" font-size="28" font-weight="700" fill="#002A54">Category of systems</text><text x="404" y="96" font-size="22" fill="#2C4B6A">problems are objects,</text><text x="404" y="122" font-size="22" fill="#2C4B6A">interconnections are</text><text x="404" y="148" font-size="22" fill="#2C4B6A">morphisms</text>
-            <rect x="760" y="0" width="300" height="170" rx="14" fill="#FBF1E7" stroke="#D9782A" stroke-width="2.5"/><rect x="760" y="0" width="300" height="8" rx="4" fill="#D9782A"/><text x="784" y="54" font-size="28" font-weight="700" fill="#002A54">Functor to a solver</text><text x="784" y="96" font-size="22" fill="#2C4B6A">the whole's solver is</text><text x="784" y="122" font-size="22" fill="#2C4B6A">built from its parts'</text>
-            <rect x="1140" y="0" width="300" height="170" rx="14" fill="#EFF6EB" stroke="#5E9E42" stroke-width="2.5"/><rect x="1140" y="0" width="300" height="8" rx="4" fill="#5E9E42"/><text x="1164" y="54" font-size="28" font-weight="700" fill="#002A54">Engineering answer</text><text x="1164" y="96" font-size="22" fill="#2C4B6A">matrices, optimization</text><text x="1164" y="122" font-size="22" fill="#2C4B6A">problems, control laws</text>
+            <rect x="0" y="0" width="300" height="186" rx="14" fill="#EDF2F8" stroke="#4F7FAE" stroke-width="2.5"/><rect x="0" y="0" width="300" height="8" rx="4" fill="#4F7FAE"/><text x="24" y="54" font-size="28" font-weight="700" fill="#002A54">Engineering problem</text><text x="24" y="98" font-size="25" fill="#2C4B6A">optimization,</text><text x="24" y="128" font-size="25" fill="#2C4B6A">dynamics, control</text>
+            <rect x="380" y="0" width="300" height="186" rx="14" fill="#EDF2F8" stroke="#4F7FAE" stroke-width="2.5"/><rect x="380" y="0" width="300" height="8" rx="4" fill="#4F7FAE"/><text x="404" y="54" font-size="28" font-weight="700" fill="#002A54">Category of systems</text><text x="404" y="98" font-size="25" fill="#2C4B6A">problems are objects,</text><text x="404" y="128" font-size="25" fill="#2C4B6A">interconnections are</text><text x="404" y="158" font-size="25" fill="#2C4B6A">morphisms</text>
+            <rect x="760" y="0" width="300" height="186" rx="14" fill="#FBF1E7" stroke="#D9782A" stroke-width="2.5"/><rect x="760" y="0" width="300" height="8" rx="4" fill="#D9782A"/><text x="784" y="54" font-size="28" font-weight="700" fill="#002A54">Functor to a solver</text><text x="784" y="98" font-size="25" fill="#2C4B6A">the whole's solver is</text><text x="784" y="128" font-size="25" fill="#2C4B6A">built from its parts'</text>
+            <rect x="1140" y="0" width="300" height="186" rx="14" fill="#EFF6EB" stroke="#5E9E42" stroke-width="2.5"/><rect x="1140" y="0" width="300" height="8" rx="4" fill="#5E9E42"/><text x="1164" y="54" font-size="28" font-weight="700" fill="#002A54">Engineering answer</text><text x="1164" y="98" font-size="25" fill="#2C4B6A">matrices, optimization</text><text x="1164" y="128" font-size="25" fill="#2C4B6A">problems, control laws</text>
             <g stroke="#2C4B6A" stroke-width="3" fill="none" marker-end="url(#arr4)">
-              <line x1="304" y1="85" x2="374" y2="85"/><line x1="684" y1="85" x2="754" y2="85"/><line x1="1064" y1="85" x2="1134" y2="85"/>
+              <line x1="304" y1="93" x2="374" y2="93"/><line x1="684" y1="93" x2="754" y2="93"/><line x1="1064" y1="93" x2="1134" y2="93"/>
             </g>
-            <g font-size="20" font-weight="700" fill="#2C4B6A" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">
+            <g font-size="23" font-weight="700" fill="#2C4B6A" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">
               <text x="340" y="-12">1 &middot; model</text><text x="720" y="-12">2 &middot; solve</text><text x="1100" y="-12">3 &middot; translate back</text>
             </g>
             <g fill="none" stroke-width="3">
-              <path d="M10,196 v14 h280 v-14" stroke="#5E9E42"/><path d="M1150,196 v14 h280 v-14" stroke="#5E9E42"/>
-              <path d="M390,196 v14 h660 v-14" stroke="#D9782A"/>
+              <path d="M10,212 v14 h280 v-14" stroke="#5E9E42"/><path d="M1150,212 v14 h280 v-14" stroke="#5E9E42"/>
+              <path d="M390,212 v14 h660 v-14" stroke="#D9782A"/>
             </g>
-            <g font-size="21" font-style="italic" text-anchor="middle">
-              <text x="150" y="244" fill="#5E9E42">engineering in</text><text x="1290" y="244" fill="#5E9E42">engineering out</text>
-              <text x="720" y="244" fill="#B35C12">category theory stays inside the tools</text>
+            <g font-size="25" font-style="italic" text-anchor="middle">
+              <text x="150" y="264" fill="#5E9E42">engineering in</text><text x="1290" y="264" fill="#5E9E42">engineering out</text>
+              <text x="720" y="264" fill="#B35C12">category theory stays inside the tools</text>
             </g>
           </svg>
           <div class="takeaway">
@@ -954,7 +986,7 @@
           <div style="position:absolute;left:48px;top:116px;width:830px;font-size:30px;line-height:1.24;text-wrap:pretty">
             Problems and solutions are both sheaves: <b>continuous</b> ones over a space carry the theory,
             <b>combinatorial</b> ones over a finite structure carry the computation.</div>
-          <div style="position:absolute;left:48px;top:268px;width:830px;display:grid;grid-template-columns:120px 1fr;gap:10px 18px;font-size:25px;line-height:1.26;align-items:center">
+          <div style="position:absolute;left:48px;top:268px;width:830px;display:grid;grid-template-columns:120px 1fr;gap:10px 18px;font-size:27px;line-height:1.24;align-items:center">
             <div class="card t1" style="padding:10px 0;text-align:center;font-size:30px"><span class="katex-inline" data-tex="\mathbf{Vect}">\(\mathbf{Vect}\)</span></div>
             <div>Numerical computing: optimization, dynamics and control as linear algebra</div>
             <div class="card t2" style="padding:10px 0;text-align:center;font-size:30px"><span class="katex-inline" data-tex="\mathbf{Met}">\(\mathbf{Met}\)</span></div>
@@ -964,7 +996,7 @@
             <div class="card t4" style="padding:10px 0;text-align:center;font-size:30px"><span class="katex-inline" data-tex="\mathbf{Set}">\(\mathbf{Set}\)</span></div>
             <div>Feasibility: find or enumerate solutions by dynamic programming</div>
           </div>
-          <div style="position:absolute;left:48px;top:640px;width:830px;font-size:25px;line-height:1.26;color:#2C4B6A">
+          <div style="position:absolute;left:48px;top:652px;width:830px;font-size:27px;line-height:1.26;color:#2C4B6A">
             Ordered from most structure to least. Most of our current work uses the first row.</div>
           <img src="../assets/figures/master-sheaf.jpg"
             alt="Sheaves over grids, fluid flows, multi-domain fleets, vector fields, cellular sheaves, and graph colorings, each with overlapping open sets"
@@ -979,7 +1011,30 @@
         </aside>
       </section>
 
-<section data-label="6 · The Team" data-slide-index="6" data-background-color="#ffffff"
+<section data-label="6 · Where the Teams Meet" data-slide-index="6" data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1 class="slide-h1">Where the Teams Meet</h1>
+          <svg viewBox="0 0 1440 710" width="1440" height="710" role="img"
+            aria-label="Undirected wiring diagram of the center: UF, Georgia Tech, Virginia Tech, Duke and the Topos Institute inside the center boundary; AFRL and MIT outside it, joined through ports on the boundary. Solid wires for completed joint work, dashed for work planned this year"
+            style="position:absolute;left:48px;top:108px;font-family:var(--font-core);overflow:visible">
+            <rect x="10" y="34" width="1080" height="636" rx="22" fill="#F4F7FA" stroke="#002A54" stroke-width="3"/>
+            <text x="32" y="22" font-size="21" font-weight="700" letter-spacing="2" fill="#2C4B6A">DIGICAMS</text>
+            <g><line x1="165" y1="105" x2="250" y2="350" stroke="#2C4B6A" stroke-width="4"/><line x1="250" y1="350" x2="830" y2="315" stroke="#2C4B6A" stroke-width="4"/><line x1="250" y1="350" x2="250" y2="585" stroke="#2C4B6A" stroke-width="4"/><line x1="165" y1="105" x2="780" y2="273" stroke="#E28F41" stroke-width="4" stroke-dasharray="12 9"/><line x1="830" y1="315" x2="870" y2="105" stroke="#E28F41" stroke-width="4" stroke-dasharray="12 9"/><line x1="830" y1="315" x2="1090" y2="110" stroke="#2C4B6A" stroke-width="4"/><line x1="830" y1="315" x2="1090" y2="505" stroke="#2C4B6A" stroke-width="4"/><line x1="250" y1="350" x2="1090" y2="505" stroke="#2C4B6A" stroke-width="4"/><line x1="250" y1="585" x2="1090" y2="505" stroke="#E28F41" stroke-width="4" stroke-dasharray="12 9"/><line x1="1090" y1="110" x2="1290" y2="110" stroke="#2C4B6A" stroke-width="4"/><line x1="1090" y1="505" x2="1290" y2="505" stroke="#2C4B6A" stroke-width="4"/></g>
+            <g font-size="21" paint-order="stroke" stroke="#fff" stroke-width="7" stroke-linejoin="round"><text x="240" y="240" text-anchor="start" fill="#2C4B6A">barrier functions [4, 7]</text><text x="240" y="262" text-anchor="start" fill="#2C4B6A">temporal sheaves [12]</text><text x="240" y="284" text-anchor="start" fill="#2C4B6A">metriplectic, Q3 2027</text><text x="578" y="276" text-anchor="middle" fill="#2C4B6A">coordination sheaves [1, 3]</text><text x="578" y="298" text-anchor="middle" fill="#2C4B6A">MSCS [9] · Joana at GT</text><text x="578" y="320" text-anchor="middle" fill="#2C4B6A">temporal sheaves, ECC 2027</text><text x="470" y="150" text-anchor="middle" fill="#B35C12">sheaf Lyapunov methods</text><text x="822" y="200" text-anchor="end" fill="#B35C12">games on</text><text x="822" y="222" text-anchor="end" fill="#B35C12">coordination sheaves</text><text x="958" y="258" text-anchor="start" fill="#2C4B6A">co-design [6]</text><text x="1080" y="382" text-anchor="end" fill="#2C4B6A">co-design [6]</text><text x="1080" y="404" text-anchor="end" fill="#2C4B6A">Hans at AFRL/RF</text><text x="640" y="468" text-anchor="middle" fill="#2C4B6A">MSCS [9]</text><text x="236" y="492" text-anchor="end" fill="#2C4B6A">MSCS [9]</text><text x="236" y="514" text-anchor="end" fill="#2C4B6A">CatColab sheaves</text><text x="700" y="592" text-anchor="middle" fill="#B35C12">workflow search, June 2027</text></g>
+            <g><rect x="40" y="63" width="250" height="84" rx="14" fill="#fff" stroke="#002A54" stroke-width="3"/><image href="../assets/logos/vt-logo.svg" x="54.0" y="83.3" width="222.0" height="43.3" preserveAspectRatio="xMidYMid meet"><title>Virginia Tech</title></image><text x="175" y="173" text-anchor="end" font-size="20" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">Dixon</text><rect x="775" y="57" width="190" height="96" rx="14" fill="#fff" stroke="#002A54" stroke-width="3"/><image href="../assets/logos/duke-logo.svg" x="792.2" y="71.0" width="155.6" height="68.0" preserveAspectRatio="xMidYMid meet"><title>Duke</title></image><text x="882" y="179" text-anchor="start" font-size="20" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">Pajic, Wang</text><rect x="710" y="273" width="240" height="84" rx="14" fill="#fff" stroke="#002A54" stroke-width="3"/><image href="../assets/logos/gatech-logo.png" x="724.0" y="296.7" width="212.0" height="36.6" preserveAspectRatio="xMidYMid meet"><title>Georgia Tech</title></image><text x="830" y="383" text-anchor="middle" font-size="20" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">Hale, Riess</text><rect x="125" y="308" width="250" height="84" rx="14" fill="#fff" stroke="#002A54" stroke-width="3"/><image href="../assets/logos/uf-logo.svg" x="139.0" y="328.9" width="222.0" height="42.1" preserveAspectRatio="xMidYMid meet"><title>University of Florida</title></image><text x="262" y="418" text-anchor="start" font-size="20" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">Fairbanks, Leal,</text><text x="262" y="439" text-anchor="start" font-size="20" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">Samuelson and students</text><rect x="140" y="540" width="220" height="90" rx="14" fill="#fff" stroke="#002A54" stroke-width="3"/><image href="../assets/logos/topos-logo.png" x="163.5" y="554.0" width="173.0" height="62.0" preserveAspectRatio="xMidYMid meet"><title>Topos Institute</title></image><text x="250" y="656" text-anchor="middle" font-size="20" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">Brown, Spivak, Patterson</text><rect x="1215" y="65" width="150" height="90" rx="14" fill="#fff" stroke="#002A54" stroke-width="3"/><image href="../assets/logos/mit-logo.svg" x="1234.9" y="79.0" width="110.1" height="62.0" preserveAspectRatio="xMidYMid meet"><title>MIT</title></image><text x="1290" y="181" text-anchor="middle" font-size="20" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">Zardini</text><rect x="1228" y="443" width="124" height="124" rx="14" fill="#fff" stroke="#002A54" stroke-width="3"/><image href="../assets/logos/afrl-emblem.svg" x="1242.0" y="457.0" width="96.0" height="96.0" preserveAspectRatio="xMidYMid meet"><title>AFRL</title></image><text x="1290" y="593" text-anchor="middle" font-size="20" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">Klawonn</text><circle cx="1090" cy="110" r="10" fill="#002A54" stroke="#fff" stroke-width="3"/><circle cx="1090" cy="505" r="10" fill="#002A54" stroke="#fff" stroke-width="3"/></g>
+            <g font-size="21" fill="#2C4B6A"><line x1="1130" y1="618" x2="1180" y2="618" stroke="#2C4B6A" stroke-width="4"/><text x="1190" y="625">joint work so far</text><line x1="1130" y1="650" x2="1180" y2="650" stroke="#E28F41" stroke-width="4" stroke-dasharray="12 9"/><text x="1190" y="657">planned</text><circle cx="1155" cy="682" r="9" fill="#002A54"/><text x="1190" y="689">port, outside DIGICAMS</text></g>
+          </svg>
+          <div class="ds-slide-num">6</div>
+
+        </div>
+        <aside class="notes">
+          Joint work so far, and the topics that appear in more than one team's plan. The box is DIGICAMS; AFRL and MIT are outside the contract, so they attach through ports on its boundary. Solid edges are joint work already done; dashed edges are planned this year. Open question: repeat the student exchange and the AFRL residency next summer.
+        </aside>
+      </section>
+
+<section data-label="7 · The Team" data-slide-index="7" data-background-color="#ffffff"
         style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
         <div class="slide-canvas">
 
@@ -987,7 +1042,7 @@
           <div class="eyebrow" style="position:absolute;left:48px;top:104px">Investigators and thrust leads</div>
           <div class="people-row" style="top:146px">
             <div class="person"><img src="../assets/photos/james-fairbanks.jpg" alt="James Fairbanks" style="width:128px;height:128px">
-              <div class="nm">James Fairbanks</div><div class="af">UF &middot; Director</div>
+              <div class="nm">James Fairbanks</div><div class="af">UF &middot; Principal Investigator</div>
               <div class="chips"><span class="chip t1">T1</span><span class="chip t2">T2</span><span class="chip t5">T5</span></div></div>
             <div class="person"><img src="../assets/photos/matthew-hale.jpg" alt="Matthew Hale" style="width:128px;height:128px">
               <div class="nm">Matthew Hale</div><div class="af">Georgia Tech</div>
@@ -1032,7 +1087,7 @@
           <div class="takeaway" style="font-size:27px;bottom:44px">
             Tyler Hanks and Cristian Nino completed their PhDs in May 2026. Matthew Klawonn at AFRL is a
             co-author across the optimization work.</div>
-          <div class="ds-slide-num">6</div>
+          <div class="ds-slide-num">7</div>
 
         </div>
         <aside class="notes">
@@ -1040,8 +1095,7 @@
         </aside>
       </section>
 
-
-<section data-label="7 · Recent Papers" data-slide-index="7" data-background-color="#ffffff"
+<section data-label="8 · Recent Papers" data-slide-index="8" data-background-color="#ffffff"
         style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
         <div class="slide-canvas">
 
@@ -1052,12 +1106,12 @@
             aria-label="Timeline of the center's papers from the May 2025 award to December 2026, colored by thrust"
             style="position:absolute;left:48px;top:150px;font-family:var(--font-core);overflow:visible">
             <line x1="40" y1="330" x2="1400" y2="330" stroke="#2C4B6A" stroke-width="3"/>
-            <line x1="176" y1="325" x2="176" y2="335" stroke="#2C4B6A" stroke-width="2"/><text x="176" y="360" text-anchor="middle" font-size="17" fill="#888B97">Jul 2025</text><line x1="381" y1="325" x2="381" y2="335" stroke="#2C4B6A" stroke-width="2"/><text x="381" y="360" text-anchor="middle" font-size="17" fill="#888B97">Oct 2025</text><line x1="586" y1="325" x2="586" y2="335" stroke="#2C4B6A" stroke-width="2"/><text x="586" y="360" text-anchor="middle" font-size="17" fill="#888B97">Jan 2026</text><line x1="787" y1="325" x2="787" y2="335" stroke="#2C4B6A" stroke-width="2"/><text x="787" y="360" text-anchor="middle" font-size="17" fill="#888B97">Apr 2026</text><line x1="990" y1="325" x2="990" y2="335" stroke="#2C4B6A" stroke-width="2"/><text x="990" y="360" text-anchor="middle" font-size="17" fill="#888B97">Jul 2026</text><line x1="1195" y1="325" x2="1195" y2="335" stroke="#2C4B6A" stroke-width="2"/><text x="1195" y="360" text-anchor="middle" font-size="17" fill="#888B97">Oct 2026</text>
-            <line x1="539" y1="318" x2="539" y2="312" stroke="#B1B3B6" stroke-width="2"/><line x1="794" y1="318" x2="794" y2="252" stroke="#B1B3B6" stroke-width="2"/><line x1="912" y1="318" x2="912" y2="192" stroke="#B1B3B6" stroke-width="2"/><line x1="1005" y1="318" x2="1005" y2="312" stroke="#B1B3B6" stroke-width="2"/><line x1="1112" y1="318" x2="1112" y2="132" stroke="#B1B3B6" stroke-width="2"/><line x1="1251" y1="318" x2="1251" y2="252" stroke="#B1B3B6" stroke-width="2"/><line x1="1364" y1="318" x2="1364" y2="192" stroke="#B1B3B6" stroke-width="2"/><circle cx="539" cy="330" r="10" fill="#4F7FAE"/><circle cx="794" cy="330" r="10" fill="#4F7FAE"/><circle cx="912" cy="330" r="10" fill="#5E9E42"/><circle cx="1005" cy="330" r="10" fill="#4F7FAE"/><circle cx="1112" cy="330" r="10" fill="#D9782A"/><circle cx="1251" cy="330" r="10" fill="#4F7FAE"/><circle cx="1354" cy="330" r="10" fill="#D9782A"/><circle cx="1374" cy="330" r="10" fill="#A5824F"/><text x="547" y="282" text-anchor="start" font-size="20" font-weight="700" fill="#002A54" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">CDC 2025 [1]</text><text x="547" y="304" text-anchor="start" font-size="18" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">coordination sheaves</text><text x="802" y="222" text-anchor="start" font-size="20" font-weight="700" fill="#002A54" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">ACS 2026 [10]</text><text x="802" y="244" text-anchor="start" font-size="18" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">time-varying data</text><text x="920" y="162" text-anchor="start" font-size="20" font-weight="700" fill="#002A54" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">ACC 2026 [3]</text><text x="920" y="184" text-anchor="start" font-size="18" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">asynchronous diffusion</text><text x="1013" y="282" text-anchor="start" font-size="20" font-weight="700" fill="#002A54" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">ECC 2026 [5]</text><text x="1013" y="304" text-anchor="start" font-size="18" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">multi-target tracking</text><text x="1120" y="102" text-anchor="start" font-size="20" font-weight="700" fill="#002A54" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">IFAC WC 2026 [7]</text><text x="1120" y="124" text-anchor="start" font-size="18" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">Whitney barrier functions</text><text x="1243" y="222" text-anchor="end" font-size="20" font-weight="700" fill="#002A54" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">Asilomar 2026 [8]</text><text x="1243" y="244" text-anchor="end" font-size="18" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">system identification</text><text x="1356" y="162" text-anchor="end" font-size="20" font-weight="700" fill="#002A54" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">CDC 2026 [4, 6]</text><text x="1356" y="184" text-anchor="end" font-size="18" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">safety; co-design</text><line x1="1173" y1="342" x2="1173" y2="392" stroke="#B1B3B6" stroke-width="2"/><circle cx="1173" cy="330" r="9" fill="#fff" stroke="#5E9E42" stroke-width="4"/><text x="1187" y="410" font-size="20" font-weight="700" fill="#002A54" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">MSCS, accepted [9]</text><text x="1187" y="432" font-size="18" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">first journal paper</text><circle cx="1104" cy="480" r="8" fill="#fff" stroke="#4F7FAE" stroke-width="4"/><circle cx="1126" cy="480" r="8" fill="#fff" stroke="#D9782A" stroke-width="4"/><circle cx="1148" cy="480" r="8" fill="#fff" stroke="#D9782A" stroke-width="4"/><line x1="1148" y1="342" x2="1148" y2="468" stroke="#B1B3B6" stroke-width="2" stroke-dasharray="4 4"/><text x="1082" y="486" text-anchor="end" font-size="20" font-weight="700" fill="#002A54" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">Submitted, Sep 2026</text><text x="1082" y="508" text-anchor="end" font-size="18" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">narratives [11] &middot; ACC 2027 [12] &middot; L-CSS [13]</text><path d="M80,317 l11,13 l-11,13 l-11,-13 z" fill="#002A54"/><text x="68" y="374" font-size="20" font-weight="700" fill="#002A54">Award</text><text x="68" y="396" font-size="18" fill="#2C4B6A">19 May 2025</text><line x1="1179" y1="84" x2="1179" y2="530" stroke="#FA4616" stroke-width="2" stroke-dasharray="6 5"/><text x="1185" y="544" font-size="18" font-weight="700" fill="#FA4616">kickoff</text>
-            <g font-size="18" fill="#2C4B6A"><circle cx="20" cy="566" r="9" fill="#2C4B6A"/><text x="36" y="572">presented or published</text><circle cx="260" cy="566" r="8" fill="#fff" stroke="#2C4B6A" stroke-width="4"/><text x="276" y="572">accepted or submitted</text><circle cx="520" cy="566" r="8" fill="#4F7FAE"/><text x="534" y="572">T1</text><circle cx="610" cy="566" r="8" fill="#D9782A"/><text x="624" y="572">T2</text><circle cx="700" cy="566" r="8" fill="#5E9E42"/><text x="714" y="572">T3</text><circle cx="790" cy="566" r="8" fill="#A5824F"/><text x="804" y="572">T4</text><circle cx="880" cy="566" r="8" fill="#2F948C"/><text x="894" y="572">T5</text></g>
+            <line x1="176" y1="325" x2="176" y2="335" stroke="#2C4B6A" stroke-width="2"/><text x="176" y="360" text-anchor="middle" font-size="19" fill="#888B97">Jul 2025</text><line x1="381" y1="325" x2="381" y2="335" stroke="#2C4B6A" stroke-width="2"/><text x="381" y="360" text-anchor="middle" font-size="19" fill="#888B97">Oct 2025</text><line x1="586" y1="325" x2="586" y2="335" stroke="#2C4B6A" stroke-width="2"/><text x="586" y="360" text-anchor="middle" font-size="19" fill="#888B97">Jan 2026</text><line x1="787" y1="325" x2="787" y2="335" stroke="#2C4B6A" stroke-width="2"/><text x="787" y="360" text-anchor="middle" font-size="19" fill="#888B97">Apr 2026</text><line x1="990" y1="325" x2="990" y2="335" stroke="#2C4B6A" stroke-width="2"/><text x="990" y="360" text-anchor="middle" font-size="19" fill="#888B97">Jul 2026</text><line x1="1195" y1="325" x2="1195" y2="335" stroke="#2C4B6A" stroke-width="2"/><text x="1195" y="360" text-anchor="middle" font-size="19" fill="#888B97">Oct 2026</text>
+            <line x1="539" y1="318" x2="539" y2="312" stroke="#B1B3B6" stroke-width="2"/><line x1="794" y1="318" x2="794" y2="252" stroke="#B1B3B6" stroke-width="2"/><line x1="912" y1="318" x2="912" y2="192" stroke="#B1B3B6" stroke-width="2"/><line x1="1005" y1="318" x2="1005" y2="312" stroke="#B1B3B6" stroke-width="2"/><line x1="1112" y1="318" x2="1112" y2="132" stroke="#B1B3B6" stroke-width="2"/><line x1="1251" y1="318" x2="1251" y2="252" stroke="#B1B3B6" stroke-width="2"/><line x1="1364" y1="318" x2="1364" y2="192" stroke="#B1B3B6" stroke-width="2"/><circle cx="539" cy="330" r="10" fill="#4F7FAE"/><circle cx="794" cy="330" r="10" fill="#4F7FAE"/><circle cx="912" cy="330" r="10" fill="#5E9E42"/><circle cx="1005" cy="330" r="10" fill="#4F7FAE"/><circle cx="1112" cy="330" r="10" fill="#D9782A"/><circle cx="1251" cy="330" r="10" fill="#4F7FAE"/><circle cx="1354" cy="330" r="10" fill="#D9782A"/><circle cx="1374" cy="330" r="10" fill="#A5824F"/><text x="547" y="282" text-anchor="start" font-size="22" font-weight="700" fill="#002A54" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">CDC 2025 [1]</text><text x="547" y="304" text-anchor="start" font-size="20" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">coordination sheaves</text><text x="802" y="222" text-anchor="start" font-size="22" font-weight="700" fill="#002A54" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">ACS 2026 [10]</text><text x="802" y="244" text-anchor="start" font-size="20" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">time-varying data</text><text x="920" y="162" text-anchor="start" font-size="22" font-weight="700" fill="#002A54" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">ACC 2026 [3]</text><text x="920" y="184" text-anchor="start" font-size="20" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">asynchronous diffusion</text><text x="1013" y="282" text-anchor="start" font-size="22" font-weight="700" fill="#002A54" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">ECC 2026 [5]</text><text x="1013" y="304" text-anchor="start" font-size="20" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">multi-target tracking</text><text x="1120" y="102" text-anchor="start" font-size="22" font-weight="700" fill="#002A54" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">IFAC WC 2026 [7]</text><text x="1120" y="124" text-anchor="start" font-size="20" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">Whitney barrier functions</text><text x="1243" y="222" text-anchor="end" font-size="22" font-weight="700" fill="#002A54" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">Asilomar 2026 [8]</text><text x="1243" y="244" text-anchor="end" font-size="20" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">system identification</text><text x="1356" y="162" text-anchor="end" font-size="22" font-weight="700" fill="#002A54" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">CDC 2026 [4, 6]</text><text x="1356" y="184" text-anchor="end" font-size="20" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">safety; co-design</text><line x1="1173" y1="342" x2="1173" y2="392" stroke="#B1B3B6" stroke-width="2"/><circle cx="1173" cy="330" r="9" fill="#fff" stroke="#5E9E42" stroke-width="4"/><text x="1187" y="410" font-size="22" font-weight="700" fill="#002A54" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">MSCS, accepted [9]</text><text x="1187" y="432" font-size="20" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">first journal paper</text><circle cx="1104" cy="480" r="8" fill="#fff" stroke="#4F7FAE" stroke-width="4"/><circle cx="1126" cy="480" r="8" fill="#fff" stroke="#D9782A" stroke-width="4"/><circle cx="1148" cy="480" r="8" fill="#fff" stroke="#D9782A" stroke-width="4"/><line x1="1148" y1="342" x2="1148" y2="468" stroke="#B1B3B6" stroke-width="2" stroke-dasharray="4 4"/><text x="1082" y="486" text-anchor="end" font-size="22" font-weight="700" fill="#002A54" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">Submitted, Sep 2026</text><text x="1082" y="508" text-anchor="end" font-size="20" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">narratives [11] &middot; ACC 2027 [12] &middot; L-CSS [13]</text><path d="M80,317 l11,13 l-11,13 l-11,-13 z" fill="#002A54"/><text x="68" y="374" font-size="22" font-weight="700" fill="#002A54">Award</text><text x="68" y="396" font-size="20" fill="#2C4B6A">19 May 2025</text><line x1="1179" y1="84" x2="1179" y2="530" stroke="#FA4616" stroke-width="2" stroke-dasharray="6 5"/><text x="1185" y="544" font-size="20" font-weight="700" fill="#FA4616">kickoff</text>
+            <g font-size="20" fill="#2C4B6A"><circle cx="20" cy="566" r="9" fill="#2C4B6A"/><text x="36" y="572">presented or published</text><circle cx="286" cy="566" r="8" fill="#fff" stroke="#2C4B6A" stroke-width="4"/><text x="302" y="572">accepted or submitted</text><circle cx="560" cy="566" r="8" fill="#4F7FAE"/><text x="574" y="572">T1</text><circle cx="650" cy="566" r="8" fill="#D9782A"/><text x="664" y="572">T2</text><circle cx="740" cy="566" r="8" fill="#5E9E42"/><text x="754" y="572">T3</text><circle cx="830" cy="566" r="8" fill="#A5824F"/><text x="844" y="572">T4</text><circle cx="920" cy="566" r="8" fill="#2F948C"/><text x="934" y="572">T5</text></g>
           </svg>
           <div class="ds-cite">Placed at the conference date, or the publication, acceptance or submission date &middot; references on the last slide</div>
-          <div class="ds-slide-num">7</div>
+          <div class="ds-slide-num">8</div>
 
         </div>
         <aside class="notes">
@@ -1065,40 +1119,40 @@
         </aside>
       </section>
 
-<section data-label="8 · Collaboration So Far" data-slide-index="8" data-background-color="#ffffff"
+<section data-label="9 · Collaboration So Far" data-slide-index="9" data-background-color="#ffffff"
         style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
         <div class="slide-canvas">
 
           <h1 class="slide-h1" style="font-size:59px">Collaboration So Far</h1>
           <div style="position:absolute;left:48px;top:108px;width:1440px;font-size:30px;line-height:1.2">
             Joint work across the teams and with AFRL, before the kickoff.</div>
-          <div style="position:absolute;left:48px;top:172px;width:1440px;display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:286px;gap:24px">
+          <div style="position:absolute;left:48px;top:172px;width:1440px;display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:304px;gap:22px">
             <div class="card t3"><div class="eyebrow" style="color:var(--thrust)">First journal paper</div>
-              <div class="card-head" style="margin-top:8px;font-size:27px">UF, GT, Topos and AFRL</div>
-              <div class="card-body" style="font-size:23px">The MSCS paper is the center's first journal paper and its first
+              <div class="card-head" style="margin-top:6px;font-size:28px">UF, GT, Topos and AFRL</div>
+              <div class="card-body" style="font-size:25px;line-height:1.26">The MSCS paper is the center's first journal paper and its first
                 written jointly with AFRL <span class="ref">[9]</span></div></div>
             <div class="card t4"><div class="eyebrow" style="color:var(--thrust)">First cross-team paper</div>
-              <div class="card-head" style="margin-top:8px;font-size:27px">Co-design, with AFRL and MIT</div>
-              <div class="card-body" style="font-size:23px">Riess and Hale with Matthew Klawonn at AFRL and Gioele Zardini
+              <div class="card-head" style="margin-top:6px;font-size:28px">Co-design, with AFRL and MIT</div>
+              <div class="card-body" style="font-size:25px;line-height:1.26">Riess and Hale with Matthew Klawonn at AFRL and Gioele Zardini
                 at MIT, at CDC 2026 <span class="ref">[6]</span></div></div>
             <div class="card t1"><div class="eyebrow" style="color:var(--thrust)">First AFRL residency</div>
-              <div class="card-head" style="margin-top:8px;font-size:27px">Hans Riess at AFRL/RF</div>
-              <div class="card-body" style="font-size:23px">Part of this past summer at AFRL, working in part with
+              <div class="card-head" style="margin-top:6px;font-size:28px">Hans Riess at AFRL/RF</div>
+              <div class="card-body" style="font-size:25px;line-height:1.26">Part of this past summer at AFRL, working in part with
                 Matthew Klawonn</div></div>
             <div class="card t2"><div class="eyebrow" style="color:var(--thrust)">First student exchange</div>
-              <div class="card-head" style="margin-top:8px;font-size:27px">Joana Bou Barcelo at Georgia Tech</div>
-              <div class="card-body" style="font-size:23px">Coordination sheaves reached Hale's students, and her work now runs
+              <div class="card-head" style="margin-top:6px;font-size:28px">Joana Bou Barcelo at Georgia Tech</div>
+              <div class="card-body" style="font-size:25px;line-height:1.26">Coordination sheaves reached Hale's students, and her work now runs
                 on the Robotarium and in the motion-capture lab</div></div>
             <div class="card t5"><div class="eyebrow" style="color:var(--thrust)">Software foundations</div>
-              <div class="card-head" style="margin-top:8px;font-size:27px">A query engine in Rust</div>
-              <div class="card-body" style="font-size:23px">Incremental queries, rewriting with type specialization, and
+              <div class="card-head" style="margin-top:6px;font-size:28px">A query engine in Rust</div>
+              <div class="card-body" style="font-size:25px;line-height:1.26">Incremental queries, rewriting with type specialization, and
                 homomorphism search posed as constraint satisfaction</div></div>
             <div class="card t1"><div class="eyebrow" style="color:var(--thrust)">People</div>
-              <div class="card-head" style="margin-top:8px;font-size:27px">Two PhDs, May 2026</div>
-              <div class="card-body" style="font-size:23px">Tyler Hanks, on coordination sheaves, now on the faculty at Florida
+              <div class="card-head" style="margin-top:6px;font-size:28px">Two PhDs, May 2026</div>
+              <div class="card-body" style="font-size:25px;line-height:1.26">Tyler Hanks, on coordination sheaves, now on the faculty at Florida
                 Tech; Cristian Nino, MAE Best Dissertation Award</div></div>
           </div>
-          <div class="ds-slide-num">8</div>
+          <div class="ds-slide-num">9</div>
 
         </div>
         <aside class="notes">
@@ -1106,7 +1160,185 @@
         </aside>
       </section>
 
-<section data-label="9 · The Plan" data-slide-index="9" data-background-color="#002A54"
+<section data-label="10 · Who Can Track Whom Is a Cohomological Question" data-slide-index="10"
+        data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1 class="slide-h1">Who Can Track Whom Is a Cohomological Question</h1>
+          <div style="position:absolute;left:48px;top:104px;width:700px;height:578px;background:#fff;border:1px solid rgba(108,154,195,0.28);border-radius:12px;box-shadow:0 3px 10px rgba(0,42,84,0.05);padding:18px 20px;box-sizing:border-box;display:flex;flex-direction:column;gap:10px">
+            <div style="font-size:29px;color:#2C4B6A;font-weight:700;text-align:center">Ships Tracking Submarines — Determined</div>
+            <div style="width:100%;height:326px">
+              <img src="../assets/figures/usv-tracking-uuv.svg" alt="Surface vessels on a plane sensing submarines moving in a three-dimensional volume below" style="width:100%;height:100%;object-fit:contain">
+            </div>
+            <div style="flex:1;font-size:31px;line-height:1.24;text-wrap:pretty">A ship is stuck on the surface, so the target’s three coordinates determine its two. The harmonic extension is unique and the relative cohomology vanishes.</div>
+          </div>
+          <div style="position:absolute;left:788px;top:104px;width:700px;height:578px;background:#fff;border:1px solid rgba(108,154,195,0.28);border-radius:12px;box-shadow:0 3px 10px rgba(0,42,84,0.05);padding:18px 20px;box-sizing:border-box;display:flex;flex-direction:column;gap:10px">
+            <div style="font-size:29px;color:#2C4B6A;font-weight:700;text-align:center">Quadcopters Tracking Ships — Underdetermined</div>
+            <div style="width:100%;height:326px">
+              <img src="../assets/figures/uav-tracking-usv-2.svg" alt="Aerial vehicles in a three-dimensional volume sensing surface vessels confined to a plane below" style="width:100%;height:100%;object-fit:contain">
+            </div>
+            <div style="flex:1;font-size:31px;line-height:1.24;text-wrap:pretty">A quadcopter also has an altitude, which nothing it measures about a surface vessel constrains. That spare degree of freedom is the non-vanishing relative cohomology.</div>
+          </div>
+          <div style="position:absolute;left:48px;right:48px;bottom:58px;font-size:37px;line-height:1.18;color:#2C4B6A">
+            Trackability is whether the measurements pin down every degree of freedom the agents have. The cohomology
+            counts the ones they miss.</div>
+          <div class="ds-cite">[<span class="cite-ours">5</span>] T. Hanks, C. F. Nino, J. Bou Barcelo, A. Copeland, W. E. Dixon, and J. Fairbanks. <i>European Control Conference,</i> 2026</div>
+          <div class="ds-slide-num">10</div>
+
+        </div>
+        <aside class="notes">
+          The question the widget on the next slide answers. Ships in the plane tracking submarines in 3D are determined: the targets' coordinates fix the ships'. Quadcopters tracking ships are not: each quadcopter's altitude is left free, and that freedom is the non-vanishing relative cohomology. The widget computes this live for one scenario, and the explorer after it for any sheaf you write down.
+        </aside>
+      </section>
+
+<section data-label="11 · Live: Who Can Track Whom" data-slide-index="11" data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1 class="slide-h1">Live: Who Can Track Whom</h1>
+          <iframe src="../assets/widgets/multi-domain-tracking.html" title="Multi-domain tracking sheaf widget"
+            style="position:absolute;left:48px;top:100px;width:1440px;height:640px;border:1px solid #D5D8DD;border-radius:10px;background:#f9f9f7"></iframe>
+          <div style="position:absolute;left:48px;right:48px;top:748px;font-size:26px;line-height:1.24;color:#2C4B6A;text-wrap:pretty">
+            Ships in <span class="katex-inline" data-tex="\mathbb{R}^2">\(\mathbb{R}^2\)</span>, targets in
+            <span class="katex-inline" data-tex="\mathbb{R}^3">\(\mathbb{R}^3\)</span>, linked by the projection that forgets
+            altitude. Pin the ships and four degrees of freedom survive, one altitude per target; pin the targets and none do.</div>
+          <div class="ds-cite">CODAC-Centers/SheafApps &middot; also at codac-centers.github.io/software/multi-domain-tracking
+            <span class="ds-cite-more">&middot; [<span class="cite-ours">5</span>]</span></div>
+          <div class="ds-slide-num">11</div>
+
+        </div>
+        <aside class="notes">
+          Click into the widget to use it: drag an agent, toggle pins, scrub diffusion time. Click outside the
+          frame to get the arrow keys back for the slides. The degrees-of-freedom readout is the dimension of
+          H&#8304; for the pinned set, which is the cohomological answer to who can track whom from the ECC paper.
+          Runs offline; nothing is fetched.
+        </aside>
+      </section>
+
+<section data-label="12 · The Cellular Sheaf Explorer" data-slide-index="12" data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1 class="slide-h1">The Cellular Sheaf Explorer</h1>
+          <iframe src="../assets/widgets/cellular-sheaf-explorer.html" title="Cellular Sheaf Explorer"
+            style="position:absolute;left:48px;top:100px;width:1440px;height:670px;border:1px solid #D5D8DD;border-radius:10px;background:#f9f9f7"></iframe>
+          <div style="position:absolute;left:48px;right:48px;top:778px;font-size:26px;line-height:1.24;color:#2C4B6A">
+            Six worked examples, a source editor for writing your own sheaf, and the spectrum and energy readouts. In the
+            browser, with nothing to install.</div>
+          <div class="ds-slide-num">12</div>
+
+        </div>
+        <aside class="notes">
+          The picker in the top right has six sheaves, simplest first: braced square, bare square, degenerate
+          triangle, offset formation, infeasible cycle, multi-domain tracking. Bare square is the quickest to show:
+          deleting the brace adds one degree of freedom, and sweeping it shears the square into a rhombus. This is
+          the tool for engineers who have never seen a sheaf.
+        </aside>
+      </section>
+
+<section data-label="13 · Manifesto" data-slide-index="13" data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1 class="slide-h1">Manifesto: A Knowledgebase for Sheaf Theory</h1>
+          <div style="position:absolute;left:48px;top:106px;width:1440px;font-size:30px;line-height:1.22">
+            Every result in the center's papers, with a permanent tag and its own citable page, cross-linked to what it
+            depends on.</div>
+          <svg viewBox="0 0 1440 250" width="1440" height="250" role="img"
+            aria-label="Pipeline: papers are parsed, each result gets a permanent tag, and the results are browsed by library, concepts, notation and search; cited papers are harvested back into the queue"
+            style="position:absolute;left:48px;top:200px;font-family:var(--font-core);overflow:visible">
+            <defs><marker id="arrM" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="#2C4B6A"/></marker></defs>
+            <g stroke="#2C4B6A" stroke-width="3" fill="none" marker-end="url(#arrM)">
+              <line x1="304" y1="82" x2="374" y2="82"/><line x1="684" y1="82" x2="754" y2="82"/><line x1="1064" y1="82" x2="1134" y2="82"/>
+              <path d="M1290,168 C1290,250 150,250 150,172" stroke-dasharray="10 8"/>
+            </g>
+            <text x="720" y="252" text-anchor="middle" font-size="24" font-style="italic" fill="#2C4B6A"
+              paint-order="stroke" stroke="#fff" stroke-width="7" stroke-linejoin="round">harvest: the papers a corpus cites are queued for review</text>
+            <rect x="0" y="0" width="300" height="164" rx="12" fill="#EDF2F8" stroke="#4F7FAE" stroke-width="2"/><rect x="0" y="0" width="300" height="7" rx="3" fill="#4F7FAE"/><text x="22" y="46" font-size="28" font-weight="700" fill="#002A54">Papers</text><text x="22" y="82" font-size="24" fill="#2C4B6A">arXiv source or</text><text x="22" y="110" font-size="24" fill="#2C4B6A">local LaTeX</text><rect x="380" y="0" width="300" height="164" rx="12" fill="#EFF6EB" stroke="#5E9E42" stroke-width="2"/><rect x="380" y="0" width="300" height="7" rx="3" fill="#5E9E42"/><text x="402" y="46" font-size="28" font-weight="700" fill="#002A54">Parse</text><text x="402" y="82" font-size="24" fill="#2C4B6A">every definition,</text><text x="402" y="110" font-size="24" fill="#2C4B6A">theorem, lemma</text><text x="402" y="138" font-size="24" fill="#2C4B6A">and example</text><rect x="760" y="0" width="300" height="164" rx="12" fill="#FBF1E7" stroke="#D9782A" stroke-width="2"/><rect x="760" y="0" width="300" height="7" rx="3" fill="#D9782A"/><text x="782" y="46" font-size="28" font-weight="700" fill="#002A54">Tag</text><text x="782" y="82" font-size="24" fill="#2C4B6A">permanent, never</text><text x="782" y="110" font-size="24" fill="#2C4B6A">reused, so citations</text><text x="782" y="138" font-size="24" fill="#2C4B6A">survive renumbering</text><rect x="1140" y="0" width="300" height="164" rx="12" fill="#EAF5F4" stroke="#2F948C" stroke-width="2"/><rect x="1140" y="0" width="300" height="7" rx="3" fill="#2F948C"/><text x="1162" y="46" font-size="28" font-weight="700" fill="#002A54">Browse</text><text x="1162" y="82" font-size="24" fill="#2C4B6A">Library &middot; Concepts</text><text x="1162" y="110" font-size="24" fill="#2C4B6A">Notation &middot; Search</text>
+          </svg>
+          <div style="position:absolute;left:48px;top:502px;width:1440px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+            <div class="card t1"><div class="card-head" style="font-size:28px">Library</div>
+              <div class="card-body" style="font-size:25px;line-height:1.26">Paper, section, result, in reading order.</div></div>
+            <div class="card t3"><div class="card-head" style="font-size:28px">Concepts</div>
+              <div class="card-body" style="font-size:25px;line-height:1.26">One notion's definitions from different papers, side by side.</div></div>
+            <div class="card t2"><div class="card-head" style="font-size:28px">Notation</div>
+              <div class="card-body" style="font-size:25px;line-height:1.26">Where each symbol first appears, in each paper that uses it.</div></div>
+          </div>
+          <div style="position:absolute;left:48px;right:48px;top:694px;font-size:28px;line-height:1.26;color:#002A54;text-wrap:pretty">
+            <b>Ask:</b> send the arXiv ID of every center paper, cite results by tag in new papers, and help review the
+            queue. <span style="color:#2C4B6A">manifesto.privapps.ufl.edu</span></div>
+          <div class="ds-cite">CODAC-Centers/Manifesto &middot; corpus in SheavesManifesto</div>
+          <div class="ds-slide-num">13</div>
+
+        </div>
+        <aside class="notes">
+          The pitch: the center's results are spread over dozens of papers with different notation. Manifesto
+          gives every definition, theorem, lemma and example a permanent tag, Stacks Project style, so a citation
+          of a tag keeps resolving after a paper is renumbered. The Concepts view is the one to show: the same
+          notion defined in several papers, side by side. It grows from the corpus's own bibliographies, but
+          nothing is added without someone approving it in the queue.
+        </aside>
+      </section>
+
+<section data-label="14 · The Year at a Glance" data-slide-index="14" data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1 class="slide-h1">The Year at a Glance</h1>
+          <svg viewBox="0 0 1440 614" width="1440" height="614" role="img"
+            aria-label="Swimlane chart of the year from September 2026 to September 2027: submissions as diamonds, conferences as dots, spans as bars"
+            style="position:absolute;left:48px;top:100px;font-family:var(--font-core);overflow:visible">
+            <rect x="506" y="66" width="233" height="508" fill="#EEF2F6"/><text x="622" y="18" text-anchor="middle" font-size="23" font-weight="700" fill="#002A54">Q1</text><text x="853" y="18" text-anchor="middle" font-size="23" font-weight="700" fill="#002A54">Q2</text><rect x="967" y="66" width="230" height="508" fill="#EEF2F6"/><text x="1082" y="18" text-anchor="middle" font-size="23" font-weight="700" fill="#002A54">Q3</text><text x="1314" y="18" text-anchor="middle" font-size="23" font-weight="700" fill="#002A54">Q4</text><text x="468" y="46" text-anchor="middle" font-size="19" fill="#888B97">Sep</text><text x="545" y="46" text-anchor="middle" font-size="19" fill="#888B97">Oct</text><text x="622" y="46" text-anchor="middle" font-size="19" fill="#888B97">Nov</text><text x="700" y="46" text-anchor="middle" font-size="19" fill="#888B97">Dec</text><text x="778" y="46" text-anchor="middle" font-size="19" fill="#888B97">Jan</text><text x="853" y="46" text-anchor="middle" font-size="19" fill="#888B97">Feb</text><text x="927" y="46" text-anchor="middle" font-size="19" fill="#888B97">Mar</text><text x="1005" y="46" text-anchor="middle" font-size="19" fill="#888B97">Apr</text><text x="1082" y="46" text-anchor="middle" font-size="19" fill="#888B97">May</text><text x="1159" y="46" text-anchor="middle" font-size="19" fill="#888B97">Jun</text><text x="1236" y="46" text-anchor="middle" font-size="19" fill="#888B97">Jul</text><text x="1315" y="46" text-anchor="middle" font-size="19" fill="#888B97">Aug</text><text x="1392" y="46" text-anchor="middle" font-size="19" fill="#888B97">Sep</text><line x1="0" y1="124" x2="1430" y2="124" stroke="#E3E4E6"/><text x="0" y="106" font-size="23" fill="#002A54">Under review: ACC 2027 [12], L-CSS [13]</text><circle cx="478" cy="99" r="10" fill="#fff" stroke="#4F7FAE" stroke-width="4"/><text x="500" y="105" font-size="20" font-style="italic" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">submitted Sep</text><line x1="0" y1="174" x2="1430" y2="174" stroke="#E3E4E6"/><text x="0" y="156" font-size="23" fill="#002A54">ECC 2027: temporal sheaves; HPC</text><path d="M582,135 l14,14 l-14,14 l-14,-14 z" fill="#5E9E42"/><text x="604" y="155" font-size="20" font-style="italic" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">31 Oct</text><line x1="0" y1="224" x2="1430" y2="224" stroke="#E3E4E6"/><text x="0" y="206" font-size="23" fill="#002A54">ACM TODS: incremental rewriting</text><path d="M633,185 l14,14 l-14,14 l-14,-14 z" fill="#2F948C"/><text x="655" y="205" font-size="20" font-style="italic" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">before Thanksgiving</text><line x1="0" y1="274" x2="1430" y2="274" stroke="#E3E4E6"/><text x="0" y="256" font-size="23" fill="#002A54">CDC 2026, Honolulu: present [4, 6]</text><circle cx="698" cy="249" r="11" fill="#002A54"/><text x="720" y="255" font-size="20" font-style="italic" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">15–18 Dec</text><line x1="0" y1="324" x2="1430" y2="324" stroke="#E3E4E6"/><text x="0" y="306" font-size="23" fill="#002A54">CDC 2027: hardware results</text><path d="M964,286 l13,13 l-13,13 l-13,-13 z" fill="#fff" stroke="#D9782A" stroke-width="3.5"/><text x="986" y="305" font-size="20" font-style="italic" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">expected late Mar</text><line x1="0" y1="374" x2="1430" y2="374" stroke="#E3E4E6"/><text x="0" y="356" font-size="23" fill="#002A54">IEEE TAC: local-to-global safety</text><rect x="936" y="338" width="233" height="22" rx="11" fill="#D9782A"/><text x="1179" y="355" text-anchor="start" font-size="20" font-style="italic" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">spring</text><line x1="0" y1="424" x2="1430" y2="424" stroke="#E3E4E6"/><text x="0" y="406" font-size="23" fill="#002A54">Metriplectic dynamics and open sheaves</text><rect x="967" y="388" width="228" height="22" rx="11" fill="#D9782A"/><text x="1205" y="405" text-anchor="start" font-size="20" font-style="italic" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">Q3 deadline</text><line x1="0" y1="474" x2="1430" y2="474" stroke="#E3E4E6"/><text x="0" y="456" font-size="23" fill="#002A54">Workflow-search prototype, with AFRL</text><path d="M1195,435 l14,14 l-14,14 l-14,-14 z" fill="#A5824F"/><text x="1217" y="455" font-size="20" font-style="italic" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">June</text><line x1="0" y1="524" x2="1430" y2="524" stroke="#E3E4E6"/><text x="0" y="506" font-size="23" fill="#002A54">ECC 2027, Brussels: present</text><circle cx="1230" cy="499" r="11" fill="#002A54"/><text x="1252" y="505" font-size="20" font-style="italic" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">13–16 Jul</text><line x1="0" y1="574" x2="1430" y2="574" stroke="#E3E4E6"/><text x="0" y="556" font-size="23" fill="#002A54">Journal track: every team</text><rect x="506" y="540" width="922" height="18" rx="9" fill="#5E9E42" fill-opacity=".18" stroke="#5E9E42" stroke-width="2" stroke-dasharray="8 6"/><text x="967" y="555" text-anchor="middle" font-size="20" font-style="italic" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">no fixed dates</text><line x1="488" y1="66" x2="488" y2="574" stroke="#FA4616" stroke-width="2" stroke-dasharray="6 5"/><text x="488" y="596" text-anchor="middle" font-size="20" font-weight="700" fill="#FA4616">kickoff</text>
+            <g font-size="20" fill="#2C4B6A" transform="translate(0,596)"><path d="M8,-6 l10,10 l-10,10 l-10,-10 z" fill="#2C4B6A"/><text x="26" y="10">deadline</text><path d="M126,-6 l10,10 l-10,10 l-10,-10 z" fill="#fff" stroke="#2C4B6A" stroke-width="3"/><text x="144" y="10">expected deadline</text><circle cx="328" cy="4" r="9" fill="#002A54"/><text x="343" y="10">conference</text></g>
+          </svg>
+          <div style="position:absolute;left:48px;right:48px;top:742px;font-size:25px;line-height:1.24;color:#2C4B6A">
+            <b>Through the year:</b> categories of sheaves &middot; multifrontal and interior-point conic solvers &middot;
+            hierarchical mission planning &middot; games on sheaves &middot; CatColab interface</div>
+          <div class="ds-cite" style="font-size:18px">Only dates the teams have committed to &middot; ECC 2027 deadline from its call for papers; CDC 2027 has not published one, so its date follows CDC 2026 (31 March)</div>
+          <div class="ds-slide-num">14</div>
+
+        </div>
+        <aside class="notes">
+          Most of the dated items fall in the first three quarters; every team is also writing journal papers, which have no fixed dates. Ask for Q4 milestones and the date of the annual review.
+        </aside>
+      </section>
+
+<section data-label="15 · Working With the Air Force" data-slide-index="15" data-background-color="#ffffff"
+        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
+        <div class="slide-canvas">
+
+          <h1 class="slide-h1">Working With the Air Force</h1>
+          <div style="position:absolute;left:48px;top:120px;width:1440px;display:grid;grid-template-columns:1fr 1fr;gap:44px">
+            <div class="card t1" style="height:620px;padding:26px 30px">
+              <div class="eyebrow" style="color:var(--thrust);font-size:22px">Already under way</div>
+              <div class="plan-card" style="border:none;box-shadow:none;padding:14px 0 0;background:none"><ul style="gap:16px">
+                  <li style="font-size:31px">A joint journal paper with AFRL <span class="ref">[9]</span>, and a CDC paper with an AFRL co-author <span class="ref">[6]</span></li>
+                  <li style="font-size:31px">Hans Riess at AFRL/RF for part of the summer</li>
+                  <li style="font-size:31px">Workflow search for operational vulnerabilities, designed with Matthew Klawonn</li>
+                  <li style="font-size:31px">Open-source software, immediately available to the government</li>
+                </ul></div>
+            </div>
+            <div class="card t2" style="height:620px;padding:26px 30px">
+              <div class="eyebrow" style="color:var(--thrust);font-size:22px">What we ask of AFOSR and AFRL <span class="tbd">(to discuss)</span></div>
+              <div class="plan-card" style="border:none;box-shadow:none;padding:14px 0 0;background:none"><ul style="gap:16px">
+                  <li style="font-size:31px"><b>Problems</b>: missions and operations for hierarchical planning and workflow search</li>
+                  <li style="font-size:31px"><b>Hosts</b>: summer residencies for students, following Hans's at AFRL/RF</li>
+                  <li style="font-size:31px"><b>Users</b>: engineers willing to pilot the CatColab sheaf interface</li>
+                  <li style="font-size:31px"><b>A cadence</b>: regular check-ins with the program manager and AFRL collaborators</li>
+                </ul></div>
+            </div>
+          </div>
+          <div class="ds-slide-num">15</div>
+
+        </div>
+        <aside class="notes">
+          The right column is for discussion. Leave time for the PM and AFRL collaborators to respond.
+        </aside>
+      </section>
+
+<section data-label="16 · The Plan" data-slide-index="16" data-background-color="#002A54"
         style="background:#002A54;overflow:hidden;color:#FFEFCF;font-family:var(--font-core)">
         <div class="slide-canvas">
 
@@ -1119,11 +1351,11 @@
           <svg viewBox="0 0 1300 330" width="1300" height="330" role="img"
             aria-label="Matrix of the four plan parts against the five thrusts: parts 1 and 2 use thrusts 1 to 4, part 3 uses all five, part 4 uses thrusts 1, 2, 4 and 5"
             style="position:absolute;left:120px;top:388px;font-family:var(--font-core);overflow:visible">
-            <text x="800" y="20" text-anchor="middle" font-size="22" font-weight="700" fill="#4F7FAE" style="filter:brightness(1.35)">T1</text><text x="800" y="44" text-anchor="middle" font-size="16" fill="#FFEFCF" opacity=".8">Sheaf theory</text><text x="910" y="20" text-anchor="middle" font-size="22" font-weight="700" fill="#D9782A" style="filter:brightness(1.35)">T2</text><text x="910" y="44" text-anchor="middle" font-size="16" fill="#FFEFCF" opacity=".8">Learning, control</text><text x="1020" y="20" text-anchor="middle" font-size="22" font-weight="700" fill="#5E9E42" style="filter:brightness(1.35)">T3</text><text x="1020" y="44" text-anchor="middle" font-size="16" fill="#FFEFCF" opacity=".8">Optimization</text><text x="1130" y="20" text-anchor="middle" font-size="22" font-weight="700" fill="#A5824F" style="filter:brightness(1.35)">T4</text><text x="1130" y="44" text-anchor="middle" font-size="16" fill="#FFEFCF" opacity=".8">Uncertainty</text><text x="1240" y="20" text-anchor="middle" font-size="22" font-weight="700" fill="#2F948C" style="filter:brightness(1.35)">T5</text><text x="1240" y="44" text-anchor="middle" font-size="16" fill="#FFEFCF" opacity=".8">Deployment</text><line x1="0" y1="116" x2="1300" y2="116" stroke="#FFEFCF" stroke-opacity=".18"/><text x="0" y="84" font-size="20" font-weight="700" letter-spacing="2" fill="#FFEFCF" opacity=".85">1 &middot; LOCAL TO GLOBAL</text><text x="0" y="108" font-size="24" fill="#FFEFCF">Safety, stability and optimality that survive composition</text><circle cx="800" cy="88" r="15" fill="#4F7FAE" stroke="#FFEFCF" stroke-width="2"/><circle cx="910" cy="88" r="15" fill="#D9782A" stroke="#FFEFCF" stroke-width="2"/><circle cx="1020" cy="88" r="15" fill="#5E9E42" stroke="#FFEFCF" stroke-width="2"/><circle cx="1130" cy="88" r="15" fill="#A5824F" stroke="#FFEFCF" stroke-width="2"/><circle cx="1240" cy="88" r="6" fill="none" stroke="#FFEFCF" stroke-opacity=".35" stroke-width="2"/><line x1="0" y1="182" x2="1300" y2="182" stroke="#FFEFCF" stroke-opacity=".18"/><text x="0" y="150" font-size="20" font-weight="700" letter-spacing="2" fill="#FFEFCF" opacity=".85">2 &middot; NEW SETTINGS</text><text x="0" y="174" font-size="24" fill="#FFEFCF">Time, geometry, energy, adversaries</text><circle cx="800" cy="154" r="15" fill="#4F7FAE" stroke="#FFEFCF" stroke-width="2"/><circle cx="910" cy="154" r="15" fill="#D9782A" stroke="#FFEFCF" stroke-width="2"/><circle cx="1020" cy="154" r="15" fill="#5E9E42" stroke="#FFEFCF" stroke-width="2"/><circle cx="1130" cy="154" r="15" fill="#A5824F" stroke="#FFEFCF" stroke-width="2"/><circle cx="1240" cy="154" r="6" fill="none" stroke="#FFEFCF" stroke-opacity=".35" stroke-width="2"/><line x1="0" y1="248" x2="1300" y2="248" stroke="#FFEFCF" stroke-opacity=".18"/><text x="0" y="216" font-size="20" font-weight="700" letter-spacing="2" fill="#FFEFCF" opacity=".85">3 &middot; SCALE</text><text x="0" y="240" font-size="24" fill="#FFEFCF">Algorithms that exploit sheaf structure</text><circle cx="800" cy="220" r="15" fill="#4F7FAE" stroke="#FFEFCF" stroke-width="2"/><circle cx="910" cy="220" r="15" fill="#D9782A" stroke="#FFEFCF" stroke-width="2"/><circle cx="1020" cy="220" r="15" fill="#5E9E42" stroke="#FFEFCF" stroke-width="2"/><circle cx="1130" cy="220" r="15" fill="#A5824F" stroke="#FFEFCF" stroke-width="2"/><circle cx="1240" cy="220" r="15" fill="#2F948C" stroke="#FFEFCF" stroke-width="2"/><line x1="0" y1="314" x2="1300" y2="314" stroke="#FFEFCF" stroke-opacity=".18"/><text x="0" y="282" font-size="20" font-weight="700" letter-spacing="2" fill="#FFEFCF" opacity=".85">4 &middot; TOOLS</text><text x="0" y="306" font-size="24" fill="#FFEFCF">Software, hardware, transition to the Air Force</text><circle cx="800" cy="286" r="15" fill="#4F7FAE" stroke="#FFEFCF" stroke-width="2"/><circle cx="910" cy="286" r="15" fill="#D9782A" stroke="#FFEFCF" stroke-width="2"/><circle cx="1020" cy="286" r="6" fill="none" stroke="#FFEFCF" stroke-opacity=".35" stroke-width="2"/><circle cx="1130" cy="286" r="15" fill="#A5824F" stroke="#FFEFCF" stroke-width="2"/><circle cx="1240" cy="286" r="15" fill="#2F948C" stroke="#FFEFCF" stroke-width="2"/>
+            <text x="745" y="20" text-anchor="middle" font-size="25" font-weight="700" fill="#4F7FAE" style="filter:brightness(1.35)">T1</text><text x="745" y="44" text-anchor="middle" font-size="19" fill="#FFEFCF" opacity=".85">Sheaf theory</text><text x="880" y="20" text-anchor="middle" font-size="25" font-weight="700" fill="#D9782A" style="filter:brightness(1.35)">T2</text><text x="880" y="44" text-anchor="middle" font-size="19" fill="#FFEFCF" opacity=".85">Learning, control</text><text x="1015" y="20" text-anchor="middle" font-size="25" font-weight="700" fill="#5E9E42" style="filter:brightness(1.35)">T3</text><text x="1015" y="44" text-anchor="middle" font-size="19" fill="#FFEFCF" opacity=".85">Optimization</text><text x="1150" y="20" text-anchor="middle" font-size="25" font-weight="700" fill="#A5824F" style="filter:brightness(1.35)">T4</text><text x="1150" y="44" text-anchor="middle" font-size="19" fill="#FFEFCF" opacity=".85">Uncertainty</text><text x="1285" y="20" text-anchor="middle" font-size="25" font-weight="700" fill="#2F948C" style="filter:brightness(1.35)">T5</text><text x="1285" y="44" text-anchor="middle" font-size="19" fill="#FFEFCF" opacity=".85">Deployment</text><line x1="0" y1="116" x2="1300" y2="116" stroke="#FFEFCF" stroke-opacity=".18"/><text x="0" y="84" font-size="22" font-weight="700" letter-spacing="2" fill="#FFEFCF" opacity=".85">1 &middot; LOCAL TO GLOBAL</text><text x="0" y="108" font-size="27" fill="#FFEFCF">Safety, stability and optimality that survive composition</text><circle cx="745" cy="88" r="15" fill="#4F7FAE" stroke="#FFEFCF" stroke-width="2"/><circle cx="880" cy="88" r="15" fill="#D9782A" stroke="#FFEFCF" stroke-width="2"/><circle cx="1015" cy="88" r="15" fill="#5E9E42" stroke="#FFEFCF" stroke-width="2"/><circle cx="1150" cy="88" r="15" fill="#A5824F" stroke="#FFEFCF" stroke-width="2"/><circle cx="1285" cy="88" r="6" fill="none" stroke="#FFEFCF" stroke-opacity=".35" stroke-width="2"/><line x1="0" y1="182" x2="1300" y2="182" stroke="#FFEFCF" stroke-opacity=".18"/><text x="0" y="150" font-size="22" font-weight="700" letter-spacing="2" fill="#FFEFCF" opacity=".85">2 &middot; NEW SETTINGS</text><text x="0" y="174" font-size="27" fill="#FFEFCF">Time, geometry, energy, adversaries</text><circle cx="745" cy="154" r="15" fill="#4F7FAE" stroke="#FFEFCF" stroke-width="2"/><circle cx="880" cy="154" r="15" fill="#D9782A" stroke="#FFEFCF" stroke-width="2"/><circle cx="1015" cy="154" r="15" fill="#5E9E42" stroke="#FFEFCF" stroke-width="2"/><circle cx="1150" cy="154" r="15" fill="#A5824F" stroke="#FFEFCF" stroke-width="2"/><circle cx="1285" cy="154" r="6" fill="none" stroke="#FFEFCF" stroke-opacity=".35" stroke-width="2"/><line x1="0" y1="248" x2="1300" y2="248" stroke="#FFEFCF" stroke-opacity=".18"/><text x="0" y="216" font-size="22" font-weight="700" letter-spacing="2" fill="#FFEFCF" opacity=".85">3 &middot; SCALE</text><text x="0" y="240" font-size="27" fill="#FFEFCF">Algorithms that exploit sheaf structure</text><circle cx="745" cy="220" r="15" fill="#4F7FAE" stroke="#FFEFCF" stroke-width="2"/><circle cx="880" cy="220" r="15" fill="#D9782A" stroke="#FFEFCF" stroke-width="2"/><circle cx="1015" cy="220" r="15" fill="#5E9E42" stroke="#FFEFCF" stroke-width="2"/><circle cx="1150" cy="220" r="15" fill="#A5824F" stroke="#FFEFCF" stroke-width="2"/><circle cx="1285" cy="220" r="15" fill="#2F948C" stroke="#FFEFCF" stroke-width="2"/><line x1="0" y1="314" x2="1300" y2="314" stroke="#FFEFCF" stroke-opacity=".18"/><text x="0" y="282" font-size="22" font-weight="700" letter-spacing="2" fill="#FFEFCF" opacity=".85">4 &middot; TOOLS</text><text x="0" y="306" font-size="27" fill="#FFEFCF">Software, hardware, transition to the Air Force</text><circle cx="745" cy="286" r="15" fill="#4F7FAE" stroke="#FFEFCF" stroke-width="2"/><circle cx="880" cy="286" r="15" fill="#D9782A" stroke="#FFEFCF" stroke-width="2"/><circle cx="1015" cy="286" r="6" fill="none" stroke="#FFEFCF" stroke-opacity=".35" stroke-width="2"/><circle cx="1150" cy="286" r="15" fill="#A5824F" stroke="#FFEFCF" stroke-width="2"/><circle cx="1285" cy="286" r="15" fill="#2F948C" stroke="#FFEFCF" stroke-width="2"/>
           </svg>
-          <div style="position:absolute;left:120px;bottom:56px;width:1100px;font-size:26px;line-height:1.3;opacity:.85">
+          <div style="position:absolute;left:120px;bottom:56px;width:1100px;font-size:30px;line-height:1.3;opacity:.85">
             Each part draws on at least four of the five thrusts.</div>
-          <div class="ds-slide-num">9</div>
+          <div class="ds-slide-num">16</div>
 
         </div>
         <aside class="notes">
@@ -1131,13 +1363,13 @@
         </aside>
       </section>
 
-<section data-label="10 · Local to Global Guarantees" data-slide-index="10" data-background-color="#ffffff"
+<section data-label="17 · Local to Global Guarantees" data-slide-index="17" data-background-color="#ffffff"
         style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
         <div class="slide-canvas">
 
           <h1 class="slide-h1">1 &middot; Local to Global Guarantees</h1>
-          <div class="question" style="top:104px;width:900px">Build global controllers and safety certificates from local ones, without a monolithic model of the whole system.</div>
-          <div class="plan-list">
+          <div class="question" style="top:104px;width:1010px">Build global controllers and safety certificates from local ones, without a monolithic model of the whole system.</div>
+          <div class="plan-list" style="width:1010px">
             <div class="plan-item t2"><div><b>Local-to-global safety.</b> Compose heterogeneous local barrier functions and controllers into globally safe policies, and characterize the compatibility and gluing conditions.
                 Target: <i>IEEE Transactions on Automatic Control,</i> spring 2027</div>
               <div class="chips"><span class="chip t2">T2</span></div>
@@ -1155,7 +1387,7 @@
               <div class="chips"><span class="chip t2">T2</span><span class="chip t3">T3</span></div>
               <div class="who">Dixon</div></div>
           </div>
-          <figure class="fig-col" style="left:990px;width:498px">
+          <figure class="fig-col" style="left:1088px;width:400px">
             <img src="../assets/figures/local-to-global.png"
               alt="The sheaf of continuous functions on a space, the sheaf of 3-colorings on a graph, a cellular sheaf of vector spaces, and the sheaf of solutions to a PDE">
             <figcaption>Sheaves in four settings: functions on a space, colorings of a graph, a cellular sheaf, solutions of a PDE.</figcaption>
@@ -1163,7 +1395,7 @@
           <div class="ds-cite">[<span class="cite-ours">4</span>] K. A. Currier, W. Leal, B. C. Fallin, J. Fairbanks, and
             W. E. Dixon. <i>IEEE Conference on Decision and Control,</i> 2026, to appear<span class="ds-cite-more"> &middot;
               [<span class="cite-ours">1</span>, <span class="cite-ours">7</span>]</span></div>
-          <div class="ds-slide-num">10</div>
+          <div class="ds-slide-num">17</div>
 
         </div>
         <aside class="notes">
@@ -1171,44 +1403,44 @@
         </aside>
       </section>
 
-<section data-label="11 · New Settings" data-slide-index="11" data-background-color="#ffffff"
+<section data-label="18 · New Settings" data-slide-index="18" data-background-color="#ffffff"
         style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
         <div class="slide-canvas">
 
           <h1 class="slide-h1" style="font-size:48px">2 &middot; New Settings: Time, Geometry, Energy, Adversaries</h1>
           <div class="question" style="top:104px;width:1440px">Extend coordination sheaves beyond static, linear, Euclidean problems to time-varying, geometric, dissipative and adversarial systems.</div>
-          <div style="position:absolute;left:48px;top:196px;width:1440px;display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:268px;gap:22px">
+          <div style="position:absolute;left:48px;top:196px;width:1440px;display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:286px;gap:20px">
             <div class="card t1" style="padding:18px 24px">
               <div style="display:flex;justify-content:space-between;align-items:baseline"><div class="card-head">Time</div>
                 <div><span class="chip t1">T1</span> <span class="chip t2">T2</span></div></div>
-              <div class="card-body" style="font-size:20px;line-height:1.28">Narratives: time-varying data as sheaves <span class="ref">[10, 11]</span>. Temporal sheaves for switching topologies <span class="ref">[12]</span>. Temporal and hybrid barrier functions.</div>
-              <div class="eyebrow" style="margin-top:10px;font-size:16px;letter-spacing:1px;text-transform:none;font-weight:400">Leal, Fallin, Dixon, Fairbanks</div></div>
+              <div class="card-body" style="font-size:23px;line-height:1.24">Narratives: time-varying data as sheaves <span class="ref">[10, 11]</span>. Temporal sheaves for switching topologies <span class="ref">[12]</span>. Temporal and hybrid barrier functions.</div>
+              <div class="eyebrow" style="margin-top:8px;font-size:20px;letter-spacing:.5px;text-transform:none;font-weight:400">Leal, Fallin, Dixon, Fairbanks</div></div>
             <div class="card t3" style="padding:18px 24px">
               <div style="display:flex;justify-content:space-between;align-items:baseline"><div class="card-head">Geometry</div>
                 <div><span class="chip t1">T1</span> <span class="chip t3">T3</span></div></div>
-              <div class="card-body" style="font-size:20px;line-height:1.28">Coordination sheaves on manifolds, for nonconvex and time-varying problems, linking continuous and cellular formulations.</div>
-              <div class="eyebrow" style="margin-top:10px;font-size:16px;letter-spacing:1px;text-transform:none;font-weight:400">Hale, Riess, Dixon</div></div>
+              <div class="card-body" style="font-size:23px;line-height:1.24">Coordination sheaves on manifolds, for nonconvex and time-varying problems, linking continuous and cellular formulations.</div>
+              <div class="eyebrow" style="margin-top:8px;font-size:20px;letter-spacing:.5px;text-transform:none;font-weight:400">Hale, Riess, Dixon</div></div>
             <div class="card t2" style="padding:18px 24px">
               <div style="display:flex;justify-content:space-between;align-items:baseline"><div class="card-head">Energy</div>
                 <div><span class="chip t2">T2</span></div></div>
-              <div class="card-body" style="font-size:20px;line-height:1.28">Metriplectic and open energy-driven systems: Hamiltonian and dissipative structure, with structure-preserving safety and stabilization. Paper with open sheaves, Q3 2027.</div>
-              <div class="eyebrow" style="margin-top:10px;font-size:16px;letter-spacing:1px;text-transform:none;font-weight:400">Fairbanks, Dixon</div></div>
+              <div class="card-body" style="font-size:23px;line-height:1.24">Metriplectic and open energy-driven systems: Hamiltonian and dissipative structure, with structure-preserving safety and stabilization. Paper with open sheaves, Q3 2027.</div>
+              <div class="eyebrow" style="margin-top:8px;font-size:20px;letter-spacing:.5px;text-transform:none;font-weight:400">Fairbanks, Dixon</div></div>
             <div class="card t4" style="padding:18px 24px">
               <div style="display:flex;justify-content:space-between;align-items:baseline"><div class="card-head">Adversaries</div>
                 <div><span class="chip t4">T4</span> <span class="chip t3">T3</span></div></div>
-              <div class="card-body" style="font-size:20px;line-height:1.28">Adversarial agents and stochastic disturbances in one model: games and min-max optimization on coordination sheaves <span class="ref">[1]</span>.</div>
-              <div class="eyebrow" style="margin-top:10px;font-size:16px;letter-spacing:1px;text-transform:none;font-weight:400">Pajic, Wang</div></div>
+              <div class="card-body" style="font-size:23px;line-height:1.24">Adversarial agents and stochastic disturbances in one model: games and min-max optimization on coordination sheaves <span class="ref">[1]</span>.</div>
+              <div class="eyebrow" style="margin-top:8px;font-size:20px;letter-spacing:.5px;text-transform:none;font-weight:400">Pajic, Wang</div></div>
             <div class="card t1" style="padding:18px 24px;grid-column:span 2">
               <div style="display:flex;justify-content:space-between;align-items:baseline"><div class="card-head">Structure</div>
                 <div><span class="chip t1">T1</span> <span class="chip t3">T3</span> <span class="chip t4">T4</span></div></div>
-              <div class="card-body" style="font-size:20px;line-height:1.28">Categories of sheaves. Engineering optimization problems unified
+              <div class="card-body" style="font-size:23px;line-height:1.24">Categories of sheaves. Engineering optimization problems unified
                 as quantale-enriched profunctors <span class="ref">[6]</span>, which Hans Riess presents in detail.</div>
-              <div class="eyebrow" style="margin-top:10px;font-size:16px;letter-spacing:1px;text-transform:none;font-weight:400">Fairbanks, Hale, Riess</div></div>
+              <div class="eyebrow" style="margin-top:8px;font-size:20px;letter-spacing:.5px;text-transform:none;font-weight:400">Fairbanks, Hale, Riess</div></div>
           </div>
           <div class="ds-cite">[<span class="cite-ours">11</span>] W. Leal, B. M. Bumpus, J. K. Nickel, J. Garc&iacute;a,
             J. Fairbanks, and W. E. Dixon. Submitted, arXiv:2609.09056, 2026<span class="ds-cite-more"> &middot;
               [<span class="cite-ours">6</span>, <span class="cite-ours">10</span>, <span class="cite-ours">12</span>]</span></div>
-          <div class="ds-slide-num">11</div>
+          <div class="ds-slide-num">18</div>
 
         </div>
         <aside class="notes">
@@ -1216,13 +1448,13 @@
         </aside>
       </section>
 
-<section data-label="12 · Scale and Hierarchy" data-slide-index="12" data-background-color="#ffffff"
+<section data-label="19 · Scale and Hierarchy" data-slide-index="19" data-background-color="#ffffff"
         style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
         <div class="slide-canvas">
 
           <h1 class="slide-h1">3 &middot; Scale and Hierarchy</h1>
           <div class="question" style="top:104px;width:1440px">Formulate the scalable algorithms of computational engineering as operations on sheaves, and use that structure to build faster, distributed solvers.</div>
-          <div class="plan-list" style="top:160px;width:1440px">
+          <div class="plan-list tight" style="top:190px;width:1440px">
             <div class="plan-item t3"><div><b>Conic programs at scale.</b> Generic multifrontal algorithms, and a
                 structure-exploiting interior-point method for conic programming</div>
               <div class="chips"><span class="chip t3">T3</span><span class="chip t5">T5</span></div>
@@ -1248,7 +1480,7 @@
           </div>
           <div class="ds-cite">[<span class="cite-ours">13</span>] I. Kadosh, R. Samuelson, and J. Fairbanks. <i>IEEE
               Control Systems Letters,</i> submitted with the ACC 2027 option<span class="ds-cite-more"> &middot; [<span class="cite-ours">12</span>]</span></div>
-          <div class="ds-slide-num">12</div>
+          <div class="ds-slide-num">19</div>
 
         </div>
         <aside class="notes">
@@ -1258,14 +1490,14 @@
         </aside>
       </section>
 
-<section data-label="13 · Tools, Hardware, and Transition" data-slide-index="13" data-background-color="#ffffff"
+<section data-label="20 · Tools, Hardware, and Transition" data-slide-index="20" data-background-color="#ffffff"
         style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
         <div class="slide-canvas">
 
           <h1 class="slide-h1">4 &middot; Tools, Hardware, and Transition</h1>
-          <div class="question" style="top:104px;width:900px">Put the center's methods in the hands of Air Force
+          <div class="question" style="top:104px;width:1010px">Put the center's methods in the hands of Air Force
             researchers and bench engineers.</div>
-          <div class="plan-list">
+          <div class="plan-list" style="width:1010px">
             <div class="plan-item t5"><div><b>Incremental rewriting.</b> The theory and the Rust engine behind it, scaled to bigger models. To <i>ACM Transactions on Database Systems</i> before Thanksgiving</div>
               <div class="chips"><span class="chip t5">T5</span></div>
               <div class="who">Brown</div></div>
@@ -1285,195 +1517,23 @@
               <div class="chips"><span class="chip t1">T1</span><span class="chip t5">T5</span></div>
               <div class="who">Center-wide</div></div>
           </div>
-          <figure class="fig-col" style="left:990px;width:498px">
+          <figure class="fig-col" style="left:1088px;width:400px">
             <video data-autoplay src="../assets/video/robotarium-hexagon.mp4" autoplay="autoplay" loop="loop" muted="muted"
               playsinline="playsinline"
-              style="width:498px;height:360px;object-fit:cover;border:1px solid #B1B3B6;display:block"></video>
+              style="width:400px;height:290px;object-fit:cover;border:1px solid #B1B3B6;display:block"></video>
             <figcaption>Sheaf coordination on the Georgia Tech Robotarium.</figcaption>
           </figure>
           <div class="ds-cite">[<span class="cite-ours">14</span>] AlgebraicJulia. CellularSheaves.jl, Decapodes.jl, and
             CombinatorialSpaces.jl. algebraicjulia.github.io</div>
-          <div class="ds-slide-num">13</div>
+          <div class="ds-slide-num">20</div>
 
         </div>
         <aside class="notes">
-          All of the software is open source and immediately available to the government. The workflow-search prototype is being designed together with Matthew Klawonn at AFRL. The next two slides are live demos of the sheaf tools, then the knowledgebase.
+          All of the software is open source and immediately available to the government. The workflow-search prototype is being designed together with Matthew Klawonn at AFRL. The sheaf tools and the knowledgebase were shown before the plan.
         </aside>
       </section>
 
-<section data-label="14 · Live: Who Can Track Whom" data-slide-index="14" data-background-color="#ffffff"
-        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
-        <div class="slide-canvas">
-
-          <h1 class="slide-h1">Live: Who Can Track Whom</h1>
-          <iframe src="../assets/widgets/multi-domain-tracking.html" title="Multi-domain tracking sheaf widget"
-            style="position:absolute;left:48px;top:100px;width:1440px;height:640px;border:1px solid #D5D8DD;border-radius:10px;background:#f9f9f7"></iframe>
-          <div style="position:absolute;left:48px;right:48px;top:754px;font-size:24px;line-height:1.28;color:#2C4B6A;text-wrap:pretty">
-            Ships in <span class="katex-inline" data-tex="\mathbb{R}^2">\(\mathbb{R}^2\)</span>, targets in
-            <span class="katex-inline" data-tex="\mathbb{R}^3">\(\mathbb{R}^3\)</span>, linked by the projection that forgets
-            altitude. Pin the ships and four degrees of freedom survive, one altitude per target; pin the targets and none do.</div>
-          <div class="ds-cite">CODAC-Centers/SheafApps &middot; also at codac-centers.github.io/software/multi-domain-tracking
-            <span class="ds-cite-more">&middot; [<span class="cite-ours">5</span>]</span></div>
-          <div class="ds-slide-num">14</div>
-
-        </div>
-        <aside class="notes">
-          Click into the widget to use it: drag an agent, toggle pins, scrub diffusion time. Click outside the
-          frame to get the arrow keys back for the slides. The degrees-of-freedom readout is the dimension of
-          H&#8304; for the pinned set, which is the cohomological answer to who can track whom from the ECC paper.
-          Runs offline; nothing is fetched.
-        </aside>
-      </section>
-
-<section data-label="15 · The Cellular Sheaf Explorer" data-slide-index="15" data-background-color="#ffffff"
-        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
-        <div class="slide-canvas">
-
-          <h1 class="slide-h1">The Cellular Sheaf Explorer</h1>
-          <iframe src="../assets/widgets/cellular-sheaf-explorer.html" title="Cellular Sheaf Explorer"
-            style="position:absolute;left:48px;top:100px;width:1440px;height:670px;border:1px solid #D5D8DD;border-radius:10px;background:#f9f9f7"></iframe>
-          <div style="position:absolute;left:48px;right:48px;top:784px;font-size:24px;line-height:1.28;color:#2C4B6A">
-            Six worked examples, a source editor for writing your own sheaf, and the spectrum and energy readouts. In the
-            browser, with nothing to install.</div>
-          <div class="ds-slide-num">15</div>
-
-        </div>
-        <aside class="notes">
-          The picker in the top right has six sheaves, simplest first: braced square, bare square, degenerate
-          triangle, offset formation, infeasible cycle, multi-domain tracking. Bare square is the quickest to show:
-          deleting the brace adds one degree of freedom, and sweeping it shears the square into a rhombus. This is
-          the tool for engineers who have never seen a sheaf.
-        </aside>
-      </section>
-
-<section data-label="16 · Manifesto" data-slide-index="16" data-background-color="#ffffff"
-        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
-        <div class="slide-canvas">
-
-          <h1 class="slide-h1">Manifesto: A Knowledgebase for Sheaf Theory</h1>
-          <div style="position:absolute;left:48px;top:106px;width:1440px;font-size:30px;line-height:1.22">
-            Every result in the center's papers, with a permanent tag and its own citable page, cross-linked to what it
-            depends on.</div>
-          <svg viewBox="0 0 1440 250" width="1440" height="250" role="img"
-            aria-label="Pipeline: papers are parsed, each result gets a permanent tag, and the results are browsed by library, concepts, notation and search; cited papers are harvested back into the queue"
-            style="position:absolute;left:48px;top:200px;font-family:var(--font-core);overflow:visible">
-            <defs><marker id="arrM" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
-              <path d="M0,0 L10,5 L0,10 z" fill="#2C4B6A"/></marker></defs>
-            <g stroke="#2C4B6A" stroke-width="3" fill="none" marker-end="url(#arrM)">
-              <line x1="304" y1="75" x2="374" y2="75"/><line x1="684" y1="75" x2="754" y2="75"/><line x1="1064" y1="75" x2="1134" y2="75"/>
-              <path d="M1290,154 C1290,236 150,236 150,158" stroke-dasharray="10 8"/>
-            </g>
-            <text x="720" y="236" text-anchor="middle" font-size="21" font-style="italic" fill="#2C4B6A"
-              paint-order="stroke" stroke="#fff" stroke-width="7" stroke-linejoin="round">harvest: the papers a corpus cites are queued for review</text>
-            <rect x="0" y="0" width="300" height="150" rx="12" fill="#EDF2F8" stroke="#4F7FAE" stroke-width="2"/><rect x="0" y="0" width="300" height="7" rx="3" fill="#4F7FAE"/><text x="22" y="46" font-size="28" font-weight="700" fill="#002A54">Papers</text><text x="22" y="80" font-size="21" fill="#2C4B6A">arXiv source or</text><text x="22" y="104" font-size="21" fill="#2C4B6A">local LaTeX</text><rect x="380" y="0" width="300" height="150" rx="12" fill="#EFF6EB" stroke="#5E9E42" stroke-width="2"/><rect x="380" y="0" width="300" height="7" rx="3" fill="#5E9E42"/><text x="402" y="46" font-size="28" font-weight="700" fill="#002A54">Parse</text><text x="402" y="80" font-size="21" fill="#2C4B6A">every definition, theorem,</text><text x="402" y="104" font-size="21" fill="#2C4B6A">lemma and example</text><rect x="760" y="0" width="300" height="150" rx="12" fill="#FBF1E7" stroke="#D9782A" stroke-width="2"/><rect x="760" y="0" width="300" height="7" rx="3" fill="#D9782A"/><text x="782" y="46" font-size="28" font-weight="700" fill="#002A54">Tag</text><text x="782" y="80" font-size="21" fill="#2C4B6A">permanent and never reused,</text><text x="782" y="104" font-size="21" fill="#2C4B6A">so citations survive</text><text x="782" y="128" font-size="21" fill="#2C4B6A">renumbering</text><rect x="1140" y="0" width="300" height="150" rx="12" fill="#EAF5F4" stroke="#2F948C" stroke-width="2"/><rect x="1140" y="0" width="300" height="7" rx="3" fill="#2F948C"/><text x="1162" y="46" font-size="28" font-weight="700" fill="#002A54">Browse</text><text x="1162" y="80" font-size="21" fill="#2C4B6A">Library &middot; Concepts</text><text x="1162" y="104" font-size="21" fill="#2C4B6A">Notation &middot; Search</text>
-          </svg>
-          <div style="position:absolute;left:48px;top:492px;width:1440px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
-            <div class="card t1"><div class="card-head" style="font-size:26px">Library</div>
-              <div class="card-body" style="font-size:22px">Paper, section, result, in reading order.</div></div>
-            <div class="card t3"><div class="card-head" style="font-size:26px">Concepts</div>
-              <div class="card-body" style="font-size:22px">One notion's definitions from different papers, side by side.</div></div>
-            <div class="card t2"><div class="card-head" style="font-size:26px">Notation</div>
-              <div class="card-body" style="font-size:22px">Where each symbol first appears, in each paper that uses it.</div></div>
-          </div>
-          <div style="position:absolute;left:48px;right:48px;top:690px;font-size:27px;line-height:1.3;color:#002A54;text-wrap:pretty">
-            <b>Ask:</b> send the arXiv ID of every center paper, cite results by tag in new papers, and help review the
-            queue. <span style="color:#2C4B6A">manifesto.privapps.ufl.edu</span></div>
-          <div class="ds-cite">CODAC-Centers/Manifesto &middot; corpus in SheavesManifesto</div>
-          <div class="ds-slide-num">16</div>
-
-        </div>
-        <aside class="notes">
-          The pitch: the center's results are spread over dozens of papers with different notation. Manifesto
-          gives every definition, theorem, lemma and example a permanent tag, Stacks Project style, so a citation
-          of a tag keeps resolving after a paper is renumbered. The Concepts view is the one to show: the same
-          notion defined in several papers, side by side. It grows from the corpus's own bibliographies, but
-          nothing is added without someone approving it in the queue.
-        </aside>
-      </section>
-
-<section data-label="17 · Where the Teams Meet" data-slide-index="17" data-background-color="#ffffff"
-        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
-        <div class="slide-canvas">
-
-          <h1 class="slide-h1">Where the Teams Meet</h1>
-          <div style="position:absolute;left:48px;top:108px;width:1440px;font-size:30px;line-height:1.2">
-            Joint work so far, and the topics that appear in more than one team's plan.</div>
-          <svg viewBox="0 0 1440 660" width="1440" height="660" role="img"
-            aria-label="Collaboration network among UF, Georgia Tech, Virginia Tech, Duke, the Topos Institute, AFRL and MIT: solid edges for completed joint work, dashed for work planned this year"
-            style="position:absolute;left:48px;top:160px;font-family:var(--font-core);overflow:visible">
-            <g><line x1="170" y1="150" x2="500" y2="330" stroke="#2C4B6A" stroke-width="4"/><line x1="500" y1="330" x2="960" y2="180" stroke="#2C4B6A" stroke-width="4"/><line x1="960" y1="180" x2="1330" y2="80" stroke="#2C4B6A" stroke-width="4"/><line x1="960" y1="180" x2="960" y2="545" stroke="#2C4B6A" stroke-width="4"/><line x1="500" y1="330" x2="960" y2="545" stroke="#2C4B6A" stroke-width="4"/><line x1="500" y1="330" x2="400" y2="565" stroke="#2C4B6A" stroke-width="4"/><line x1="170" y1="150" x2="960" y2="180" stroke="#E28F41" stroke-width="4" stroke-dasharray="12 9"/><line x1="960" y1="180" x2="1300" y2="430" stroke="#E28F41" stroke-width="4" stroke-dasharray="12 9"/><line x1="400" y1="565" x2="960" y2="545" stroke="#E28F41" stroke-width="4" stroke-dasharray="12 9"/></g>
-            <g font-size="19" paint-order="stroke" stroke="#fff" stroke-width="7" stroke-linejoin="round"><text x="300" y="228" text-anchor="middle" fill="#2C4B6A">barrier functions [4, 7]</text><text x="300" y="250" text-anchor="middle" fill="#2C4B6A">temporal sheaves [12]</text><text x="300" y="272" text-anchor="middle" fill="#2C4B6A">metriplectic, Q3 2027</text><text x="735" y="244" text-anchor="middle" fill="#2C4B6A">coordination sheaves [1, 3]</text><text x="735" y="266" text-anchor="middle" fill="#2C4B6A">MSCS [9] · Joana at GT</text><text x="735" y="288" text-anchor="middle" fill="#2C4B6A">temporal sheaves, ECC 2027</text><text x="565" y="112" text-anchor="middle" fill="#B35C12">sheaf Lyapunov methods</text><text x="1150" y="120" text-anchor="middle" fill="#2C4B6A">co-design [6]</text><text x="978" y="392" text-anchor="start" fill="#2C4B6A">co-design [6]</text><text x="978" y="414" text-anchor="start" fill="#2C4B6A">Hans at AFRL/RF</text><text x="1175" y="300" text-anchor="middle" fill="#B35C12">games on</text><text x="1175" y="322" text-anchor="middle" fill="#B35C12">coordination sheaves</text><text x="730" y="452" text-anchor="middle" fill="#2C4B6A">MSCS [9]</text><text x="438" y="458" text-anchor="end" fill="#2C4B6A">MSCS [9]</text><text x="438" y="480" text-anchor="end" fill="#2C4B6A">CatColab sheaves</text><text x="680" y="590" text-anchor="middle" fill="#B35C12">workflow search, June 2027</text></g>
-            <g><circle cx="170" cy="150" r="62" fill="#fff" stroke="#002A54" stroke-width="3"/><text x="170" y="158" text-anchor="middle" font-size="24" font-weight="700" fill="#002A54">VT</text><text x="170" y="238" text-anchor="middle" font-size="18" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">Dixon</text><circle cx="500" cy="330" r="62" fill="#fff" stroke="#002A54" stroke-width="3"/><text x="500" y="338" text-anchor="middle" font-size="24" font-weight="700" fill="#002A54">UF</text><text x="500" y="418" text-anchor="middle" font-size="18" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">Fairbanks, Leal, Samuelson</text><text x="500" y="439" text-anchor="middle" font-size="18" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">and students</text><circle cx="960" cy="180" r="62" fill="#fff" stroke="#002A54" stroke-width="3"/><text x="960" y="188" text-anchor="middle" font-size="24" font-weight="700" fill="#002A54">GT</text><text x="960" y="268" text-anchor="middle" font-size="18" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">Hale, Riess</text><circle cx="1330" cy="80" r="44" fill="#fff" stroke="#002A54" stroke-width="3"/><text x="1330" y="88" text-anchor="middle" font-size="24" font-weight="700" fill="#002A54">MIT</text><text x="1330" y="150" text-anchor="middle" font-size="18" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">Zardini</text><circle cx="1300" cy="430" r="62" fill="#fff" stroke="#002A54" stroke-width="3"/><text x="1300" y="438" text-anchor="middle" font-size="24" font-weight="700" fill="#002A54">Duke</text><text x="1300" y="518" text-anchor="middle" font-size="18" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">Pajic, Wang</text><circle cx="960" cy="545" r="62" fill="#fff" stroke="#002A54" stroke-width="3"/><text x="960" y="553" text-anchor="middle" font-size="24" font-weight="700" fill="#002A54">AFRL</text><text x="960" y="633" text-anchor="middle" font-size="18" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">Klawonn</text><circle cx="400" cy="565" r="62" fill="#fff" stroke="#002A54" stroke-width="3"/><text x="400" y="573" text-anchor="middle" font-size="24" font-weight="700" fill="#002A54">Topos</text><text x="400" y="653" text-anchor="middle" font-size="18" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">Brown, Spivak, Patterson</text></g>
-            <g font-size="19" fill="#2C4B6A">
-              <line x1="1060" y1="642" x2="1110" y2="642" stroke="#2C4B6A" stroke-width="4"/><text x="1120" y="648">joint work so far</text>
-              <line x1="1270" y1="642" x2="1320" y2="642" stroke="#E28F41" stroke-width="4" stroke-dasharray="12 9"/><text x="1330" y="648">planned</text>
-            </g>
-          </svg>
-          <div class="ds-slide-num">17</div>
-
-        </div>
-        <aside class="notes">
-          Solid edges are joint work already done; dashed edges are planned this year. Open question: repeat the student exchange and the AFRL residency next summer.
-        </aside>
-      </section>
-
-<section data-label="18 · The Year at a Glance" data-slide-index="18" data-background-color="#ffffff"
-        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
-        <div class="slide-canvas">
-
-          <h1 class="slide-h1">The Year at a Glance</h1>
-          <svg viewBox="0 0 1440 614" width="1440" height="614" role="img"
-            aria-label="Swimlane chart of the year from September 2026 to September 2027: submissions as diamonds, conferences as dots, spans as bars"
-            style="position:absolute;left:48px;top:100px;font-family:var(--font-core);overflow:visible">
-            <rect x="506" y="66" width="233" height="508" fill="#EEF2F6"/><text x="622" y="18" text-anchor="middle" font-size="21" font-weight="700" fill="#002A54">Q1</text><text x="853" y="18" text-anchor="middle" font-size="21" font-weight="700" fill="#002A54">Q2</text><rect x="967" y="66" width="230" height="508" fill="#EEF2F6"/><text x="1082" y="18" text-anchor="middle" font-size="21" font-weight="700" fill="#002A54">Q3</text><text x="1314" y="18" text-anchor="middle" font-size="21" font-weight="700" fill="#002A54">Q4</text><text x="468" y="46" text-anchor="middle" font-size="16" fill="#888B97">Sep</text><text x="545" y="46" text-anchor="middle" font-size="16" fill="#888B97">Oct</text><text x="622" y="46" text-anchor="middle" font-size="16" fill="#888B97">Nov</text><text x="700" y="46" text-anchor="middle" font-size="16" fill="#888B97">Dec</text><text x="778" y="46" text-anchor="middle" font-size="16" fill="#888B97">Jan</text><text x="853" y="46" text-anchor="middle" font-size="16" fill="#888B97">Feb</text><text x="927" y="46" text-anchor="middle" font-size="16" fill="#888B97">Mar</text><text x="1005" y="46" text-anchor="middle" font-size="16" fill="#888B97">Apr</text><text x="1082" y="46" text-anchor="middle" font-size="16" fill="#888B97">May</text><text x="1159" y="46" text-anchor="middle" font-size="16" fill="#888B97">Jun</text><text x="1236" y="46" text-anchor="middle" font-size="16" fill="#888B97">Jul</text><text x="1315" y="46" text-anchor="middle" font-size="16" fill="#888B97">Aug</text><text x="1392" y="46" text-anchor="middle" font-size="16" fill="#888B97">Sep</text><line x1="0" y1="124" x2="1430" y2="124" stroke="#E3E4E6"/><text x="0" y="106" font-size="21" fill="#002A54">Under review: ACC 2027 [12], L-CSS [13]</text><circle cx="478" cy="99" r="10" fill="#fff" stroke="#4F7FAE" stroke-width="4"/><text x="500" y="105" font-size="18" font-style="italic" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">submitted Sep</text><line x1="0" y1="174" x2="1430" y2="174" stroke="#E3E4E6"/><text x="0" y="156" font-size="21" fill="#002A54">ECC 2027: temporal sheaves; HPC</text><path d="M582,135 l14,14 l-14,14 l-14,-14 z" fill="#5E9E42"/><text x="604" y="155" font-size="18" font-style="italic" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">31 Oct</text><line x1="0" y1="224" x2="1430" y2="224" stroke="#E3E4E6"/><text x="0" y="206" font-size="21" fill="#002A54">ACM TODS: incremental rewriting</text><path d="M633,185 l14,14 l-14,14 l-14,-14 z" fill="#2F948C"/><text x="655" y="205" font-size="18" font-style="italic" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">before Thanksgiving</text><line x1="0" y1="274" x2="1430" y2="274" stroke="#E3E4E6"/><text x="0" y="256" font-size="21" fill="#002A54">CDC 2026, Honolulu: present [4, 6]</text><circle cx="698" cy="249" r="11" fill="#002A54"/><text x="720" y="255" font-size="18" font-style="italic" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">15–18 Dec</text><line x1="0" y1="324" x2="1430" y2="324" stroke="#E3E4E6"/><text x="0" y="306" font-size="21" fill="#002A54">CDC 2027: hardware results</text><path d="M964,286 l13,13 l-13,13 l-13,-13 z" fill="#fff" stroke="#D9782A" stroke-width="3.5"/><text x="986" y="305" font-size="18" font-style="italic" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">expected late Mar</text><line x1="0" y1="374" x2="1430" y2="374" stroke="#E3E4E6"/><text x="0" y="356" font-size="21" fill="#002A54">IEEE TAC: local-to-global safety</text><rect x="936" y="338" width="233" height="22" rx="11" fill="#D9782A"/><text x="1179" y="355" text-anchor="start" font-size="18" font-style="italic" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">spring</text><line x1="0" y1="424" x2="1430" y2="424" stroke="#E3E4E6"/><text x="0" y="406" font-size="21" fill="#002A54">Metriplectic dynamics and open sheaves</text><rect x="967" y="388" width="228" height="22" rx="11" fill="#D9782A"/><text x="1205" y="405" text-anchor="start" font-size="18" font-style="italic" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">Q3 deadline</text><line x1="0" y1="474" x2="1430" y2="474" stroke="#E3E4E6"/><text x="0" y="456" font-size="21" fill="#002A54">Workflow-search prototype, with AFRL</text><path d="M1195,435 l14,14 l-14,14 l-14,-14 z" fill="#A5824F"/><text x="1217" y="455" font-size="18" font-style="italic" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">June</text><line x1="0" y1="524" x2="1430" y2="524" stroke="#E3E4E6"/><text x="0" y="506" font-size="21" fill="#002A54">ECC 2027, Brussels: present</text><circle cx="1230" cy="499" r="11" fill="#002A54"/><text x="1252" y="505" font-size="18" font-style="italic" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">13–16 Jul</text><line x1="0" y1="574" x2="1430" y2="574" stroke="#E3E4E6"/><text x="0" y="556" font-size="21" fill="#002A54">Journal track: Hale, Riess</text><rect x="506" y="540" width="922" height="18" rx="9" fill="#5E9E42" fill-opacity=".18" stroke="#5E9E42" stroke-width="2" stroke-dasharray="8 6"/><text x="967" y="555" text-anchor="middle" font-size="18" font-style="italic" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">no fixed dates</text><line x1="488" y1="66" x2="488" y2="574" stroke="#FA4616" stroke-width="2" stroke-dasharray="6 5"/><text x="488" y="596" text-anchor="middle" font-size="17" font-weight="700" fill="#FA4616">kickoff</text>
-            <g font-size="18" fill="#2C4B6A" transform="translate(0,596)"><path d="M8,-6 l10,10 l-10,10 l-10,-10 z" fill="#2C4B6A"/><text x="26" y="10">deadline</text><path d="M138,-6 l10,10 l-10,10 l-10,-10 z" fill="#fff" stroke="#2C4B6A" stroke-width="3"/><text x="156" y="10">expected deadline</text><circle cx="340" cy="4" r="9" fill="#002A54"/><text x="356" y="10">conference</text></g>
-          </svg>
-          <div style="position:absolute;left:48px;right:48px;top:750px;font-size:22px;line-height:1.3;color:#2C4B6A">
-            <b>Through the year:</b> categories of sheaves &middot; multifrontal and interior-point conic solvers &middot;
-            hierarchical mission planning &middot; games on sheaves &middot; CatColab interface</div>
-          <div class="ds-cite">Only dates the teams have committed to &middot; ECC 2027 deadline from its call for papers; CDC 2027 has not published one, so its date follows CDC 2026 (31 March)</div>
-          <div class="ds-slide-num">18</div>
-
-        </div>
-        <aside class="notes">
-          Most of the dated items fall in the first three quarters; the journal work has no fixed dates. Ask for Q4 milestones and the date of the annual review.
-        </aside>
-      </section>
-
-<section data-label="19 · Working With the Air Force" data-slide-index="19" data-background-color="#ffffff"
-        style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
-        <div class="slide-canvas">
-
-          <h1 class="slide-h1">Working With the Air Force</h1>
-          <div style="position:absolute;left:48px;top:120px;width:1440px;display:grid;grid-template-columns:1fr 1fr;gap:44px">
-            <div class="card t1" style="height:620px;padding:26px 30px">
-              <div class="eyebrow" style="color:var(--thrust)">Already under way</div>
-              <div class="plan-card" style="border:none;box-shadow:none;padding:14px 0 0;background:none"><ul style="gap:16px">
-                  <li style="font-size:27px">A joint journal paper with AFRL <span class="ref">[9]</span>, and a CDC paper with an AFRL co-author <span class="ref">[6]</span></li>
-                  <li style="font-size:27px">Hans Riess at AFRL/RF for part of the summer</li>
-                  <li style="font-size:27px">Workflow search for operational vulnerabilities, designed with Matthew Klawonn</li>
-                  <li style="font-size:27px">Open-source software, immediately available to the government</li>
-                </ul></div>
-            </div>
-            <div class="card t2" style="height:620px;padding:26px 30px">
-              <div class="eyebrow" style="color:var(--thrust)">What we ask of AFOSR and AFRL <span class="tbd">(to discuss)</span></div>
-              <div class="plan-card" style="border:none;box-shadow:none;padding:14px 0 0;background:none"><ul style="gap:16px">
-                  <li style="font-size:27px"><b>Problems</b>: missions and operations for hierarchical planning and workflow search</li>
-                  <li style="font-size:27px"><b>Hosts</b>: summer residencies for students, following Hans's at AFRL/RF</li>
-                  <li style="font-size:27px"><b>Users</b>: engineers willing to pilot the CatColab sheaf interface</li>
-                  <li style="font-size:27px"><b>A cadence</b>: regular check-ins with the program manager and AFRL collaborators</li>
-                </ul></div>
-            </div>
-          </div>
-          <div class="ds-slide-num">19</div>
-
-        </div>
-        <aside class="notes">
-          The right column is for discussion. Leave time for the PM and AFRL collaborators to respond.
-        </aside>
-      </section>
-
-<section data-label="20 · Long-Term Objective" data-slide-index="20" data-background-color="#002A54"
+<section data-label="21 · Long-Term Objective" data-slide-index="21" data-background-color="#002A54"
         style="background:#002A54;overflow:hidden;color:#FFEFCF;font-family:var(--font-core)">
         <div class="slide-canvas">
 
@@ -1497,7 +1557,7 @@
             &middot; Workforce &middot; Air Force</div>
           <img src="../assets/brand/codac-digicams-shield.png" alt=""
             style="position:absolute;right:96px;bottom:80px;width:220px;height:250px;object-fit:contain">
-          <div class="ds-slide-num">20</div>
+          <div class="ds-slide-num">21</div>
 
         </div>
         <aside class="notes">
@@ -1505,12 +1565,12 @@
         </aside>
       </section>
 
-<section data-label="21 · References" data-slide-index="21" data-background-color="#ffffff"
+<section data-label="22 · References" data-slide-index="22" data-background-color="#ffffff"
         style="background:#fff;overflow:hidden;color:#002A54;font-family:var(--font-core)">
         <div class="slide-canvas">
 
           <h1 class="slide-h1" style="font-size:59px">References</h1>
-          <div class="refs" style="font-size:18px">
+          <div class="refs" style="font-size:21px">
             <p>[<span class="cite-ours">1</span>] T. Hanks, H. Riess, S. Cohen, T. Gross, M. Hale, and J. Fairbanks.
               Distributed multi-agent coordination over cellular sheaves. <i>IEEE Conference on Decision and
                 Control,</i> 2025. arXiv:2504.02049.</p>
@@ -1551,7 +1611,7 @@
             <p>[<span class="cite-ours">14</span>] AlgebraicJulia. CellularSheaves.jl, Decapodes.jl, and
               CombinatorialSpaces.jl. algebraicjulia.github.io</p>
           </div>
-          <div class="ds-slide-num">21</div>
+          <div class="ds-slide-num">22</div>
 
         </div>
       </section>
