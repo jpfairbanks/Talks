@@ -11,6 +11,7 @@ Talks stay listed. Improve them, don't delete them.
 
 | Talk | Venue | Deck |
 | --- | --- | --- |
+| DIGICAMS for CODAC: Vision and Plan for the Year | AFOSR Center of Excellence kickoff, Arlington, VA, 24 September 2026 | [`2026-09-24-afosr-coe-kickoff/`](2026-09-24-afosr-coe-kickoff/) |
 | Compositional Methods of Engineering Analysis | UF MAE Department Seminar, Fall 2026 | [`2026-fall-compositional-methods/`](2026-fall-compositional-methods/) |
 | Sheaves for Coordination Problems in Distributed Autonomous Systems | Georgia Tech DCL Seminar, 11 September 2026 | [`2026-09-11-gt-dcl-sheaves-coordination/`](2026-09-11-gt-dcl-sheaves-coordination/) |
 
@@ -29,6 +30,7 @@ vendor/fira-sans-2026-09/   a Google Fonts snapshot, dated rather than versioned
 _ds/…-7193341c-…/           design system, keyed by its own id
 2026-fall-compositional-methods/index.html
 2026-09-11-gt-dcl-sheaves-coordination/index.html
+2026-09-24-afosr-coe-kickoff/index.html
 ```
 
 A deck directory holds only its `index.html`, plus a `README.md` where a talk
