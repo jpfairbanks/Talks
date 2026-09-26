@@ -1,0 +1,781 @@
+:root {
+  --slide-w: 1536px;
+  --slide-h: 864px;
+
+  /* Active Font Theme: Fira Sans + Fira Math */
+  --font-core: "Fira Sans", sans-serif;
+  --font-mono: "JuliaMono", ui-monospace, "SFMono-Regular", monospace;
+  --font-caption: "Fira Sans", sans-serif;
+  --font-math: "Fira Math", "Fira Sans", sans-serif;
+
+  /* [TO REVERT]: Uncomment the 3 lines below to switch back to XITS (Serif):
+  --font-core: "XITS", "STIX Two Text", "Times New Roman", serif;
+  --font-caption: "XITS", "STIX Two Text", "Times New Roman", serif;
+  --font-math: "XITS Math", "XITS", "STIX Two Math", serif;
+  */
+  --clr-dk1: #002A54;
+  --clr-lt1: #FFFFFF;
+  --clr-lt2: #FFEFCF;
+  --clr-accent1: #E28F41;
+  --clr-accent2: #BE9B69;
+  --clr-accent3: #CFDBCB;
+  --clr-accent4: #80BE63;
+  --clr-accent5: #B1B3B6;
+  --clr-accent6: #6C9AC3;
+  --clr-accent6-dark: #2C4B6A;
+  --clr-slide-number: #888B97;
+  --tint-orange: rgb(226 143 65 / .28);
+  --tint-green: rgb(128 190 99 / .28);
+  --tint-blue: rgb(108 154 195 / .28);
+  --tint-tan: rgb(190 155 105 / .28);
+  --radius-region: 32px;
+  --stroke-figure-w: 7px;
+  --leading-tight: 1;
+  --leading-body: 1.18;
+  --size-body: 37px;
+  --size-body-sub: 29px;
+  --size-label: 27px;
+  --size-step: 32px;
+  --size-math: 40px;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: #1B2430;
+  font-family: var(--font-core);
+  overflow: hidden;
+  color: #002A54;
+}
+
+.reveal {
+  font-family: var(--font-core);
+  color: #002A54;
+}
+
+.reveal .slides {
+  text-align: left;
+}
+
+.reveal .slides section {
+  padding: 0;
+  width: 1536px !important;
+  height: 864px !important;
+  top: 0 !important;
+  left: 0 !important;
+  margin: 0 !important;
+  box-sizing: border-box;
+  position: absolute;
+  overflow: hidden;
+  font-family: var(--font-core);
+}
+
+.slide-canvas {
+  position: relative;
+  width: 1536px;
+  height: 864px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* The two slide grounds: white content slides, navy part dividers. */
+.reveal .slides section.slide-light {
+  background: #fff;
+  color: #002A54;
+}
+
+.reveal .slides section.slide-dark {
+  background: #002A54;
+  color: #FFEFCF;
+}
+
+/* Component Styles */
+.ds-title-banner {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 131px;
+  object-fit: cover;
+  object-position: left center;
+  display: block;
+}
+
+.ds-highlight-region {
+  position: relative;
+  box-sizing: border-box;
+  border-radius: 14px;
+  border: 1px solid rgba(0, 42, 84, 0.15);
+  box-shadow: 0 3px 10px rgba(0, 42, 84, 0.04);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 24px;
+  overflow: hidden;
+}
+
+.ds-highlight-region.tint-blue {
+  background: rgba(108, 154, 195, 0.12);
+  border-top: 5px solid #002A54;
+  border-color: rgba(108, 154, 195, 0.25);
+}
+
+.ds-highlight-region.tint-orange {
+  background: rgba(226, 143, 65, 0.12);
+  border-top: 5px solid #E28F41;
+  border-color: rgba(226, 143, 65, 0.25);
+}
+
+.ds-highlight-region.tint-green {
+  background: rgba(128, 190, 99, 0.12);
+  border-top: 5px solid #80BE63;
+  border-color: rgba(128, 190, 99, 0.25);
+}
+
+.ds-highlight-region.tint-tan {
+  background: rgba(190, 155, 105, 0.12);
+  border-top: 5px solid #BE9B69;
+  border-color: rgba(190, 155, 105, 0.25);
+}
+
+.ds-region-content {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.ds-region-label {
+  flex-shrink: 0;
+  white-space: nowrap;
+  max-width: 100%;
+  font-family: var(--font-core);
+  font-size: var(--size-label);
+  font-weight: 700;
+  color: var(--clr-dk1);
+  text-align: center;
+  line-height: var(--leading-tight);
+}
+
+.ds-outlined-region {
+  position: relative;
+  box-sizing: border-box;
+  border-radius: 14px;
+  border: 1px solid rgba(0, 42, 84, 0.15);
+  box-shadow: 0 3px 10px rgba(0, 42, 84, 0.04);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  overflow: hidden;
+}
+
+.ds-outlined-region.stroke-blue {
+  background: rgba(108, 154, 195, 0.08);
+  border-top: 5px solid #002A54;
+  border-color: rgba(108, 154, 195, 0.25);
+}
+
+.ds-outlined-region.stroke-orange {
+  background: rgba(226, 143, 65, 0.08);
+  border-top: 5px solid #E28F41;
+  border-color: rgba(226, 143, 65, 0.25);
+}
+
+.ds-outlined-region.stroke-green {
+  background: rgba(128, 190, 99, 0.08);
+  border-top: 5px solid #80BE63;
+  border-color: rgba(128, 190, 99, 0.25);
+}
+
+.ds-outlined-region.stroke-tan {
+  background: rgba(190, 155, 105, 0.08);
+  border-top: 5px solid #BE9B69;
+  border-color: rgba(190, 155, 105, 0.25);
+}
+
+.ds-outlined-content {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ds-bullet-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-family: var(--font-core);
+  color: var(--clr-dk1);
+  text-wrap: pretty;
+}
+
+.ds-bullet-list li {
+  display: flex;
+  gap: 24px;
+  flex-shrink: 0;
+  align-items: flex-start;
+  line-height: var(--leading-body);
+}
+
+.ds-bullet-list li.size-body {
+  font-size: var(--size-body);
+}
+
+.ds-bullet-list li.size-body-sub {
+  font-size: var(--size-body-sub);
+}
+
+.ds-bullet-list .bullet-mark {
+  flex: none;
+  font-size: 0.62em;
+  position: relative;
+  top: 0.25em;
+}
+
+.ds-bullet-list .bullet-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.ds-theorem-block {
+  font-family: var(--font-core);
+  font-size: 29px;
+  line-height: 1.25;
+  color: var(--clr-dk1);
+  font-style: italic;
+  text-wrap: pretty;
+}
+
+.ds-theorem-block .theorem-head {
+  font-style: normal;
+  font-weight: 700;
+}
+
+.ds-theorem-block .theorem-body {
+  font-style: italic;
+}
+
+.ds-math-block {
+  font-size: 36px;
+  color: var(--clr-dk1);
+  text-align: center;
+}
+
+.ds-math-tight > .katex-display {
+  margin: 0.12em 0;
+}
+
+.katex-inline {
+  font-size: inherit;
+  color: inherit;
+  display: inline;
+  text-align: left;
+}
+
+/* The corner citation names the paper the slide's claim rests on, quietly:
+   one line, no wrap, sized and coloured to sit below the content rather
+   than compete with it. */
+.ds-cite {
+  position: absolute;
+  left: 48px;
+  bottom: 17px;
+  font-size: 18px;
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--clr-slide-number);
+}
+
+/* A citation to one of our own papers carries the UF accent, in the corner
+   marker and in the reference list alike. */
+.cite-ours {
+  color: #FA4616;
+  font-weight: 600;
+}
+
+.ds-cite-more {
+  opacity: .8;
+}
+
+/* A citation that points at a live docs page stays the same weight as the rest
+   of the footer; only the underline says it is clickable. */
+.ds-cite a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: rgb(136 139 151 / .55);
+}
+
+.ds-cite a:hover {
+  color: #FA4616;
+  text-decoration-color: #FA4616;
+}
+
+.ds-slide-num {
+  position: absolute;
+  right: 48px;
+  bottom: 16px;
+  font-size: 21px;
+  color: var(--clr-slide-number);
+}
+
+.reveal .controls {
+  color: #FA4616;
+}
+
+.reveal .progress {
+  color: #FA4616;
+  height: 4px;
+}
+
+/* ---- Components first drawn for the AFOSR COE kickoff deck ------------ */
+
+/* Slide headings, as a class rather than repeated inline styles. */
+.reveal .slides section .slide-h1 {
+  position: absolute;
+  left: 48px;
+  top: -8px;
+  height: 96px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  font-family: var(--font-core);
+  font-size: 53px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #002A54;
+  text-shadow: 2px 2px 3px rgb(0 42 84 / .40);
+}
+
+/* The five thrust colours, taken from the DIGICAMS program figure. */
+.t1 { --thrust: #4F7FAE; --thrust-tint: rgb(108 154 195 / .12); }
+.t2 { --thrust: #D9782A; --thrust-tint: rgb(226 143 65 / .12); }
+.t3 { --thrust: #5E9E42; --thrust-tint: rgb(128 190 99 / .13); }
+.t4 { --thrust: #A5824F; --thrust-tint: rgb(190 155 105 / .14); }
+.t5 { --thrust: #2F948C; --thrust-tint: rgb(91 189 182 / .14); }
+
+.chip {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 5px;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  line-height: 1.2;
+  color: #fff;
+  background: var(--thrust);
+  white-space: nowrap;
+}
+
+/* Anything the speaker still has to decide or confirm: a date, a name, a
+   proposed milestone. It is meant to be seen, so it cannot be presented
+   by accident. Delete the class once the item is settled. */
+.tbd {
+  border-bottom: 3px dashed #FA4616;
+  color: #B3330F;
+}
+
+.draft-tag {
+  position: absolute;
+  right: 110px;
+  bottom: 14px;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #FA4616;
+  border: 2px dashed #FA4616;
+  border-radius: 6px;
+  padding: 3px 10px;
+  background: #fff;
+}
+
+/* Thrust slides: leads row, question, two plan cards, figure column. */
+.leads {
+  position: absolute;
+  left: 48px;
+  top: 104px;
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+
+.leads .chip {
+  font-size: 20px;
+  letter-spacing: 3px;
+  padding: 6px 14px;
+}
+
+.lead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 23px;
+  color: #002A54;
+}
+
+.lead img {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--thrust);
+}
+
+.question {
+  position: absolute;
+  left: 48px;
+  top: 174px;
+  width: 850px;
+  font-size: 29px;
+  line-height: 1.22;
+  text-wrap: pretty;
+  color: #002A54;
+}
+
+.plan-col {
+  position: absolute;
+  left: 48px;
+  top: 290px;
+  width: 850px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.plan-card {
+  border-radius: 12px;
+  padding: 12px 22px 14px;
+  border: 1px solid rgba(0, 42, 84, 0.13);
+  box-shadow: 0 3px 10px rgba(0, 42, 84, 0.04);
+}
+
+.plan-card.start {
+  background: rgba(177, 179, 182, 0.12);
+  border-top: 4px solid #B1B3B6;
+}
+
+.plan-card.year {
+  background: var(--thrust-tint);
+  border-top: 5px solid var(--thrust);
+}
+
+.plan-card h3 {
+  margin: 0 0 8px;
+  font-family: var(--font-core);
+  font-size: 19px;
+  letter-spacing: 3px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #2C4B6A;
+  text-shadow: none;
+}
+
+.plan-card ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.plan-card li {
+  position: relative;
+  padding-left: 28px;
+  font-size: 23px;
+  line-height: 1.24;
+  color: #002A54;
+  text-wrap: pretty;
+}
+
+.plan-card li::before {
+  content: "●";
+  position: absolute;
+  left: 0;
+  top: .32em;
+  font-size: .6em;
+  color: var(--thrust, #6C9AC3);
+}
+
+.plan-card.start li::before {
+  color: #888B97;
+}
+
+.ref {
+  color: #888B97;
+  font-size: .82em;
+  white-space: nowrap;
+}
+
+.fig-col {
+  position: absolute;
+  left: 934px;
+  top: 104px;
+  width: 554px;
+  height: 690px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+}
+
+.fig-col img {
+  max-width: 100%;
+  max-height: 560px;
+  object-fit: contain;
+  display: block;
+}
+
+.fig-col figcaption {
+  font-size: 24px;
+  line-height: 1.26;
+  color: #2C4B6A;
+  text-align: center;
+  font-style: italic;
+  text-wrap: pretty;
+}
+
+/* Generic cards used on the vision, results and plan slides. */
+.card {
+  box-sizing: border-box;
+  border-radius: 12px;
+  padding: 18px 22px;
+  border: 1px solid rgba(0, 42, 84, 0.13);
+  border-top: 5px solid var(--thrust, #002A54);
+  background: var(--thrust-tint, rgba(108, 154, 195, 0.10));
+  box-shadow: 0 3px 10px rgba(0, 42, 84, 0.04);
+  color: #002A54;
+}
+
+.card .card-head {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 10px;
+}
+
+.card .card-body {
+  font-size: 25px;
+  line-height: 1.3;
+  text-wrap: pretty;
+}
+
+.eyebrow {
+  font-size: 19px;
+  letter-spacing: 3px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #2C4B6A;
+}
+
+.takeaway {
+  position: absolute;
+  left: 48px;
+  right: 48px;
+  bottom: 56px;
+  font-size: 34px;
+  line-height: 1.2;
+  color: #2C4B6A;
+  text-wrap: pretty;
+}
+
+/* Timeline grid. */
+.timeline {
+  position: absolute;
+  left: 48px;
+  top: 112px;
+  width: 1440px;
+  display: grid;
+  grid-template-columns: 190px repeat(4, 1fr);
+  gap: 10px;
+  font-size: 21px;
+  line-height: 1.24;
+  color: #002A54;
+}
+
+.timeline .q {
+  font-size: 22px;
+  font-weight: 700;
+  text-align: center;
+  padding: 8px 4px;
+  border-bottom: 3px solid #002A54;
+}
+
+.timeline .q span {
+  display: block;
+  font-size: 18px;
+  font-weight: 400;
+  color: #2C4B6A;
+}
+
+.timeline .lane {
+  font-size: 21px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  padding-left: 14px;
+  border-left: 6px solid var(--thrust, #002A54);
+}
+
+.timeline .cell {
+  background: rgba(108, 154, 195, 0.08);
+  border: 1px solid rgba(108, 154, 195, 0.25);
+  border-radius: 8px;
+  padding: 10px 12px;
+  min-height: 104px;
+  box-sizing: border-box;
+  text-wrap: pretty;
+}
+
+/* Team slide. */
+.people-row {
+  position: absolute;
+  left: 48px;
+  width: 1440px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  text-align: center;
+  color: #002A54;
+}
+
+.person img {
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;
+  border: 2px solid #B1B3B6;
+  box-shadow: 0 3px 10px rgb(0 42 84 / .12);
+}
+
+.person .nm {
+  margin-top: 10px;
+  font-size: 23px;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.person .af {
+  font-size: 20px;
+  line-height: 1.2;
+  color: #2C4B6A;
+  margin: 3px 0 7px;
+}
+
+.person .chips {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+}
+
+.person .chips .chip {
+  font-size: 17px;
+  padding: 2px 7px;
+}
+
+/* References. */
+.refs {
+  position: absolute;
+  left: 48px;
+  top: 104px;
+  width: 1440px;
+  columns: 2;
+  column-gap: 48px;
+  font-size: 18.5px;
+  line-height: 1.3;
+  color: #002A54;
+}
+
+.refs p {
+  margin: 0 0 9px;
+  padding-left: 40px;
+  text-indent: -40px;
+  break-inside: avoid;
+}
+
+/* Plan slides: one row per work item, coloured by its lead thrust. */
+.plan-list {
+  position: absolute;
+  left: 48px;
+  top: 186px;
+  width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.plan-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 16px;
+  align-items: start;
+  padding: 8px 16px 9px;
+  border-left: 6px solid var(--thrust);
+  background: var(--thrust-tint);
+  border-radius: 8px;
+  font-size: 25px;
+  line-height: 1.22;
+  color: #002A54;
+  text-wrap: pretty;
+}
+
+.plan-list.tight { gap: 6px; }
+.plan-list.tight .plan-item { padding: 6px 16px 7px; }
+
+.plan-item b {
+  font-weight: 700;
+}
+
+.plan-item .who {
+  grid-column: 1;
+  font-size: 21px;
+  line-height: 1.15;
+  color: #5B6272;
+}
+
+.plan-item .chips {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  display: flex;
+  gap: 4px;
+  padding-top: 2px;
+}
+
+.plan-item .chips .chip {
+  font-size: 17px;
+  padding: 2px 7px;
+}
+
+.avatar {
+  border-radius: 50%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #E9EDF2;
+  border: 2px solid #B1B3B6;
+  color: #2C4B6A;
+  font-weight: 700;
+  box-shadow: 0 3px 10px rgb(0 42 84 / .12);
+}

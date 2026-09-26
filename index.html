@@ -1,133 +1,21 @@
 <!doctype html>
 <html lang="en">
-
 <head>
+	<meta name="generator" content="Hugo 0.166.0">
   <meta charset="utf-8">
   <title>Talks — James Fairbanks</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    :root {
-      --navy: #002A54;
-      --cream: #FFEFCF;
-      --slate: #2C4B6A;
-      --rule: rgba(0, 42, 84, .14);
-      --card: #fff;
-      --bg: #F7F8FA;
-      --accent: #E28F41;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --navy: #FFEFCF;
-        --cream: #002A54;
-        --slate: #B8C7D6;
-        --rule: rgba(255, 239, 207, .18);
-        --card: #10243B;
-        --bg: #0A1A2B;
-      }
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      padding: 0 24px 72px;
-      background: var(--bg);
-      color: var(--navy);
-      font: 16px/1.55 "Fira Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    .wrap { max-width: 820px; margin: 0 auto; }
-
-    header {
-      padding: 72px 0 28px;
-      border-bottom: 3px solid var(--navy);
-      margin-bottom: 40px;
-    }
-
-    h1 {
-      margin: 0 0 10px;
-      font-size: clamp(38px, 7vw, 60px);
-      line-height: 1.02;
-      font-weight: 700;
-      letter-spacing: -.02em;
-    }
-
-    .sub { margin: 0; font-size: clamp(17px, 2.4vw, 21px); color: var(--slate); }
-
-    a.talk {
-      display: block;
-      text-decoration: none;
-      color: inherit;
-      background: var(--card);
-      border: 1px solid var(--rule);
-      border-top: 4px solid var(--accent);
-      border-radius: 12px;
-      padding: 26px 28px;
-      margin-bottom: 20px;
-      box-shadow: 0 3px 12px rgba(0, 42, 84, .05);
-      transition: transform .15s ease, box-shadow .15s ease;
-    }
-
-    a.talk:hover,
-    a.talk:focus-visible {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 26px rgba(0, 42, 84, .12);
-    }
-
-    .talk h2 {
-      margin: 0 0 8px;
-      font-size: clamp(21px, 3.2vw, 27px);
-      line-height: 1.2;
-      font-weight: 700;
-    }
-
-    .meta {
-      margin: 0;
-      font-size: 15px;
-      color: var(--slate);
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px 14px;
-    }
-
-    .go {
-      margin: 14px 0 0;
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--accent);
-    }
-
-    .note {
-      margin-top: 44px;
-      padding-top: 22px;
-      border-top: 1px solid var(--rule);
-      font-size: 14.5px;
-      color: var(--slate);
-    }
-
-    .note p { margin: 0 0 10px; }
-
-    kbd {
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: .88em;
-      border: 1px solid var(--rule);
-      border-radius: 4px;
-      padding: 1px 5px;
-    }
-  </style>
+  <link rel="stylesheet" href="./vendored/fira-sans-2026-09/fira-sans.css">
+  <link rel="stylesheet" href="./gatas-talks/index.css">
 </head>
-
 <body>
   <div class="wrap">
     <header>
       <h1>Talks</h1>
       <p class="sub">Snapshots of slide decks — James Fairbanks, University of Florida</p>
     </header>
-
     <main>
-      <a class="talk" href="2026-09-25-codac-kickoff-sheaves/">
+      <a class="talk" href="./2026-09-25-codac-kickoff-sheaves/">
         <h2>Sheaves for Coordination Problems in Distributed Autonomous Systems</h2>
         <p class="meta">
           <span>CODAC Kickoff Meeting</span>
@@ -136,8 +24,7 @@
         </p>
         <p class="go">Open the deck &rarr;</p>
       </a>
-
-      <a class="talk" href="2026-09-24-afosr-coe-kickoff/">
+      <a class="talk" href="./2026-09-24-afosr-coe-kickoff/">
         <h2>DIGICAMS for CODAC: Vision and Plan for the Year</h2>
         <p class="meta">
           <span>AFOSR Center of Excellence Kickoff</span>
@@ -148,8 +35,7 @@
         </p>
         <p class="go">Open the deck &rarr;</p>
       </a>
-
-      <a class="talk" href="2026-09-11-gt-dcl-sheaves-coordination/">
+      <a class="talk" href="./2026-09-11-gt-dcl-sheaves-coordination/">
         <h2>Sheaves for Coordination Problems in Distributed Autonomous Systems</h2>
         <p class="meta">
           <span>Decision and Control Laboratory Seminar</span>
@@ -160,8 +46,7 @@
         </p>
         <p class="go">Open the deck &rarr;</p>
       </a>
-
-      <a class="talk" href="2026-fall-compositional-methods/">
+      <a class="talk" href="./2026-fall-compositional-methods/">
         <h2>Compositional Methods of Engineering Analysis</h2>
         <p class="meta">
           <span>Department Seminar, Mechanical &amp; Aerospace Engineering</span>
@@ -170,18 +55,18 @@
           <span>·</span>
           <span>Fall 2026</span>
         </p>
-        <p class="go">Open the deck →</p>
+        <p class="go">Open the deck &rarr;</p>
       </a>
     </main>
-
     <div class="note">
-      <p>Each deck is self-contained: reveal.js, KaTeX and its fonts are vendored alongside
-        the slides rather than loaded from a CDN, so a snapshot still presents correctly
-        offline and does not break when an upstream version is withdrawn.</p>
-      <p>In a deck, arrow keys navigate, <kbd>Esc</kbd> shows the slide overview,
-        and <kbd>S</kbd> opens the speaker view.</p>
+      <p>Every deck is built from one library of slides, so a slide fixed once is fixed in
+every talk that uses it. reveal.js, KaTeX and the fonts are served alongside the
+slides rather than loaded from a CDN, so a deck presents offline and does not break
+when an upstream version is withdrawn.</p>
+<p>In a deck, arrow keys navigate, <kbd>Esc</kbd> shows the slide overview, and
+<kbd>S</kbd> opens the speaker view.</p>
+
     </div>
   </div>
 </body>
-
 </html>
