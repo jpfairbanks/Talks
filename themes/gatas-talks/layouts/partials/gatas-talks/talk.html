@@ -1,0 +1,25 @@
+{{- /* A talk is a section whose front matter lists its slides by name:
+
+         slides = ["title--dcl", "curriculum-vitae", { slide = "references", heading = "Sources" }]
+
+       Each name is a page under content/slides/. A table entry may override that
+       slide's front matter for this talk only. The slide number, and the ordinal
+       in a part divider's PART kicker, are counted here, so a slide shared by
+       several talks is numbered correctly in each. */ -}}
+  {{- $talk := . }}
+  {{- $part := 0 }}
+  {{- range $i, $ref := .Params.slides }}
+    {{- $name := $ref }}
+    {{- $over := dict }}
+    {{- if reflect.IsMap $ref }}
+      {{- $name = $ref.slide }}
+      {{- $over = $ref }}
+    {{- end }}
+    {{- $slide := site.GetPage (printf "/slides/%s" $name) }}
+    {{- if not $slide }}
+      {{- errorf "talk %q: slide %d names %q, which is not in content/slides/" $talk.Path (add $i 1) $name }}
+    {{- end }}
+    {{- $p := merge $slide.Params $over }}
+    {{- if $p.part }}{{ $part = add $part 1 }}{{ end }}
+    {{- partial "gatas-talks/slide.html" (dict "talk" $talk "slide" $slide "p" $p "n" (add $i 1) "part" $part) }}
+  {{- end }}

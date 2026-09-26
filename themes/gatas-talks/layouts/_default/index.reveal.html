@@ -1,0 +1,5 @@
+{{- /* A home page with the reveal output format is a talk too, for a repository
+       whose root is one deck: [outputs] home = ["reveal"]. */ -}}
+{{ define "main" }}
+  {{- partial "gatas-talks/talk.html" . }}
+{{ end }}

@@ -27,7 +27,7 @@ unsafe = true
 # Go toolchain and no network. The theme beside it is not copied.
 noVendor = "github.com/jpfairbanks/**"
 # The theme is developed here, so this site always builds with the copy beside
-# it (a path relative to themes/). go.mod says the same for the Go toolchain.
+# it (a path relative to themes/).
 replacements = "github.com/jpfairbanks/Talks/themes/gatas-talks -> gatas-talks"
 # The lab theme lives in this repository, under themes/. Other repositories
 # import it by module path, github.com/jpfairbanks/Talks/themes/gatas-talks.

@@ -48,6 +48,9 @@ name = "Your Name"
 path = "github.com/jpfairbanks/Talks/themes/gatas-talks"
 ```
 
+For a repository whose root is a single deck, make the home page a talk
+instead: `home = ["reveal"]`, with its `slides` in `content/_index.md`.
+
 and `hugo mod init github.com/you/your-talks` once. Then:
 
 ```
