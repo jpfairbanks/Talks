@@ -127,8 +127,16 @@ correctly in each talk. A name that is not in the library fails the build.
 
 In the `Talks` repository the theme is used from `themes/gatas-talks/` directly
 (`replacements` in its `hugo.toml`). To work on it from another site, point the
-module at a local checkout:
+modules at a local Talks checkout. A replaced module's own dependencies are not
+fetched, so reveal-hugo is taken from Talks' `_vendor/` as well:
 
 ```sh
-HUGO_MODULE_REPLACEMENTS="github.com/jpfairbanks/Talks/themes/gatas-talks -> /path/to/Talks/themes/gatas-talks" hugo server
+T=/path/to/Talks
+export HUGO_MODULE_REPLACEMENTS="github.com/jpfairbanks/Talks/themes/gatas-talks -> $T/themes/gatas-talks,\
+github.com/joshed-io/reveal-hugo -> $T/_vendor/github.com/joshed-io/reveal-hugo"
+hugo server
 ```
+
+Keep libraries under `static/vendored/`, never `static/vendor/`: Go leaves any
+directory named `vendor` out of a module, so a site fetching the theme would not
+get them.
