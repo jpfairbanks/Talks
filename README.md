@@ -169,7 +169,8 @@ hugo server                  # look at the decks
 ```
 
 KaTeX and Fira Sans are version-stamped directories under
-`themes/gatas-talks/static/vendor/`, named in one place,
+`themes/gatas-talks/static/vendored/` (not `vendor/`, which Go leaves out of a
+module), named in one place,
 [`layouts/partials/layout/theme.html`](themes/gatas-talks/layouts/partials/layout/theme.html).
 To upgrade one, drop the new build in beside the old, change the name there, and
 check the decks before deleting the old directory.

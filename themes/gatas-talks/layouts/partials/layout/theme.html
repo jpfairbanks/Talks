@@ -2,8 +2,8 @@
        design system is the theme. Versions are named here and nowhere else. */ -}}
 {{- $ds := "_ds/fairbanks-research-talk-design-system-7193341c-92ad-490d-a789-ef6442329aec" }}
 <link rel="stylesheet" href="{{ "reveal-js/dist/reveal.css" | relURL }}">
-<link rel="stylesheet" href="{{ "vendor/katex-0.16.11/katex.min.css" | relURL }}">
-<link rel="stylesheet" href="{{ "vendor/fira-sans-2026-09/fira-sans.css" | relURL }}">
+<link rel="stylesheet" href="{{ "vendored/katex-0.16.11/katex.min.css" | relURL }}">
+<link rel="stylesheet" href="{{ "vendored/fira-sans-2026-09/fira-sans.css" | relURL }}">
 {{- range slice "tokens/fonts.css" "tokens/colors.css" "tokens/typography.css" "tokens/spacing.css" "tokens/effects.css" "styles.css" }}
 <link rel="stylesheet" href="{{ path.Join $ds . | relURL }}">
 {{- end }}

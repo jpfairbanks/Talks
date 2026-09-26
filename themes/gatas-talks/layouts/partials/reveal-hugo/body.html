@@ -1,3 +1,3 @@
-<script src="{{ "vendor/katex-0.16.11/katex.min.js" | relURL }}"></script>
+<script src="{{ "vendored/katex-0.16.11/katex.min.js" | relURL }}"></script>
 {{- $js := resources.Get "gatas-talks/talk.ts" | js.Build (dict "target" "es2018" "minify" true) }}
 <script src="{{ $js.RelPermalink }}"></script>

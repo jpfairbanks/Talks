@@ -33,7 +33,7 @@ from html.parser import HTMLParser
 # The built site; --root points elsewhere.
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'public')
 SKIP_SCHEMES = ('data:', 'mailto:', 'javascript:', 'tel:', 'blob:')
-POOLED = ('assets', 'vendor', '_ds')
+POOLED = ('assets', 'vendored', '_ds')
 
 # A file that exists but is truncated or of the wrong type still fails to
 # display, so check that each one starts the way its extension promises.
@@ -248,22 +248,22 @@ def main() -> int:
                 print(f'  {status}  {url}')
 
     if args.versions:
-        vendored = sorted(d for d in os.listdir(os.path.join(ROOT, 'vendor'))
-                          if os.path.isdir(os.path.join(ROOT, 'vendor', d)))
+        vendored = sorted(d for d in os.listdir(os.path.join(ROOT, 'vendored'))
+                          if os.path.isdir(os.path.join(ROOT, 'vendored', d)))
         vendored += sorted('_ds/' + d for d in os.listdir(os.path.join(ROOT, '_ds'))
                            if os.path.isdir(os.path.join(ROOT, '_ds', d)))
         users: dict[str, list[str]] = {v: [] for v in vendored}
         for page in report['pages']:
             text = read(os.path.join(ROOT, page))
             for v in vendored:
-                needle = ('vendor/' + v) if not v.startswith('_ds/') else v
+                needle = ('vendored/' + v) if not v.startswith('_ds/') else v
                 if needle + '/' in text:
                     users[v].append(os.path.dirname(page) or '(root)')
         print('\nVENDORED VERSIONS')
         for v, decks in users.items():
             size = sum(os.path.getsize(os.path.join(r, f))
                        for r, _, fs in os.walk(os.path.join(
-                           ROOT, v if v.startswith('_ds/') else 'vendor/' + v))
+                           ROOT, v if v.startswith('_ds/') else 'vendored/' + v))
                        for f in fs)
             if decks:
                 print(f'  {v:42s} {size / 1e6:6.2f} MB  used by {len(decks)}: '
