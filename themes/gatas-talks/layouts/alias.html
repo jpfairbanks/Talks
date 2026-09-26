@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{{ .Page.Title }}</title>
+  <meta http-equiv="refresh" content="0; url={{ .Page.RelPermalink }}">
+  <link rel="canonical" href="{{ .Page.RelPermalink }}">
+  {{- /* Keep the #/slide fragment, so a link to one slide still lands on it. */}}
+  <script>location.replace(document.querySelector('link[rel=canonical]').href + location.hash);</script>
+</head>
+<body>
+  <p>This deck has moved to <a href="{{ .Page.RelPermalink }}">{{ .Page.Title }}</a>.</p>
+</body>
+</html>

@@ -1,0 +1,31 @@
++++
+title = "A Nested Spec Lowers to a Tower of Sheaves"
+heading = "A Nested Spec Lowers to a Tower of Sheaves"
+heading_size = 50
+cite = "[<span class=\"cite-ours\">31</span>] I. Kadosh, R. Samuelson, and J. Fairbanks, extended version<span class=\"ds-cite-more\"> &middot; Curry 2014 &middot; [<span class=\"cite-ours\">10</span>]</span>"
+notes = '''
+This is the nested section of the journal version of the layered-control paper. The point to make: nesting happens before the controller runs, so it costs nothing online. It does change the answer, though. The gap says how much energy rigidity costs. The weights say that a team deep in the tree still feels targets in the other wing. The feedback we want: is a tree the right specification language, and is this blending the behaviour you would ask for?
+'''
++++
+<div style="position:absolute;left:48px;top:104px;width:1440px;font-size:33px;line-height:1.2">Each <code style="font-family:var(--font-mono);font-size:.88em">@system</code> induces a graph map <span class="katex-inline" data-tex="f">\(f\)</span>; push the finer sheaf forward along it, <span class="katex-inline" data-tex="f_\star\mathcal{F}">\(f_\star\mathcal{F}\)</span>. One sheaf per level: <span class="katex-inline" data-tex="\mathcal{F}_N \to \cdots \to \mathcal{F}_0">\(\mathcal{F}_N \to \cdots \to \mathcal{F}_0\)</span>.</div>
+
+<ul class="ds-bullet-list" style="position:absolute;left:48px;top:196px;width:700px;gap:26px">
+  <li class="size-body" style="font-size:31px"><span class="bullet-mark">●</span><span class="bullet-text"><b>Solve coarse, lift fine.</b> The four-level fleet goes from 31 vertices to 8, and every team's geometry is enforced by the structure itself.</span></li>
+  <li class="size-body" style="font-size:31px"><span class="bullet-mark">●</span><span class="bullet-text"><b>Lowering happens at compile time.</b> Each level is a real cellular sheaf, so the layered-control results apply to it as they stand.</span></li>
+  <li class="size-body" style="font-size:31px"><span class="bullet-mark">●</span><span class="bullet-text"><b>Endpoints are linear views.</b> <code style="font-family:var(--font-mono);font-size:.88em">project</code> is exact at every level. <code style="font-family:var(--font-mono);font-size:.88em">centroid</code> averages basis coefficients above the leaves, so it is safe only on leaf teams.</span></li>
+</ul>
+
+<div style="position:absolute;left:792px;top:196px;width:696px;display:flex;flex-direction:column;gap:22px">
+  <div style="background:rgba(226,143,65,0.10);border-top:4px solid #D35400;border-radius:12px;padding:16px 22px;border-left:1px solid rgba(226,143,65,0.3);border-right:1px solid rgba(226,143,65,0.3);border-bottom:1px solid rgba(226,143,65,0.3)">
+    <div class="ds-theorem-block" style="font-size:28px"><span class="theorem-head">Proposition (Approximation gap).</span> <span class="theorem-body">The lifted tower solution is feasible for the flat problem, so</span></div>
+    <div class="ds-math-block ds-math-tight" style="font-size:30px" data-tex="\mathcal{E}_{\mathrm{hier}} \;\ge\; \mathcal{E}_{\mathrm{dir}} \;\ge\; 0"></div>
+    <div style="font-size:26px;line-height:1.25;color:#2C4B6A">The gap is the energy it costs to keep every escort ring rigid.</div>
+  </div>
+  <div style="background:rgba(226,143,65,0.10);border-top:4px solid #D35400;border-radius:12px;padding:16px 22px;border-left:1px solid rgba(226,143,65,0.3);border-right:1px solid rgba(226,143,65,0.3);border-bottom:1px solid rgba(226,143,65,0.3)">
+    <div class="ds-theorem-block" style="font-size:28px"><span class="theorem-head">Proposition (Response weights).</span> <span class="theorem-body">Team <span class="katex-inline" data-tex="S">\(S\)</span>'s response to each target sums to one:</span></div>
+    <div class="ds-math-block ds-math-tight" style="font-size:30px" data-tex="\textstyle\sum_k w_{S,k} = 1"></div>
+    <div style="font-size:26px;line-height:1.25;color:#2C4B6A">Ring: 0.60 on its own target, 0.20 on each neighbour's. Hub-and-spoke: 0.74 on its own.</div>
+  </div>
+</div>
+
+<div style="position:absolute;left:48px;right:48px;bottom:44px;font-size:33px;line-height:1.18;color:#2C4B6A">Teams <i>blend</i> their targets by design, so a deep spec can't be analysed one team at a time.</div>

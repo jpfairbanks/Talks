@@ -1,0 +1,50 @@
+# gatas-talks: the GATAS lab slide theme, layered on reveal-hugo.
+#
+# A site using it needs, in its own config (a theme cannot set these):
+#
+#   relativeURLs = true                      # decks open from file:// and any subpath
+#   [security]
+#   allowContent = ["! ^text/org$"]          # slides are .html content files
+#   [outputs]
+#   home = ["html"]
+#   section = ["reveal"]
+
+[module]
+[module.hugoVersion]
+min = "0.146.0"
+extended = false
+
+[[module.imports]]
+path = "github.com/joshed-io/reveal-hugo"
+
+[outputFormats.Reveal]
+baseName = "index"
+mediaType = "text/html"
+isHTML = true
+# So the talk has a permalink, and aliases redirect to it.
+permalinkable = true
+
+[params.reveal_hugo]
+# The canvas the design system is drawn on; reveal scales it to the window.
+width = 1536
+height = 864
+margin = 0.04
+min_scale = 0.2
+max_scale = 2.0
+center = true
+hash = true
+history = true
+keyboard = true
+overview = true
+controls = true
+progress = true
+slide_number = false
+transition = "none"
+# reveal-hugo's default set brings the markdown plugin and highlight CSS, and
+# needs its reset stylesheet, which undoes <b> and <em> inside slides. Load
+# only what the decks use.
+load_default_plugins = false
+plugins = [
+  { name = "RevealNotes", source = "reveal-js/plugin/notes/notes.js", verbatim = true },
+  { name = "RevealHighlight", source = "reveal-js/plugin/highlight/highlight.js", verbatim = true },
+]

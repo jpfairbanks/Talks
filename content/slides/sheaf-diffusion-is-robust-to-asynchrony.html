@@ -1,0 +1,22 @@
++++
+title = "Sheaf Diffusion Is Robust to Asynchrony"
+heading = "Sheaf Diffusion Is Robust to Asynchrony"
+cite = "[<span class=\"cite-ours\">14</span>] Y. Zhao, T. Hanks, H. Riess, S. Cohen, M. Hale, and J. Fairbanks. <i>IEEE American Control Conference,</i> 2026<span class=\"ds-cite-more\"> &middot; <a href=\"https://algebraicjulia.github.io/CellularSheaves.jl/stable/generated/asynch/convergence_vs_delay/\" target=\"_blank\" rel=\"noopener\">the experiment in the CellularSheaves.jl docs</a></span>"
++++
+<figure
+  style="margin:0;position:absolute;left:48px;top:98px;width:1440px;display:flex;flex-direction:column;gap:10px">
+  <img src="/assets/figures/asynch-convergence-vs-delay.svg"
+    alt="Energy and relative error against time for maximum delay B in 1, 10, 50, 100 and 200, on a 4-regular graph, an Erdos-Renyi graph and a star graph. Every curve converges; larger B converges later."
+    style="width:1440px;height:508px;object-fit:contain">
+  <figcaption style="font-size:25px;line-height:1.24;color:#2C4B6A;font-style:italic;white-space:nowrap">
+    Energy and relative error at maximum delay B = 1, 10, 50, 100 and 200, on three topologies</figcaption>
+</figure>
+
+<ul class="ds-bullet-list" style="position:absolute;left:48px;right:112px;bottom:58px;gap:8px">
+  <li class="size-body" style="font-size:30px"><span class="bullet-mark">&#9679;</span><span
+      class="bullet-text">Every agent updates and broadcasts on its own clock &mdash; no shared
+      round, no global barrier</span></li>
+  <li class="size-body" style="font-size:30px"><span class="bullet-mark">&#9679;</span><span
+      class="bullet-text">Longer delays postpone convergence; they do not break it, on a
+      4-regular graph, an Erd&#337;s&ndash;R&eacute;nyi graph, or a star</span></li>
+</ul>

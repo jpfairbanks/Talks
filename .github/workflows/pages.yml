@@ -1,0 +1,56 @@
+# Build the decks with Hugo and publish them to GitHub Pages.
+#
+# Pages must be set to deploy from GitHub Actions (Settings → Pages → Source),
+# not from a branch: the repository holds sources now, not built pages.
+name: pages
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+env:
+  HUGO_VERSION: 0.166.0
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Hugo
+        run: |
+          curl -sSL -o hugo.tar.gz \
+            "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_linux-amd64.tar.gz"
+          tar -xzf hugo.tar.gz hugo && rm hugo.tar.gz
+          sudo mv hugo /usr/local/bin/
+      # reveal-hugo is vendored in _vendor/ and the theme is in themes/, so no
+      # Go toolchain and no module download.
+      - name: Build
+        # No --minify: it collapses the indentation of code set in white-space:pre divs.
+        run: hugo --panicOnWarning
+      - name: Check every reference and asset
+        run: ./link_check.py --offline --quiet
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

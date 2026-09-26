@@ -1,0 +1,24 @@
++++
+title = "Graph-Laplacian Control, and Its Assumptions"
+heading = "Graph-Laplacian Control, and Its Assumptions"
++++
+<div
+  style="position:absolute;left:48px;top:130px;width:740px;font-size:37px;line-height:1.24;text-wrap:pretty">
+  Agents are nodes, sensing or communication links are edges. Each agent compares its state with its
+  neighbors', and local disagreement drives the network toward a global objective.</div>
+<ul class="ds-bullet-list" style="position: absolute; left: 54px; top: 358px; width: 740px">
+  <li class="size-body" style=""><span class="bullet-mark">●</span><span class="bullet-text">Compatible state
+      spaces across every agent</span></li>
+  <li class="size-body" style=""><span class="bullet-mark">●</span><span class="bullet-text">A measurement
+      each pair of neighbors can compare directly</span></li>
+  <li class="size-body" style=""><span class="bullet-mark">●</span><span
+      class="bullet-text">Two planar robots comparing positions in the same frame</span></li>
+</ul>
+<img src="/assets/figures/ring-graph.png" alt="Sixteen agents arranged on a ring communication graph"
+  style="position:absolute;left:1030px;top:126px;width:200px;height:200px;object-fit:contain">
+<img src="/assets/figures/ring-consensus.gif"
+  alt="The agent states on the ring evolving under Laplacian feedback"
+  style="position:absolute;left:932px;top:350px;width:477px;height:340px;object-fit:contain">
+<div style="position:absolute;left:48px;right:48px;bottom:64px;font-size:37px;line-height:1.18;color:#2C4B6A">
+  Natural for consensus, formation control, and leader–follower tracking — as long as the states are
+  comparable.</div>

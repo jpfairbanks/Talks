@@ -1,0 +1,29 @@
++++
+title = "From Advection–Diffusion to Porous Media Convection"
+heading = "From Advection&#8211;Diffusion to Porous Media Convection"
++++
+<div
+            style="position:absolute;left:48px;top:112px;width:740px;height:600px;background:#F4F5F6;border-radius:4px;padding:22px;box-sizing:border-box;font-family:var(--font-mono);font-size:21px;line-height:1.34;color:#002A54;white-space:pre">Porous_Convection = <span style="color:#A85F19">@decapode</span> <span style="color:#002A54;font-weight:600">begin</span>
+  (λ_ρ₀Cp, αρ₀, k_ηf, ϕ):<span style="color:#3F7A28">:Constant</span>
+  (P, T, Adv, bound_T, bound_Ṫ):<span style="color:#3F7A28">:Form0</span>
+  (g, <span style="color:#002A54">qD</span>):<span style="color:#3F7A28">:Form1</span>
+
+  bound_T == <span style="color:#2C4B6A">adiabatic</span>(T)
+
+  <span style="color:#888B97"># Darcy flux</span>
+  ρ == g ∧ (αρ₀ * bound_T)
+  P == <span style="color:#2C4B6A">Δ⁻¹</span>(<span style="color:#2C4B6A">δ</span>(ρ))
+  <span style="color:#002A54">qD</span> == -k_ηf * (<span style="color:#2C4B6A">d</span>(P) - ρ)
+
+  Adv == <span style="color:#2C4B6A">⋆</span>(<span style="color:#2C4B6A">interpolate</span>(<span style="color:#2C4B6A">∧ᵈᵖ₁₁</span>(<span style="color:#2C4B6A">⋆</span>(<span style="color:#2C4B6A">d</span>(bound_T)), <span style="color:#002A54">qD</span>)))
+  Ṫ == -<span style="color:#8A6A3A">1</span>/ϕ * Adv + λ_ρ₀Cp * <span style="color:#2C4B6A">Δ</span>(bound_T)
+
+  bound_Ṫ == <span style="color:#2C4B6A">tb_bc</span>(Ṫ)
+
+  <span style="color:#2C4B6A">∂ₜ</span>(T) == bound_Ṫ
+<span style="color:#002A54;font-weight:600">end</span></div>
+          <video data-autoplay src="/assets/video/porous-convection.mp4" autoplay="autoplay" loop="loop" muted="muted"
+            playsinline="playsinline"
+            style="position:absolute;left:820px;top:112px;width:668px;height:600px;object-fit:contain;background:#fff"></video>
+          <div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:37px;line-height:1.18;color:#2C4B6A">
+            Real multiphysics fits on one screen, and the compiler checks it.</div>

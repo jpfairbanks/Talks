@@ -1,0 +1,35 @@
++++
+title = "Scale and Hierarchy"
+heading = "3 &middot; Scale and Hierarchy"
+cite = "[<span class=\"cite-ours\">13</span>] I. Kadosh, R. Samuelson, and J. Fairbanks. <i>IEEE Control Systems Letters,</i> submitted with the ACC 2027 option<span class=\"ds-cite-more\"> &middot; [<span class=\"cite-ours\">12</span>]</span>"
+notes = '''
+Sparse direct solvers, interior-point methods and domain decomposition all combine local solves into a global solution, which can be written as a sheaf operation. The goal is for one solver to serve coordination, safety synthesis and mission planning. Two ECC 2027 papers come out of this part:
+          low-rank updates for temporal sheaves (Joana and Hans, a UF&ndash;GT paper building on the ACC 2027 temporal-sheaf submission) and high-performance computing for layered
+          control (Itay and Richard).
+'''
++++
+<div class="question" style="top:104px;width:1440px">Formulate the scalable algorithms of computational engineering as operations on sheaves, and use that structure to build faster, distributed solvers.</div>
+<div class="plan-list tight" style="top:190px;width:1440px">
+  <div class="plan-item t3"><div><b>Conic programs at scale.</b> Generic multifrontal algorithms, and a
+      structure-exploiting interior-point method for conic programming</div>
+    <div class="chips"><span class="chip t3">T3</span><span class="chip t5">T5</span></div>
+    <div class="who">Fairbanks</div></div>
+  <div class="plan-item t2"><div><b>Layered control.</b> A fleet-scale sheaf solve over a tree decomposition, with vehicle-scale feedforward <span class="ref">[13]</span>. Next: high-performance computing for the architecture, to ECC 2027</div>
+    <div class="chips"><span class="chip t2">T2</span><span class="chip t3">T3</span></div>
+    <div class="who">Kadosh, Samuelson, Fairbanks</div></div>
+  <div class="plan-item t4"><div><b>Low-rank updates for temporal sheaves.</b> Weapon&ndash;target assignment and swarm adaptation, building on the ACC 2027 temporal-sheaf paper <span class="ref">[12]</span>. To ECC 2027</div>
+    <div class="chips"><span class="chip t1">T1</span><span class="chip t3">T3</span><span class="chip t4">T4</span></div>
+    <div class="who">Bou Barcelo, Riess</div></div>
+  <div class="plan-item t1"><div><b>Hierarchical missions.</b> Nested and hierarchical mission planning with
+      sheaves</div>
+    <div class="chips"><span class="chip t1">T1</span><span class="chip t4">T4</span></div>
+    <div class="who">Fairbanks</div></div>
+  <div class="plan-item t2"><div><b>Distributed safety synthesis.</b> Domain decomposition and distributed
+      quadratic programs for barrier-function synthesis</div>
+    <div class="chips"><span class="chip t2">T2</span><span class="chip t3">T3</span></div>
+    <div class="who">Dixon</div></div>
+  <div class="plan-item t1"><div><b>Network dynamics.</b> Fixed-point supports of combinatorial threshold-linear
+      networks, enumerated with presheaves and sheaves</div>
+    <div class="chips"><span class="chip t1">T1</span></div>
+    <div class="who">Dixon</div></div>
+</div>

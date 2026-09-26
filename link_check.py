@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """Check every reference in every deck: links resolve, assets exist and decode.
 
-The decks are reveal.js single pages, so one index.html holds every slide —
-parsing it covers the whole talk. References are followed out of HTML into the
-stylesheets it loads, so pooled fonts and anything pulled in by url() are
-checked too.
+The decks are built by Hugo into public/, one reveal.js page per talk, so one
+index.html holds every slide — parsing it covers the whole talk. References are
+followed out of HTML into the stylesheets it loads, so pooled fonts and anything
+pulled in by url() are checked too. Build first:
+
+    hugo && ./link_check.py
 
     ./link_check.py                 # everything
     ./link_check.py --offline       # skip the network, check local files only
@@ -28,7 +30,8 @@ import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from html.parser import HTMLParser
 
-ROOT = os.path.dirname(os.path.abspath(__file__))
+# The built site; --root points elsewhere.
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'public')
 SKIP_SCHEMES = ('data:', 'mailto:', 'javascript:', 'tel:', 'blob:')
 POOLED = ('assets', 'vendor', '_ds')
 
@@ -198,6 +201,7 @@ def check_url(url: str) -> tuple[str, int | str]:
 
 
 def main() -> int:
+    global ROOT
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('--offline', action='store_true', help='skip external URLs')
@@ -206,7 +210,9 @@ def main() -> int:
     ap.add_argument('--orphans', action='store_true',
                     help='also list pooled files nothing references')
     ap.add_argument('--quiet', action='store_true', help='only print problems')
+    ap.add_argument('--root', default=None, help='the built site (default: public/)')
     args = ap.parse_args()
+    ROOT = os.path.abspath(args.root or ROOT)
 
     report, referenced = collect(args.quiet)
     failures = 0

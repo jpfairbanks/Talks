@@ -1,0 +1,23 @@
++++
+title = "Decapodes: Directly Computable Physics"
+heading = "Decapodes: Directly Computable Physics"
++++
+<div
+  style="position:absolute;left:48px;top:130px;width:820px;font-size:37px;line-height:1.24;text-wrap:pretty">
+  Discrete exterior calculus supplies the operators; the diagram supplies the equations. The specification
+  compiles to a simulator with no hand-written discretization.</div>
+<ul class="ds-bullet-list" style="position:absolute;left:48px;top:340px;width:820px">
+  <li class="size-body" style=""><span class="bullet-mark">●</span><span class="bullet-text">Specifications
+      are data: type-checked, rewritten, and composed before compilation</span></li>
+  <li class="size-body" style=""><span class="bullet-mark">●</span><span class="bullet-text">Custom operators
+      supply their own matrices against any mesh</span></li>
+  <li class="size-body" style=""><span class="bullet-mark">●</span><span class="bullet-text">Generic
+      subdivision gives geometric multigrid for free</span></li>
+  <li class="size-body" style=""><span class="bullet-mark">●</span><span class="bullet-text">Sparse DEC
+      operators map cleanly onto GPUs</span></li>
+</ul>
+<img src="/assets/figures/decapodes-4-panel.png"
+  alt="Exterior calculus operators, a discrete geometric domain, physical equations, and the generated simulation"
+  style="position:absolute;left:930px;top:150px;width:530px;height:500px;object-fit:contain">
+<div style="position:absolute;left:48px;right:48px;bottom:64px;font-size:37px;line-height:1.18;color:#2C4B6A">
+  Built on CombinatorialSpaces.jl, part of the AlgebraicJulia ecosystem.</div>

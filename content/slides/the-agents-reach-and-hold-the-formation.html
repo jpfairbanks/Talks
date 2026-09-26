@@ -1,0 +1,41 @@
++++
+title = "The Agents Reach and Hold the Formation"
+heading = "The Agents Reach and Hold the Formation"
+cite = "[<span class=\"cite-ours\">5</span>] T. Hanks, C. F. Nino, J. Bou Barcelo, A. Copeland, W. E. Dixon, and J. Fairbanks. <i>European Control Conference,</i> 2026"
++++
+<div style="position:absolute;left:48px;top:100px;right:48px;display:grid;grid-template-columns:repeat(3, 1fr);gap:24px;align-items:stretch">
+  <div style="background:rgba(108,154,195,0.08);border-top:5px solid #002A54;border-radius:14px;padding:16px 18px;border-left:1px solid rgba(108,154,195,0.25);border-right:1px solid rgba(108,154,195,0.25);border-bottom:1px solid rgba(108,154,195,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04);display:flex;flex-direction:column;align-items:center;height:550px;box-sizing:border-box">
+    <div style="font-size:25px;color:#002A54;font-weight:700;margin-bottom:8px;text-align:center">Formations, in the Plane</div>
+    <div style="position:relative;width:100%;flex:1;overflow:hidden;border-radius:8px">
+      <video data-autoplay src="/assets/video/formation-tracking.mp4" autoplay="autoplay" loop="loop" muted="muted"
+        playsinline="playsinline"
+        style="position:absolute;left:-26px;top:0;width:112%;height:100%;object-fit:fill;background:#fff"></video>
+    </div>
+  </div>
+
+  <div style="background:rgba(226,143,65,0.08);border-top:5px solid #E28F41;border-radius:14px;padding:16px 18px;border-left:1px solid rgba(226,143,65,0.25);border-right:1px solid rgba(226,143,65,0.25);border-bottom:1px solid rgba(226,143,65,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04);display:flex;flex-direction:column;align-items:center;height:550px;box-sizing:border-box">
+    <div style="font-size:25px;color:#002A54;font-weight:700;margin-bottom:8px;text-align:center">Agent and Target Trajectories</div>
+    <div style="width:100%;flex:1;display:flex;align-items:center;justify-content:center">
+      <img src="/assets/figures/formation-3d-trajectories.png"
+        alt="Agent orbits above and target figure-eight paths below, in three dimensions"
+        style="max-width:100%;max-height:100%;object-fit:contain;border-radius:8px">
+    </div>
+  </div>
+
+  <div style="background:rgba(128,190,99,0.08);border-top:5px solid #80BE63;border-radius:14px;padding:16px 18px;border-left:1px solid rgba(128,190,99,0.25);border-right:1px solid rgba(128,190,99,0.25);border-bottom:1px solid rgba(128,190,99,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04);display:flex;flex-direction:column;align-items:center;height:550px;box-sizing:border-box">
+    <div style="font-size:25px;color:#002A54;font-weight:700;margin-bottom:8px;text-align:center">Tracking Error by Gain</div>
+    <div style="width:100%;height:320px;display:flex;align-items:center;justify-content:center">
+      <img src="/assets/figures/tracking-error-gains-2x.png"
+        alt="Tracking error norm against time for six control gains from k = 0.001 to k = 100"
+        style="max-width:100%;max-height:100%;object-fit:contain;border-radius:8px">
+    </div>
+    <div style="font-size:24px;line-height:1.24;color:#002A54;margin-top:10px;text-align:center;text-wrap:pretty">
+      A larger gain shrinks the residual error, exactly matching the convergence bound.
+    </div>
+  </div>
+</div>
+
+<div
+  style="position:absolute;left:48px;right:48px;bottom:48px;font-size:35px;line-height:1.2;color:#2C4B6A;text-wrap:pretty">
+  Agents converge from arbitrary initial positions into the square and triangle formations, and hold them as
+  the targets move.</div>

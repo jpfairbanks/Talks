@@ -1,0 +1,19 @@
++++
+title = "Euler's Method Is Functorial"
+heading = "Euler's Method Is Functorial"
+heading_size = 59
+cite = "[<span class=\"cite-ours\">13</span>] T. Hanks, J. Fairbanks, and M. Klawonn. <i>Applied Category Theory 2024,</i> EPTCS 429:217&ndash;233"
++++
+<img src="/assets/figures/euler-gradient-flow.png"
+  alt="An objective f maps to its gradient flow and then to the Euler discretization; the contour plot of f beside the stream plot of the flow"
+  style="position:absolute;left:48px;top:100px;width:1440px;height:420px;object-fit:contain">
+
+<div
+  style="position:absolute;left:48px;right:48px;top:540px;background:rgba(108,154,195,0.12);border-top:5px solid #2E7D32;border-radius:12px;padding:14px 32px;border-left:1px solid rgba(108,154,195,0.25);border-right:1px solid rgba(108,154,195,0.25);border-bottom:1px solid rgba(108,154,195,0.25);box-shadow:0 3px 10px rgba(0,42,84,0.04)">
+  <div class="ds-theorem-block" style="font-size:26px;line-height:1.36">
+    <div class="theorem-head" style="font-size:26px;font-weight:700;color:#2E7D32;margin-bottom:6px">Theorem (Functorial Discretization).</div>
+    <div class="theorem-body">Gradient flow <span class="katex-inline" data-tex="\mathcal{G}\colon \mathbf{Opt} \to \mathbf{DynSys}">\(\mathcal{G}\colon \mathbf{Opt} \to \mathbf{DynSys}\)</span> and Euler integration <span class="katex-inline" data-tex="\mathcal{E}_h\colon \mathbf{DynSys} \to \mathbf{DiscreteDynSys}">\(\mathcal{E}_h\colon \mathbf{DynSys} \to \mathbf{DiscreteDynSys}\)</span> are monoidal functors:</div>
+    <div class="ds-math-block" data-tex="\mathcal{E}_h(\mathcal{G}(f \oplus g)) = \mathcal{E}_h(\mathcal{G}(f)) \oplus \mathcal{E}_h(\mathcal{G}(g))" style="font-size:28px;margin:6px 0;text-align:center">\[\mathcal{E}_h(\mathcal{G}(f \oplus g)) = \mathcal{E}_h(\mathcal{G}(f)) \oplus \mathcal{E}_h(\mathcal{G}(g))\]</div>
+    <div style="font-size:23px;color:#2C4B6A">Discretizing a composite problem equals composing the discrete solvers. Modular verification is exact.</div>
+  </div>
+</div>

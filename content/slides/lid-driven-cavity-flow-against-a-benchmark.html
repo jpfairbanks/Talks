@@ -1,0 +1,28 @@
++++
+title = "Lid-Driven Cavity Flow, Against a Benchmark"
+heading = "Lid-Driven Cavity Flow, Against a Benchmark"
++++
+<figure
+  style="margin:0;position:absolute;left:48px;top:118px;width:900px;display:flex;flex-direction:column;gap:12px">
+  <img src="/assets/figures/cavity-ghia-comparison.png"
+    alt="Simulated v-velocity across the x-midline and u-velocity across the y-midline at Re = 1000, plotted against the Ghia et al. 1982 benchmark points"
+    style="width:900px;height:452px;object-fit:contain">
+  <figcaption style="font-size:26px;line-height:1.24;color:#2C4B6A;font-style:italic">
+    Midline velocity profiles at Re = 1000, against Ghia et al. (1982)</figcaption>
+</figure>
+<figure
+  style="margin:0;position:absolute;left:990px;top:118px;width:498px;display:flex;flex-direction:column;gap:12px">
+  <img src="/assets/figures/cavity-velocity-magnitude.png"
+    alt="Velocity magnitude field with direction arrows, showing the primary vortex and the corner recirculations"
+    style="width:498px;height:452px;object-fit:contain">
+  <figcaption style="font-size:26px;line-height:1.24;color:#2C4B6A;font-style:italic">
+    Speed and direction of the converged flow</figcaption>
+</figure>
+<ul class="ds-bullet-list" style="position:absolute;left:48px;right:112px;bottom:36px;gap:10px">
+  <li class="size-body" style="font-size:32px"><span class="bullet-mark">●</span><span
+      class="bullet-text">The generated simulator lands on the benchmark points across both midlines, and
+      recovers the primary vortex with its corner recirculations</span></li>
+  <li class="size-body" style="font-size:32px"><span class="bullet-mark">●</span><span
+      class="bullet-text">Quantitative agreement, from a specification with no hand-written
+      discretization</span></li>
+</ul>

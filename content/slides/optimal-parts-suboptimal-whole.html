@@ -1,0 +1,39 @@
++++
+title = "Optimal Parts, Suboptimal Whole"
+heading = "Optimal Parts, Suboptimal Whole"
+notes = '''
+This is the motivating scenario from the center's research plan. It couples discrete and continuous optimization, planning and control, and robustness to both uncertain conditions and uncertain communication. For example, dispatching another drone changes the communication delays, which affects stability of the whole flock. Current methods analyze these decisions separately.
+'''
++++
+<div style="position:absolute;left:48px;top:118px;width:800px;font-size:34px;line-height:1.22;text-wrap:pretty">
+  A heterogeneous flock is sent to reach a stranded vehicle and observe its surroundings. Before
+  launch it must decide:</div>
+<svg viewBox="0 0 800 420" width="800" height="420" role="img"
+  aria-label="Four coupled decisions: fleet size constrains routes and communication; routes constrain communication; communication delays constrain adaptation"
+  style="position:absolute;left:48px;top:250px;font-family:var(--font-core);overflow:visible">
+  <defs><marker id="arr3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#2C4B6A"/></marker></defs>
+  <g stroke="#2C4B6A" stroke-width="3" fill="none" marker-end="url(#arr3)">
+    <line x1="304" y1="59" x2="494" y2="59"/>
+    <line x1="150" y1="122" x2="150" y2="294"/>
+    <line x1="560" y1="122" x2="262" y2="294"/>
+    <line x1="304" y1="359" x2="494" y2="359"/>
+  </g>
+  <g font-size="23" font-style="italic" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">
+    <text x="400" y="46" text-anchor="middle">fleet size</text>
+    <text x="162" y="214">fleet size</text>
+    <text x="430" y="206" text-anchor="middle">routes</text>
+    <text x="400" y="346" text-anchor="middle">delays</text>
+  </g>
+  <rect x="0" y="0" width="300" height="118" rx="12" fill="#EFF6EB" stroke="#5E9E42" stroke-width="2"/><rect x="0" y="0" width="8" height="118" rx="4" fill="#5E9E42"/><text x="24" y="44" font-size="27" font-weight="700" fill="#002A54">How many drones</text><text x="24" y="76" font-size="23" fill="#2C4B6A">discrete optimization</text><rect x="500" y="0" width="300" height="118" rx="12" fill="#EFF6EB" stroke="#5E9E42" stroke-width="2"/><rect x="500" y="0" width="8" height="118" rx="4" fill="#5E9E42"/><text x="524" y="44" font-size="27" font-weight="700" fill="#002A54">Which routes</text><text x="524" y="76" font-size="23" fill="#2C4B6A">continuous optimization</text><rect x="0" y="300" width="300" height="118" rx="12" fill="#EDF2F8" stroke="#4F7FAE" stroke-width="2"/><rect x="0" y="300" width="8" height="118" rx="4" fill="#4F7FAE"/><text x="24" y="344" font-size="27" font-weight="700" fill="#002A54">Who talks to whom</text><text x="24" y="376" font-size="23" fill="#2C4B6A">communication pattern</text><rect x="500" y="300" width="300" height="118" rx="12" fill="#F6F1EA" stroke="#A5824F" stroke-width="2"/><rect x="500" y="300" width="8" height="118" rx="4" fill="#A5824F"/><text x="524" y="344" font-size="27" font-weight="700" fill="#002A54">How to adapt</text><text x="524" y="374" font-size="23" fill="#2C4B6A">weather, interlopers,</text><text x="524" y="401" font-size="23" fill="#2C4B6A">unmodeled effects</text>
+</svg>
+<figure style="position:absolute;left:890px;top:118px;width:598px;margin:0">
+  <img src="/assets/figures/multidomain-autonomy.png"
+    alt="Drones, surface vessels and submarines in three layers, joined by communication links"
+    style="width:100%;height:458px;object-fit:contain;display:block">
+  <figcaption style="margin-top:10px;font-size:24px;line-height:1.26;color:#2C4B6A;text-align:center;font-style:italic">
+    Agents differ in dynamics, sensing, communication and computation.</figcaption>
+</figure>
+<div class="takeaway" style="bottom:48px">
+  Each decision limits the others. Analyzed apart, optimal subsystems compose into a suboptimal
+  whole, and stable ones into an unstable one.</div>

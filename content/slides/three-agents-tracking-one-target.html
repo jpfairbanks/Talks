@@ -1,0 +1,76 @@
++++
+title = "Three Agents Tracking One Target"
+heading = "Three Agents Tracking One Target"
++++
+<div
+  style="position:absolute;left:48px;top:104px;right:48px;display:grid;grid-template-columns:1fr 1fr;gap:48px">
+  <figure style="margin:0;display:flex;flex-direction:column;gap:10px">
+    <svg viewBox="0 0 520 400" style="width:100%;height:462px">
+      <g stroke="#B1B3B6" stroke-width="2.5" stroke-dasharray="7 7">
+        <line x1="20" y1="330" x2="500" y2="330"></line>
+        <line x1="90" y1="20" x2="90" y2="390"></line>
+        <line x1="40" y1="31.8" x2="480" y2="368.2"></line>
+      </g>
+      <g stroke="#002A54" stroke-width="3">
+        <line x1="200" y1="230" x2="430" y2="330"></line>
+        <line x1="200" y1="230" x2="90" y2="330"></line>
+        <line x1="200" y1="230" x2="90" y2="70"></line>
+      </g>
+      <circle cx="430" cy="330" r="34" fill="rgb(108 154 195 / .28)"></circle>
+      <circle cx="90" cy="330" r="34" fill="rgb(226 143 65 / .28)"></circle>
+      <circle cx="90" cy="70" r="34" fill="rgb(128 190 99 / .28)"></circle>
+      <circle cx="200" cy="230" r="34" fill="rgb(190 155 105 / .28)"></circle>
+      <g fill="#fff" stroke="#002A54" stroke-width="3">
+        <circle cx="430" cy="330" r="12"></circle>
+        <circle cx="90" cy="330" r="12"></circle>
+        <circle cx="90" cy="70" r="12"></circle>
+        <circle cx="200" cy="230" r="12"></circle>
+      </g>
+      <g fill="#002A54" font-size="28" font-style="italic" text-anchor="middle"
+        font-family="var(--font-math)"><text x="477.7" y="360.7">ℝ²</text><text x="51.5"
+          y="375.0">ℝ²</text><text x="60.5" y="37.1">ℝ²</text><text x="200" y="192">ℝ²</text></g>
+      <g fill="#2C4B6A" font-size="26" font-style="italic" text-anchor="middle"
+        font-family="var(--font-math)"><text x="323.8" y="268.8">ℝ</text><text x="159.8"
+          y="305.3">ℝ</text><text x="126.9" y="171.5">ℝ</text></g><text x="200" y="160" text-anchor="middle"
+        font-family="var(--font-core)" font-style="italic" font-size="24"
+        fill="#2C4B6A">target</text>
+    </svg>
+    <figcaption style="font-size:26px;line-height:1.24;color:#2C4B6A;font-style:italic">
+      Initial configuration: one agent per line, target inside</figcaption>
+  </figure>
+  <figure style="margin:0;display:flex;flex-direction:column;gap:10px">
+    <svg viewBox="0 0 520 400" style="width:100%;height:462px">
+      <g stroke="#B1B3B6" stroke-width="2.5" stroke-dasharray="7 7">
+        <line x1="20" y1="330" x2="500" y2="330"></line>
+        <line x1="90" y1="20" x2="90" y2="390"></line>
+        <line x1="40" y1="31.8" x2="480" y2="368.2"></line>
+      </g>
+      <g stroke="#002A54" stroke-width="3">
+        <line x1="200" y1="230" x2="200" y2="330"></line>
+        <line x1="200" y1="230" x2="90" y2="230"></line>
+        <line x1="200" y1="230" x2="236.3" y2="181.9"></line>
+      </g>
+      <circle cx="200" cy="330" r="34" fill="rgb(108 154 195 / .28)"></circle>
+      <circle cx="90" cy="230" r="34" fill="rgb(226 143 65 / .28)"></circle>
+      <circle cx="236.3" cy="181.9" r="34" fill="rgb(128 190 99 / .28)"></circle>
+      <circle cx="200" cy="230" r="34" fill="rgb(190 155 105 / .28)"></circle>
+      <g fill="#fff" stroke="#002A54" stroke-width="3">
+        <circle cx="200" cy="330" r="12"></circle>
+        <circle cx="90" cy="230" r="12"></circle>
+        <circle cx="236.3" cy="181.9" r="12"></circle>
+        <circle cx="200" cy="230" r="12"></circle>
+      </g><text x="200" y="160" text-anchor="middle" font-family="var(--font-core)"
+        font-style="italic" font-size="24" fill="#2C4B6A">target</text>
+      <g fill="none" stroke="#2C4B6A" stroke-width="2.5">
+        <path d="M200,316 h14 v14"></path>
+        <path d="M104,230 v-14 h-14"></path>
+        <path d="M247.4,190.4 L239.0,201.6 L227.9,193.1"></path>
+      </g>
+    </svg>
+    <figcaption style="font-size:26px;line-height:1.24;color:#2C4B6A;font-style:italic">
+      Equilibrium: each agent at a perpendicular foot</figcaption>
+  </figure>
+</div>
+<div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:37px;line-height:1.18;color:#2C4B6A">
+  Every agent stalk is ℝ², every edge stalk ℝ: each edge compares the target against the line its agent moves
+  along. This is the sheaf behind a Robotarium demo.</div>

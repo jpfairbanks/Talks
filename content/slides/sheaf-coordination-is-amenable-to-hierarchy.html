@@ -1,0 +1,39 @@
++++
+title = "Sheaf Coordination Is Amenable to Hierarchy"
+heading = "Sheaf Coordination Is Amenable to Hierarchy"
+cite = "[<span class=\"cite-ours\">10</span>] <a href=\"https://algebraicjulia.github.io/CellularSheaves.jl/dev/generated/nested/hierarchical_fleet/\" target=\"_blank\" rel=\"noopener\">CellularSheaves.jl docs &middot; A Four-Level Fleet, Written in the Nested DSL</a><span class=\"ds-cite-more\"> &middot; [<span class=\"cite-ours\">12</span>]</span>"
++++
+<div
+            style="position:absolute;left:48px;top:112px;width:700px;font-size:30px;line-height:1.22;text-wrap:pretty">
+            The fleet is a tree of nested <span style="font-family:var(--font-mono);font-size:0.85em">@system</span> blocks:
+            two wings, each built from the same reusable fragments, joined by a relay.</div>
+          <div
+            style="position:absolute;left:48px;top:232px;width:665px;height:548px;background:#F4F5F6;border-radius:4px;padding:22px;box-sizing:border-box;overflow:hidden;font-family:var(--font-mono);font-size:22px;line-height:1.32;color:#002A54;white-space:pre">fleet = <span style="color:#A85F19">@nested_system</span> <span style="color:#002A54;font-weight:600">begin</span>
+  <span style="color:#A85F19">@system</span> wingA <span style="color:#002A54;font-weight:600">begin</span>
+    flight1 = <span style="color:#2C4B6A">flight</span>(elemsA, <span style="color:#3F7A28">:r1</span>)
+    charlie = <span style="color:#2C4B6A">escort</span>(<span style="color:#8A6A3A">4</span>, <span style="color:#8A6A3A">0.6</span>, <span style="color:#3F7A28">:t3</span>)
+    r2 = <span style="color:#2C4B6A">relay</span>()
+    <span style="color:#A85F19">@link</span> <span style="color:#2C4B6A">project</span>(flight1, <span style="color:#8A6A3A">1</span>) => r2
+    <span style="color:#A85F19">@link</span> r2 => <span style="color:#2C4B6A">centroid</span>(charlie)
+  <span style="color:#002A54;font-weight:600">end</span>
+  <span style="color:#A85F19">@system</span> wingB <span style="color:#002A54;font-weight:600">begin</span>
+    delta = <span style="color:#2C4B6A">escort</span>(<span style="color:#8A6A3A">5</span>, <span style="color:#8A6A3A">0.7</span>, <span style="color:#3F7A28">:t4</span>)
+    echo = <span style="color:#2C4B6A">escort</span>(<span style="color:#8A6A3A">5</span>, <span style="color:#8A6A3A">0.7</span>, <span style="color:#3F7A28">:t5</span>)
+    r3 = <span style="color:#2C4B6A">relay</span>()
+  <span style="color:#002A54;font-weight:600">end</span>
+  r4 = <span style="color:#2C4B6A">relay</span>()
+  <span style="color:#A85F19">@link</span> <span style="color:#2C4B6A">project</span>(wingA, <span style="color:#8A6A3A">1</span>) => r4
+  <span style="color:#A85F19">@link</span> r4 => <span style="color:#2C4B6A">project</span>(wingB, <span style="color:#8A6A3A">1</span>)
+<span style="color:#002A54;font-weight:600">end</span></div>
+          <div
+            style="position:absolute;left:750px;top:120px;width:738px;height:555px;overflow:hidden;border-radius:4px">
+            <img src="/assets/figures/hierarchical-fleet.gif"
+              alt="A four-level fleet of nested escort teams tracking orbiting targets, hierarchy tower compiled from the DSL"
+              style="width:100%;height:100%;object-fit:contain">
+          </div>
+          <div
+            style="position:absolute;left:750px;top:688px;width:738px;font-size:25px;line-height:1.24;color:#2C4B6A;font-style:italic">
+            A four-level fleet — root → wing → flight → escort team — compiled from this DSL. CellularSheaves.jl,
+            AlgebraicJulia.</div>
+          <div style="position:absolute;left:48px;right:112px;bottom:48px;font-size:37px;line-height:1.18;color:#2C4B6A">
+            The spec records the hierarchy; the solver exploits it.</div>

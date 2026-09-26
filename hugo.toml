@@ -1,0 +1,43 @@
+# Every URL is written relative to the page (relativeURLs), so the site works
+# from file://, under github.io/Talks/, or anywhere else it is copied.
+baseURL = "/"
+title = "Talks"
+locale = "en"
+relativeURLs = true
+disableKinds = ["taxonomy", "term", "rss", "sitemap", "404"]
+# A talk's README.md is for GitHub, not the site.
+ignoreFiles = ['README\.md$']
+
+[params.author]
+name = "James Fairbanks"
+
+[outputs]
+home = ["html"]
+section = ["reveal"]
+
+[security]
+# Slides are .html content files, which Hugo refuses by default.
+allowContent = ["! ^text/org$"]
+
+[markup.goldmark.renderer]
+unsafe = true
+
+[module]
+# hugo mod vendor copies reveal-hugo into _vendor/, so the site builds with no
+# Go toolchain and no network. The theme beside it is not copied.
+noVendor = "github.com/jpfairbanks/**"
+# The theme is developed here, so this site always builds with the copy beside
+# it (a path relative to themes/). go.mod says the same for the Go toolchain.
+replacements = "github.com/jpfairbanks/Talks/themes/gatas-talks -> gatas-talks"
+# The lab theme lives in this repository, under themes/. Other repositories
+# import it by module path, github.com/jpfairbanks/Talks/themes/gatas-talks.
+[[module.imports]]
+path = "github.com/jpfairbanks/Talks/themes/gatas-talks"
+
+# The pooled figures, photos and video keep their old home and their old URLs.
+[[module.mounts]]
+source = "content"
+target = "content"
+[[module.mounts]]
+source = "assets"
+target = "static/assets"

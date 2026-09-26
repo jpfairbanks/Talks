@@ -1,0 +1,46 @@
++++
+title = "Writing and Composing Decapodes in Julia"
+heading = "Writing and Composing Decapodes in Julia"
++++
+<div
+            style="position:absolute;left:48px;top:120px;width:820px;height:600px;background:#F4F5F6;border-radius:4px;padding:28px;box-sizing:border-box;font-family:var(--font-mono);font-size:22px;line-height:1.42;color:#002A54;white-space:pre">Diffusion = <span style="color:#A85F19">@decapode</span> <span style="color:#002A54;font-weight:600">begin</span>
+    (C, Ċ):<span style="color:#3F7A28">:Form0</span>
+    ϕ:<span style="color:#3F7A28">:Form1</span>
+
+    ϕ  ==  k * <span style="color:#2C4B6A">d</span>(C)
+    Ċ  ==  <span style="color:#2C4B6A">⋆</span>(<span style="color:#2C4B6A">d</span>(<span style="color:#2C4B6A">⋆</span>(ϕ)))
+    <span style="color:#2C4B6A">∂ₜ</span>(C) == Ċ
+<span style="color:#002A54;font-weight:600">end</span>
+
+DiffusionAdvection = <span style="color:#A85F19">@relation</span> (C, V) <span style="color:#002A54;font-weight:600">begin</span>
+    <span style="color:#2C4B6A">diffusion</span>(C, ϕ₁)
+    <span style="color:#2C4B6A">advection</span>(C, V, ϕ₂)
+    <span style="color:#2C4B6A">superposition</span>(ϕ₁, ϕ₂, ϕ, C)
+<span style="color:#002A54;font-weight:600">end</span>
+
+sim = <span style="color:#2C4B6A">evalsim</span>(<span style="color:#2C4B6A">apex</span>(<span style="color:#2C4B6A">oapply</span>(DiffusionAdvection, physics)))
+f = <span style="color:#2C4B6A">sim</span>(mesh, generate)</div>
+          <div style="position:absolute;left:908px;top:132px;width:580px;display:flex;flex-direction:column;gap:26px">
+            <div>
+              <div style="font-family:var(--font-mono);font-size:26px;color:#2C4B6A">(C, Ċ)::Form0</div>
+              <div style="margin-top:6px;font-size:30px;line-height:1.24;text-wrap:pretty">declares which differential
+                forms the variables are</div>
+            </div>
+            <div>
+              <div style="font-family:var(--font-mono);font-size:26px;color:#2C4B6A">d, ⋆</div>
+              <div style="margin-top:6px;font-size:30px;line-height:1.24;text-wrap:pretty">exterior derivative and Hodge
+                star, not finite differences</div>
+            </div>
+            <div>
+              <div style="font-family:var(--font-mono);font-size:26px;color:#2C4B6A">@relation</div>
+              <div style="margin-top:6px;font-size:30px;line-height:1.24;text-wrap:pretty">the wiring diagram, written
+                as text</div>
+            </div>
+            <div>
+              <div style="font-family:var(--font-mono);font-size:26px;color:#2C4B6A">evalsim</div>
+              <div style="margin-top:6px;font-size:30px;line-height:1.24;text-wrap:pretty">generates the simulator from
+                the composite</div>
+            </div>
+          </div>
+          <div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:37px;line-height:1.18;color:#2C4B6A">
+            The macro is the syntax; the diagram is what it denotes.</div>
