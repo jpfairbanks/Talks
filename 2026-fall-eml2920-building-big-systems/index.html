@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>Building Big Systems from Small Pieces — James Fairbanks</title>
+
+<meta name="author" content="James Fairbanks">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<link rel="stylesheet" href="../reveal-js/dist/reveal.css">
+<link rel="stylesheet" href="../vendored/katex-0.16.11/katex.min.css">
+<link rel="stylesheet" href="../vendored/fira-sans-2026-09/fira-sans.css">
+<link rel="stylesheet" href="../_ds/fairbanks-research-talk-design-system-7193341c-92ad-490d-a789-ef6442329aec/tokens/fonts.css">
+<link rel="stylesheet" href="../_ds/fairbanks-research-talk-design-system-7193341c-92ad-490d-a789-ef6442329aec/tokens/colors.css">
+<link rel="stylesheet" href="../_ds/fairbanks-research-talk-design-system-7193341c-92ad-490d-a789-ef6442329aec/tokens/typography.css">
+<link rel="stylesheet" href="../_ds/fairbanks-research-talk-design-system-7193341c-92ad-490d-a789-ef6442329aec/tokens/spacing.css">
+<link rel="stylesheet" href="../_ds/fairbanks-research-talk-design-system-7193341c-92ad-490d-a789-ef6442329aec/tokens/effects.css">
+<link rel="stylesheet" href="../_ds/fairbanks-research-talk-design-system-7193341c-92ad-490d-a789-ef6442329aec/styles.css">
+<link rel="stylesheet" href="../gatas-talks/talk.css">
+<link rel="stylesheet" href="../css/site.css">
+
+  </head>
+  <body>
+    
+    <div class="reveal">
+      <div class="slides">
+<section data-label="1 · Title" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    
+<img src="../assets/brand/uf-banner.jpg" alt="University of Florida" class="ds-title-banner">
+<div class="title-block">
+  <div class="title-kicker">EML 2920 · FALL 2026</div>
+  <div class="title-main">Building Big Systems from Small Pieces</div>
+  <div class="title-sub">How math snaps engineering models together</div>
+  <div class="title-speaker">James Fairbanks</div>
+  <div class="title-affiliation">Department of Mechanical &amp; Aerospace Engineering, University of Florida</div>
+</div>
+<div class="title-logos">
+  <img src="../assets/brand/codac-digicams-shield.png" alt="CODAC DIGICAMS Shield" style="height:170px">
+  <img src="../assets/brand/gatas-lockup.png" alt="UF · GATAS Lab" style="height:136px">
+</div>
+<div class="title-panel" style="top:180px;height:296px">
+  <video data-autoplay src="../assets/video/rayleigh-taylor-volume.mp4" autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline" class="wide"></video>
+</div>
+<div class="title-panel" style="top:500px;height:284px">
+  <video data-autoplay src="../assets/video/robotarium.mp4#t=22" autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline" onloadedmetadata="this.currentTime=22"></video>
+</div>
+
+  </div>
+</section>
+
+<section data-label="2 · Curriculum Vitae" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">Curriculum Vitae</h1>
+    <img src="../assets/figures/career-walk-of-life.svg" alt="Mathematics at the University of Florida, then Georgia Tech with NSA, NDSEG, IDA and LLNL support, then the Georgia Tech Research Institute sponsored by DARPA and ONR, then UF&#39;s Herbert Wertheim College of Engineering (CISE and MAE) sponsored by DARPA, ONR, ARO, and AFRL" class="at-full" style="top:96px;height:720px;object-fit:contain">
+
+    <div class="ds-slide-num">2</div>
+  </div>
+</section>
+
+<section data-label="3 · Students, Collaborators, and Family" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">Students, Collaborators, and Family</h1>
+    <!-- 3 collaborator columns at 378x283 (4:3, so the photos are shown essentially
+     uncropped), and a 376px family column cropped to the same 570px height, which
+     takes sky off the top and grass off the bottom and squares off the block. -->
+<div
+  style="position:absolute;left:7px;top:96px;width:1522px;height:570px;display:grid;grid-template-columns:378px 378px 378px 376px;grid-template-rows:283px 283px;gap:4px">
+  <img src="../assets/photos/family.jpg"
+    alt="The presenter with his family in a field of lupines"
+    style="grid-column:4;grid-row:1 / span 2;width:100%;height:100%;object-fit:cover">
+  <img src="../assets/photos/collaborators-1.jpg" alt="A group selfie of five in front of the U.S. Capitol" style="width:100%;height:100%;object-fit:cover">
+  <img src="../assets/photos/collaborators-2.jpg" alt="Five friends outdoors by a lake, an alligator on the grass behind them" style="width:100%;height:100%;object-fit:cover">
+  <img src="../assets/photos/collaborators-3.jpg" alt="Four colleagues on a rocky overlook above a reservoir" style="width:100%;height:100%;object-fit:cover">
+  <img src="../assets/photos/collaborators-4.jpg" alt="Six students and colleagues in front of a jet-engine exhibit on campus" style="width:100%;height:100%;object-fit:cover">
+  <img src="../assets/photos/collaborators-5.jpg" alt="Five colleagues on a beach at dusk, the moon rising over the water" style="width:100%;height:100%;object-fit:cover">
+  <img src="../assets/photos/collaborators-6.jpg" alt="A group selfie of four on the UC Berkeley campus, the Campanile behind them" style="width:100%;height:100%;object-fit:cover">
+</div>
+
+    <div class="ds-slide-num">3</div>
+  </div>
+</section>
+
+<section data-label="4 · Snapping Models Together" data-background-color="#002A54" class="slide-dark">
+  <div class="slide-canvas">
+    <div style="position:absolute;left:120px;top:277px;width:1060px">
+  <div style="font-size:var(--text-md);letter-spacing:3px;opacity:.85;font-weight:700">PART ONE</div>
+  <div style="margin-top:24px;font-size:110px;line-height:1.02">Snapping Models Together</div>
+  <div style="margin-top:32px;width:860px;height:2px;background:rgb(255 239 207 / .35)"></div>
+  <div style="margin-top:32px;font-size:var(--text-3xl);line-height:1.2;opacity:.9">One drawing, many kinds of engineering problem</div>
+  
+  <div style="margin-top:22px;display:flex;align-items:flex-start;gap:10px"><div style="flex:0 0 52px;padding-top:34px;font-size:20px;letter-spacing:2px;font-weight:700;opacity:.72">WITH</div>
+  <div style="flex:0 0 132px;text-align:center"><img src="../assets/photos/sophie-libkind.jpg" alt="Sophie Libkind" style="width:88px;height:88px;border-radius:50%;border:2px solid rgb(255 239 207 / .5);box-shadow:0 3px 12px rgb(0 0 0 / .3);object-fit:cover;display:block;margin:0 auto"><div style="margin-top:9px;font-size:18px;line-height:1.15;opacity:.9">Sophie Libkind</div></div>
+  <div style="flex:0 0 132px;text-align:center"><img src="../assets/photos/evan-patterson.jpg" alt="Evan Patterson" style="width:88px;height:88px;border-radius:50%;border:2px solid rgb(255 239 207 / .5);box-shadow:0 3px 12px rgb(0 0 0 / .3);object-fit:cover;display:block;margin:0 auto"><div style="margin-top:9px;font-size:18px;line-height:1.15;opacity:.9">Evan Patterson</div></div>
+  <div style="flex:0 0 132px;text-align:center"><img src="../assets/photos/owen-lynch.jpg" alt="Owen Lynch" style="width:88px;height:88px;border-radius:50%;border:2px solid rgb(255 239 207 / .5);box-shadow:0 3px 12px rgb(0 0 0 / .3);object-fit:cover;display:block;margin:0 auto"><div style="margin-top:9px;font-size:18px;line-height:1.15;opacity:.9">Owen Lynch</div></div>
+  <div style="flex:0 0 132px;text-align:center"><img src="../assets/photos/kristopher-brown.jpg" alt="Kristopher Brown" style="width:88px;height:88px;border-radius:50%;border:2px solid rgb(255 239 207 / .5);box-shadow:0 3px 12px rgb(0 0 0 / .3);object-fit:cover;display:block;margin:0 auto"><div style="margin-top:9px;font-size:18px;line-height:1.15;opacity:.9">Kristopher Brown</div></div>
+  <div style="flex:0 0 132px;text-align:center"><img src="../assets/photos/benjamin-bumpus.jpg" alt="Benjamin Bumpus" style="width:88px;height:88px;border-radius:50%;border:2px solid rgb(255 239 207 / .5);box-shadow:0 3px 12px rgb(0 0 0 / .3);object-fit:cover;display:block;margin:0 auto"><div style="margin-top:9px;font-size:18px;line-height:1.15;opacity:.9">Benjamin Bumpus</div></div></div>
+</div>
+<img src="../assets/brand/gatas-mark-onnavy.png" alt=""
+  style="position:absolute;right:96px;bottom:88px;width:220px;height:220px;object-fit:contain;opacity:.85">
+
+    <div class="ds-slide-num">4</div>
+  </div>
+</section>
+
+<section data-label="5 · Engineers Draw Boxes and Wires" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">Engineers Draw Boxes and Wires</h1>
+    <img src="../assets/figures/wiring-diagram-formulas.png" alt="Wiring diagrams in circuits, signal processing, chemistry, manufacturing, controls, and engineering design" style="position:absolute;left:48px;top:104px;width:1000px;height:590px;object-fit:contain">
+<div style="position:absolute;left:1090px;top:130px;width:400px;display:flex;flex-direction:column;gap:26px">
+  <div style="font-size:var(--text-xl);line-height:1.22;text-wrap:pretty;color:var(--navy)">
+    Circuits, controls, chemistry, factories: every field sketches its systems as boxes joined by wires.</div>
+  <div style="font-size:var(--text-lg);line-height:1.24;text-wrap:pretty;color:var(--navy)">
+    A box is a piece you understand. A wire says what two pieces share.</div>
+  <div style="font-size:var(--text-lg);line-height:1.24;text-wrap:pretty;color:var(--slate)">
+    Our research teaches the computer to read the sketch as math, so it can assemble the whole model.</div>
+</div>
+
+    <div class="ds-slide-num">5</div>
+  </div>
+  <aside class="notes">Ask who has drawn a free-body diagram or a block diagram. Every field on this
+slide draws its systems the same way, and the drawing is already most of the
+model. The research question is how to let the computer read it.
+</aside>
+</section>
+
+<section data-label="6 · Two Design Problems Share a Variable" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">Two Design Problems Share a Variable</h1>
+    <div class="card blue tight at-full" style="top:112px">
+  <div style="font-size:var(--text-xl);line-height:1.2;color:var(--navy);text-wrap:pretty">Designing a drone: the wing team picks wing size <span class="katex-inline" data-tex="x_1">\(x_1\)</span> and battery <span class="katex-inline" data-tex="x_2">\(x_2\)</span>; the motor team picks battery <span class="katex-inline" data-tex="x_2">\(x_2\)</span> and motor <span class="katex-inline" data-tex="x_3">\(x_3\)</span>.</div>
+  <div class="ds-math-block ds-math-tight" data-tex="\text{total cost} \;=\; f(x_1, x_2) \;&#43;\; g(x_2, x_3)" style="font-size:var(--text-lg);margin:10px 0 4px;line-height:1.2">\[ \text{total cost} \;=\; f(x_1, x_2) \;&#43;\; g(x_2, x_3) \]</div>
+  <div style="font-size:var(--text-sm);line-height:1.25;color:var(--slate);text-align:center">The shared battery is the wire. Connect the problems by sharing it; combine them by adding.</div>
+</div>
+<img src="../assets/figures/compose-objectives.png" alt="Contour plots of f on x1 and x2, g on x2 and x3, and their sum on the shared variable" class="at-full" style="top:372px;height:335px;object-fit:contain">
+<div style="position:absolute;left:48px;right:48px;bottom:48px;font-size:var(--text-xl);line-height:1.18;color:var(--slate)">Each team keeps its own piece; the drawing says how the pieces add up.</div>
+
+    <div class="ds-slide-num">6</div>
+  </div>
+  <aside class="notes">A drone design split between two teams. The wing team trades wing size against
+battery weight; the motor team trades battery weight against motor size. Each
+team has its own cost. The battery is the wire between them: the combined
+problem is just the sum of the two costs, and each team's part is unchanged.
+That is why big problems can be solved piece by piece, even in parallel.
+</aside>
+</section>
+
+<section data-label="7 · Forces Add Up, and So Do Models" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">Forces Add Up, and So Do Models</h1>
+    <div class="card blue tight at-full" style="top:112px">
+  <div style="font-size:var(--text-xl);line-height:1.2;color:var(--navy);text-wrap:pretty">Two springs hooked to one cart: each pull depends on where the cart is, and the cart feels the sum.</div>
+  <div class="ds-math-block ds-math-tight" data-tex="\text{motion of the shared part} \;=\; \text{push from } v \;&#43;\; \text{push from } u" style="font-size:var(--text-lg);margin:10px 0 4px;line-height:1.2">\[ \text{motion of the shared part} \;=\; \text{push from } v \;&#43;\; \text{push from } u \]</div>
+  <div style="font-size:var(--text-sm);line-height:1.25;color:var(--slate);text-align:center">Each box is a small model of how things move. Where boxes share a variable, their pushes add, just as in a free-body diagram.</div>
+</div>
+<img src="../assets/figures/vf-sources.png" alt="Two small motion models, v and u, each on two variables" style="position:absolute;left:110px;top:330px;width:330px;height:380px;object-fit:contain">
+<img src="../assets/figures/vf-composed.png" alt="The combined motion model on three variables, shown as two slices" style="position:absolute;left:600px;top:345px;width:830px;height:350px;object-fit:contain">
+<div style="position:absolute;left:48px;right:48px;bottom:48px;font-size:var(--text-xl);line-height:1.18;color:var(--slate)">Same drawing, new meaning: last slide it added costs, here it adds forces.</div>
+
+    <div class="ds-slide-num">7</div>
+  </div>
+  <aside class="notes">The same drawing, read a second way. Think of two springs hooked to one cart:
+each spring's pull depends on where the cart is, and the cart feels the sum.
+Here each box is a little model of motion, the shared variable is the cart, and
+the combined model adds the pushes on it. Free-body diagrams already work this
+way; the drawing tells the computer to do it for any number of pieces.
+</aside>
+</section>
+
+<section data-label="8 · Simulating Physics" data-background-color="#002A54" class="slide-dark">
+  <div class="slide-canvas">
+    <div style="position:absolute;left:120px;top:277px;width:1060px">
+  <div style="font-size:var(--text-md);letter-spacing:3px;opacity:.85;font-weight:700">PART TWO</div>
+  <div style="margin-top:24px;font-size:110px;line-height:1.02">Simulating Physics</div>
+  <div style="margin-top:32px;width:860px;height:2px;background:rgb(255 239 207 / .35)"></div>
+  <div style="margin-top:32px;font-size:var(--text-3xl);line-height:1.2;opacity:.9">Building simulators from the laws you learn in class</div>
+  
+  <div style="margin-top:22px;display:flex;align-items:flex-start;gap:10px"><div style="flex:0 0 52px;padding-top:34px;font-size:20px;letter-spacing:2px;font-weight:700;opacity:.72">WITH</div>
+  <div style="flex:0 0 132px;text-align:center"><img src="../assets/photos/luke-morris.jpg" alt="Luke Morris" style="width:88px;height:88px;border-radius:50%;border:2px solid rgb(255 239 207 / .5);box-shadow:0 3px 12px rgb(0 0 0 / .3);object-fit:cover;display:block;margin:0 auto"><div style="margin-top:9px;font-size:18px;line-height:1.15;opacity:.9">Luke Morris</div></div>
+  <div style="flex:0 0 132px;text-align:center"><img src="../assets/photos/evan-patterson.jpg" alt="Evan Patterson" style="width:88px;height:88px;border-radius:50%;border:2px solid rgb(255 239 207 / .5);box-shadow:0 3px 12px rgb(0 0 0 / .3);object-fit:cover;display:block;margin:0 auto"><div style="margin-top:9px;font-size:18px;line-height:1.15;opacity:.9">Evan Patterson</div></div>
+  <div style="flex:0 0 132px;text-align:center"><img src="../assets/photos/george-rauta.jpg" alt="George Rauta" style="width:88px;height:88px;border-radius:50%;border:2px solid rgb(255 239 207 / .5);box-shadow:0 3px 12px rgb(0 0 0 / .3);object-fit:cover;display:block;margin:0 auto"><div style="margin-top:9px;font-size:18px;line-height:1.15;opacity:.9">George Rauta</div></div>
+  <div style="flex:0 0 132px;text-align:center"><img src="../assets/photos/matthew-cuffaro.jpg" alt="Matthew Cuffaro" style="width:88px;height:88px;border-radius:50%;border:2px solid rgb(255 239 207 / .5);box-shadow:0 3px 12px rgb(0 0 0 / .3);object-fit:cover;display:block;margin:0 auto"><div style="margin-top:9px;font-size:18px;line-height:1.15;opacity:.9">Matthew Cuffaro</div></div></div>
+</div>
+<img src="../assets/brand/gatas-mark-onnavy.png" alt=""
+  style="position:absolute;right:96px;bottom:88px;width:220px;height:220px;object-fit:contain;opacity:.85">
+
+    <div class="ds-slide-num">8</div>
+  </div>
+</section>
+
+<section data-label="9 · Physics Laws Are Building Blocks" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">Physics Laws Are Building Blocks</h1>
+    <div class="at-left" style="top:120px;display:flex;flex-direction:column;gap:22px">
+  <div style="font-size:var(--text-xl);line-height:1.22;color:var(--navy);text-wrap:pretty">Three laws from heat transfer:</div>
+  <ul class="ds-bullet-list" style="gap:14px">
+    <li class="size-body" style="font-size:var(--text-lg)"><span class="bullet-mark">●</span><span class="bullet-text"><strong>Diffusion:</strong> heat flows from hot to cold</span></li>
+    <li class="size-body" style="font-size:var(--text-lg)"><span class="bullet-mark">●</span><span class="bullet-text"><strong>Advection:</strong> moving air carries heat along with it</span></li>
+    <li class="size-body" style="font-size:var(--text-lg)"><span class="bullet-mark">●</span><span class="bullet-text"><strong>Conservation:</strong> energy is neither made nor lost</span></li>
+  </ul>
+  <div style="font-size:var(--text-lg);line-height:1.24;color:var(--slate);text-wrap:pretty">Each law is a small diagram. Wire them together and you have a model of air cooling a hot engine.</div>
+</div>
+<div class="card blue soft tight at-right" style="top:112px;height:300px;display:flex;flex-direction:column;gap:6px">
+  <div style="font-size:var(--text-xs);font-weight:700;color:var(--navy)">The laws, one diagram each</div>
+  <img src="../assets/figures/physical-principles.png" alt="Diffusion, advection, conservation of mass, and adding fluxes, each as a small diagram" style="width:100%;flex:1;min-height:0;object-fit:contain">
+</div>
+<div class="card orange soft tight at-right" style="top:432px;height:300px;display:flex;flex-direction:column;gap:6px">
+  <div style="font-size:var(--text-xs);font-weight:700;color:var(--navy)">Wired together: heat carried by a flow</div>
+  <img src="../assets/figures/advection-diffusion-composite.png" alt="The combined advection-diffusion diagram, with temperature, velocity, and two heat-flow terms" style="width:100%;flex:1;min-height:0;object-fit:contain">
+</div>
+
+    <div class="ds-slide-num">9</div>
+  </div>
+  <aside class="notes">Three laws they will meet in thermodynamics and heat transfer. Each is drawn as
+a small diagram: circles are quantities like temperature, arrows are operations
+like "take the gradient". Wiring the three together gives the model of air
+carrying heat away from something hot, without writing the combined equation
+by hand.
+</aside>
+</section>
+
+<section data-label="10 · A Model the Computer Can Read" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">A Model the Computer Can Read</h1>
+    <div style="position:absolute;left:48px;top:120px;width:820px;height:560px;background:var(--paper);border-radius:4px;padding:28px;box-sizing:border-box;font-family:var(--font-mono);font-size:var(--text-code);line-height:1.5;color:var(--navy);white-space:pre">Diffusion = <span style="color:var(--ink-orange)">@decapode</span> <span style="font-weight:600">begin</span>
+    (C, Ċ)::<span style="color:var(--ink-green)">Form0</span>
+    ϕ::<span style="color:var(--ink-green)">Form1</span>
+
+    ϕ  ==  k * <span style="color:var(--slate)">d</span>(C)
+    Ċ  ==  <span style="color:var(--slate)">⋆</span>(<span style="color:var(--slate)">d</span>(<span style="color:var(--slate)">⋆</span>(ϕ)))
+    <span style="color:var(--slate)">∂ₜ</span>(C) == Ċ
+<span style="font-weight:600">end</span>
+
+HeatInAFlow = <span style="color:var(--ink-orange)">@relation</span> (C, V) <span style="font-weight:600">begin</span>
+    <span style="color:var(--slate)">diffusion</span>(C, ϕ₁)
+    <span style="color:var(--slate)">advection</span>(C, V, ϕ₂)
+    <span style="color:var(--slate)">superposition</span>(ϕ₁, ϕ₂, ϕ, C)
+<span style="font-weight:600">end</span>
+
+sim = <span style="color:var(--slate)">evalsim</span>(<span style="color:var(--slate)">apex</span>(<span style="color:var(--slate)">oapply</span>(HeatInAFlow, physics)))</div>
+<div style="position:absolute;left:908px;top:132px;width:580px;display:flex;flex-direction:column;gap:24px;color:var(--navy)">
+  <div>
+    <div style="font-family:var(--font-mono);font-size:var(--text-md);color:var(--slate)">C, ϕ</div>
+    <div style="margin-top:6px;font-size:var(--text-lg);line-height:1.24;text-wrap:pretty">temperature at each point, and how heat flows</div>
+  </div>
+  <div>
+    <div style="font-family:var(--font-mono);font-size:var(--text-md);color:var(--slate)">ϕ == k * d(C)</div>
+    <div style="margin-top:6px;font-size:var(--text-lg);line-height:1.24;text-wrap:pretty">heat flows down the temperature slope</div>
+  </div>
+  <div>
+    <div style="font-family:var(--font-mono);font-size:var(--text-md);color:var(--slate)">@relation</div>
+    <div style="margin-top:6px;font-size:var(--text-lg);line-height:1.24;text-wrap:pretty">the boxes-and-wires drawing, typed as text</div>
+  </div>
+  <div>
+    <div style="font-family:var(--font-mono);font-size:var(--text-md);color:var(--slate)">evalsim</div>
+    <div style="margin-top:6px;font-size:var(--text-lg);line-height:1.24;text-wrap:pretty">builds the simulator for you</div>
+  </div>
+</div>
+<div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)">You write the physics; the computer writes the number crunching.</div>
+
+    <div class="ds-slide-num">10</div>
+  </div>
+  <aside class="notes">This is real code in Julia, from our open-source Decapodes package. Five lines
+say what diffusion is; one line wires it to advection; the last line asks for a
+simulator. Nobody writes the loops over grid points: the computer generates
+them for whatever shape you give it.
+</aside>
+</section>
+
+<section data-label="11 · Simulations You Can Check" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">Simulations You Can Check</h1>
+    <div class="at-full" style="top:104px;display:grid;grid-template-columns:1.15fr 0.85fr 1fr;gap:24px">
+  <div class="card blue soft tight" style="display:flex;flex-direction:column;gap:8px">
+    <div style="font-size:var(--text-sm);font-weight:700;color:var(--navy)">Wind over water: layers curl into waves</div>
+    <div style="position:relative;width:100%;height:540px;overflow:hidden;border-radius:6px">
+      <video data-autoplay src="../assets/video/kelvin-helmholtz.mp4" autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline"
+        style="position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;background:#fff"></video>
+    </div>
+  </div>
+
+  <div class="card blue soft tight" style="display:flex;flex-direction:column;gap:8px">
+    <div style="font-size:var(--text-sm);font-weight:700;color:var(--navy)">Heavy fluid falls through light</div>
+    <div style="position:relative;width:100%;height:540px;overflow:hidden;border-radius:6px">
+      <video data-autoplay src="../assets/video/rayleigh-taylor-3d.mp4" autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline"
+        style="position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;background:#fff"></video>
+    </div>
+  </div>
+
+  <div class="card blue soft tight" style="display:flex;flex-direction:column;gap:8px">
+    <div style="font-size:var(--text-sm);font-weight:700;color:var(--navy)">A warm bubble rises</div>
+    <div style="position:relative;width:100%;height:540px;overflow:hidden;border-radius:6px">
+      <video data-autoplay src="../assets/video/rising-thermal-bubble.mp4" autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline"
+        style="position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;background:#fff"></video>
+    </div>
+  </div>
+</div>
+<div class="card blue side tight" style="position:absolute;left:48px;right:112px;bottom:36px;font-size:var(--text-md);line-height:1.24;color:var(--navy)">
+  <strong>Trust, but verify:</strong> every simulator is checked against experiments and published results before we use it.
+</div>
+
+    <div class="ds-slide-num">11</div>
+  </div>
+  <aside class="notes">Three classic fluid experiments, each simulated from a model built the way the
+last slide showed. Left: two layers sliding past each other curl into waves,
+the same instability that makes waves on a windy lake. Middle: heavy fluid
+resting on light fluid falls through it in fingers. Right: a warm bubble rises
+and rolls up. Every one is compared against published results before we trust
+it; for the lid-driven cavity, against a benchmark from 1982.
+</aside>
+</section>
+
+<section data-label="12 · Your Path to Simulations Like These" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">Your Path to Simulations Like These</h1>
+    <div class="at-full" style="top:116px;display:grid;grid-template-columns:1fr 64px 1fr 64px 1fr;align-items:stretch">
+  <div class="card blue roomy">
+    <div class="card-head">Numerical Methods</div>
+    <div class="card-body">Turn equations into steps a computer can take.</div>
+  </div>
+  <div style="display:flex;align-items:center;justify-content:center;font-size:56px;color:var(--slate)">→</div>
+  <div class="card orange roomy">
+    <div class="card-head">Finite Elements</div>
+    <div class="card-body">Split any shape into small pieces, and solve on each one.</div>
+  </div>
+  <div style="display:flex;align-items:center;justify-content:center;font-size:56px;color:var(--slate)">→</div>
+  <div class="card green roomy">
+    <div class="card-head">Computational Fluid Dynamics</div>
+    <div class="card-body">Simulate air and water flowing around real designs.</div>
+  </div>
+</div>
+<video data-autoplay src="../assets/video/porous-convection.mp4" autoplay="autoplay" loop="loop" muted="muted"
+  playsinline="playsinline"
+  style="position:absolute;left:48px;top:372px;width:700px;height:400px;object-fit:contain;background:#fff;border-radius:8px"></video>
+<div class="at-right" style="top:392px;display:flex;flex-direction:column;gap:22px">
+  <div style="font-size:var(--text-2xl);line-height:1.22;color:var(--navy);text-wrap:pretty">Every video in this part is a numerical method solving physics on a mesh.</div>
+  <div style="font-size:var(--text-lg);line-height:1.26;color:var(--slate);text-wrap:pretty">Hot fluid rising through porous rock, built from the same blocks as the heat-transfer model. These courses teach you to build simulators like it.</div>
+</div>
+
+    <div class="ds-slide-num">12</div>
+  </div>
+  <aside class="notes">Hype slide. Every video in this part is a numerical method solving physics on a
+mesh, and the courses that teach you to build them are right here at UF:
+numerical methods first, then finite elements, then computational fluid
+dynamics. The video is heat-driven flow through porous rock, from the same
+building blocks.
+</aside>
+</section>
+
+<section data-label="13 · Robots That Work Together" data-background-color="#002A54" class="slide-dark">
+  <div class="slide-canvas">
+    <div style="position:absolute;left:120px;top:226px;width:1060px">
+  <div style="font-size:var(--text-md);letter-spacing:3px;opacity:.85;font-weight:700">PART THREE</div>
+  <div style="margin-top:24px;font-size:110px;line-height:1.02">Robots That Work Together</div>
+  <div style="margin-top:32px;width:860px;height:2px;background:rgb(255 239 207 / .35)"></div>
+  <div style="margin-top:32px;font-size:var(--text-3xl);line-height:1.2;opacity:.9">Teams of vehicles that coordinate without a boss</div>
+  
+  <div style="margin-top:22px;display:flex;align-items:flex-start;gap:10px"><div style="flex:0 0 52px;padding-top:34px;font-size:20px;letter-spacing:2px;font-weight:700;opacity:.72">WITH</div>
+  <div style="flex:0 0 132px;text-align:center"><img src="../assets/photos/tyler-hanks.jpg" alt="Tyler Hanks" style="width:88px;height:88px;border-radius:50%;border:2px solid rgb(255 239 207 / .5);box-shadow:0 3px 12px rgb(0 0 0 / .3);object-fit:cover;display:block;margin:0 auto"><div style="margin-top:9px;font-size:18px;line-height:1.15;opacity:.9">Tyler Hanks</div></div>
+  <div style="flex:0 0 132px;text-align:center"><img src="../assets/photos/joana-bou-barcelo.jpg" alt="Joana Bou Barcelo" style="width:88px;height:88px;border-radius:50%;border:2px solid rgb(255 239 207 / .5);box-shadow:0 3px 12px rgb(0 0 0 / .3);object-fit:cover;display:block;margin:0 auto"><div style="margin-top:9px;font-size:18px;line-height:1.15;opacity:.9">Joana Bou Barcelo</div></div>
+  <div style="flex:0 0 132px;text-align:center"><img src="../assets/photos/wilmer-leal.jpg" alt="Wilmer Leal" style="width:88px;height:88px;border-radius:50%;border:2px solid rgb(255 239 207 / .5);box-shadow:0 3px 12px rgb(0 0 0 / .3);object-fit:cover;display:block;margin:0 auto"><div style="margin-top:9px;font-size:18px;line-height:1.15;opacity:.9">Wilmer Leal</div></div>
+  <div style="flex:0 0 132px;text-align:center"><img src="../assets/photos/itay-kadosh.jpg" alt="Itay Kadosh" style="width:88px;height:88px;border-radius:50%;border:2px solid rgb(255 239 207 / .5);box-shadow:0 3px 12px rgb(0 0 0 / .3);object-fit:cover;display:block;margin:0 auto"><div style="margin-top:9px;font-size:18px;line-height:1.15;opacity:.9">Itay Kadosh</div></div>
+  <div style="flex:0 0 132px;text-align:center"><img src="../assets/photos/hans-riess.jpg" alt="Hans Riess" style="width:88px;height:88px;border-radius:50%;border:2px solid rgb(255 239 207 / .5);box-shadow:0 3px 12px rgb(0 0 0 / .3);object-fit:cover;display:block;margin:0 auto"><div style="margin-top:9px;font-size:18px;line-height:1.15;opacity:.9">Hans Riess</div></div>
+  <div style="flex:0 0 132px;text-align:center"><img src="../assets/photos/matthew-hale.jpg" alt="Matthew Hale" style="width:88px;height:88px;border-radius:50%;border:2px solid rgb(255 239 207 / .5);box-shadow:0 3px 12px rgb(0 0 0 / .3);object-fit:cover;display:block;margin:0 auto"><div style="margin-top:9px;font-size:18px;line-height:1.15;opacity:.9">Matthew Hale</div></div>
+  <div style="flex:0 0 132px;text-align:center"><img src="../assets/photos/warren-dixon.jpg" alt="Warren Dixon" style="width:88px;height:88px;border-radius:50%;border:2px solid rgb(255 239 207 / .5);box-shadow:0 3px 12px rgb(0 0 0 / .3);object-fit:cover;display:block;margin:0 auto"><div style="margin-top:9px;font-size:18px;line-height:1.15;opacity:.9">Warren Dixon</div></div></div>
+</div>
+<img src="../assets/brand/gatas-mark-onnavy.png" alt=""
+  style="position:absolute;right:96px;bottom:88px;width:220px;height:220px;object-fit:contain;opacity:.85">
+
+    <div class="ds-slide-num">13</div>
+  </div>
+</section>
+
+<section data-label="14 · Agreeing with Your Neighbors" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">Agreeing with Your Neighbors</h1>
+    <div class="at-left" style="top:130px;font-size:var(--text-2xl);line-height:1.24;text-wrap:pretty;color:var(--navy)">
+  Each robot talks only to its neighbors, and follows one rule:</div>
+<div class="card green roomy at-left" style="top:270px">
+  <div style="font-size:var(--text-2xl);line-height:1.22;color:var(--navy);text-wrap:pretty">Move a little toward your neighbors' average. Repeat.</div>
+</div>
+<div class="at-left" style="top:450px;font-size:var(--text-lg);line-height:1.26;text-wrap:pretty;color:var(--slate)">
+  No leader, no central computer, and the whole team ends up agreeing. Flocks of birds and schools of fish work in much the same way.</div>
+<img src="../assets/figures/ring-graph.png" alt="Sixteen robots in a ring, each linked to the two beside it" style="position:absolute;left:1030px;top:126px;width:200px;height:200px;object-fit:contain">
+<img src="../assets/figures/ring-consensus.gif" alt="The robots&#39; values on the ring drifting together until they agree" style="position:absolute;left:932px;top:350px;width:477px;height:340px;object-fit:contain">
+<div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)">Simple local rules add up to teamwork.</div>
+
+    <div class="ds-slide-num">14</div>
+  </div>
+  <aside class="notes">Sixteen robots in a ring; each one can only talk to the two beside it. The rule
+is the same for every robot: move a little toward the average of your
+neighbors. Nobody is in charge, and yet the whole team ends up agreeing. Flocks
+of birds and schools of fish do something similar.
+</aside>
+</section>
+
+<section data-label="15 · Different Robots, Different Views" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">Different Robots, Different Views</h1>
+    <ul class="ds-bullet-list at-left" style="top:130px;gap:16px">
+  <li class="size-body" style="font-size:var(--text-lg)"><span class="bullet-mark">●</span><span class="bullet-text">A drone sees from above, a boat sees the surface, a submarine knows its depth</span></li>
+  <li class="size-body" style="font-size:var(--text-lg)"><span class="bullet-mark">●</span><span class="bullet-text">Their raw measurements can't be compared directly</span></li>
+  <li class="size-body" style="font-size:var(--text-lg)"><span class="bullet-mark">●</span><span class="bullet-text">The fix: translate before you compare, with one translation for each link</span></li>
+</ul>
+<div class="card orange side roomy at-left" style="top:470px">
+  <div style="font-size:var(--text-lg);line-height:1.26;color:var(--navy);text-wrap:pretty">A <strong>sheaf</strong> is the math that keeps track of those translations, and lets us prove the team still works.</div>
+</div>
+<figure class="card roomy at-right" style="margin:0;top:110px">
+  <figcaption style="font-size:var(--text-md);line-height:1.26;color:var(--navy);margin-bottom:16px">
+    One mission, three kinds of vehicle, three different points of view.</figcaption>
+  <img src="../assets/figures/vehicles-v2.svg"
+    alt="Drones in the air, surface vessels on the water and submarines below, linked across all three layers"
+    style="width:100%;height:500px;object-fit:contain;display:block">
+</figure>
+
+    <div class="ds-slide-num">15</div>
+  </div>
+  <aside class="notes">The averaging rule assumes every robot measures the same kind of thing. A real
+team is mixed: a drone sees from above, a boat sees the surface, a submarine
+knows its depth. Before two of them can compare notes, one has to translate
+what it sees into what the other can use. The mathematical object that keeps
+track of all those translations, one for every link, is called a sheaf; it is
+what lets mixed teams coordinate with guarantees.
+</aside>
+</section>
+
+<section data-label="16 · From Simulation to Real Robots" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">From Simulation to Real Robots</h1>
+    <img src="../assets/brand/robotarium-logo.png" alt="Robotarium by Georgia Tech"
+  style="position:absolute;right:48px;top:22px;width:161px;height:66px;object-fit:contain">
+<div class="at-full" style="top:110px;display:grid;grid-template-columns:1fr 1fr;gap:32px">
+  <div class="card blue soft" style="display:flex;flex-direction:column;gap:10px;height:540px">
+    <div style="font-size:var(--text-md);color:var(--navy);font-weight:700">Simulation: boats track submarines from the surface</div>
+    <div style="position:relative;width:100%;flex:1;overflow:hidden;border-radius:8px">
+      <video data-autoplay src="../assets/video/formation-tracking.mp4" autoplay="autoplay" loop="loop" muted="muted"
+        playsinline="playsinline"
+        style="position:absolute;left:0;top:0;width:100%;height:100%;object-fit:contain;background:#fff"></video>
+    </div>
+  </div>
+  <div class="card green soft" style="display:flex;flex-direction:column;gap:10px;height:540px">
+    <div style="font-size:var(--text-md);color:var(--navy);font-weight:700">Hardware: real robots at Georgia Tech's Robotarium</div>
+    <div style="position:relative;width:100%;flex:1;overflow:hidden;border-radius:8px">
+      <video data-autoplay src="../assets/video/robotarium.mp4#t=22" autoplay="autoplay" loop="loop" muted="muted"
+        playsinline="playsinline" onloadedmetadata="this.currentTime=22"
+        style="position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;background:#fff"></video>
+    </div>
+  </div>
+</div>
+<div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-xl);line-height:1.18;color:var(--slate)">The same feedback rule runs in simulation and on real robots.</div>
+
+    <div class="ds-slide-num">16</div>
+  </div>
+  <aside class="notes">Left: a simulation where thirteen boats each follow a submarine they can only
+see from the surface, and settle into formation around it. Right: the same
+idea on real wheeled robots at the Robotarium, a remotely operated robot lab at
+Georgia Tech that anyone can submit experiments to. The hardware work is in
+progress with the Robotarium team and Matt Hale's lab.
+</aside>
+</section>
+
+<section data-label="17 · Your Path to Autonomous Teams" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">Your Path to Autonomous Teams</h1>
+    <div style="position:absolute;left:48px;top:112px;width:1000px;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:20px;height:560px">
+  <div class="card blue tight">
+    <div class="card-head">Linear Algebra</div>
+    <div class="card-body">Describe a whole team at once, with vectors and matrices.</div>
+  </div>
+  <div class="card blue tight">
+    <div class="card-head">Differential Equations</div>
+    <div class="card-body">Write down how each vehicle moves.</div>
+  </div>
+  <div class="card blue tight">
+    <div class="card-head">Numerical Methods</div>
+    <div class="card-body">Simulate it before you build it.</div>
+  </div>
+  <div class="card green tight">
+    <div class="card-head">Dynamics</div>
+    <div class="card-body">The physics of wheels, wings, and propellers.</div>
+  </div>
+  <div class="card green tight">
+    <div class="card-head">Control</div>
+    <div class="card-body">Feedback that keeps the formation stable.</div>
+  </div>
+  <div class="card orange tight">
+    <div class="card-head">Machine Learning</div>
+    <div class="card-body">Learn what you can't model by hand.</div>
+  </div>
+</div>
+<video data-autoplay src="../assets/video/robotarium-hexagon.mp4" autoplay="autoplay" loop="loop" muted="muted"
+  playsinline="playsinline"
+  style="position:absolute;left:1080px;top:112px;width:408px;height:560px;object-fit:cover;border:1px solid var(--grey);border-radius:8px"></video>
+<div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-xl);line-height:1.18;color:var(--slate)">Every one of these is a course you can take at UF, and every one shows up in the demos.</div>
+
+    <div class="ds-slide-num">17</div>
+  </div>
+  <aside class="notes">Hype slide. The robot demos need six subjects, and each one does a specific
+job: linear algebra describes the whole team at once, ODEs say how each vehicle
+moves, numerical methods let you test it in simulation, dynamics is the physics
+of the vehicles, control is the feedback that keeps the formation together, and
+machine learning fills in what you can't model by hand. The video is eight real
+robots holding a hexagon.
+</aside>
+</section>
+
+<section data-label="18 · The Big Idea" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">The Big Idea</h1>
+    <div class="at-full" style="top:114px;font-size:var(--text-xl);line-height:1.22;text-wrap:pretty">
+  Big systems are made of small pieces; the right math lets computers assemble them.</div>
+
+<div class="at-full" style="top:200px;display:grid;grid-template-columns:repeat(3,1fr);gap:32px">
+  <div class="ds-highlight-region tint-blue" style="height:540px;justify-content:flex-start;padding:20px 20px 22px">
+    <div style="font-size:var(--text-md);font-weight:700;line-height:1.2;color:var(--navy);text-align:center;width:100%;margin-bottom:6px">Draw It</div>
+    <div style="font-size:var(--text-sm);line-height:1.26;color:var(--navy);text-align:center;width:100%;margin-bottom:12px">Boxes and wires say how the pieces connect.</div>
+    <div class="ds-region-content" style="align-items:center;justify-content:center">
+      <img src="../assets/figures/wiring-diagram-formulas.png" alt="Wiring diagrams from six fields of engineering" style="max-width:100%;max-height:100%;object-fit:contain">
+    </div>
+  </div>
+  <div class="ds-highlight-region tint-orange" style="height:540px;justify-content:flex-start;padding:20px 20px 22px">
+    <div style="font-size:var(--text-md);font-weight:700;line-height:1.2;color:var(--navy);text-align:center;width:100%;margin-bottom:6px">Simulate It</div>
+    <div style="font-size:var(--text-sm);line-height:1.26;color:var(--navy);text-align:center;width:100%;margin-bottom:12px">The computer builds the simulator, and we check it.</div>
+    <div class="ds-region-content" style="align-items:center;justify-content:center">
+      <div style="position:relative;width:100%;height:100%;overflow:hidden;border-radius:6px;background:#fff">
+        <video data-autoplay src="../assets/video/rayleigh-taylor-3d.mp4" autoplay="autoplay"
+          loop="loop" muted="muted" playsinline="playsinline"
+          style="position:absolute;width:1050px;height:1050px;left:-288px;top:-340px"></video>
+      </div>
+    </div>
+  </div>
+  <div class="ds-highlight-region tint-green" style="height:540px;justify-content:flex-start;padding:20px 20px 22px">
+    <div style="font-size:var(--text-md);font-weight:700;line-height:1.2;color:var(--navy);text-align:center;width:100%;margin-bottom:6px">Coordinate It</div>
+    <div style="font-size:var(--text-sm);line-height:1.26;color:var(--navy);text-align:center;width:100%;margin-bottom:12px">Mixed robot teams work together, with guarantees.</div>
+    <div class="ds-region-content" style="align-items:center;justify-content:center">
+      <img src="../assets/figures/vehicles-v2.svg" alt="Drones in the air, surface vessels on the water and submarines below, linked across all three layers" style="max-width:100%;max-height:100%;object-fit:contain">
+    </div>
+  </div>
+</div>
+
+    <div class="ds-slide-num">18</div>
+  </div>
+  <aside class="notes">One sentence to remember: big engineering systems are made of small pieces, and
+math that respects the pieces lets the computer do the assembly. Then the three
+stories in one line each.
+</aside>
+</section>
+
+<section data-label="19 · Get Involved as a Freshman" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">Get Involved as a Freshman</h1>
+    <div class="at-full" style="top:200px;display:grid;grid-template-columns:repeat(3,1fr);gap:32px">
+  <div class="card blue roomy" style="height:340px">
+    <div class="card-head">Learn</div>
+    <div class="card-body">Start programming now. The courses ahead (numerical methods, linear algebra, differential equations, dynamics, control) are the tools behind every demo today.</div>
+  </div>
+  <div class="card orange roomy" style="height:340px">
+    <div class="card-head">Try</div>
+    <div class="card-body">Undergraduate research in the GATAS Lab: build simulations, program robot teams, and contribute to open-source software.</div>
+  </div>
+  <div class="card green roomy" style="height:340px">
+    <div class="card-head">Reach Out</div>
+    <div class="card-body">Talk to me after class, or get in touch: <span class="tbd">email and lab website</span>.</div>
+  </div>
+</div>
+<div class="at-full" style="top:120px;font-size:var(--text-xl);line-height:1.22;text-wrap:pretty">
+  You don't need the advanced math yet: curiosity and some programming are enough.</div>
+<div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)">Everyone on these slides started exactly where you are now.</div>
+
+    <div class="ds-slide-num">19</div>
+  </div>
+  <aside class="notes">The point to land: they do not need to know any of the advanced math yet. Everyone
+on the part dividers, students and faculty, started where they are. Programming and the
+courses they are about to take are the foundation; curiosity is the rest.
+</aside>
+</section>
+
+
+</div>
+      
+
+    </div><script src="../reveal-js/dist/reveal.js"></script>
+<script src="../reveal-js/plugin/notes/notes.js"></script>
+<script src="../reveal-js/plugin/highlight/highlight.js"></script>
+<script src="../vendored/katex-0.16.11/katex.min.js"></script>
+<script src="../gatas-talks/talk.js"></script>
+
+    
+    
+  </body>
+</html>
