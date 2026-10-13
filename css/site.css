@@ -2,6 +2,10 @@
    thrust-slide pieces, the timeline, the team row and the plan lists.
    Site-specific, so they live with the talks, not in the theme. */
 
+/* The theme's ink orange (#A85F19) reads as a burnt, Texas orange. Use the
+   card orange instead, the accent behind the orange card tints. */
+:root { --ink-orange: #E28F41; }
+
 /* The five thrust colours, taken from the DIGICAMS program figure. */
 .t1 { --thrust: #4F7FAE; --thrust-tint: rgb(108 154 195 / .12); --rule: #4F7FAE; --tint: 108 154 195; }
 .t2 { --thrust: #D9782A; --thrust-tint: rgb(226 143 65 / .12); --rule: #D9782A; --tint: 226 143 65; }

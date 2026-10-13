@@ -43,7 +43,7 @@
   <video data-autoplay src="../assets/video/rayleigh-taylor-volume.mp4" autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline" class="wide"></video>
 </div>
 <div class="title-panel" style="top:500px;height:284px">
-  <video data-autoplay src="../assets/video/porous-convection.mp4" autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline"></video>
+  <video data-autoplay src="../assets/video/kh-theta.mp4" autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline"></video>
 </div>
 
   </div>
@@ -228,8 +228,8 @@ the two columns is what DEC keeps when it discretizes.
   <div class="card blue soft tight" style="display:flex;flex-direction:column;align-items:center;gap:8px">
     <div style="font-size:var(--text-lg);font-weight:700;color:var(--navy)">1-form: integrals along edges</div>
     <svg viewBox="20 50 380 250" width="100%" height="320" role="img" aria-label="The same two triangles with an orientation arrow and a number on each edge">
-      <defs><marker id="dec-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#A85F19"/></marker></defs>
-      <g stroke="#A85F19" stroke-width="3" fill="none" marker-end="url(#dec-arrow)">
+      <defs><marker id="dec-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#E28F41"/></marker></defs>
+      <g stroke="#E28F41" stroke-width="3" fill="none" marker-end="url(#dec-arrow)">
         <path d="M66 260 L250 260"/><path d="M256 252 L166 90"/><path d="M64 252 L154 90"/><path d="M264 252 L355 99"/><path d="M350 90 L170 81"/>
       </g>
       <g fill="#002A54"><circle cx="60" cy="260" r="6"/><circle cx="260" cy="260" r="6"/><circle cx="160" cy="80" r="6"/><circle cx="360" cy="90" r="6"/></g>
@@ -240,7 +240,7 @@ the two columns is what DEC keeps when it discretizes.
     <div style="font-size:var(--text-lg);font-weight:700;color:var(--navy)">2-form: integrals over faces</div>
     <svg viewBox="20 50 380 250" width="100%" height="320" role="img" aria-label="The same two triangles shaded, with a number on each face">
       <path d="M60 260 L260 260 L160 80 Z" fill="#6C9AC3" fill-opacity="0.45" stroke="#2C4B6A" stroke-width="2"/>
-      <path d="M260 260 L360 90 L160 80 Z" fill="#2E7D32" fill-opacity="0.3" stroke="#2C4B6A" stroke-width="2"/>
+      <path d="M260 260 L360 90 L160 80 Z" fill="#80BE63" fill-opacity="0.3" stroke="#2C4B6A" stroke-width="2"/>
       <g font-family="Fira Sans, sans-serif" font-size="24" fill="#002A54"><text x="140" y="212">0.3</text><text x="246" y="152">−0.5</text></g>
     </svg>
   </div>
@@ -265,9 +265,9 @@ theorems of the calculus hold exactly; that is the next slide.
   <div class="slide-canvas">
     <h1 class="slide-h1">The Discrete Derivative Is the Coboundary</h1>
     <svg class="at-left" style="top:108px;height:310px" viewBox="20 30 380 275" role="img" aria-label="One triangle with vertices 1, 2, 3, edges oriented from 1 to 2, 2 to 3 and 1 to 3, and the face oriented counterclockwise">
-  <defs><marker id="dec-arrow-2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#A85F19"/></marker></defs>
+  <defs><marker id="dec-arrow-2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#E28F41"/></marker></defs>
   <path d="M60 260 L340 260 L200 70 Z" fill="#6C9AC3" fill-opacity="0.25"/>
-  <g stroke="#A85F19" stroke-width="3" fill="none" marker-end="url(#dec-arrow-2)">
+  <g stroke="#E28F41" stroke-width="3" fill="none" marker-end="url(#dec-arrow-2)">
     <path d="M68 260 L330 260"/><path d="M335 252 L206 78"/><path d="M65 252 L194 78"/>
   </g>
   <path d="M175 205 A 28 28 0 1 0 225 205" fill="none" stroke="#2C4B6A" stroke-width="2" marker-end="url(#dec-arrow-2)"/>
@@ -308,14 +308,14 @@ sheaf talks; d0 is the graph's.
     <svg class="at-left" style="top:112px;height:540px" viewBox="40 60 340 220" role="img" aria-label="Two acute, non-equilateral primal triangles, with the angles alpha and beta opposite the highlighted edge marked, with their circumcentric dual: dashed dual edges from the circumcenters, perpendicular to each edge, one primal edge and its perpendicular dual edge highlighted, and the dual cell of the top vertex shaded">
   <path d="M96.0 72.0 L72.0 167.0 L166.5 190.9 L223.7 133.9 L230.5 96.0 Z" fill="#6C9AC3" fill-opacity="0.22"/>
   <g stroke="#2C4B6A" stroke-width="1.6" fill="none"><path d="M48.0 262.0 L285.0 262.0 L96.0 72.0 Z M285.0 262.0 L365.0 120.0 L96.0 72.0"/></g>
-  <path d="M285.0 262.0 L96.0 72.0" stroke="#A85F19" stroke-width="3.5"/>
-  <g stroke="#2E7D32" stroke-width="1.6" stroke-dasharray="5 4" fill="none">
+  <path d="M285.0 262.0 L96.0 72.0" stroke="#E28F41" stroke-width="3.5"/>
+  <g stroke="#80BE63" stroke-width="1.6" stroke-dasharray="5 4" fill="none">
     <path d="M166.5 190.9 L166.5 262.0 M166.5 190.9 L72.0 167.0 M223.7 133.9 L325.0 191.0 M223.7 133.9 L230.5 96.0"/>
   </g>
-  <path d="M166.5 190.9 L223.7 133.9" stroke="#A85F19" stroke-width="3" stroke-dasharray="7 4" fill="none"/>
+  <path d="M166.5 190.9 L223.7 133.9" stroke="#E28F41" stroke-width="3" stroke-dasharray="7 4" fill="none"/>
   <g fill="#002A54"><circle cx="48" cy="262" r="4.5"/><circle cx="285" cy="262" r="4.5"/><circle cx="96" cy="72" r="4.5"/><circle cx="365" cy="120" r="4.5"/></g>
-  <g fill="#2E7D32"><circle cx="166.5" cy="190.9" r="4"/><circle cx="223.7" cy="133.9" r="4"/></g>
-  <g font-family="KaTeX_Main, serif" font-size="15" fill="#A85F19"><text x="237" y="200">σ</text><text x="224" y="162">⋆σ</text></g>
+  <g fill="#80BE63"><circle cx="166.5" cy="190.9" r="4"/><circle cx="223.7" cy="133.9" r="4"/></g>
+  <g font-family="KaTeX_Main, serif" font-size="15" fill="#E28F41"><text x="237" y="200">σ</text><text x="224" y="162">⋆σ</text></g>
   <g font-family="KaTeX_Main, serif" font-size="14" fill="#2C4B6A"><text x="102" y="102">⋆v</text></g>
   <path d="M53.4 240.7 A22 22 0 0 1 70.0 262.0 M353.2 140.9 A24 24 0 0 1 341.4 115.8" fill="none" stroke="#002A54" stroke-width="1.4"/>
   <g font-family="Fira Sans, sans-serif" font-size="15" font-style="italic" fill="#002A54" text-anchor="middle" dominant-baseline="middle"><text x="76.4" y="239.9">α</text><text x="328.8" y="137.1">β</text></g>
@@ -357,14 +357,14 @@ when no triangle is obtuse; the next slide is what the solvers use instead.
     <svg class="at-left" style="top:112px;height:540px" viewBox="40 60 340 220" role="img" aria-label="The same two triangles with their barycentric dual: dashed dual edges from each centroid to the edge midpoints, one primal edge and its bent dual edge highlighted, the angle theta between them marked, and the dual cell of the top vertex shaded">
   <path d="M96.0 72.0 L72.0 167.0 L143.0 198.7 L190.5 167.0 L248.7 151.3 L230.5 96.0 Z" fill="#6C9AC3" fill-opacity="0.22"/>
   <g stroke="#2C4B6A" stroke-width="1.6" fill="none"><path d="M48.0 262.0 L285.0 262.0 L96.0 72.0 Z M285.0 262.0 L365.0 120.0 L96.0 72.0"/></g>
-  <path d="M285.0 262.0 L96.0 72.0" stroke="#A85F19" stroke-width="3.5"/>
-  <g stroke="#2E7D32" stroke-width="1.6" stroke-dasharray="5 4" fill="none">
+  <path d="M285.0 262.0 L96.0 72.0" stroke="#E28F41" stroke-width="3.5"/>
+  <g stroke="#80BE63" stroke-width="1.6" stroke-dasharray="5 4" fill="none">
     <path d="M143.0 198.7 L166.5 262.0 M143.0 198.7 L72.0 167.0 M248.7 151.3 L325.0 191.0 M248.7 151.3 L230.5 96.0"/>
   </g>
-  <path d="M143.0 198.7 L190.5 167.0 L248.7 151.3" stroke="#A85F19" stroke-width="3" stroke-dasharray="7 4" fill="none"/>
+  <path d="M143.0 198.7 L190.5 167.0 L248.7 151.3" stroke="#E28F41" stroke-width="3" stroke-dasharray="7 4" fill="none"/>
   <g fill="#002A54"><circle cx="48" cy="262" r="4.5"/><circle cx="285" cy="262" r="4.5"/><circle cx="96" cy="72" r="4.5"/><circle cx="365" cy="120" r="4.5"/></g>
-  <g fill="#2E7D32"><circle cx="143.0" cy="198.7" r="4"/><circle cx="248.7" cy="151.3" r="4"/></g>
-  <g font-family="KaTeX_Main, serif" font-size="15" fill="#A85F19"><text x="237" y="200">σ</text><text x="214" y="150">⋆σ</text></g>
+  <g fill="#80BE63"><circle cx="143.0" cy="198.7" r="4"/><circle cx="248.7" cy="151.3" r="4"/></g>
+  <g font-family="KaTeX_Main, serif" font-size="15" fill="#E28F41"><text x="237" y="200">σ</text><text x="214" y="150">⋆σ</text></g>
   <g font-family="KaTeX_Main, serif" font-size="14" fill="#2C4B6A"><text x="102" y="102">⋆v</text></g>
   <path d="M206.9 162.6 A17 17 0 0 1 202.5 179.1" fill="none" stroke="#002A54" stroke-width="1.4"/>
   <text x="220.4" y="175.0" font-family="KaTeX_Main, serif" font-size="15" font-style="italic" fill="#002A54" text-anchor="middle" dominant-baseline="middle">θ</text>
@@ -596,7 +596,7 @@ says the edge fluxes d0 psi leave no net mass in any triangle.
 </div>
 <img src="../assets/figures/laplacian-null-modes.svg" alt="Four pressure patterns on a periodic grid: constant, stripes in x, stripes in y and a checkerboard. All four have eigenvalue 0 for the collocated div grad; for DEC they have 0, 4, 4 and 8 over delta x squared." class="at-full" style="top:196px;height:262px;object-fit:contain">
 <div class="at-left" style="top:478px;display:flex;flex-direction:column;align-items:center">
-  <svg style="width:620px;height:228px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 250" role="img" aria-label="Two rows of nodes alternating dark and light. Top row, collocated: the difference at node i reads its two dashed neighbors i minus 1 and i plus 1, which have the same value. Bottom row, DEC: every edge is highlighted, and each joins a dark node to a light one."><line x1="70" y1="50" x2="160" y2="50" stroke="#2C4B6A" stroke-width="1.5" stroke-opacity="0.4"/><line x1="160" y1="50" x2="250" y2="50" stroke="#2C4B6A" stroke-width="1.5" stroke-opacity="0.4"/><line x1="250" y1="50" x2="340" y2="50" stroke="#2C4B6A" stroke-width="1.5" stroke-opacity="0.4"/><line x1="340" y1="50" x2="430" y2="50" stroke="#2C4B6A" stroke-width="1.5" stroke-opacity="0.4"/><line x1="430" y1="50" x2="520" y2="50" stroke="#2C4B6A" stroke-width="1.5" stroke-opacity="0.4"/><line x1="520" y1="50" x2="610" y2="50" stroke="#2C4B6A" stroke-width="1.5" stroke-opacity="0.4"/><circle cx="70" cy="50" r="11" fill="#002A54" stroke="#002A54" stroke-width="2.5"/><circle cx="160" cy="50" r="11" fill="#FFFFFF" stroke="#002A54" stroke-width="2.5"/><circle cx="250" cy="50" r="11" fill="#002A54" stroke="#002A54" stroke-width="2.5"/><circle cx="340" cy="50" r="11" fill="#FFFFFF" stroke="#002A54" stroke-width="2.5"/><circle cx="430" cy="50" r="11" fill="#002A54" stroke="#002A54" stroke-width="2.5"/><circle cx="520" cy="50" r="11" fill="#FFFFFF" stroke="#002A54" stroke-width="2.5"/><circle cx="610" cy="50" r="11" fill="#002A54" stroke="#002A54" stroke-width="2.5"/><circle cx="340" cy="50" r="20" fill="none" stroke="#A85F19" stroke-width="3"/><circle cx="250" cy="50" r="18" fill="none" stroke="#A85F19" stroke-width="3" stroke-dasharray="5 4"/><circle cx="430" cy="50" r="18" fill="none" stroke="#A85F19" stroke-width="3" stroke-dasharray="5 4"/><text x="250" y="96" font-family="KaTeX_Math, serif" font-style="italic" font-size="24" fill="#002A54" text-anchor="middle">i−1</text><text x="340" y="96" font-family="KaTeX_Math, serif" font-style="italic" font-size="24" fill="#002A54" text-anchor="middle">i</text><text x="430" y="96" font-family="KaTeX_Math, serif" font-style="italic" font-size="24" fill="#002A54" text-anchor="middle">i+1</text><line x1="70" y1="170" x2="160" y2="170" stroke="#A85F19" stroke-width="4"/><line x1="160" y1="170" x2="250" y2="170" stroke="#A85F19" stroke-width="4"/><line x1="250" y1="170" x2="340" y2="170" stroke="#A85F19" stroke-width="4"/><line x1="340" y1="170" x2="430" y2="170" stroke="#A85F19" stroke-width="4"/><line x1="430" y1="170" x2="520" y2="170" stroke="#A85F19" stroke-width="4"/><line x1="520" y1="170" x2="610" y2="170" stroke="#A85F19" stroke-width="4"/><circle cx="70" cy="170" r="11" fill="#002A54" stroke="#002A54" stroke-width="2.5"/><circle cx="160" cy="170" r="11" fill="#FFFFFF" stroke="#002A54" stroke-width="2.5"/><circle cx="250" cy="170" r="11" fill="#002A54" stroke="#002A54" stroke-width="2.5"/><circle cx="340" cy="170" r="11" fill="#FFFFFF" stroke="#002A54" stroke-width="2.5"/><circle cx="430" cy="170" r="11" fill="#002A54" stroke="#002A54" stroke-width="2.5"/><circle cx="520" cy="170" r="11" fill="#FFFFFF" stroke="#002A54" stroke-width="2.5"/><circle cx="610" cy="170" r="11" fill="#002A54" stroke="#002A54" stroke-width="2.5"/><text x="250" y="216" font-family="KaTeX_Math, serif" font-style="italic" font-size="24" fill="#002A54" text-anchor="middle">i−1</text><text x="340" y="216" font-family="KaTeX_Math, serif" font-style="italic" font-size="24" fill="#002A54" text-anchor="middle">i</text><text x="430" y="216" font-family="KaTeX_Math, serif" font-style="italic" font-size="24" fill="#002A54" text-anchor="middle">i+1</text></svg>
+  <svg style="width:620px;height:228px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 250" role="img" aria-label="Two rows of nodes alternating dark and light. Top row, collocated: the difference at node i reads its two dashed neighbors i minus 1 and i plus 1, which have the same value. Bottom row, DEC: every edge is highlighted, and each joins a dark node to a light one."><line x1="70" y1="50" x2="160" y2="50" stroke="#2C4B6A" stroke-width="1.5" stroke-opacity="0.4"/><line x1="160" y1="50" x2="250" y2="50" stroke="#2C4B6A" stroke-width="1.5" stroke-opacity="0.4"/><line x1="250" y1="50" x2="340" y2="50" stroke="#2C4B6A" stroke-width="1.5" stroke-opacity="0.4"/><line x1="340" y1="50" x2="430" y2="50" stroke="#2C4B6A" stroke-width="1.5" stroke-opacity="0.4"/><line x1="430" y1="50" x2="520" y2="50" stroke="#2C4B6A" stroke-width="1.5" stroke-opacity="0.4"/><line x1="520" y1="50" x2="610" y2="50" stroke="#2C4B6A" stroke-width="1.5" stroke-opacity="0.4"/><circle cx="70" cy="50" r="11" fill="#002A54" stroke="#002A54" stroke-width="2.5"/><circle cx="160" cy="50" r="11" fill="#FFFFFF" stroke="#002A54" stroke-width="2.5"/><circle cx="250" cy="50" r="11" fill="#002A54" stroke="#002A54" stroke-width="2.5"/><circle cx="340" cy="50" r="11" fill="#FFFFFF" stroke="#002A54" stroke-width="2.5"/><circle cx="430" cy="50" r="11" fill="#002A54" stroke="#002A54" stroke-width="2.5"/><circle cx="520" cy="50" r="11" fill="#FFFFFF" stroke="#002A54" stroke-width="2.5"/><circle cx="610" cy="50" r="11" fill="#002A54" stroke="#002A54" stroke-width="2.5"/><circle cx="340" cy="50" r="20" fill="none" stroke="#E28F41" stroke-width="3"/><circle cx="250" cy="50" r="18" fill="none" stroke="#E28F41" stroke-width="3" stroke-dasharray="5 4"/><circle cx="430" cy="50" r="18" fill="none" stroke="#E28F41" stroke-width="3" stroke-dasharray="5 4"/><text x="250" y="96" font-family="KaTeX_Math, serif" font-style="italic" font-size="24" fill="#002A54" text-anchor="middle">i−1</text><text x="340" y="96" font-family="KaTeX_Math, serif" font-style="italic" font-size="24" fill="#002A54" text-anchor="middle">i</text><text x="430" y="96" font-family="KaTeX_Math, serif" font-style="italic" font-size="24" fill="#002A54" text-anchor="middle">i+1</text><line x1="70" y1="170" x2="160" y2="170" stroke="#E28F41" stroke-width="4"/><line x1="160" y1="170" x2="250" y2="170" stroke="#E28F41" stroke-width="4"/><line x1="250" y1="170" x2="340" y2="170" stroke="#E28F41" stroke-width="4"/><line x1="340" y1="170" x2="430" y2="170" stroke="#E28F41" stroke-width="4"/><line x1="430" y1="170" x2="520" y2="170" stroke="#E28F41" stroke-width="4"/><line x1="520" y1="170" x2="610" y2="170" stroke="#E28F41" stroke-width="4"/><circle cx="70" cy="170" r="11" fill="#002A54" stroke="#002A54" stroke-width="2.5"/><circle cx="160" cy="170" r="11" fill="#FFFFFF" stroke="#002A54" stroke-width="2.5"/><circle cx="250" cy="170" r="11" fill="#002A54" stroke="#002A54" stroke-width="2.5"/><circle cx="340" cy="170" r="11" fill="#FFFFFF" stroke="#002A54" stroke-width="2.5"/><circle cx="430" cy="170" r="11" fill="#002A54" stroke="#002A54" stroke-width="2.5"/><circle cx="520" cy="170" r="11" fill="#FFFFFF" stroke="#002A54" stroke-width="2.5"/><circle cx="610" cy="170" r="11" fill="#002A54" stroke="#002A54" stroke-width="2.5"/><text x="250" y="216" font-family="KaTeX_Math, serif" font-style="italic" font-size="24" fill="#002A54" text-anchor="middle">i−1</text><text x="340" y="216" font-family="KaTeX_Math, serif" font-style="italic" font-size="24" fill="#002A54" text-anchor="middle">i</text><text x="430" y="216" font-family="KaTeX_Math, serif" font-style="italic" font-size="24" fill="#002A54" text-anchor="middle">i+1</text></svg>
 </div>
 <div class="at-right" style="top:470px;height:250px;display:flex;flex-direction:column;justify-content:center;gap:18px;color:var(--navy);font-size:var(--text-md);line-height:1.3">
   <div><strong>Collocated</strong> (top): <span class="katex-inline" data-tex="p, u">\(p, u\)</span> at the same nodes, <span class="katex-inline" data-tex="(\operatorname{grad} p)_i = (p_{i&#43;1} - p_{i-1})/2\Delta x">\((\operatorname{grad} p)_i = (p_{i+1} - p_{i-1})/2\Delta x\)</span>. Then <span class="katex-inline" data-tex="\operatorname{div}\operatorname{grad}">\(\operatorname{div}\operatorname{grad}\)</span> reaches <span class="katex-inline" data-tex="p_{i\pm 2}">\(p_{i\pm 2}\)</span>, and a checkerboard has <span class="katex-inline" data-tex="\operatorname{grad} p = 0">\(\operatorname{grad} p = 0\)</span>.</div>
@@ -837,11 +837,11 @@ records.
     <h1 class="slide-h1">Compressible Navier&#8211;Stokes</h1>
     <div class="at-full" style="top:136px;display:grid;grid-template-columns:340px 1fr;row-gap:64px;align-items:baseline;color:var(--navy)">
   <div style="font-size:var(--text-lg);font-weight:700;color:var(--slate)">Mass</div>
-  <div style="font-size:var(--text-2xl)"><span class="katex-inline" data-tex="\displaystyle \partial_t \rho &#43; \textcolor{#A85F19}{\nabla\cdot U} = 0">\(\displaystyle \partial_t \rho + \textcolor{#A85F19}{\nabla\cdot U} = 0\)</span></div>
+  <div style="font-size:var(--text-2xl)"><span class="katex-inline" data-tex="\displaystyle \partial_t \rho &#43; \textcolor{#E28F41}{\nabla\cdot U} = 0">\(\displaystyle \partial_t \rho + \textcolor{#E28F41}{\nabla\cdot U} = 0\)</span></div>
   <div style="font-size:var(--text-lg);font-weight:700;color:var(--slate)">Momentum</div>
-  <div style="font-size:var(--text-2xl)"><span class="katex-inline" data-tex="\displaystyle \partial_t U &#43; \textcolor{#A85F19}{\nabla\cdot(u \otimes U)} = -\nabla P(\Theta) &#43; \rho\, g &#43; \mu\, \Delta u">\(\displaystyle \partial_t U + \textcolor{#A85F19}{\nabla\cdot(u \otimes U)} = -\nabla P(\Theta) + \rho\, g + \mu\, \Delta u\)</span></div>
+  <div style="font-size:var(--text-2xl)"><span class="katex-inline" data-tex="\displaystyle \partial_t U &#43; \textcolor{#E28F41}{\nabla\cdot(u \otimes U)} = -\nabla P(\Theta) &#43; \rho\, g &#43; \mu\, \Delta u">\(\displaystyle \partial_t U + \textcolor{#E28F41}{\nabla\cdot(u \otimes U)} = -\nabla P(\Theta) + \rho\, g + \mu\, \Delta u\)</span></div>
   <div style="font-size:var(--text-lg);font-weight:700;color:var(--slate)">Potential temperature</div>
-  <div style="font-size:var(--text-2xl)"><span class="katex-inline" data-tex="\displaystyle \partial_t \Theta &#43; \textcolor{#A85F19}{\nabla\cdot(u\, \Theta)} = \kappa\, \Delta \Theta">\(\displaystyle \partial_t \Theta + \textcolor{#A85F19}{\nabla\cdot(u\, \Theta)} = \kappa\, \Delta \Theta\)</span></div>
+  <div style="font-size:var(--text-2xl)"><span class="katex-inline" data-tex="\displaystyle \partial_t \Theta &#43; \textcolor{#E28F41}{\nabla\cdot(u\, \Theta)} = \kappa\, \Delta \Theta">\(\displaystyle \partial_t \Theta + \textcolor{#E28F41}{\nabla\cdot(u\, \Theta)} = \kappa\, \Delta \Theta\)</span></div>
 </div>
 <div class="card blue soft tight at-full" style="top:600px">
   <div style="display:flex;justify-content:space-around;gap:24px;font-size:var(--text-md);color:var(--navy)">
