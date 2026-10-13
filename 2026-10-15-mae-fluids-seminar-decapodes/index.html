@@ -518,7 +518,285 @@ the same split with Whitney forms in place of the diagonal stars.
 </aside>
 </section>
 
-<section data-label="14 · A Dictionary from Vector Calculus" data-background-color="#ffffff" class="slide-light">
+<section data-label="14 · What Structure Preservation Buys a Flow Solver" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">What Structure Preservation Buys a Flow Solver</h1>
+    <div class="at-full" style="top:124px;display:grid;grid-template-columns:1.25fr 1fr 0.9fr;row-gap:30px;column-gap:36px;align-items:baseline;font-size:var(--text-lg);line-height:1.25;color:var(--navy)">
+  <div style="font-size:var(--text-md);font-weight:700;color:var(--slate);border-bottom:2px solid var(--slate);padding-bottom:8px">Structure DEC keeps</div>
+  <div style="font-size:var(--text-md);font-weight:700;color:var(--slate);border-bottom:2px solid var(--slate);padding-bottom:8px">Broken, it gives</div>
+  <div style="font-size:var(--text-md);font-weight:700;color:var(--slate);border-bottom:2px solid var(--slate);padding-bottom:8px">Example</div>
+  <div><span class="katex-inline" data-tex="d_1 d_0 = 0">\(d_1 d_0 = 0\)</span>: curl grad <span class="katex-inline" data-tex="= 0">\(= 0\)</span></div><div>spurious vorticity</div><div>a fluid at rest spins up</div>
+  <div><span class="katex-inline" data-tex="\operatorname{div}\operatorname{grad}">\(\operatorname{div}\operatorname{grad}\)</span> sees every mode</div><div>checkerboard pressure</div><div>the pressure equation</div>
+  <div><span class="katex-inline" data-tex="\operatorname{div} = -\star_0^{-1} d_0^{\top}\star_1">\(\operatorname{div} = -\star_0^{-1} d_0^{\top}\star_1\)</span>, adjoint to grad</div><div>energy growth, instability</div><div>a pressure pulse</div>
+  <div><span class="katex-inline" data-tex="\dim H^1">\(\dim H^1\)</span> = number of holes</div><div>missing circulation</div><div>lift on cylinders</div>
+</div>
+<div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)">Each of these flow-solver failures is a broken identity.</div>
+
+    <div class="ds-slide-num">14</div>
+  </div>
+  <aside class="notes">The next few slides are the payoff for a fluids audience. Each row is an
+identity of vector calculus that DEC keeps exactly, the failure a scheme shows
+when it breaks it, and the example we will run. The first three are failures
+of the operators themselves: a curl of a gradient that is not zero, a pressure
+Laplacian that has lost modes, and a gradient and divergence that are not
+adjoint, which is what lets energy grow. The last is about the domain: the
+circulations a flow can carry around obstacles, which potential-flow codes add
+by hand.
+</aside>
+</section>
+
+<section data-label="15 · Pressure Cannot Spin the Fluid" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">Pressure Cannot Spin the Fluid</h1>
+    
+<div style="position:absolute;left:48px;top:108px;width:1010px;height:512px;overflow:hidden;border-radius:4px"><video data-autoplay src="../assets/video/dec-spurious-spin-up.mp4" autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:contain;background:#fff"></video></div>
+<div style="position:absolute;left:1080px;width:408px;top:110px;height:510px;display:flex;flex-direction:column;justify-content:center;gap:20px;color:var(--navy)">
+  <div class="card blue tight">
+    <div class="ds-math-block ds-math-tight" data-tex="\begin{aligned} \partial_t u &#43; \operatorname{grad} p &amp;= \nu\,\Delta u - \operatorname{grad}\Phi \\ \operatorname{div} u &amp;= 0 \end{aligned}" style="font-size:var(--text-md);margin:0">\[ \begin{aligned} \partial_t u &#43; \operatorname{grad} p &amp;= \nu\,\Delta u - \operatorname{grad}\Phi \\ \operatorname{div} u &amp;= 0 \end{aligned} \]</div>
+    <div style="font-size:var(--text-sm);text-align:center">exact solution: <span class="katex-inline" data-tex="u = 0">\(u = 0\)</span>, <span class="katex-inline" data-tex="p = -\Phi">\(p = -\Phi\)</span></div>
+  </div>
+  <div class="card orange tight">
+    <div style="font-size:var(--text-md);font-weight:700;margin-bottom:6px">Take the curl</div>
+    <div class="ds-math-block ds-math-tight" data-tex="\partial_t \omega = \nu\,\Delta\omega - \operatorname{curl}\operatorname{grad}\Phi" style="font-size:var(--text-md);margin:0">\[ \partial_t \omega = \nu\,\Delta\omega - \operatorname{curl}\operatorname{grad}\Phi \]</div>
+    <div style="font-size:var(--text-md);line-height:1.3;margin-top:6px">DEC: <span class="katex-inline" data-tex="d_1 d_0 \Phi = 0">\(d_1 d_0 \Phi = 0\)</span>. Collocated: not zero, so vorticity is forced.</div>
+  </div>
+</div>
+<div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)"><span class="katex-inline" data-tex="d_1 d_0 = 0">\(d_1 d_0 = 0\)</span>: no spurious vorticity, and mass conserved cell by cell.</div>
+
+    <div class="ds-slide-num">15</div>
+  </div>
+  <aside class="notes">The first payoff of d1 d0 = 0, as a simulation. Incompressible Stokes flow in a
+closed box, at rest under a conservative body force, minus the gradient of a
+potential well. The exact answer is that nothing moves: the pressure balances
+the force. Both runs use the same mesh, the same projection and the same
+implicit viscous solve. The only difference is how the force reaches the
+edges. Left: the usual collocated practice, least-squares gradients at the
+nodes averaged onto each edge. That force is not exactly a gradient, the
+projection cannot remove the remainder, and the fluid spins up into spurious
+vortices, to a speed of 0.25. This is the static-droplet parasitic current, or
+the lake-at-rest test, in its simplest form. Right: DEC, where the force is
+d0 Phi; its curl is d1 d0 Phi = 0, the projection removes all of it, and the
+fluid stays at rest to 1e-14. Viscosity 0.01, colour is vorticity. The curl of
+the momentum equation shows why: the only vorticity source is the curl of the
+discrete gradient of Phi. Read the same identity with a stream function and it
+says the edge fluxes d0 psi leave no net mass in any triangle.
+</aside>
+</section>
+
+<section data-label="16 · No Checkerboards in the Pressure Equation" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">No Checkerboards in the Pressure Equation</h1>
+    <div class="card blue soft tight at-full" style="top:100px">
+  <div style="display:flex;align-items:center;justify-content:center;gap:22px;font-size:var(--text-md);color:var(--navy)">
+    <span>Take the divergence:</span>
+    <div class="ds-math-block ds-math-tight" data-tex="\partial_t u &#43; \operatorname{grad} p = f, \quad \operatorname{div} u = 0 \quad\Longrightarrow\quad \operatorname{div}\operatorname{grad} p = \operatorname{div} f" style="font-size:var(--text-lg);margin:0">\[ \partial_t u &#43; \operatorname{grad} p = f, \quad \operatorname{div} u = 0 \quad\Longrightarrow\quad \operatorname{div}\operatorname{grad} p = \operatorname{div} f \]</div>
+  </div>
+</div>
+<img src="../assets/figures/laplacian-null-modes.svg" alt="Four pressure patterns on a periodic grid: constant, stripes in x, stripes in y and a checkerboard. All four have eigenvalue 0 for the collocated div grad; for DEC they have 0, 4, 4 and 8 over delta x squared." class="at-full" style="top:196px;height:262px;object-fit:contain">
+<div class="at-left" style="top:478px;display:flex;flex-direction:column;align-items:center">
+  <svg style="width:620px;height:228px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 250" role="img" aria-label="Two rows of nodes alternating dark and light. Top row, collocated: the difference at node i reads its two dashed neighbors i minus 1 and i plus 1, which have the same value. Bottom row, DEC: every edge is highlighted, and each joins a dark node to a light one."><line x1="70" y1="50" x2="160" y2="50" stroke="#2C4B6A" stroke-width="1.5" stroke-opacity="0.4"/><line x1="160" y1="50" x2="250" y2="50" stroke="#2C4B6A" stroke-width="1.5" stroke-opacity="0.4"/><line x1="250" y1="50" x2="340" y2="50" stroke="#2C4B6A" stroke-width="1.5" stroke-opacity="0.4"/><line x1="340" y1="50" x2="430" y2="50" stroke="#2C4B6A" stroke-width="1.5" stroke-opacity="0.4"/><line x1="430" y1="50" x2="520" y2="50" stroke="#2C4B6A" stroke-width="1.5" stroke-opacity="0.4"/><line x1="520" y1="50" x2="610" y2="50" stroke="#2C4B6A" stroke-width="1.5" stroke-opacity="0.4"/><circle cx="70" cy="50" r="11" fill="#002A54" stroke="#002A54" stroke-width="2.5"/><circle cx="160" cy="50" r="11" fill="#FFFFFF" stroke="#002A54" stroke-width="2.5"/><circle cx="250" cy="50" r="11" fill="#002A54" stroke="#002A54" stroke-width="2.5"/><circle cx="340" cy="50" r="11" fill="#FFFFFF" stroke="#002A54" stroke-width="2.5"/><circle cx="430" cy="50" r="11" fill="#002A54" stroke="#002A54" stroke-width="2.5"/><circle cx="520" cy="50" r="11" fill="#FFFFFF" stroke="#002A54" stroke-width="2.5"/><circle cx="610" cy="50" r="11" fill="#002A54" stroke="#002A54" stroke-width="2.5"/><circle cx="340" cy="50" r="20" fill="none" stroke="#A85F19" stroke-width="3"/><circle cx="250" cy="50" r="18" fill="none" stroke="#A85F19" stroke-width="3" stroke-dasharray="5 4"/><circle cx="430" cy="50" r="18" fill="none" stroke="#A85F19" stroke-width="3" stroke-dasharray="5 4"/><text x="250" y="96" font-family="KaTeX_Math, serif" font-style="italic" font-size="24" fill="#002A54" text-anchor="middle">i−1</text><text x="340" y="96" font-family="KaTeX_Math, serif" font-style="italic" font-size="24" fill="#002A54" text-anchor="middle">i</text><text x="430" y="96" font-family="KaTeX_Math, serif" font-style="italic" font-size="24" fill="#002A54" text-anchor="middle">i+1</text><line x1="70" y1="170" x2="160" y2="170" stroke="#A85F19" stroke-width="4"/><line x1="160" y1="170" x2="250" y2="170" stroke="#A85F19" stroke-width="4"/><line x1="250" y1="170" x2="340" y2="170" stroke="#A85F19" stroke-width="4"/><line x1="340" y1="170" x2="430" y2="170" stroke="#A85F19" stroke-width="4"/><line x1="430" y1="170" x2="520" y2="170" stroke="#A85F19" stroke-width="4"/><line x1="520" y1="170" x2="610" y2="170" stroke="#A85F19" stroke-width="4"/><circle cx="70" cy="170" r="11" fill="#002A54" stroke="#002A54" stroke-width="2.5"/><circle cx="160" cy="170" r="11" fill="#FFFFFF" stroke="#002A54" stroke-width="2.5"/><circle cx="250" cy="170" r="11" fill="#002A54" stroke="#002A54" stroke-width="2.5"/><circle cx="340" cy="170" r="11" fill="#FFFFFF" stroke="#002A54" stroke-width="2.5"/><circle cx="430" cy="170" r="11" fill="#002A54" stroke="#002A54" stroke-width="2.5"/><circle cx="520" cy="170" r="11" fill="#FFFFFF" stroke="#002A54" stroke-width="2.5"/><circle cx="610" cy="170" r="11" fill="#002A54" stroke="#002A54" stroke-width="2.5"/><text x="250" y="216" font-family="KaTeX_Math, serif" font-style="italic" font-size="24" fill="#002A54" text-anchor="middle">i−1</text><text x="340" y="216" font-family="KaTeX_Math, serif" font-style="italic" font-size="24" fill="#002A54" text-anchor="middle">i</text><text x="430" y="216" font-family="KaTeX_Math, serif" font-style="italic" font-size="24" fill="#002A54" text-anchor="middle">i+1</text></svg>
+</div>
+<div class="at-right" style="top:470px;height:250px;display:flex;flex-direction:column;justify-content:center;gap:18px;color:var(--navy);font-size:var(--text-md);line-height:1.3">
+  <div><strong>Collocated</strong> (top): <span class="katex-inline" data-tex="p, u">\(p, u\)</span> at the same nodes, <span class="katex-inline" data-tex="(\operatorname{grad} p)_i = (p_{i&#43;1} - p_{i-1})/2\Delta x">\((\operatorname{grad} p)_i = (p_{i+1} - p_{i-1})/2\Delta x\)</span>. Then <span class="katex-inline" data-tex="\operatorname{div}\operatorname{grad}">\(\operatorname{div}\operatorname{grad}\)</span> reaches <span class="katex-inline" data-tex="p_{i\pm 2}">\(p_{i\pm 2}\)</span>, and a checkerboard has <span class="katex-inline" data-tex="\operatorname{grad} p = 0">\(\operatorname{grad} p = 0\)</span>.</div>
+  <div><strong style="color:var(--ink-orange)">DEC</strong> (bottom): <span class="katex-inline" data-tex="p">\(p\)</span> on vertices, <span class="katex-inline" data-tex="u">\(u\)</span> on edges; <span class="katex-inline" data-tex="\operatorname{grad} = d_0">\(\operatorname{grad} = d_0\)</span>, <span class="katex-inline" data-tex="\operatorname{div} = -\star_0^{-1} d_0^{\top} \star_1">\(\operatorname{div} = -\star_0^{-1} d_0^{\top} \star_1\)</span>, so <span class="katex-inline" data-tex="\operatorname{div}\operatorname{grad}">\(\operatorname{div}\operatorname{grad}\)</span> is <span style="white-space:nowrap"><span class="katex-inline" data-tex="(p_{i&#43;1} - 2p_i &#43; p_{i-1})/\Delta x^2">\((p_{i+1} - 2p_i + p_{i-1})/\Delta x^2\)</span>.</span></div>
+</div>
+<div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)">With <span class="katex-inline" data-tex="p">\(p\)</span> on vertices and <span class="katex-inline" data-tex="u">\(u\)</span> on edges, the pressure equation sees every mode.</div>
+
+    <div class="ds-cite">[5] F. H. Harlow and J. E. Welch. <i>The Physics of Fluids,</i> 8(12):2182-2189, 1965</div>
+    <div class="ds-slide-num">16</div>
+  </div>
+  <aside class="notes">Where the checkerboard comes from. Momentum sees the pressure only through its
+gradient, grad p; continuity sees the velocity only through its divergence,
+div u.
+Take the divergence of momentum and use div u = 0: the velocity drops out
+and leaves one equation for the pressure, div grad p = div f, where f is
+everything else in the momentum equation. A projection method solves exactly
+this equation every step. So the Laplacian of the pressure equation is div
+after grad,
+and its stencil depends on where p and u are stored.
+Collocated: p and u at the same nodes, grad and div both central differences,
+(p_{i+1} - p_{i-1}) / 2 dx. Composing them reaches p_{i+2} and p_{i-2} and
+skips the neighbors, so odd and even nodes never talk. A checkerboard has
+grad p = 0: it pushes on nothing, continuity cannot see it, and the pressure is
+undetermined up to it. On a periodic grid that leaves four null modes, top row.
+DEC: p on vertices, u on edges, grad = d0 and div = minus star0 inverse d0 transpose star1, so div grad is the
+compact stencil (p_{i+1} - 2 p_i + p_{i-1}) / dx^2. Each Hodge star carries one
+factor of 1/dx, which is where the 1/dx^2 comes from. The same patterns have
+eigenvalues 0, 4, 4 and 8 in units of 1/dx^2: the checkerboard is now the mode the pressure
+equation penalizes most. On a grid this is the MAC scheme of Harlow and Welch,
+and the primal and dual meshes give it on any mesh.
+</aside>
+</section>
+
+<section data-label="17 · When Both Bite: A Pressure Pulse" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">When Both Bite: A Pressure Pulse</h1>
+    
+<div style="position:absolute;left:48px;top:104px;width:1000px;height:547px;overflow:hidden;border-radius:4px"><video data-autoplay src="../assets/video/dec-pressure-pulse.mp4" autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:contain;background:#fff"></video></div>
+<div style="position:absolute;left:1076px;width:412px;top:110px;height:540px;display:flex;flex-direction:column;justify-content:center;gap:20px;color:var(--navy)">
+  <div class="card blue tight">
+    <div class="ds-math-block ds-math-tight" data-tex="\begin{aligned} \partial_t u &amp;= -\operatorname{grad} p \\ \partial_t p &amp;= -c^2 \operatorname{div} u \end{aligned}" style="font-size:var(--text-lg);margin:0">\[ \begin{aligned} \partial_t u &amp;= -\operatorname{grad} p \\ \partial_t p &amp;= -c^2 \operatorname{div} u \end{aligned} \]</div>
+    <div style="font-size:var(--text-sm);line-height:1.3;text-align:center">from rest; energy <span class="katex-inline" data-tex="\tfrac12\!\int |u|^2 &#43; p^2/c^2">\(\tfrac12\!\int |u|^2 + p^2/c^2\)</span> is conserved</div>
+  </div>
+  <div class="card green tight">
+    <div style="font-size:var(--text-md);line-height:1.3"><strong>DEC:</strong> div and grad adjoint, <span class="katex-inline" data-tex="d_1 d_0 = 0">\(d_1 d_0 = 0\)</span>. Energy conserved, no vorticity.</div>
+  </div>
+  <div class="card orange tight">
+    <div style="font-size:var(--text-md);line-height:1.3"><strong>Collocated:</strong> about 600 growing modes. Energy <span class="katex-inline" data-tex="\times 10^5">\(\times 10^5\)</span> by <span class="katex-inline" data-tex="t = 0.6">\(t = 0.6\)</span>.</div>
+  </div>
+</div>
+<div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)">Break the identities and a pressure pulse from rest blows up.</div>
+
+    <div class="ds-slide-num">17</div>
+  </div>
+  <aside class="notes">A flow driven by pressure alone, from rest: the pressure-velocity core of
+every compressible or low-Mach solver, linear acoustics. The fluid starts at
+rest with a pressure pulse, and the continuous system conserves the energy
+one half of u squared plus p squared over c squared, while its velocity stays
+a gradient, so it never has vorticity. Both runs use the same mesh and the same
+time integrator, the implicit midpoint rule. DEC: grad = d0 and
+div = minus star0 inverse d0 transpose star1 are adjoint, so the energy is
+conserved to six digits and the vorticity stays at 1e-17: an acoustic ring
+leaves the pulse. Collocated least squares: grad and div are not adjoint, and
+the curl of the gradient is not zero. The operator has about 600 growing modes,
+the fastest growing like e^{42 t}; the energy goes from 0.004 to 300 by t = 0.6
+and the pressure fills with grid-scale noise. The fastest modes sit at the
+boundary, where the stencils are one-sided, but holding every boundary node
+fixed still leaves 518 growing modes. Its pressure Laplacian also has three
+spurious null modes on this mesh, the unstructured checkerboard.
+</aside>
+</section>
+
+<section data-label="18 · Cohomology Counts the Holes" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">Cohomology Counts the Holes</h1>
+    <img src="../assets/figures/hodge-1form-spectra.svg" alt="Smallest eigenvalues of the Hodge Laplacian on 1-forms for a square, one cylinder and two cylinders, relative to the first nonzero one: no zero eigenvalue for the square, one for one cylinder, two for two cylinders, each about 1e-13 or smaller, far below a threshold line." class="at-left" style="top:104px;height:600px;object-fit:contain">
+<div class="at-right" style="top:112px;height:560px;display:flex;flex-direction:column;justify-content:center;gap:22px;color:var(--navy)">
+  <div style="display:grid;grid-template-columns:130px 1fr;row-gap:12px;font-size:var(--text-lg);line-height:1.25">
+    <div style="font-weight:700">closed</div><div><span class="katex-inline" data-tex="d_1 u = 0">\(d_1 u = 0\)</span>: no vorticity</div>
+    <div style="font-weight:700">exact</div><div><span class="katex-inline" data-tex="u = d_0\phi">\(u = d_0\phi\)</span>: a gradient</div>
+  </div>
+  <div class="card orange tight">
+    <div class="ds-math-block ds-math-tight" data-tex="H^1 = \frac{\ker d_1}{\operatorname{im} d_0}, \qquad \dim H^1 = \#\text{holes}" style="font-size:var(--text-xl);margin:0">\[ H^1 = \frac{\ker d_1}{\operatorname{im} d_0}, \qquad \dim H^1 = \#\text{holes} \]</div>
+    <div style="font-size:var(--text-md);text-align:center">closed flows that are not gradients, counted by integer linear algebra</div>
+  </div>
+  <div style="font-size:var(--text-lg);line-height:1.3;text-wrap:pretty">Its harmonic representative also has <span style="white-space:nowrap"><span class="katex-inline" data-tex="d_0^{\top}\star_1 h = 0">\(d_0^{\top}\star_1 h = 0\)</span></span>: it is curl-free and divergence-free, and carries the circulation.</div>
+</div>
+<div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)">Closed but not exact: the flows that circulate around obstacles.</div>
+
+    <div class="ds-slide-num">18</div>
+  </div>
+  <aside class="notes">The last identity is about the domain, not the operators. A 1-form u is closed
+if d1 u = 0: no vorticity in any cell. It is exact if u = d0 phi: a gradient.
+Every exact form is closed, because d1 d0 = 0. The question is whether every
+closed form is exact, and the answer depends on the holes. Around a loop that
+encloses no hole, a closed form has zero circulation by Stokes' theorem; around
+a hole it can have any circulation, and then it is not a gradient. The
+quotient, closed forms modulo exact ones, is the first cohomology H1, and its
+dimension is the number of holes. In DEC this is integer linear algebra on the
+incidence matrices: dim ker d1 minus rank d0, exactly, on any mesh. The
+harmonic representative is closed and co-closed: curl-free, divergence-free,
+and not a gradient. That is the flow that carries circulation, and lift. The
+plot counts the holes a second way: the Hodge Laplacian on 1-forms has one zero
+eigenvalue per hole. Square, none; one cylinder, one; two cylinders, two; each
+at 1e-13 or below against a first nonzero eigenvalue of order one, so the
+threshold is unambiguous.
+</aside>
+</section>
+
+<section data-label="19 · Circulation Around a Hole" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">Circulation Around a Hole</h1>
+    <img src="../assets/figures/cylinder-circulation.png" alt="Three views of flow past a cylinder: potential flow coloured by its potential; the same flow with clockwise circulation, faster over the top with both stagnation points underneath; and the harmonic circulating flow, whose potential jumps across a cut." class="at-full" style="top:100px;height:520px;object-fit:contain">
+<div class="card orange tight at-full" style="top:628px">
+  <div style="display:flex;align-items:center;justify-content:center;gap:28px;font-size:var(--text-md);color:var(--navy)">
+    <span>The flows no gradient can reach:</span>
+    <div class="ds-math-block ds-math-tight" data-tex="\dim\ker d_1 - \operatorname{rank} d_0 = \#\text{holes}" style="font-size:var(--text-lg);margin:0">\[ \dim\ker d_1 - \operatorname{rank} d_0 = \#\text{holes} \]</div>
+  </div>
+</div>
+<div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)">DEC computes the circulation that potential flow has to add by hand.</div>
+
+    <div class="ds-slide-num">19</div>
+  </div>
+  <aside class="notes">The textbook lifting cylinder, computed in DEC on 4800 triangles. Left: potential
+flow past a cylinder, u = grad phi, coloured by phi; it matches the exact
+potential U (r + R squared / r) cos theta to 3e-3, with stagnation points front
+and back. A gradient has zero circulation around the cylinder, exactly: the sum
+of d0 phi around a loop telescopes. So lift has to come from somewhere else.
+Middle: add a clockwise circulation Gamma times h; the flow speeds up over the
+top and the stagnation points move underneath, which is Kutta-Joukowski lift.
+Right: h, the unit clockwise circulation, so Gamma is positive and the lift
+is rho U Gamma. Classically its potential is minus theta over 2 pi, which is
+multivalued: it jumps across a cut, and potential-flow codes put the
+circulation in by hand. In DEC, h is a computed 1-form: closed and co-closed to
+1e-17, circulation exactly 1. The flows a gradient cannot reach number
+dim ker d1 - rank d0, which is the number of holes.
+</aside>
+</section>
+
+<section data-label="20 · Two Holes, Two Circulations" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">Two Holes, Two Circulations</h1>
+    <img src="../assets/figures/two-cylinders.png" alt="Flow past two cylinders in four panels: potential flow without circulation; the flow with both circulations, faster over the top of each cylinder; and the two harmonic flows, each circulating around one cylinder only." class="at-full" style="top:100px;height:540px;object-fit:contain">
+<div class="card orange tight at-full" style="top:650px">
+  <div style="display:flex;align-items:center;justify-content:center;gap:28px;font-size:var(--text-md);color:var(--navy)">
+    <div class="ds-math-block ds-math-tight" data-tex="\dim H^1 = 2, \qquad u = \nabla\phi &#43; \Gamma_1 h_1 &#43; \Gamma_2 h_2" style="font-size:var(--text-lg);margin:0">\[ \dim H^1 = 2, \qquad u = \nabla\phi &#43; \Gamma_1 h_1 &#43; \Gamma_2 h_2 \]</div>
+    <span>each <span class="katex-inline" data-tex="h_k">\(h_k\)</span>: circulation 1 around its cylinder, 0 around the other</span>
+  </div>
+</div>
+<div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)">One free circulation per hole, found by linear algebra.</div>
+
+    <div class="ds-slide-num">20</div>
+  </div>
+  <aside class="notes">Two cylinders in a stream, on a Delaunay mesh of 12,545 triangles. Now dim H1
+is 2, computed exactly as dim ker d1 minus rank d0 and agreeing with the Euler
+characteristic. On a coarser mesh you can also read it off the spectrum of the
+Hodge Laplacian on 1-forms: two eigenvalues at 1e-13, then a gap to 0.065.
+The harmonic flows h1 and h2 each have circulation exactly 1 around their own
+cylinder and 0 around the other, and are curl-free and divergence-free to
+round-off. Top left: potential flow, no circulation. Bottom: h1 and h2, coloured
+by their multivalued angle potentials, which jump across a cut. Top right: the
+flow with both circulations, u = grad phi + Gamma1 h1 + Gamma2 h2; each
+cylinder now carries lift. Two free numbers, so a two-element airfoil needs two
+Kutta conditions, one at each trailing edge.
+</aside>
+</section>
+
+<section data-label="21 · The Hodge Decomposition" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">The Hodge Decomposition</h1>
+    <div class="card blue soft tight at-full" style="top:100px">
+  <div style="display:grid;grid-template-columns:auto 1fr;column-gap:28px;row-gap:6px;align-items:baseline;font-size:var(--text-md);color:var(--navy)">
+    <span style="font-weight:700">simply connected</span><span class="katex-inline" data-tex="u = \nabla\phi &#43; \nabla\times\psi">\(u = \nabla\phi + \nabla\times\psi\)</span>
+    <span style="font-weight:700">with holes</span><span><span class="katex-inline" data-tex="u = \nabla\phi &#43; \nabla\times\psi &#43; h">\(u = \nabla\phi + \nabla\times\psi + h\)</span>, with <span class="katex-inline" data-tex="\nabla\cdot h = 0">\(\nabla\cdot h = 0\)</span>, <span class="katex-inline" data-tex="\nabla\times h = 0">\(\nabla\times h = 0\)</span>, <span class="katex-inline" data-tex="h\cdot n = 0">\(h\cdot n = 0\)</span>: one <span class="katex-inline" data-tex="h">\(h\)</span> per hole</span>
+    <span style="font-weight:700;color:var(--ink-orange)">DEC</span><span><span class="katex-inline" data-tex="u = d_0\phi &#43; \star_1^{-1} d_1^{\top}\star_2\,\psi &#43; h">\(u = d_0\phi + \star_1^{-1} d_1^{\top}\star_2\,\psi + h\)</span>, three pieces orthogonal because <span class="katex-inline" data-tex="d_1 d_0 = 0">\(d_1 d_0 = 0\)</span></span>
+  </div>
+</div>
+<img src="../assets/figures/hodge-decomposition.png" alt="A flow past two cylinders and its three pieces: a gradient through-flow, a curl part concentrated in a vortex patch above the gap, and a harmonic part circulating around the cylinders." class="at-full" style="top:258px;height:486px;object-fit:contain">
+<div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)">With holes, a third piece appears that neither curl nor div can see.</div>
+
+    <div class="ds-slide-num">21</div>
+  </div>
+  <aside class="notes">The Helmholtz decomposition from vector calculus: on a simply connected domain
+every velocity field is a gradient plus a curl, u = grad phi + curl psi. The
+gradient part has no vorticity, the curl part has no divergence, and a
+projection method for incompressible flow is exactly the step that removes the
+gradient part. On a domain with holes there is a third piece, the harmonic
+part h: curl-free, divergence-free, tangent to the boundary, and not a
+gradient. Its dimension is the number of holes, the cohomology we counted
+earlier, and on the last slide it was the circulating flows h1 and h2. Because it has neither curl nor divergence, a solver that only controls
+vorticity and divergence cannot see it; it is fixed by the circulations.
+In DEC the decomposition is u = d0 phi + star1 inverse d1 transpose star2 psi
++ h, and the three pieces are orthogonal in the star1 inner product because
+d1 d0 = 0. The figure decomposes a flow on the same two cylinders: a stream, a
+vortex patch and a vortex around the left cylinder. The pieces are orthogonal
+to 1e-12, the harmonic piece is curl-free and divergence-free to round-off, the
+gradient piece has zero circulation around both cylinders, and the harmonic
+piece carries circulation 5.85 and -1.33 around them.
+</aside>
+</section>
+
+<section data-label="22 · A Dictionary from Vector Calculus" data-background-color="#ffffff" class="slide-light">
   <div class="slide-canvas">
     <h1 class="slide-h1">A Dictionary from Vector Calculus</h1>
     <div class="at-full" style="top:130px;display:grid;grid-template-columns:260px 1.25fr 1fr;row-gap:44px;column-gap:32px;align-items:baseline;font-size:var(--text-xl);line-height:1.2;color:var(--navy)">
@@ -533,7 +811,7 @@ the same split with Whitney forms in place of the diagonal stars.
 </div>
 <div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)">Every operator is a short word in <span class="katex-inline" data-tex="d">\(d\)</span>, <span class="katex-inline" data-tex="\star">\(\star\)</span> and <span class="katex-inline" data-tex="\wedge">\(\wedge\)</span>: the words a Decapode records.</div>
 
-    <div class="ds-slide-num">14</div>
+    <div class="ds-slide-num">22</div>
   </div>
   <aside class="notes">How to read a model written in vector calculus as DEC. Each operator becomes
 a short word in d, star and wedge, and each word becomes a product of the
@@ -546,25 +824,7 @@ records.
 </aside>
 </section>
 
-<section data-label="15 · Taylor-Green Vortex in 3D" data-background-color="#ffffff" class="slide-light">
-  <div class="slide-canvas">
-    <h1 class="slide-h1">Taylor&#8211;Green Vortex in 3D</h1>
-    
-<div style="position:absolute;left:48px;top:112px;width:1440px;height:640px;overflow:hidden;border-radius:4px"><video data-autoplay src="../assets/video/taylor-green-3d.mp4" autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:contain;background:#fff"></video></div>
-<div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)">The same operators run in 3D, from a smooth start into small-scale vortices.</div>
-
-    <div class="ds-slide-num">15</div>
-  </div>
-  <aside class="notes">The 3D Taylor-Green vortex, a standard test for the transition to
-turbulence: a smooth periodic array of vortices that stretches and breaks down
-into small scales. Left, vortex cores (the Q-criterion); right, the vertical
-vorticity, red positive and blue negative. This is the barotropic compressible model,
-built from the operators in the dictionary, on a 3D mesh. Whether the late-time flow has the right
-turbulent statistics is the next thing to check.
-</aside>
-</section>
-
-<section data-label="16 · Compressible Navier-Stokes" data-background-color="#ffffff" class="slide-light">
+<section data-label="23 · Compressible Navier-Stokes" data-background-color="#ffffff" class="slide-light">
   <div class="slide-canvas">
     <h1 class="slide-h1">Compressible Navier&#8211;Stokes</h1>
     <div class="at-full" style="top:136px;display:grid;grid-template-columns:340px 1fr;row-gap:64px;align-items:baseline;color:var(--navy)">
@@ -584,7 +844,7 @@ turbulent statistics is the next thing to check.
 </div>
 <div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)">The hard terms are the advection terms: a divergence of a flux in every equation.</div>
 
-    <div class="ds-slide-num">16</div>
+    <div class="ds-slide-num">23</div>
   </div>
   <aside class="notes">The model as it is usually written, in conservative form: mass, momentum and
 potential temperature. The unknowns are the density rho, the momentum U = rho
@@ -597,7 +857,7 @@ in exterior calculus.
 </aside>
 </section>
 
-<section data-label="17 · Compressible Navier-Stokes in Exterior Calculus" data-background-color="#ffffff" class="slide-light">
+<section data-label="24 · Compressible Navier-Stokes in Exterior Calculus" data-background-color="#ffffff" class="slide-light">
   <div class="slide-canvas">
     <h1 class="slide-h1">Compressible Navier&#8211;Stokes in Exterior Calculus</h1>
     <div class="ds-math-block" data-tex="\begin{aligned}
@@ -625,7 +885,7 @@ in exterior calculus.
 </div>
 <div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)">Every advection term is a wedge: current work focuses on improving the numerics of wedges.</div>
 
-    <div class="ds-slide-num">17</div>
+    <div class="ds-slide-num">24</div>
   </div>
   <aside class="notes">A real model in the words of the dictionary: compressible Navier-Stokes for
 the density rho, the momentum U = rho u and the potential temperature density
@@ -639,7 +899,7 @@ This is George Rauta's model, and the runs on the next slides solve it.
 </aside>
 </section>
 
-<section data-label="18 · Lid-Driven Cavity Flow, Against a Benchmark" data-background-color="#ffffff" class="slide-light">
+<section data-label="25 · Lid-Driven Cavity Flow, Against a Benchmark" data-background-color="#ffffff" class="slide-light">
   <div class="slide-canvas">
     <h1 class="slide-h1">Lid-Driven Cavity Flow, Against a Benchmark</h1>
     <figure
@@ -667,12 +927,12 @@ This is George Rauta's model, and the runs on the next slides solve it.
       discretization</span></li>
 </ul>
 
-    <div class="ds-cite">[5] U. Ghia, K. N. Ghia, and C. T. Shin. <i>Journal of Computational Physics,</i> 48(3):387–411, 1982</div>
-    <div class="ds-slide-num">18</div>
+    <div class="ds-cite">[6] U. Ghia, K. N. Ghia, and C. T. Shin. <i>Journal of Computational Physics,</i> 48(3):387–411, 1982</div>
+    <div class="ds-slide-num">25</div>
   </div>
 </section>
 
-<section data-label="19 · Lid-Driven Cavity at High Reynolds Number" data-background-color="#ffffff" class="slide-light">
+<section data-label="26 · Lid-Driven Cavity at High Reynolds Number" data-background-color="#ffffff" class="slide-light">
   <div class="slide-canvas">
     <h1 class="slide-h1">Lid-Driven Cavity at High Reynolds Number</h1>
     <div class="at-full" style="top:108px;display:grid;grid-template-columns:repeat(2,1fr);gap:16px 32px">
@@ -683,8 +943,8 @@ This is George Rauta's model, and the runs on the next slides solve it.
 </div>
 <div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)">The benchmark holds from Re = 3200 to Re = 10,000.</div>
 
-    <div class="ds-cite">[5] U. Ghia, K. N. Ghia, and C. T. Shin. <i>Journal of Computational Physics,</i> 48(3):387–411, 1982</div>
-    <div class="ds-slide-num">19</div>
+    <div class="ds-cite">[6] U. Ghia, K. N. Ghia, and C. T. Shin. <i>Journal of Computational Physics,</i> 48(3):387–411, 1982</div>
+    <div class="ds-slide-num">26</div>
   </div>
   <aside class="notes">The same benchmark pushed from Re = 1000 to Re = 10,000, on 129 by 129 and
 257 by 257 grids. Each panel is the two midline velocity profiles against the
@@ -694,7 +954,25 @@ across the whole range. These are 2D runs of the barotropic model.
 </aside>
 </section>
 
-<section data-label="20 · Sharp Fronts and Shear Layers" data-background-color="#ffffff" class="slide-light">
+<section data-label="27 · Taylor-Green Vortex in 3D" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">Taylor&#8211;Green Vortex in 3D</h1>
+    
+<div style="position:absolute;left:48px;top:112px;width:1440px;height:640px;overflow:hidden;border-radius:4px"><video data-autoplay src="../assets/video/taylor-green-3d.mp4" autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:contain;background:#fff"></video></div>
+<div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)">The same operators run in 3D, from a smooth start into small-scale vortices.</div>
+
+    <div class="ds-slide-num">27</div>
+  </div>
+  <aside class="notes">The 3D Taylor-Green vortex, a standard test for the transition to
+turbulence: a smooth periodic array of vortices that stretches and breaks down
+into small scales. Left, vortex cores (the Q-criterion); right, the vertical
+vorticity, red positive and blue negative. This is the barotropic compressible model of the
+cavity runs, now on a 3D mesh. Whether the late-time flow has the right
+turbulent statistics is the next thing to check.
+</aside>
+</section>
+
+<section data-label="28 · Sharp Fronts and Shear Layers" data-background-color="#ffffff" class="slide-light">
   <div class="slide-canvas">
     <h1 class="slide-h1">Sharp Fronts and Shear Layers</h1>
     <figure style="margin:0;position:absolute;left:48px;top:112px;width:900px;display:flex;flex-direction:column;gap:12px">
@@ -713,7 +991,7 @@ across the whole range. These are 2D runs of the barotropic model.
 </figure>
 <div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)">A better wedge removes the ringing without smearing the structure.</div>
 
-    <div class="ds-slide-num">20</div>
+    <div class="ds-slide-num">28</div>
   </div>
   <aside class="notes">Left: the rising thermal bubble with two choices of wedge product. The top row
 reconstructs with centered averaging, the bottom row with WENO5, a
@@ -726,7 +1004,7 @@ number the shear layer breaks up into 2D turbulence.
 </aside>
 </section>
 
-<section data-label="21 · Computational Physics" data-background-color="#002A54" class="slide-dark">
+<section data-label="29 · Computational Physics" data-background-color="#002A54" class="slide-dark">
   <div class="slide-canvas">
     <div style="position:absolute;left:120px;top:226px;width:1060px">
   <div style="font-size:var(--text-md);letter-spacing:3px;opacity:.85;font-weight:700">PART TWO</div>
@@ -745,11 +1023,11 @@ number the shear layer breaks up into 2D turbulence.
 <img src="../assets/brand/decapodes_logo.svg" alt="Decapodes logo"
   style="position:absolute;right:96px;bottom:88px;width:240px;height:240px;object-fit:contain">
 
-    <div class="ds-slide-num">21</div>
+    <div class="ds-slide-num">29</div>
   </div>
 </section>
 
-<section data-label="22 · Encoding Equations as Diagrams" data-background-color="#ffffff" class="slide-light">
+<section data-label="30 · Encoding Equations as Diagrams" data-background-color="#ffffff" class="slide-light">
   <div class="slide-canvas">
     <h1 class="slide-h1">Encoding Equations as Diagrams</h1>
     <ul class="ds-bullet-list at-full" style="top:130px">
@@ -769,12 +1047,12 @@ number the shear layer breaks up into 2D turbulence.
 </figure>
 <div style="position:absolute;left:48px;right:48px;bottom:64px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)">The same content, in a form that supports type checking, rewriting, and composition.</div>
 
-    <div class="ds-cite">[<span class="cite-ours">6</span>] L. Morris, A. Baas, J. Arias, M. Gatlin, E. Patterson, and J. Fairbanks. <i>Journal of Computational Science,</i> 81:102345, 2024</div>
-    <div class="ds-slide-num">22</div>
+    <div class="ds-cite">[<span class="cite-ours">7</span>] L. Morris, A. Baas, J. Arias, M. Gatlin, E. Patterson, and J. Fairbanks. <i>Journal of Computational Science,</i> 81:102345, 2024</div>
+    <div class="ds-slide-num">30</div>
   </div>
 </section>
 
-<section data-label="23 · Writing and Composing Decapodes in Julia" data-background-color="#ffffff" class="slide-light">
+<section data-label="31 · Writing and Composing Decapodes in Julia" data-background-color="#ffffff" class="slide-light">
   <div class="slide-canvas">
     <h1 class="slide-h1">Writing and Composing Decapodes in Julia</h1>
     <div
@@ -819,12 +1097,12 @@ f = <span style="color:var(--slate)">sim</span>(mesh, generate)</div>
           </div>
           <div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)">The macro is the syntax; the diagram is what it denotes.</div>
 
-    <div class="ds-cite">[<span class="cite-ours">6</span>] L. Morris, A. Baas, J. Arias, M. Gatlin, E. Patterson, and J. Fairbanks. <i>Journal of Computational Science,</i> 81:102345, 2024<span class="ds-cite-more"> &middot; [<span class="cite-ours">7</span>]</span></div>
-    <div class="ds-slide-num">23</div>
+    <div class="ds-cite">[<span class="cite-ours">7</span>] L. Morris, A. Baas, J. Arias, M. Gatlin, E. Patterson, and J. Fairbanks. <i>Journal of Computational Science,</i> 81:102345, 2024<span class="ds-cite-more"> &middot; [<span class="cite-ours">8</span>]</span></div>
+    <div class="ds-slide-num">31</div>
   </div>
 </section>
 
-<section data-label="24 · From Advection–Diffusion to Porous Media Convection" data-background-color="#ffffff" class="slide-light">
+<section data-label="32 · From Advection–Diffusion to Porous Media Convection" data-background-color="#ffffff" class="slide-light">
   <div class="slide-canvas">
     <h1 class="slide-h1">From Advection&#8211;Diffusion to Porous Media Convection</h1>
     <div
@@ -852,11 +1130,11 @@ f = <span style="color:var(--slate)">sim</span>(mesh, generate)</div>
             style="position:absolute;left:820px;top:112px;width:668px;height:600px;object-fit:contain;background:#fff"></video>
           <div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)">Real multiphysics fits on one screen, and the compiler checks it.</div>
 
-    <div class="ds-slide-num">24</div>
+    <div class="ds-slide-num">32</div>
   </div>
 </section>
 
-<section data-label="25 · Building Multiphysics with Wiring Diagrams" data-background-color="#ffffff" class="slide-light">
+<section data-label="33 · Building Multiphysics with Wiring Diagrams" data-background-color="#ffffff" class="slide-light">
   <div class="slide-canvas">
     <h1 class="slide-h1">Building Multiphysics with Wiring Diagrams</h1>
     <div class="at-full" style="top:104px;height:650px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:20px 32px">
@@ -890,12 +1168,12 @@ f = <span style="color:var(--slate)">sim</span>(mesh, generate)</div>
   </div>
 </div>
 
-    <div class="ds-cite">[<span class="cite-ours">6</span>] L. Morris, A. Baas, J. Arias, M. Gatlin, E. Patterson, and J. Fairbanks. <i>Journal of Computational Science,</i> 81:102345, 2024<span class="ds-cite-more"> &middot; [<span class="cite-ours">8</span>]</span></div>
-    <div class="ds-slide-num">25</div>
+    <div class="ds-cite">[<span class="cite-ours">7</span>] L. Morris, A. Baas, J. Arias, M. Gatlin, E. Patterson, and J. Fairbanks. <i>Journal of Computational Science,</i> 81:102345, 2024<span class="ds-cite-more"> &middot; [<span class="cite-ours">9</span>]</span></div>
+    <div class="ds-slide-num">33</div>
   </div>
 </section>
 
-<section data-label="26 · From Diagram to Simulator" data-background-color="#ffffff" class="slide-light">
+<section data-label="34 · From Diagram to Simulator" data-background-color="#ffffff" class="slide-light">
   <div class="slide-canvas">
     <h1 class="slide-h1">From Diagram to Simulator</h1>
     <div class="at-full" style="top:120px;display:grid;grid-template-columns:repeat(5,1fr);gap:20px">
@@ -927,8 +1205,8 @@ f = <span style="color:var(--slate)">sim</span>(mesh, generate)</div>
 </div>
 <div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)">The type system is exterior calculus: a mismatched degree is caught before any matrix is built.</div>
 
-    <div class="ds-cite">[<span class="cite-ours">6</span>] L. Morris, A. Baas, J. Arias, M. Gatlin, E. Patterson, and J. Fairbanks. <i>Journal of Computational Science,</i> 81:102345, 2024<span class="ds-cite-more"> &middot; [<span class="cite-ours">7</span>]</span></div>
-    <div class="ds-slide-num">26</div>
+    <div class="ds-cite">[<span class="cite-ours">7</span>] L. Morris, A. Baas, J. Arias, M. Gatlin, E. Patterson, and J. Fairbanks. <i>Journal of Computational Science,</i> 81:102345, 2024<span class="ds-cite-more"> &middot; [<span class="cite-ours">8</span>]</span></div>
+    <div class="ds-slide-num">34</div>
   </div>
   <aside class="notes">What happens between the macro and the movie. The specification is a
 diagram, data a program can read. Type inference propagates form degree and
@@ -942,7 +1220,7 @@ any ODE solver integrates it, on CPU or GPU.
 </aside>
 </section>
 
-<section data-label="27 · What We Are Still Checking" data-background-color="#ffffff" class="slide-light">
+<section data-label="35 · What We Are Still Checking" data-background-color="#ffffff" class="slide-light">
   <div class="slide-canvas">
     <h1 class="slide-h1">What We Are Still Checking</h1>
     <div class="card blue at-left" style="top:116px;height:560px">
@@ -964,7 +1242,7 @@ any ODE solver integrates it, on CPU or GPU.
 </div>
 <div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)">Benchmarks set the bar; the right column is where we have not cleared it yet.</div>
 
-    <div class="ds-slide-num">27</div>
+    <div class="ds-slide-num">35</div>
   </div>
   <aside class="notes">Where the compressible runs stand. The 2D cavity matches the benchmark; 3D
 cavity flow needs proper lid boundary conditions first. The rising bubble
@@ -977,26 +1255,26 @@ whether the late-time flow is turbulent.
 </aside>
 </section>
 
-<section data-label="28 · One Calculus, Many Uses" data-background-color="#ffffff" class="slide-light">
+<section data-label="36 · One Calculus, Many Uses" data-background-color="#ffffff" class="slide-light">
   <div class="slide-canvas">
     <h1 class="slide-h1">One Calculus, Many Uses</h1>
     <div class="at-full" style="top:120px;display:grid;grid-template-columns:repeat(3,1fr);gap:32px">
   <div class="card blue roomy" style="height:470px;display:flex;flex-direction:column;gap:14px">
     <div style="font-size:var(--text-lg);font-weight:700;line-height:1.2;color:var(--navy)">Compressible flow on grids</div>
-    <div style="font-size:var(--text-md);line-height:1.3;color:var(--navy);text-wrap:pretty">Low-Mach Navier–Stokes with DEC on rectilinear grids, where it is a staggered scheme by construction [9].</div>
+    <div style="font-size:var(--text-md);line-height:1.3;color:var(--navy);text-wrap:pretty">Low-Mach Navier–Stokes with DEC on rectilinear grids, where it is a staggered scheme by construction [10].</div>
   </div>
   <div class="card orange roomy" style="height:470px;display:flex;flex-direction:column;gap:14px">
     <div style="font-size:var(--text-lg);font-weight:700;line-height:1.2;color:var(--navy)">Safety on a mesh</div>
-    <div style="font-size:var(--text-md);line-height:1.3;color:var(--navy);text-wrap:pretty">Whitney forms turn a safe set given on a mesh into a control barrier function [10].</div>
+    <div style="font-size:var(--text-md);line-height:1.3;color:var(--navy);text-wrap:pretty">Whitney forms turn a safe set given on a mesh into a control barrier function [11].</div>
   </div>
   <div class="card green roomy" style="height:470px;display:flex;flex-direction:column;gap:14px">
     <div style="font-size:var(--text-lg);font-weight:700;line-height:1.2;color:var(--navy)">Coordination on a graph</div>
-    <div style="font-size:var(--text-md);line-height:1.3;color:var(--navy);text-wrap:pretty">The sheaf Laplacian <span class="katex-inline" data-tex="\delta^\top\delta">\(\delta^\top\delta\)</span> is DEC with restriction maps in place of the Hodge stars [11, 12].</div>
+    <div style="font-size:var(--text-md);line-height:1.3;color:var(--navy);text-wrap:pretty">The sheaf Laplacian <span class="katex-inline" data-tex="\delta^\top\delta">\(\delta^\top\delta\)</span> is DEC with restriction maps in place of the Hodge stars [12, 13].</div>
   </div>
 </div>
 <div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)">Wherever there is a mesh or a graph, <span class="katex-inline" data-tex="d">\(d\)</span> and <span class="katex-inline" data-tex="\star">\(\star\)</span> are the right primitives.</div>
 
-    <div class="ds-slide-num">28</div>
+    <div class="ds-slide-num">36</div>
   </div>
   <aside class="notes">DEC in our other work. Rectilinear grids: DEC is not only for triangles, and
 on a grid it recovers a staggered finite-volume scheme, here for low-Mach
@@ -1008,7 +1286,7 @@ runs on the same calculus with the geometry replaced by restriction maps.
 </aside>
 </section>
 
-<section data-label="29 · Decapodes: Directly Computable Physics" data-background-color="#ffffff" class="slide-light">
+<section data-label="37 · Decapodes: Directly Computable Physics" data-background-color="#ffffff" class="slide-light">
   <div class="slide-canvas">
     <h1 class="slide-h1">Decapodes: Directly Computable Physics</h1>
     <div
@@ -1028,12 +1306,12 @@ runs on the same calculus with the geometry replaced by restriction maps.
 <img src="../assets/figures/decapodes-4-panel.png" alt="Exterior calculus operators, a discrete geometric domain, physical equations, and the generated simulation" style="position:absolute;left:930px;top:150px;width:530px;height:500px;object-fit:contain">
 <div style="position:absolute;left:48px;right:48px;bottom:64px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)">Built on CombinatorialSpaces.jl, part of the AlgebraicJulia ecosystem.</div>
 
-    <div class="ds-cite">[<span class="cite-ours">6</span>] L. Morris, A. Baas, J. Arias, M. Gatlin, E. Patterson, and J. Fairbanks. <i>Journal of Computational Science,</i> 81:102345, 2024<span class="ds-cite-more"> &middot; [<span class="cite-ours">7</span>]</span></div>
-    <div class="ds-slide-num">29</div>
+    <div class="ds-cite">[<span class="cite-ours">7</span>] L. Morris, A. Baas, J. Arias, M. Gatlin, E. Patterson, and J. Fairbanks. <i>Journal of Computational Science,</i> 81:102345, 2024<span class="ds-cite-more"> &middot; [<span class="cite-ours">8</span>]</span></div>
+    <div class="ds-slide-num">37</div>
   </div>
 </section>
 
-<section data-label="30 · References" data-background-color="#ffffff" class="slide-light">
+<section data-label="38 · References" data-background-color="#ffffff" class="slide-light">
   <div class="slide-canvas">
     <h1 class="slide-h1">References</h1>
     
@@ -1044,20 +1322,21 @@ runs on the same calculus with the geometry replaced by restriction maps.
     <li style="display:flex;gap:14px;font-size:22px;line-height:1.29;color:#002A54"><span style="flex:none;font-weight:700;color:#2C4B6A">[2]</span><span style="flex:1;min-width:0;text-wrap:pretty">M. Desbrun, A. N. Hirani, M. Leok, and J. E. Marsden. Discrete exterior calculus. arXiv:math/0508341, 2005.</span></li>
     <li style="display:flex;gap:14px;font-size:22px;line-height:1.29;color:#002A54"><span style="flex:none;font-weight:700;color:#2C4B6A">[3]</span><span style="flex:1;min-width:0;text-wrap:pretty">R. Ayoub, A. Hamdouni, and D. Razafindralandy. A new Hodge operator in discrete exterior calculus. Application to fluid mechanics. <em>Communications on Pure and Applied Analysis,</em> 20(6):2155-2185, 2021. doi:10.3934/cpaa.2021062.</span></li>
     <li style="display:flex;gap:14px;font-size:22px;line-height:1.29;color:#002A54"><span style="flex:none;font-weight:700;color:#2C4B6A">[4]</span><span style="flex:1;min-width:0;text-wrap:pretty">D. N. Arnold, R. S. Falk, and R. Winther. Finite element exterior calculus, homological techniques, and applications. <em>Acta Numerica,</em> 15:1–155, 2006.</span></li>
-    <li style="display:flex;gap:14px;font-size:22px;line-height:1.29;color:#002A54"><span style="flex:none;font-weight:700;color:#2C4B6A">[5]</span><span style="flex:1;min-width:0;text-wrap:pretty">U. Ghia, K. N. Ghia, and C. T. Shin. High-Re solutions for incompressible flow using the Navier–Stokes equations and a multigrid method. <em>Journal of Computational Physics,</em> 48(3):387–411, 1982.</span></li>
-    <li style="display:flex;gap:14px;font-size:22px;line-height:1.29;color:#002A54"><span class="cite-ours" style="flex:none;font-weight:700;color:#FA4616">[6]</span><span style="flex:1;min-width:0;text-wrap:pretty">L. Morris, A. Baas, J. Arias, M. Gatlin, E. Patterson, and J. Fairbanks. Decapodes: a diagrammatic tool for representing, composing, and computing spatialized partial differential equations. <em>Journal of Computational Science,</em> 81:102345, 2024.</span></li>
+    <li style="display:flex;gap:14px;font-size:22px;line-height:1.29;color:#002A54"><span style="flex:none;font-weight:700;color:#2C4B6A">[5]</span><span style="flex:1;min-width:0;text-wrap:pretty">F. H. Harlow and J. E. Welch. Numerical calculation of time-dependent viscous incompressible flow of fluid with free surface. <em>The Physics of Fluids,</em> 8(12):2182-2189, 1965. doi:10.1063/1.1761178.</span></li>
+    <li style="display:flex;gap:14px;font-size:22px;line-height:1.29;color:#002A54"><span style="flex:none;font-weight:700;color:#2C4B6A">[6]</span><span style="flex:1;min-width:0;text-wrap:pretty">U. Ghia, K. N. Ghia, and C. T. Shin. High-Re solutions for incompressible flow using the Navier–Stokes equations and a multigrid method. <em>Journal of Computational Physics,</em> 48(3):387–411, 1982.</span></li>
+    <li style="display:flex;gap:14px;font-size:22px;line-height:1.29;color:#002A54"><span class="cite-ours" style="flex:none;font-weight:700;color:#FA4616">[7]</span><span style="flex:1;min-width:0;text-wrap:pretty">L. Morris, A. Baas, J. Arias, M. Gatlin, E. Patterson, and J. Fairbanks. Decapodes: a diagrammatic tool for representing, composing, and computing spatialized partial differential equations. <em>Journal of Computational Science,</em> 81:102345, 2024.</span></li>
   </ol>
   <ol style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:14px">
-    <li style="display:flex;gap:14px;font-size:22px;line-height:1.29;color:#002A54"><span class="cite-ours" style="flex:none;font-weight:700;color:#FA4616">[7]</span><span style="flex:1;min-width:0;text-wrap:pretty">AlgebraicJulia. CellularSheaves.jl, Decapodes.jl, and CombinatorialSpaces.jl. algebraicjulia.github.io</span></li>
-    <li style="display:flex;gap:14px;font-size:22px;line-height:1.29;color:#002A54"><span class="cite-ours" style="flex:none;font-weight:700;color:#FA4616">[8]</span><span style="flex:1;min-width:0;text-wrap:pretty">E. Patterson, O. Lynch, and J. Fairbanks. Categorical data structures for technical computing. <em>Compositionality,</em> 4(5), 2022.</span></li>
-    <li style="display:flex;gap:14px;font-size:22px;line-height:1.29;color:#002A54"><span class="cite-ours" style="flex:none;font-weight:700;color:#FA4616">[9]</span><span style="flex:1;min-width:0;text-wrap:pretty">G. Rauta, J. Fairbanks, and L. Kunzendorf. Low-Mach compressible Navier–Stokes using discrete exterior calculus on rectilinear grids. <em>WCCM–ECCOMAS,</em> Munich, 2026, accepted.</span></li>
-    <li style="display:flex;gap:14px;font-size:22px;line-height:1.29;color:#002A54"><span class="cite-ours" style="flex:none;font-weight:700;color:#FA4616">[10]</span><span style="flex:1;min-width:0;text-wrap:pretty">K. Currier, W. Leal, G. Rauta, A. Copeland, J. Fairbanks, and W. E. Dixon. Whitney control barrier functions: a mesh-based geometric approach via discrete exterior calculus. <em>IFAC World Congress,</em> 2026.</span></li>
-    <li style="display:flex;gap:14px;font-size:22px;line-height:1.29;color:#002A54"><span style="flex:none;font-weight:700;color:#2C4B6A">[11]</span><span style="flex:1;min-width:0;text-wrap:pretty">J. Hansen. <em>Laplacians of Cellular Sheaves: Theory and Applications.</em> PhD dissertation, University of Pennsylvania, 2020. Advised by R. Ghrist.</span></li>
-    <li style="display:flex;gap:14px;font-size:22px;line-height:1.29;color:#002A54"><span class="cite-ours" style="flex:none;font-weight:700;color:#FA4616">[12]</span><span style="flex:1;min-width:0;text-wrap:pretty">T. Hanks, H. Riess, S. Cohen, T. Gross, M. Hale, and J. Fairbanks. Distributed multi-agent coordination over cellular sheaves. <em>IEEE Conference on Decision and Control,</em> 2025. arXiv:2504.02049.</span></li>
+    <li style="display:flex;gap:14px;font-size:22px;line-height:1.29;color:#002A54"><span class="cite-ours" style="flex:none;font-weight:700;color:#FA4616">[8]</span><span style="flex:1;min-width:0;text-wrap:pretty">AlgebraicJulia. CellularSheaves.jl, Decapodes.jl, and CombinatorialSpaces.jl. algebraicjulia.github.io</span></li>
+    <li style="display:flex;gap:14px;font-size:22px;line-height:1.29;color:#002A54"><span class="cite-ours" style="flex:none;font-weight:700;color:#FA4616">[9]</span><span style="flex:1;min-width:0;text-wrap:pretty">E. Patterson, O. Lynch, and J. Fairbanks. Categorical data structures for technical computing. <em>Compositionality,</em> 4(5), 2022.</span></li>
+    <li style="display:flex;gap:14px;font-size:22px;line-height:1.29;color:#002A54"><span class="cite-ours" style="flex:none;font-weight:700;color:#FA4616">[10]</span><span style="flex:1;min-width:0;text-wrap:pretty">G. Rauta, J. Fairbanks, and L. Kunzendorf. Low-Mach compressible Navier–Stokes using discrete exterior calculus on rectilinear grids. <em>WCCM–ECCOMAS,</em> Munich, 2026, accepted.</span></li>
+    <li style="display:flex;gap:14px;font-size:22px;line-height:1.29;color:#002A54"><span class="cite-ours" style="flex:none;font-weight:700;color:#FA4616">[11]</span><span style="flex:1;min-width:0;text-wrap:pretty">K. Currier, W. Leal, G. Rauta, A. Copeland, J. Fairbanks, and W. E. Dixon. Whitney control barrier functions: a mesh-based geometric approach via discrete exterior calculus. <em>IFAC World Congress,</em> 2026.</span></li>
+    <li style="display:flex;gap:14px;font-size:22px;line-height:1.29;color:#002A54"><span style="flex:none;font-weight:700;color:#2C4B6A">[12]</span><span style="flex:1;min-width:0;text-wrap:pretty">J. Hansen. <em>Laplacians of Cellular Sheaves: Theory and Applications.</em> PhD dissertation, University of Pennsylvania, 2020. Advised by R. Ghrist.</span></li>
+    <li style="display:flex;gap:14px;font-size:22px;line-height:1.29;color:#002A54"><span class="cite-ours" style="flex:none;font-weight:700;color:#FA4616">[13]</span><span style="flex:1;min-width:0;text-wrap:pretty">T. Hanks, H. Riess, S. Cohen, T. Gross, M. Hale, and J. Fairbanks. Distributed multi-agent coordination over cellular sheaves. <em>IEEE Conference on Decision and Control,</em> 2025. arXiv:2504.02049.</span></li>
   </ol>
 </div>
 
-    <div class="ds-slide-num">30</div>
+    <div class="ds-slide-num">38</div>
   </div>
 </section>
 
