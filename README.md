@@ -11,6 +11,7 @@ Talks stay listed. Improve them, don't delete them.
 
 | Talk | Venue | Deck |
 | --- | --- | --- |
+| Decapodes and the Discrete Exterior Calculus | UF MAE Fluids Seminar, 15 October 2026 | [`2026-10-15-mae-fluids-seminar-decapodes/`](2026-10-15-mae-fluids-seminar-decapodes/) |
 | Building Big Systems from Small Pieces | UF EML 2920 (first-year MAE), Fall 2026 | [`2026-fall-eml2920-building-big-systems/`](2026-fall-eml2920-building-big-systems/) |
 | Sheaves for Coordination Problems in Distributed Autonomous Systems | CODAC Kickoff Meeting, 25 September 2026 | [`2026-09-25-codac-kickoff-sheaves/`](2026-09-25-codac-kickoff-sheaves/) |
 | DIGICAMS for CODAC: Vision and Plan for the Year | AFOSR Center of Excellence kickoff, Arlington, VA, 24 September 2026 | [`2026-09-24-afosr-coe-kickoff/`](2026-09-24-afosr-coe-kickoff/) |

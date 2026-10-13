@@ -109,18 +109,18 @@
     <img src="../assets/figures/wiring-diagram-formulas.png" alt="Wiring diagrams in circuits, signal processing, chemistry, manufacturing, controls, and engineering design" style="position:absolute;left:48px;top:104px;width:1000px;height:590px;object-fit:contain">
 <div style="position:absolute;left:1090px;top:130px;width:400px;display:flex;flex-direction:column;gap:26px">
   <div style="font-size:var(--text-xl);line-height:1.22;text-wrap:pretty;color:var(--navy)">
-    Circuits, controls, chemistry, factories: every field sketches its systems as boxes joined by wires.</div>
+    Circuits, controls, chemistry, factories: engineers sketch systems as boxes joined by wires.</div>
   <div style="font-size:var(--text-lg);line-height:1.24;text-wrap:pretty;color:var(--navy)">
     A box is a piece you understand. A wire says what two pieces share.</div>
   <div style="font-size:var(--text-lg);line-height:1.24;text-wrap:pretty;color:var(--slate)">
-    Our research teaches the computer to read the sketch as math, so it can assemble the whole model.</div>
+    Our research makes the sketch precise enough to generate the combined equations.</div>
 </div>
 
     <div class="ds-slide-num">5</div>
   </div>
-  <aside class="notes">Ask who has drawn a free-body diagram or a block diagram. Every field on this
-slide draws its systems the same way, and the drawing is already most of the
-model. The research question is how to let the computer read it.
+  <aside class="notes">Ask who has drawn a free-body diagram or a block diagram. The fields on this
+slide all draw their systems this way. The research question is how to make
+the drawing precise enough that the combined equations follow from it.
 </aside>
 </section>
 
@@ -129,41 +129,44 @@ model. The research question is how to let the computer read it.
     <h1 class="slide-h1">Two Design Problems Share a Variable</h1>
     <div class="card blue tight at-full" style="top:112px">
   <div style="font-size:var(--text-xl);line-height:1.2;color:var(--navy);text-wrap:pretty">Designing a drone: the wing team picks wing size <span class="katex-inline" data-tex="x_1">\(x_1\)</span> and battery <span class="katex-inline" data-tex="x_2">\(x_2\)</span>; the motor team picks battery <span class="katex-inline" data-tex="x_2">\(x_2\)</span> and motor <span class="katex-inline" data-tex="x_3">\(x_3\)</span>.</div>
-  <div class="ds-math-block ds-math-tight" data-tex="\text{total cost} \;=\; f(x_1, x_2) \;&#43;\; g(x_2, x_3)" style="font-size:var(--text-lg);margin:10px 0 4px;line-height:1.2">\[ \text{total cost} \;=\; f(x_1, x_2) \;&#43;\; g(x_2, x_3) \]</div>
-  <div style="font-size:var(--text-sm);line-height:1.25;color:var(--slate);text-align:center">The shared battery is the wire. Connect the problems by sharing it; combine them by adding.</div>
+  <div class="ds-math-block ds-math-tight" data-tex="\min_{x_1, x_2, x_3}\; f(x_1, x_2) &#43; g(x_2, x_3) \qquad\text{optimal when}\qquad \frac{\partial f}{\partial x_2} &#43; \frac{\partial g}{\partial x_2} = 0" style="font-size:var(--text-lg);margin:10px 0 4px;line-height:1.2">\[ \min_{x_1, x_2, x_3}\; f(x_1, x_2) &#43; g(x_2, x_3) \qquad\text{optimal when}\qquad \frac{\partial f}{\partial x_2} &#43; \frac{\partial g}{\partial x_2} = 0 \]</div>
+  <div style="font-size:var(--text-sm);line-height:1.25;color:var(--slate);text-align:center">The shared battery is the wire. Each team computes its own derivative; only the battery terms have to be exchanged.</div>
 </div>
-<img src="../assets/figures/compose-objectives.png" alt="Contour plots of f on x1 and x2, g on x2 and x3, and their sum on the shared variable" class="at-full" style="top:372px;height:335px;object-fit:contain">
-<div style="position:absolute;left:48px;right:48px;bottom:48px;font-size:var(--text-xl);line-height:1.18;color:var(--slate)">Each team keeps its own piece; the drawing says how the pieces add up.</div>
+<img src="../assets/figures/compose-objectives.png" alt="Contour plots of f on x1 and x2, g on x2 and x3, and their sum on the shared variable" class="at-full" style="top:380px;height:330px;object-fit:contain">
+<div style="position:absolute;left:48px;right:48px;bottom:48px;font-size:var(--text-xl);line-height:1.18;color:var(--slate)">Each team keeps its own cost. The drawing says which variables they must agree on.</div>
 
     <div class="ds-slide-num">6</div>
   </div>
   <aside class="notes">A drone design split between two teams. The wing team trades wing size against
 battery weight; the motor team trades battery weight against motor size. Each
-team has its own cost. The battery is the wire between them: the combined
-problem is just the sum of the two costs, and each team's part is unchanged.
-That is why big problems can be solved piece by piece, even in parallel.
+team has its own cost. The battery is the wire between them: the combined cost
+is the sum of the two, and each team's part is unchanged. At the best design
+the two teams' derivatives in the battery cancel, so each team can work on its
+own cost as long as they keep exchanging that one number. That exchange is what
+lets a big problem be solved in pieces.
 </aside>
 </section>
 
-<section data-label="7 · Forces Add Up, and So Do Models" data-background-color="#ffffff" class="slide-light">
+<section data-label="7 · Rates Add Up, and So Do Models" data-background-color="#ffffff" class="slide-light">
   <div class="slide-canvas">
-    <h1 class="slide-h1">Forces Add Up, and So Do Models</h1>
+    <h1 class="slide-h1">Rates Add Up, and So Do Models</h1>
     <div class="card blue tight at-full" style="top:112px">
-  <div style="font-size:var(--text-xl);line-height:1.2;color:var(--navy);text-wrap:pretty">Two springs hooked to one cart: each pull depends on where the cart is, and the cart feels the sum.</div>
-  <div class="ds-math-block ds-math-tight" data-tex="\text{motion of the shared part} \;=\; \text{push from } v \;&#43;\; \text{push from } u" style="font-size:var(--text-lg);margin:10px 0 4px;line-height:1.2">\[ \text{motion of the shared part} \;=\; \text{push from } v \;&#43;\; \text{push from } u \]</div>
-  <div style="font-size:var(--text-sm);line-height:1.25;color:var(--slate);text-align:center">Each box is a small model of how things move. Where boxes share a variable, their pushes add, just as in a free-body diagram.</div>
+  <div style="font-size:var(--text-xl);line-height:1.2;color:var(--navy);text-wrap:pretty">Two heaters in one room: model <span class="katex-inline" data-tex="v">\(v\)</span> changes heater A <span class="katex-inline" data-tex="x_1">\(x_1\)</span> and the room <span class="katex-inline" data-tex="x_2">\(x_2\)</span>; model <span class="katex-inline" data-tex="u">\(u\)</span> changes the room <span class="katex-inline" data-tex="x_2">\(x_2\)</span> and heater B <span class="katex-inline" data-tex="x_3">\(x_3\)</span>.</div>
+  <div class="ds-math-block ds-math-tight" data-tex="\dot x_1 = v(x_1, x_2)_1, \qquad \dot x_2 = v(x_1, x_2)_2 &#43; u(x_2, x_3)_1, \qquad \dot x_3 = u(x_2, x_3)_2" style="font-size:var(--text-lg);margin:10px 0 4px;line-height:1.2">\[ \dot x_1 = v(x_1, x_2)_1, \qquad \dot x_2 = v(x_1, x_2)_2 &#43; u(x_2, x_3)_1, \qquad \dot x_3 = u(x_2, x_3)_2 \]</div>
+  <div style="font-size:var(--text-sm);line-height:1.25;color:var(--slate);text-align:center">Each box is a vector field, a small model of how things change. Where two boxes share a variable, their rates add.</div>
 </div>
-<img src="../assets/figures/vf-sources.png" alt="Two small motion models, v and u, each on two variables" style="position:absolute;left:110px;top:330px;width:330px;height:380px;object-fit:contain">
-<img src="../assets/figures/vf-composed.png" alt="The combined motion model on three variables, shown as two slices" style="position:absolute;left:600px;top:345px;width:830px;height:350px;object-fit:contain">
-<div style="position:absolute;left:48px;right:48px;bottom:48px;font-size:var(--text-xl);line-height:1.18;color:var(--slate)">Same drawing, new meaning: last slide it added costs, here it adds forces.</div>
+<img src="../assets/figures/vf-sources.png" alt="Two small motion models, v and u, each on two variables" style="position:absolute;left:110px;top:360px;width:300px;height:350px;object-fit:contain">
+<img src="../assets/figures/vf-composed.png" alt="The combined motion model on three variables, shown as two slices" style="position:absolute;left:600px;top:370px;width:830px;height:330px;object-fit:contain">
+<div style="position:absolute;left:48px;right:48px;bottom:48px;font-size:var(--text-xl);line-height:1.18;color:var(--slate)">The drawing is the same as on the last slide. There it added costs; here it adds rates.</div>
 
     <div class="ds-slide-num">7</div>
   </div>
-  <aside class="notes">The same drawing, read a second way. Think of two springs hooked to one cart:
-each spring's pull depends on where the cart is, and the cart feels the sum.
-Here each box is a little model of motion, the shared variable is the cart, and
-the combined model adds the pushes on it. Free-body diagrams already work this
-way; the drawing tells the computer to do it for any number of pieces.
+  <aside class="notes">The same drawing, read a second way. Two heaters in one room: heater A's model
+says how its temperature and the room's change, heater B's model does the same,
+and the room's temperature changes at the sum of the two rates. Each box is a
+small model of how things change, written as a vector field; the shared variable
+is the room, and the combined model adds the two rates there. The drawing tells
+the computer to do this for any number of pieces.
 </aside>
 </section>
 
@@ -191,31 +194,38 @@ way; the drawing tells the computer to do it for any number of pieces.
 <section data-label="9 · Physics Laws Are Building Blocks" data-background-color="#ffffff" class="slide-light">
   <div class="slide-canvas">
     <h1 class="slide-h1">Physics Laws Are Building Blocks</h1>
-    <div class="at-left" style="top:120px;display:flex;flex-direction:column;gap:22px">
-  <div style="font-size:var(--text-xl);line-height:1.22;color:var(--navy);text-wrap:pretty">Three laws from heat transfer:</div>
-  <ul class="ds-bullet-list" style="gap:14px">
-    <li class="size-body" style="font-size:var(--text-lg)"><span class="bullet-mark">●</span><span class="bullet-text"><strong>Diffusion:</strong> heat flows from hot to cold</span></li>
-    <li class="size-body" style="font-size:var(--text-lg)"><span class="bullet-mark">●</span><span class="bullet-text"><strong>Advection:</strong> moving air carries heat along with it</span></li>
-    <li class="size-body" style="font-size:var(--text-lg)"><span class="bullet-mark">●</span><span class="bullet-text"><strong>Conservation:</strong> energy is neither made nor lost</span></li>
-  </ul>
-  <div style="font-size:var(--text-lg);line-height:1.24;color:var(--slate);text-wrap:pretty">Each law is a small diagram. Wire them together and you have a model of air cooling a hot engine.</div>
+    <div class="at-left" style="top:116px;display:flex;flex-direction:column;gap:14px">
+  <div style="font-size:var(--text-lg);line-height:1.22;color:var(--navy);text-wrap:pretty">For a concentration <span class="katex-inline" data-tex="C">\(C\)</span> carried by a flow <span class="katex-inline" data-tex="V">\(V\)</span>:</div>
+  <div style="display:grid;grid-template-columns:230px 1fr;row-gap:12px;align-items:baseline;font-size:var(--text-md);line-height:1.2;color:var(--navy)">
+    <div><strong>Diffusion</strong></div><div><span class="katex-inline" data-tex="\phi_1 = -k\,\nabla C">\(\phi_1 = -k\,\nabla C\)</span><span style="color:var(--slate)">&ensp;down the slope</span></div>
+    <div><strong>Advection</strong></div><div><span class="katex-inline" data-tex="\phi_2 = C\,V">\(\phi_2 = C\,V\)</span><span style="color:var(--slate)">&ensp;carried along</span></div>
+    <div><strong>Superposition</strong></div><div><span class="katex-inline" data-tex="\phi = \phi_1 &#43; \phi_2">\(\phi = \phi_1 + \phi_2\)</span></div>
+    <div><strong>Conservation</strong></div><div><span class="katex-inline" data-tex="\partial_t C = -\nabla\cdot\phi">\(\partial_t C = -\nabla\cdot\phi\)</span></div>
+  </div>
+</div>
+<div class="card orange tight at-left" style="top:452px">
+  <div style="font-size:var(--text-sm);line-height:1.25;color:var(--navy)">Wired together:</div>
+  <div class="ds-math-block ds-math-tight" data-tex="\partial_t C = k\,\Delta C - \nabla\cdot(C\,V)" style="font-size:var(--text-lg);margin:8px 0">\[ \partial_t C = k\,\Delta C - \nabla\cdot(C\,V) \]</div>
+  <div style="font-size:var(--text-sm);line-height:1.25;color:var(--slate);text-wrap:pretty"><span class="katex-inline" data-tex="\Delta = \nabla\cdot\nabla">\(\Delta = \nabla\cdot\nabla\)</span> is the Laplacian. It compares each point with the average of the points around it.</div>
 </div>
 <div class="card blue soft tight at-right" style="top:112px;height:300px;display:flex;flex-direction:column;gap:6px">
   <div style="font-size:var(--text-xs);font-weight:700;color:var(--navy)">The laws, one diagram each</div>
-  <img src="../assets/figures/physical-principles.png" alt="Diffusion, advection, conservation of mass, and adding fluxes, each as a small diagram" style="width:100%;flex:1;min-height:0;object-fit:contain">
+  <img src="../assets/figures/physical-principles.png" alt="Fick's law of diffusion, advection, conservation of mass, and superposition of flux, each as a small diagram" style="width:100%;flex:1;min-height:0;object-fit:contain">
 </div>
 <div class="card orange soft tight at-right" style="top:432px;height:300px;display:flex;flex-direction:column;gap:6px">
-  <div style="font-size:var(--text-xs);font-weight:700;color:var(--navy)">Wired together: heat carried by a flow</div>
-  <img src="../assets/figures/advection-diffusion-composite.png" alt="The combined advection-diffusion diagram, with temperature, velocity, and two heat-flow terms" style="width:100%;flex:1;min-height:0;object-fit:contain">
+  <div style="font-size:var(--text-xs);font-weight:700;color:var(--navy)">The diagrams wired together</div>
+  <img src="../assets/figures/advection-diffusion-composite.png" alt="The combined advection-diffusion diagram, with concentration, velocity, and two flux terms" style="width:100%;flex:1;min-height:0;object-fit:contain">
 </div>
 
     <div class="ds-slide-num">9</div>
   </div>
-  <aside class="notes">Three laws they will meet in thermodynamics and heat transfer. Each is drawn as
-a small diagram: circles are quantities like temperature, arrows are operations
-like "take the gradient". Wiring the three together gives the model of air
-carrying heat away from something hot, without writing the combined equation
-by hand.
+  <aside class="notes">Four laws from heat and mass transfer, for a concentration C: dye in water,
+smoke in air. Temperature obeys the same equations, with Fourier's law in place
+of Fick's. Each law is drawn as a small diagram: the circles are quantities, the
+arrows are operations like "take the gradient". The diagrams leave out the two
+minus signs, which cancel. Wiring the four together gives the equation at the
+bottom without anyone deriving it by hand. Point at the Laplacian: it is
+diffusion, and it comes back in the robot part.
 </aside>
 </section>
 
@@ -238,38 +248,44 @@ HeatInAFlow = <span style="color:var(--ink-orange)">@relation</span> (C, V) <spa
 <span style="font-weight:600">end</span>
 
 sim = <span style="color:var(--slate)">evalsim</span>(<span style="color:var(--slate)">apex</span>(<span style="color:var(--slate)">oapply</span>(HeatInAFlow, physics)))</div>
-<div style="position:absolute;left:908px;top:132px;width:580px;display:flex;flex-direction:column;gap:24px;color:var(--navy)">
+<div style="position:absolute;left:908px;top:124px;width:580px;display:flex;flex-direction:column;gap:20px;color:var(--navy)">
   <div>
-    <div style="font-family:var(--font-mono);font-size:var(--text-md);color:var(--slate)">C, ϕ</div>
-    <div style="margin-top:6px;font-size:var(--text-lg);line-height:1.24;text-wrap:pretty">temperature at each point, and how heat flows</div>
+    <div style="font-family:var(--font-mono);font-size:var(--text-md);color:var(--slate)">d(C)</div>
+    <div style="margin-top:4px;font-size:var(--text-md);line-height:1.24;text-wrap:pretty">the gradient <span class="katex-inline" data-tex="\nabla C">\(\nabla C\)</span>, on a mesh</div>
   </div>
   <div>
-    <div style="font-family:var(--font-mono);font-size:var(--text-md);color:var(--slate)">ϕ == k * d(C)</div>
-    <div style="margin-top:6px;font-size:var(--text-lg);line-height:1.24;text-wrap:pretty">heat flows down the temperature slope</div>
+    <div style="font-family:var(--font-mono);font-size:var(--text-md);color:var(--slate)">⋆(d(⋆(ϕ)))</div>
+    <div style="margin-top:4px;font-size:var(--text-md);line-height:1.24;text-wrap:pretty">the divergence <span class="katex-inline" data-tex="\nabla\cdot\phi">\(\nabla\cdot\phi\)</span></div>
+  </div>
+  <div>
+    <div style="font-family:var(--font-mono);font-size:var(--text-md);color:var(--slate)">together</div>
+    <div style="margin-top:4px;font-size:var(--text-md);line-height:1.24;text-wrap:pretty"><span class="katex-inline" data-tex="\dot C = k\,{\star}d{\star}d\,C = k\,\Delta C">\(\dot C = k\,{\star}d{\star}d\,C = k\,\Delta C\)</span>, the Laplacian</div>
   </div>
   <div>
     <div style="font-family:var(--font-mono);font-size:var(--text-md);color:var(--slate)">@relation</div>
-    <div style="margin-top:6px;font-size:var(--text-lg);line-height:1.24;text-wrap:pretty">the boxes-and-wires drawing, typed as text</div>
+    <div style="margin-top:4px;font-size:var(--text-md);line-height:1.24;text-wrap:pretty">the boxes-and-wires drawing, typed as text</div>
   </div>
   <div>
     <div style="font-family:var(--font-mono);font-size:var(--text-md);color:var(--slate)">evalsim</div>
-    <div style="margin-top:6px;font-size:var(--text-lg);line-height:1.24;text-wrap:pretty">builds the simulator for you</div>
+    <div style="margin-top:4px;font-size:var(--text-md);line-height:1.24;text-wrap:pretty">generates the solver for a given mesh</div>
   </div>
 </div>
-<div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)">You write the physics; the computer writes the number crunching.</div>
+<div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)">Decapodes generates the solver from these equations, for any mesh.</div>
 
     <div class="ds-slide-num">10</div>
   </div>
-  <aside class="notes">This is real code in Julia, from our open-source Decapodes package. Five lines
-say what diffusion is; one line wires it to advection; the last line asks for a
-simulator. Nobody writes the loops over grid points: the computer generates
-them for whatever shape you give it.
+  <aside class="notes">Julia code using our open-source Decapodes package. Five lines say what
+diffusion is: d is the gradient, star-d-star is the divergence, and together
+they make the Laplacian from the last slide. Three lines wire diffusion to
+advection, the same drawing as before typed as text, and the last line asks
+for a simulator. Nobody writes the loops over grid points: Decapodes generates
+them for whatever mesh you give it.
 </aside>
 </section>
 
-<section data-label="11 · Simulations You Can Check" data-background-color="#ffffff" class="slide-light">
+<section data-label="11 · Three Classic Fluid Experiments" data-background-color="#ffffff" class="slide-light">
   <div class="slide-canvas">
-    <h1 class="slide-h1">Simulations You Can Check</h1>
+    <h1 class="slide-h1">Three Classic Fluid Experiments</h1>
     <div class="at-full" style="top:104px;display:grid;grid-template-columns:1.15fr 0.85fr 1fr;gap:24px">
   <div class="card blue soft tight" style="display:flex;flex-direction:column;gap:8px">
     <div style="font-size:var(--text-sm);font-weight:700;color:var(--navy)">Wind over water: layers curl into waves</div>
@@ -296,7 +312,7 @@ them for whatever shape you give it.
   </div>
 </div>
 <div class="card blue side tight" style="position:absolute;left:48px;right:112px;bottom:36px;font-size:var(--text-md);line-height:1.24;color:var(--navy)">
-  <strong>Trust, but verify:</strong> every simulator is checked against experiments and published results before we use it.
+  All three solve the Navier–Stokes equations, <span class="katex-inline" data-tex="\partial_t u &#43; (u\cdot\nabla)u = -\nabla p &#43; \nu\,\Delta u">\(\partial_t u + (u\cdot\nabla)u = -\nabla p + \nu\,\Delta u\)</span>, with buoyancy added for the last two. The <span class="katex-inline" data-tex="\nu\,\Delta u">\(\nu\,\Delta u\)</span> term is the Laplacian again: viscosity is diffusion of momentum.
 </div>
 
     <div class="ds-slide-num">11</div>
@@ -305,41 +321,43 @@ them for whatever shape you give it.
 last slide showed. Left: two layers sliding past each other curl into waves,
 the same instability that makes waves on a windy lake. Middle: heavy fluid
 resting on light fluid falls through it in fingers. Right: a warm bubble rises
-and rolls up. Every one is compared against published results before we trust
-it; for the lid-driven cavity, against a benchmark from 1982.
+and rolls up. All three are the Navier-Stokes equations, the momentum
+balance for a fluid, with buoyancy added for the last two; nu times the
+Laplacian of u is viscosity, the same diffusion term as before, now spreading
+momentum instead of heat.
 </aside>
 </section>
 
-<section data-label="12 · Your Path to Simulations Like These" data-background-color="#ffffff" class="slide-light">
+<section data-label="12 · Courses Behind the Simulations" data-background-color="#ffffff" class="slide-light">
   <div class="slide-canvas">
-    <h1 class="slide-h1">Your Path to Simulations Like These</h1>
+    <h1 class="slide-h1">Courses Behind the Simulations</h1>
     <div class="at-full" style="top:116px;display:grid;grid-template-columns:1fr 64px 1fr 64px 1fr;align-items:stretch">
   <div class="card blue roomy">
     <div class="card-head">Numerical Methods</div>
-    <div class="card-body">Turn equations into steps a computer can take.</div>
+    <div class="card-body">Turn <span class="katex-inline" data-tex="\partial_t C = k\,\Delta C">\(\partial_t C = k\,\Delta C\)</span> into steps a computer can take.</div>
   </div>
   <div style="display:flex;align-items:center;justify-content:center;font-size:56px;color:var(--slate)">→</div>
   <div class="card orange roomy">
     <div class="card-head">Finite Elements</div>
-    <div class="card-body">Split any shape into small pieces, and solve on each one.</div>
+    <div class="card-body">Split any shape into small pieces; the Laplacian becomes a matrix.</div>
   </div>
   <div style="display:flex;align-items:center;justify-content:center;font-size:56px;color:var(--slate)">→</div>
   <div class="card green roomy">
     <div class="card-head">Computational Fluid Dynamics</div>
-    <div class="card-body">Simulate air and water flowing around real designs.</div>
+    <div class="card-body">Solve Navier–Stokes for air and water around real designs.</div>
   </div>
 </div>
 <video data-autoplay src="../assets/video/porous-convection.mp4" autoplay="autoplay" loop="loop" muted="muted"
   playsinline="playsinline"
   style="position:absolute;left:48px;top:372px;width:700px;height:400px;object-fit:contain;background:#fff;border-radius:8px"></video>
 <div class="at-right" style="top:392px;display:flex;flex-direction:column;gap:22px">
-  <div style="font-size:var(--text-2xl);line-height:1.22;color:var(--navy);text-wrap:pretty">Every video in this part is a numerical method solving physics on a mesh.</div>
-  <div style="font-size:var(--text-lg);line-height:1.26;color:var(--slate);text-wrap:pretty">Hot fluid rising through porous rock, built from the same blocks as the heat-transfer model. These courses teach you to build simulators like it.</div>
+  <div style="font-size:var(--text-2xl);line-height:1.22;color:var(--navy);text-wrap:pretty">Each video in this part is a set of equations solved on a mesh.</div>
+  <div style="font-size:var(--text-lg);line-height:1.26;color:var(--slate);text-wrap:pretty">Hot fluid rising through porous rock, built from the same blocks as the diffusion model. These three courses are where you learn to build one.</div>
 </div>
 
     <div class="ds-slide-num">12</div>
   </div>
-  <aside class="notes">Hype slide. Every video in this part is a numerical method solving physics on a
+  <aside class="notes">Each video in this part is a numerical method solving physics on a
 mesh, and the courses that teach you to build them are right here at UF:
 numerical methods first, then finite elements, then computational fluid
 dynamics. The video is heat-driven flow through porous rock, from the same
@@ -353,7 +371,7 @@ building blocks.
   <div style="font-size:var(--text-md);letter-spacing:3px;opacity:.85;font-weight:700">PART THREE</div>
   <div style="margin-top:24px;font-size:110px;line-height:1.02">Robots That Work Together</div>
   <div style="margin-top:32px;width:860px;height:2px;background:rgb(255 239 207 / .35)"></div>
-  <div style="margin-top:32px;font-size:var(--text-3xl);line-height:1.2;opacity:.9">Teams of vehicles that coordinate without a boss</div>
+  <div style="margin-top:32px;font-size:var(--text-3xl);line-height:1.2;opacity:.9">Teams of vehicles that coordinate with no central controller</div>
   
   <div style="margin-top:22px;display:flex;align-items:flex-start;gap:10px"><div style="flex:0 0 52px;padding-top:34px;font-size:20px;letter-spacing:2px;font-weight:700;opacity:.72">WITH</div>
   <div style="flex:0 0 132px;text-align:center"><img src="../assets/photos/tyler-hanks.jpg" alt="Tyler Hanks" style="width:88px;height:88px;border-radius:50%;border:2px solid rgb(255 239 207 / .5);box-shadow:0 3px 12px rgb(0 0 0 / .3);object-fit:cover;display:block;margin:0 auto"><div style="margin-top:9px;font-size:18px;line-height:1.15;opacity:.9">Tyler Hanks</div></div>
@@ -374,36 +392,45 @@ building blocks.
 <section data-label="14 · Agreeing with Your Neighbors" data-background-color="#ffffff" class="slide-light">
   <div class="slide-canvas">
     <h1 class="slide-h1">Agreeing with Your Neighbors</h1>
-    <div class="at-left" style="top:130px;font-size:var(--text-2xl);line-height:1.24;text-wrap:pretty;color:var(--navy)">
-  Each robot talks only to its neighbors, and follows one rule:</div>
-<div class="card green roomy at-left" style="top:270px">
-  <div style="font-size:var(--text-2xl);line-height:1.22;color:var(--navy);text-wrap:pretty">Move a little toward your neighbors' average. Repeat.</div>
+    <div class="at-left" style="top:124px;font-size:var(--text-lg);line-height:1.24;text-wrap:pretty;color:var(--navy)">
+  Each robot <span class="katex-inline" data-tex="i">\(i\)</span> talks only to its neighbors <span class="katex-inline" data-tex="N_i">\(N_i\)</span>, and follows one rule:</div>
+<div class="card green roomy at-left" style="top:226px">
+  <div style="font-size:var(--text-lg);line-height:1.22;color:var(--navy);text-wrap:pretty">Move toward your neighbors. Repeat.</div>
+  <div class="ds-math-block ds-math-tight" data-tex="\dot x_i = \sum_{j \in N_i} (x_j - x_i)" style="font-size:var(--text-lg);margin:12px 0 0">\[ \dot x_i = \sum_{j \in N_i} (x_j - x_i) \]</div>
 </div>
-<div class="at-left" style="top:450px;font-size:var(--text-lg);line-height:1.26;text-wrap:pretty;color:var(--slate)">
-  No leader, no central computer, and the whole team ends up agreeing. Flocks of birds and schools of fish work in much the same way.</div>
+<div class="at-left" style="top:452px;display:flex;flex-direction:column;gap:10px;font-size:var(--text-md);line-height:1.26;text-wrap:pretty;color:var(--navy)">
+  <div>Stack all sixteen robots into one vector <span class="katex-inline" data-tex="x">\(x\)</span>:</div>
+  <div class="ds-math-block ds-math-tight" data-tex="\dot x = -L\,x, \qquad L = D - A" style="font-size:var(--text-lg);margin:4px 0">\[ \dot x = -L\,x, \qquad L = D - A \]</div>
+  <div style="color:var(--slate)"><span class="katex-inline" data-tex="L">\(L\)</span> is the graph Laplacian: degrees <span class="katex-inline" data-tex="D">\(D\)</span> minus links <span class="katex-inline" data-tex="A">\(A\)</span>. It is the heat equation, run on the communication graph.</div>
+</div>
 <img src="../assets/figures/ring-graph.png" alt="Sixteen robots in a ring, each linked to the two beside it" style="position:absolute;left:1030px;top:126px;width:200px;height:200px;object-fit:contain">
 <img src="../assets/figures/ring-consensus.gif" alt="The robots&#39; values on the ring drifting together until they agree" style="position:absolute;left:932px;top:350px;width:477px;height:340px;object-fit:contain">
-<div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)">Simple local rules add up to teamwork.</div>
+<div style="position:absolute;left:48px;right:48px;bottom:48px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)">The robots agree for the same reason temperature evens out.</div>
 
     <div class="ds-slide-num">14</div>
   </div>
-  <aside class="notes">Sixteen robots in a ring; each one can only talk to the two beside it. The rule
-is the same for every robot: move a little toward the average of your
-neighbors. Nobody is in charge, and yet the whole team ends up agreeing. Flocks
-of birds and schools of fish do something similar.
+  <aside class="notes">Sixteen robots in a ring; each one can only talk to the two beside it. Every
+robot runs the same rule: move toward your neighbors. Stack the sixteen
+equations and you get one matrix equation with the graph Laplacian, which is
+the heat equation from the last part with the mesh replaced by the
+communication graph. The robots' values even out the way temperature does, and
+that is why they end up agreeing with nobody in charge.
 </aside>
 </section>
 
 <section data-label="15 · Different Robots, Different Views" data-background-color="#ffffff" class="slide-light">
   <div class="slide-canvas">
     <h1 class="slide-h1">Different Robots, Different Views</h1>
-    <ul class="ds-bullet-list at-left" style="top:130px;gap:16px">
-  <li class="size-body" style="font-size:var(--text-lg)"><span class="bullet-mark">●</span><span class="bullet-text">A drone sees from above, a boat sees the surface, a submarine knows its depth</span></li>
-  <li class="size-body" style="font-size:var(--text-lg)"><span class="bullet-mark">●</span><span class="bullet-text">Their raw measurements can't be compared directly</span></li>
-  <li class="size-body" style="font-size:var(--text-lg)"><span class="bullet-mark">●</span><span class="bullet-text">The fix: translate before you compare, with one translation for each link</span></li>
+    <ul class="ds-bullet-list at-left" style="top:124px;gap:14px">
+  <li class="size-body" style="font-size:var(--text-md)"><span class="bullet-mark">●</span><span class="bullet-text">A drone sees from above, a boat sees the surface, a submarine measures its depth</span></li>
+  <li class="size-body" style="font-size:var(--text-md)"><span class="bullet-mark">●</span><span class="bullet-text">Their states live in different spaces, so <span class="katex-inline" data-tex="x_j - x_i">\(x_j - x_i\)</span> means nothing</span></li>
+  <li class="size-body" style="font-size:var(--text-md)"><span class="bullet-mark">●</span><span class="bullet-text">On each link <span class="katex-inline" data-tex="e = ij">\(e = ij\)</span>, translate both into a shared space first:</span></li>
 </ul>
-<div class="card orange side roomy at-left" style="top:470px">
-  <div style="font-size:var(--text-lg);line-height:1.26;color:var(--navy);text-wrap:pretty">A <strong>sheaf</strong> is the math that keeps track of those translations, and lets us prove the team still works.</div>
+<div class="ds-math-block ds-math-tight" data-tex="\mathcal{F}_{i \unlhd e}\, x_i \;-\; \mathcal{F}_{j \unlhd e}\, x_j" style="position:absolute;left:48px;top:384px;width:700px;font-size:var(--text-lg);margin:0">\[ \mathcal{F}_{i \unlhd e}\, x_i \;-\; \mathcal{F}_{j \unlhd e}\, x_j \]</div>
+<div class="card orange side roomy at-left" style="top:480px">
+  <div style="font-size:var(--text-md);line-height:1.26;color:var(--navy);text-wrap:pretty">The translations <span class="katex-inline" data-tex="\mathcal{F}">\(\mathcal{F}\)</span> form a <strong>sheaf</strong>. Using its Laplacian in the same rule,</div>
+  <div class="ds-math-block ds-math-tight" data-tex="\dot x = -L_{\mathcal{F}}\, x," style="font-size:var(--text-lg);margin:10px 0">\[ \dot x = -L_{\mathcal{F}}\, x, \]</div>
+  <div style="font-size:var(--text-md);line-height:1.26;color:var(--navy);text-wrap:pretty">the team converges to a state that every link agrees on.</div>
 </div>
 <figure class="card roomy at-right" style="margin:0;top:110px">
   <figcaption style="font-size:var(--text-md);line-height:1.26;color:var(--navy);margin-bottom:16px">
@@ -415,12 +442,13 @@ of birds and schools of fish do something similar.
 
     <div class="ds-slide-num">15</div>
   </div>
-  <aside class="notes">The averaging rule assumes every robot measures the same kind of thing. A real
-team is mixed: a drone sees from above, a boat sees the surface, a submarine
-knows its depth. Before two of them can compare notes, one has to translate
-what it sees into what the other can use. The mathematical object that keeps
-track of all those translations, one for every link, is called a sheaf; it is
-what lets mixed teams coordinate with guarantees.
+  <aside class="notes">The averaging rule assumes every robot measures the same kind of thing, so that
+x_j minus x_i makes sense. A real team is mixed: a drone sees from above, a boat
+sees the surface, a submarine measures its depth. Before two of them can compare
+notes, each translates what it knows into the terms of the link between them.
+The collection of those translations, one pair for every link, is a sheaf, and
+swapping the graph Laplacian for the sheaf Laplacian gives the same kind of
+rule. The team settles on a state that every link agrees on.
 </aside>
 </section>
 
@@ -447,41 +475,42 @@ what lets mixed teams coordinate with guarantees.
     </div>
   </div>
 </div>
-<div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-xl);line-height:1.18;color:var(--slate)">The same feedback rule runs in simulation and on real robots.</div>
+<div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-xl);line-height:1.18;color:var(--slate)">The same sheaf-Laplacian feedback, <span class="katex-inline" data-tex="\dot x = -L_{\mathcal{F}}\,x">\(\dot x = -L_{\mathcal{F}}\,x\)</span>, runs in simulation and on real robots.</div>
 
     <div class="ds-slide-num">16</div>
   </div>
   <aside class="notes">Left: a simulation where thirteen boats each follow a submarine they can only
 see from the surface, and settle into formation around it. Right: the same
-idea on real wheeled robots at the Robotarium, a remotely operated robot lab at
-Georgia Tech that anyone can submit experiments to. The hardware work is in
-progress with the Robotarium team and Matt Hale's lab.
+sheaf and the same feedback law on real wheeled robots at the Robotarium, a
+remotely operated robot lab at Georgia Tech that anyone can submit experiments
+to. The hardware work is in progress with the Robotarium team and Matt Hale's
+lab.
 </aside>
 </section>
 
-<section data-label="17 · Your Path to Autonomous Teams" data-background-color="#ffffff" class="slide-light">
+<section data-label="17 · Courses Behind the Robot Demos" data-background-color="#ffffff" class="slide-light">
   <div class="slide-canvas">
-    <h1 class="slide-h1">Your Path to Autonomous Teams</h1>
+    <h1 class="slide-h1">Courses Behind the Robot Demos</h1>
     <div style="position:absolute;left:48px;top:112px;width:1000px;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:20px;height:560px">
   <div class="card blue tight">
     <div class="card-head">Linear Algebra</div>
-    <div class="card-body">Describe a whole team at once, with vectors and matrices.</div>
+    <div class="card-body">The whole team in one matrix: <span class="katex-inline" data-tex="L = D - A">\(L = D - A\)</span>.</div>
   </div>
   <div class="card blue tight">
     <div class="card-head">Differential Equations</div>
-    <div class="card-body">Write down how each vehicle moves.</div>
+    <div class="card-body">How each vehicle moves: <span class="katex-inline" data-tex="\dot x = f(x, u)">\(\dot x = f(x, u)\)</span>.</div>
   </div>
   <div class="card blue tight">
     <div class="card-head">Numerical Methods</div>
-    <div class="card-body">Simulate it before you build it.</div>
+    <div class="card-body">Step it forward in time:<br><span style="white-space:nowrap"><span class="katex-inline" data-tex="x_{k&#43;1} = x_k &#43; h\,f(x_k)">\(x_{k+1} = x_k + h\,f(x_k)\)</span>.</span></div>
   </div>
   <div class="card green tight">
     <div class="card-head">Dynamics</div>
-    <div class="card-body">The physics of wheels, wings, and propellers.</div>
+    <div class="card-body">The physics of wheels, wings, and propellers: <span class="katex-inline" data-tex="m\,\ddot x = F">\(m\,\ddot x = F\)</span>.</div>
   </div>
   <div class="card green tight">
     <div class="card-head">Control</div>
-    <div class="card-body">Feedback that keeps the formation stable.</div>
+    <div class="card-body">Feedback that holds the formation: <span class="katex-inline" data-tex="u = -K x">\(u = -K x\)</span>.</div>
   </div>
   <div class="card orange tight">
     <div class="card-head">Machine Learning</div>
@@ -491,15 +520,15 @@ progress with the Robotarium team and Matt Hale's lab.
 <video data-autoplay src="../assets/video/robotarium-hexagon.mp4" autoplay="autoplay" loop="loop" muted="muted"
   playsinline="playsinline"
   style="position:absolute;left:1080px;top:112px;width:408px;height:560px;object-fit:cover;border:1px solid var(--grey);border-radius:8px"></video>
-<div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-xl);line-height:1.18;color:var(--slate)">Every one of these is a course you can take at UF, and every one shows up in the demos.</div>
+<div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-xl);line-height:1.18;color:var(--slate)">All six are courses you can take at UF.</div>
 
     <div class="ds-slide-num">17</div>
   </div>
-  <aside class="notes">Hype slide. The robot demos need six subjects, and each one does a specific
-job: linear algebra describes the whole team at once, ODEs say how each vehicle
+  <aside class="notes">The robot demos draw on six subjects, and each one does a specific job: linear algebra describes the whole team at once, ODEs say how each vehicle
 moves, numerical methods let you test it in simulation, dynamics is the physics
 of the vehicles, control is the feedback that keeps the formation together, and
-machine learning fills in what you can't model by hand. The video is eight real
+machine learning fills in what you can't model by hand. The demos today don't
+use machine learning, but the extensions in progress do. The video is eight real
 robots holding a hexagon.
 </aside>
 </section>
@@ -508,19 +537,19 @@ robots holding a hexagon.
   <div class="slide-canvas">
     <h1 class="slide-h1">The Big Idea</h1>
     <div class="at-full" style="top:114px;font-size:var(--text-xl);line-height:1.22;text-wrap:pretty">
-  Big systems are made of small pieces; the right math lets computers assemble them.</div>
+  Draw how the pieces connect, and the computer builds the combined model.</div>
 
 <div class="at-full" style="top:200px;display:grid;grid-template-columns:repeat(3,1fr);gap:32px">
   <div class="ds-highlight-region tint-blue" style="height:540px;justify-content:flex-start;padding:20px 20px 22px">
     <div style="font-size:var(--text-md);font-weight:700;line-height:1.2;color:var(--navy);text-align:center;width:100%;margin-bottom:6px">Draw It</div>
-    <div style="font-size:var(--text-sm);line-height:1.26;color:var(--navy);text-align:center;width:100%;margin-bottom:12px">Boxes and wires say how the pieces connect.</div>
+    <div style="font-size:var(--text-sm);line-height:1.26;color:var(--navy);text-align:center;width:100%;margin-bottom:12px">Boxes and wires say which variables the pieces share. Shared variables add.</div>
     <div class="ds-region-content" style="align-items:center;justify-content:center">
       <img src="../assets/figures/wiring-diagram-formulas.png" alt="Wiring diagrams from six fields of engineering" style="max-width:100%;max-height:100%;object-fit:contain">
     </div>
   </div>
   <div class="ds-highlight-region tint-orange" style="height:540px;justify-content:flex-start;padding:20px 20px 22px">
     <div style="font-size:var(--text-md);font-weight:700;line-height:1.2;color:var(--navy);text-align:center;width:100%;margin-bottom:6px">Simulate It</div>
-    <div style="font-size:var(--text-sm);line-height:1.26;color:var(--navy);text-align:center;width:100%;margin-bottom:12px">The computer builds the simulator, and we check it.</div>
+    <div style="font-size:var(--text-sm);line-height:1.26;color:var(--navy);text-align:center;width:100%;margin-bottom:12px"><span class="katex-inline" data-tex="\partial_t C = k\,\Delta C">\(\partial_t C = k\,\Delta C\)</span>, assembled from its laws and solved on a mesh.</div>
     <div class="ds-region-content" style="align-items:center;justify-content:center">
       <div style="position:relative;width:100%;height:100%;overflow:hidden;border-radius:6px;background:#fff">
         <video data-autoplay src="../assets/video/rayleigh-taylor-3d.mp4" autoplay="autoplay"
@@ -531,7 +560,7 @@ robots holding a hexagon.
   </div>
   <div class="ds-highlight-region tint-green" style="height:540px;justify-content:flex-start;padding:20px 20px 22px">
     <div style="font-size:var(--text-md);font-weight:700;line-height:1.2;color:var(--navy);text-align:center;width:100%;margin-bottom:6px">Coordinate It</div>
-    <div style="font-size:var(--text-sm);line-height:1.26;color:var(--navy);text-align:center;width:100%;margin-bottom:12px">Mixed robot teams work together, with guarantees.</div>
+    <div style="font-size:var(--text-sm);line-height:1.26;color:var(--navy);text-align:center;width:100%;margin-bottom:12px"><span class="katex-inline" data-tex="\dot x = -L_{\mathcal{F}}\,x">\(\dot x = -L_{\mathcal{F}}\,x\)</span>: mixed teams converge to a state every link agrees on.</div>
     <div class="ds-region-content" style="align-items:center;justify-content:center">
       <img src="../assets/figures/vehicles-v2.svg" alt="Drones in the air, surface vessels on the water and submarines below, linked across all three layers" style="max-width:100%;max-height:100%;object-fit:contain">
     </div>
@@ -540,9 +569,10 @@ robots holding a hexagon.
 
     <div class="ds-slide-num">18</div>
   </div>
-  <aside class="notes">One sentence to remember: big engineering systems are made of small pieces, and
-math that respects the pieces lets the computer do the assembly. Then the three
-stories in one line each.
+  <aside class="notes">One sentence to remember: draw how the pieces connect, and the computer builds
+the combined model. Then the three stories in one line each, and point out that
+the Laplacian showed up in two of them: heat spreading and robots agreeing are
+the same equation on different spaces.
 </aside>
 </section>
 
@@ -552,7 +582,7 @@ stories in one line each.
     <div class="at-full" style="top:200px;display:grid;grid-template-columns:repeat(3,1fr);gap:32px">
   <div class="card blue roomy" style="height:340px">
     <div class="card-head">Learn</div>
-    <div class="card-body">Start programming now. The courses ahead (numerical methods, linear algebra, differential equations, dynamics, control) are the tools behind every demo today.</div>
+    <div class="card-body">Start programming now. The courses on the last few slides are the tools behind today's demos.</div>
   </div>
   <div class="card orange roomy" style="height:340px">
     <div class="card-head">Try</div>
@@ -564,14 +594,13 @@ stories in one line each.
   </div>
 </div>
 <div class="at-full" style="top:120px;font-size:var(--text-xl);line-height:1.22;text-wrap:pretty">
-  You don't need the advanced math yet: curiosity and some programming are enough.</div>
-<div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)">Everyone on these slides started exactly where you are now.</div>
+  You don't need the advanced math yet. Some programming is enough to start.</div>
 
     <div class="ds-slide-num">19</div>
   </div>
-  <aside class="notes">The point to land: they do not need to know any of the advanced math yet. Everyone
-on the part dividers, students and faculty, started where they are. Programming and the
-courses they are about to take are the foundation; curiosity is the rest.
+  <aside class="notes">The point to land: they do not need to know any of the advanced math yet.
+Programming is enough to start, and the courses they are about to take cover
+the rest.
 </aside>
 </section>
 
