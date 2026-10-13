@@ -346,8 +346,8 @@ measure to the primal cell's. On an edge that ratio is the
 cotangent weight. All the metric information in DEC is in these diagonals.
 Once a triangle is obtuse its circumcenter leaves it,
 and the dual lengths have to be signed for the weights to stay right. Our
-diagonal star uses unsigned lengths, so it is exact only on meshes with no
-obtuse triangles; the next slide is what the solvers use instead.
+diagonal star uses unsigned lengths, so it equals the cotangent weight only
+when no triangle is obtuse; the next slide is what the solvers use instead.
 </aside>
 </section>
 
@@ -432,7 +432,7 @@ has a third of the area of each triangle around it.
 <div class="card green tight at-full" style="top:620px">
   <div style="display:flex;align-items:center;justify-content:center;gap:28px;font-size:var(--text-md);color:var(--navy)">
     <span>Around the first square:</span>
-    <div class="ds-math-block ds-math-tight" data-tex="\Delta_0 = \star_0^{-1}\, \tilde d_1\, \star_1\, d_0" style="font-size:var(--text-xl);margin:0">\[ \Delta_0 = \star_0^{-1}\, \tilde d_1\, \star_1\, d_0 \]</div>
+    <div class="ds-math-block ds-math-tight" data-tex="\nabla^2 = \star_0^{-1}\, \tilde d_1\, \star_1\, d_0" style="font-size:var(--text-xl);margin:0">\[ \nabla^2 = \star_0^{-1}\, \tilde d_1\, \star_1\, d_0 \]</div>
   </div>
 </div>
 <div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)">Every operator is a path through this diagram.</div>
@@ -449,8 +449,10 @@ exterior calculus sign convention. The Hodge stars are
 the only vertical arrows, and the only place the metric enters. Every operator
 in the model is a path through this diagram: the Laplacian on functions goes
 down the first square, d0 across, star1 down, d-tilde-1 back, and star0
-inverse up. That product is the Laplace-de Rham operator, minus the
-Laplace-Beltrami; we checked it against the library to round-off.
+inverse up. With d-tilde-1 = minus d0 transpose and positive stars, that
+product is minus star0 inverse d0 transpose star1 d0: the Laplace-Beltrami
+operator, div grad, the L of the next slide. It matches the library to
+round-off, although the library calls the negative of it the Laplace-Beltrami.
 </aside>
 </section>
 
@@ -497,7 +499,7 @@ out.
 <div class="card orange at-right" style="top:116px;height:580px;padding:32px 36px">
   <div style="font-size:var(--text-2xl);font-weight:700;color:var(--navy);margin-bottom:28px">Approximate, from geometry</div>
   <ul class="ds-bullet-list" style="gap:28px">
-    <li class="size-body" style="font-size:var(--text-xl)"><span class="bullet-mark">●</span><span class="bullet-text">The Hodge star <span class="katex-inline" data-tex="\star">\(\star\)</span>; positive weights need a Delaunay mesh</span></li>
+    <li class="size-body" style="font-size:var(--text-xl)"><span class="bullet-mark">●</span><span class="bullet-text">The Hodge star <span class="katex-inline" data-tex="\star">\(\star\)</span>; positive weights need a Delaunay mesh (in 2D)</span></li>
     <li class="size-body" style="font-size:var(--text-xl)"><span class="bullet-mark">●</span><span class="bullet-text">The wedge product <span class="katex-inline" data-tex="\wedge">\(\wedge\)</span>, associative only on closed forms</span></li>
     <li class="size-body" style="font-size:var(--text-xl)"><span class="bullet-mark">●</span><span class="bullet-text">Interior product <span class="katex-inline" data-tex="\iota_X">\(\iota_X\)</span> and Lie derivative <span class="katex-inline" data-tex="\mathcal{L}_X">\(\mathcal{L}_X\)</span></span></li>
     <li class="size-body" style="font-size:var(--text-xl)"><span class="bullet-mark">●</span><span class="bullet-text">Sharp <span class="katex-inline" data-tex="\sharp">\(\sharp\)</span> and flat <span class="katex-inline" data-tex="\flat">\(\flat\)</span>, between forms and vector fields</span></li>
@@ -527,7 +529,7 @@ the same split with Whitney forms in place of the diagonal stars.
   <div style="font-size:var(--text-md);font-weight:700;color:var(--slate);border-bottom:2px solid var(--slate);padding-bottom:8px">Example</div>
   <div><span class="katex-inline" data-tex="d_1 d_0 = 0">\(d_1 d_0 = 0\)</span>: curl grad <span class="katex-inline" data-tex="= 0">\(= 0\)</span></div><div>spurious vorticity</div><div>a fluid at rest spins up</div>
   <div><span class="katex-inline" data-tex="\operatorname{div}\operatorname{grad}">\(\operatorname{div}\operatorname{grad}\)</span> sees every mode</div><div>checkerboard pressure</div><div>the pressure equation</div>
-  <div><span class="katex-inline" data-tex="\operatorname{div} = -\star_0^{-1} d_0^{\top}\star_1">\(\operatorname{div} = -\star_0^{-1} d_0^{\top}\star_1\)</span>, adjoint to grad</div><div>energy growth, instability</div><div>a pressure pulse</div>
+  <div><span class="katex-inline" data-tex="-\operatorname{div}">\(-\operatorname{div}\)</span> is the adjoint of grad</div><div>energy growth, instability</div><div>a pressure pulse</div>
   <div><span class="katex-inline" data-tex="\dim H^1">\(\dim H^1\)</span> = number of holes</div><div>missing circulation</div><div>lift on cylinders</div>
 </div>
 <div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)">Each of these flow-solver failures is a broken identity.</div>
@@ -569,13 +571,13 @@ by hand.
 closed box, at rest under a conservative body force, minus the gradient of a
 potential well. The exact answer is that nothing moves: the pressure balances
 the force. Both runs use the same mesh, the same projection and the same
-implicit viscous solve. The only difference is how the force reaches the
+implicit viscous solve, built from the diagonal barycentric Hodge stars. The only difference is how the force reaches the
 edges. Left: the usual collocated practice, least-squares gradients at the
 nodes averaged onto each edge. That force is not exactly a gradient, the
 projection cannot remove the remainder, and the fluid spins up into spurious
 vortices, to a speed of 0.25. This is the static-droplet parasitic current, or
 the lake-at-rest test, in its simplest form. Right: DEC, where the force is
-d0 Phi; its curl is d1 d0 Phi = 0, the projection removes all of it, and the
+minus d0 Phi; its curl is d1 d0 Phi = 0, the projection removes all of it, and the
 fluid stays at rest to 1e-14. Viscosity 0.01, colour is vorticity. The curl of
 the momentum equation shows why: the only vorticity source is the curl of the
 discrete gradient of Phi. Read the same identity with a stream function and it
@@ -620,9 +622,10 @@ skips the neighbors, so odd and even nodes never talk. A checkerboard has
 grad p = 0: it pushes on nothing, continuity cannot see it, and the pressure is
 undetermined up to it. On a periodic grid that leaves four null modes, top row.
 DEC: p on vertices, u on edges, grad = d0 and div = minus star0 inverse d0 transpose star1, so div grad is the
-compact stencil (p_{i+1} - 2 p_i + p_{i-1}) / dx^2. Each Hodge star carries one
-factor of 1/dx, which is where the 1/dx^2 comes from. The same patterns have
-eigenvalues 0, 4, 4 and 8 in units of 1/dx^2: the checkerboard is now the mode the pressure
+compact stencil (p_{i+1} - 2 p_i + p_{i-1}) / dx^2. The Hodge stars supply the
+1/dx^2: in 1D each star carries one 1/dx; in 2D star1 = 1 and star0 inverse
+carries both. The same patterns have
+eigenvalues of minus div grad 0, 4, 4 and 8 in units of 1/dx^2: the checkerboard is now the mode the pressure
 equation penalizes most. On a grid this is the MAC scheme of Harlow and Welch,
 and the primal and dual meshes give it on any mesh.
 </aside>
@@ -639,10 +642,10 @@ and the primal and dual meshes give it on any mesh.
     <div style="font-size:var(--text-sm);line-height:1.3;text-align:center">from rest; energy <span class="katex-inline" data-tex="\tfrac12\!\int |u|^2 &#43; p^2/c^2">\(\tfrac12\!\int |u|^2 + p^2/c^2\)</span> is conserved</div>
   </div>
   <div class="card green tight">
-    <div style="font-size:var(--text-md);line-height:1.3"><strong>DEC:</strong> div and grad adjoint, <span class="katex-inline" data-tex="d_1 d_0 = 0">\(d_1 d_0 = 0\)</span>. Energy conserved, no vorticity.</div>
+    <div style="font-size:var(--text-md);line-height:1.3"><strong>DEC:</strong> <span class="katex-inline" data-tex="-\operatorname{div} = \operatorname{grad}^*">\(-\operatorname{div} = \operatorname{grad}^*\)</span> and <span style="white-space:nowrap"><span class="katex-inline" data-tex="d_1 d_0 = 0">\(d_1 d_0 = 0\)</span>.</span> Energy conserved, no vorticity.</div>
   </div>
   <div class="card orange tight">
-    <div style="font-size:var(--text-md);line-height:1.3"><strong>Collocated:</strong> about 600 growing modes. Energy <span class="katex-inline" data-tex="\times 10^5">\(\times 10^5\)</span> by <span class="katex-inline" data-tex="t = 0.6">\(t = 0.6\)</span>.</div>
+    <div style="font-size:var(--text-md);line-height:1.3"><strong>Collocated:</strong> about 600 growing modes. Energy grows nearly <span class="katex-inline" data-tex="10^5">\(10^5\)</span>-fold by <span class="katex-inline" data-tex="t = 0.6">\(t = 0.6\)</span>.</div>
   </div>
 </div>
 <div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)">Break the identities and a pressure pulse from rest blows up.</div>
@@ -655,11 +658,13 @@ rest with a pressure pulse, and the continuous system conserves the energy
 one half of u squared plus p squared over c squared, while its velocity stays
 a gradient, so it never has vorticity. Both runs use the same mesh and the same
 time integrator, the implicit midpoint rule. DEC: grad = d0 and
-div = minus star0 inverse d0 transpose star1 are adjoint, so the energy is
+div = minus star0 inverse d0 transpose star1 satisfy: minus div is the
+adjoint of grad in the star inner products (diagonal barycentric stars,
+which are symmetric and positive), so the energy is
 conserved to six digits and the vorticity stays at 1e-17: an acoustic ring
-leaves the pulse. Collocated least squares: grad and div are not adjoint, and
+leaves the pulse. Collocated least squares: minus div is not the adjoint of grad, and
 the curl of the gradient is not zero. The operator has about 600 growing modes,
-the fastest growing like e^{42 t}; the energy goes from 0.004 to 300 by t = 0.6
+the fastest growing like e^{42 t}; the energy goes from 0.004 to 322 by t = 0.6, nearly a factor of 10^5,
 and the pressure fills with grid-scale noise. The fastest modes sit at the
 boundary, where the stencils are one-sided, but holding every boundary node
 fixed still leaves 518 growing modes. Its pressure Laplacian also has three
@@ -769,7 +774,7 @@ Kutta conditions, one at each trailing edge.
   <div style="display:grid;grid-template-columns:auto 1fr;column-gap:28px;row-gap:6px;align-items:baseline;font-size:var(--text-md);color:var(--navy)">
     <span style="font-weight:700">simply connected</span><span class="katex-inline" data-tex="u = \nabla\phi &#43; \nabla\times\psi">\(u = \nabla\phi + \nabla\times\psi\)</span>
     <span style="font-weight:700">with holes</span><span><span class="katex-inline" data-tex="u = \nabla\phi &#43; \nabla\times\psi &#43; h">\(u = \nabla\phi + \nabla\times\psi + h\)</span>, with <span class="katex-inline" data-tex="\nabla\cdot h = 0">\(\nabla\cdot h = 0\)</span>, <span class="katex-inline" data-tex="\nabla\times h = 0">\(\nabla\times h = 0\)</span>, <span class="katex-inline" data-tex="h\cdot n = 0">\(h\cdot n = 0\)</span>: one <span class="katex-inline" data-tex="h">\(h\)</span> per hole</span>
-    <span style="font-weight:700;color:var(--ink-orange)">DEC</span><span><span class="katex-inline" data-tex="u = d_0\phi &#43; \star_1^{-1} d_1^{\top}\star_2\,\psi &#43; h">\(u = d_0\phi + \star_1^{-1} d_1^{\top}\star_2\,\psi + h\)</span>, three pieces orthogonal because <span class="katex-inline" data-tex="d_1 d_0 = 0">\(d_1 d_0 = 0\)</span></span>
+    <span style="font-weight:700;color:var(--ink-orange)">DEC</span><span><span class="katex-inline" data-tex="u = d_0\phi &#43; \star_1^{-1} d_1^{\top}\star_2\,\psi &#43; h">\(u = d_0\phi + \star_1^{-1} d_1^{\top}\star_2\,\psi + h\)</span>, three pieces orthogonal in the <span class="katex-inline" data-tex="\star_1">\(\star_1\)</span> inner product</span>
   </div>
 </div>
 <img src="../assets/figures/hodge-decomposition.png" alt="A flow past two cylinders and its three pieces: a gradient through-flow, a curl part concentrated in a vortex patch above the gap, and a harmonic part circulating around the cylinders." class="at-full" style="top:258px;height:486px;object-fit:contain">
@@ -787,8 +792,11 @@ gradient. Its dimension is the number of holes, the cohomology we counted
 earlier, and on the last slide it was the circulating flows h1 and h2. Because it has neither curl nor divergence, a solver that only controls
 vorticity and divergence cannot see it; it is fixed by the circulations.
 In DEC the decomposition is u = d0 phi + star1 inverse d1 transpose star2 psi
-+ h, and the three pieces are orthogonal in the star1 inner product because
-d1 d0 = 0. The figure decomposes a flow on the same two cylinders: a stream, a
++ h, with psi a 2-form, and the three pieces are orthogonal in the star1 inner
+product (diagonal barycentric stars, symmetric and positive). Gradient and curl
+parts are orthogonal because d1 d0 = 0; the gradient part is orthogonal to h
+because h is co-closed, and the curl part because h is closed. In the
+continuum the same holds with psi = 0 on the boundary. The figure decomposes a flow on the same two cylinders: a stream, a
 vortex patch and a vortex around the left cylinder. The pieces are orthogonal
 to 1e-12, the harmonic piece is curl-free and divergence-free to round-off, the
 gradient piece has zero circulation around both cylinders, and the harmonic
@@ -839,7 +847,7 @@ records.
   <div style="display:flex;justify-content:space-around;gap:24px;font-size:var(--text-md);color:var(--navy)">
     <span><span class="katex-inline" data-tex="U = \rho\, u">\(U = \rho\, u\)</span>: momentum</span>
     <span><span class="katex-inline" data-tex="\Theta = \rho\, \theta">\(\Theta = \rho\, \theta\)</span>: potential temperature density</span>
-    <span>Newtonian fluid, Stokes' hypothesis</span>
+    <span>Newtonian fluid, simplified viscous term</span>
   </div>
 </div>
 <div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)">The hard terms are the advection terms: a divergence of a flux in every equation.</div>
@@ -850,7 +858,8 @@ records.
 potential temperature. The unknowns are the density rho, the momentum U = rho
 u and the potential temperature density Theta = rho theta; the pressure comes
 from Theta through the equation of state. We assume a Newtonian fluid with
-Stokes' hypothesis and simplify the viscous term to mu times the Laplacian of
+Stokes' hypothesis, which gives mu times the Laplacian of u plus mu/3 times
+the gradient of div u, and we drop the second term: the viscous term is mu times the Laplacian of
 u. Each equation has a divergence of a flux, highlighted, and those advection
 terms are the hard part numerically. The next slide writes the same equations
 in exterior calculus.
@@ -880,7 +889,7 @@ in exterior calculus.
   </div>
   <div class="card green" style="display:flex;flex-direction:column;gap:8px">
     <div style="font-size:var(--text-lg);font-weight:700;color:var(--navy)">Energy gradient</div>
-    <div style="font-size:var(--text-md);color:var(--navy)"><span class="katex-inline" data-tex="\tfrac{1}{2}\, \rho\, d\, |u|^2">\(\tfrac{1}{2}\, \rho\, d\, |u|^2\)</span>, the kinetic energy</div>
+    <div style="font-size:var(--text-md);color:var(--navy)"><span class="katex-inline" data-tex="-\tfrac{1}{2}\, \rho\, d\, |u|^2">\(-\tfrac{1}{2}\, \rho\, d\, |u|^2\)</span>, the kinetic energy</div>
   </div>
 </div>
 <div style="position:absolute;left:48px;right:48px;bottom:56px;font-size:var(--text-2xl);line-height:1.18;color:var(--slate)">Every advection term is a wedge: current work focuses on improving the numerics of wedges.</div>
@@ -890,7 +899,8 @@ in exterior calculus.
   <aside class="notes">A real model in the words of the dictionary: compressible Navier-Stokes for
 the density rho, the momentum U = rho u and the potential temperature density
 Theta, assuming a Newtonian fluid with Stokes' hypothesis and a simplified
-viscous term. The divergence in each advection term splits into a compression
+viscous term. In the momentum and temperature equations the divergence of each
+flux splits into a compression
 term, a wedge with star d star u, and a self-advection term, the Lie
 derivative, which Cartan's formula writes with the interior product and d; the
 momentum equation keeps a kinetic energy gradient. So every advection term is
