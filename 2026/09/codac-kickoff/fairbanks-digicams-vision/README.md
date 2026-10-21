@@ -31,7 +31,7 @@ each team's plan item landed. Make changes there and re-deploy here.
 
 ## Presenting
 
-Serve the repository root, then open `2026-09-24-afosr-coe-kickoff/`. The old unlisted
+Serve the repository root, then open `2026/09/codac-kickoff/fairbanks-digicams-vision/`. The old unlisted
 address, `j0pprb/`, redirects here. Arrow keys navigate,
 <kbd>Esc</kbd> shows the overview, <kbd>S</kbd> opens the speaker view, which carries
 notes for every slide.
