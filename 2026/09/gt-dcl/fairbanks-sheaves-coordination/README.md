@@ -46,7 +46,7 @@ submerged targets, and on hardware at the Georgia Tech Robotarium.
 ## Relationship to the other deck in this repository
 
 This is a 39-slide cut for a control audience, built from the same body of work as
-`2026-fall-compositional-methods/`. Part Three, on sheaves and coordination, is the
+`2026/08/mae-seminar/fairbanks-compositional-methods/`. Part Three, on sheaves and coordination, is the
 centre of gravity here; the Decapodes and optimization material is compressed into an
 opening that establishes the method rather than argued at length.
 

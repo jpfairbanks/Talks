@@ -11,12 +11,12 @@ Talks stay listed. Improve them, don't delete them.
 
 | Talk | Venue | Deck |
 | --- | --- | --- |
-| Decapodes and the Discrete Exterior Calculus | UF MAE Fluids Seminar, 15 October 2026 | [`2026-10-15-mae-fluids-seminar-decapodes/`](2026-10-15-mae-fluids-seminar-decapodes/) |
-| Building Big Systems from Small Pieces | UF EML 2920 (first-year MAE), Fall 2026 | [`2026-fall-eml2920-building-big-systems/`](2026-fall-eml2920-building-big-systems/) |
-| Sheaves for Coordination Problems in Distributed Autonomous Systems | CODAC Kickoff Meeting, 25 September 2026 | [`2026-09-25-codac-kickoff-sheaves/`](2026-09-25-codac-kickoff-sheaves/) |
-| DIGICAMS for CODAC: Vision and Plan for the Year | AFOSR Center of Excellence kickoff, Arlington, VA, 24 September 2026 | [`2026-09-24-afosr-coe-kickoff/`](2026-09-24-afosr-coe-kickoff/) |
-| Compositional Methods of Engineering Analysis | UF MAE Department Seminar, Fall 2026 | [`2026-fall-compositional-methods/`](2026-fall-compositional-methods/) |
-| Sheaves for Coordination Problems in Distributed Autonomous Systems | Georgia Tech DCL Seminar, 11 September 2026 | [`2026-09-11-gt-dcl-sheaves-coordination/`](2026-09-11-gt-dcl-sheaves-coordination/) |
+| Decapodes and the Discrete Exterior Calculus | UF MAE Fluids Seminar, 15 October 2026 | [`2026/10/mae-fluids-seminar/fairbanks-decapodes/`](2026/10/mae-fluids-seminar/fairbanks-decapodes/) |
+| Building Big Systems from Small Pieces | UF EML 2920 (first-year MAE), Fall 2026 | [`2026/10/eml2920/fairbanks-building-big-systems/`](2026/10/eml2920/fairbanks-building-big-systems/) |
+| Sheaves for Coordination Problems in Distributed Autonomous Systems | CODAC Kickoff Meeting, 25 September 2026 | [`2026/09/codac-kickoff/fairbanks-sheaves-coordination/`](2026/09/codac-kickoff/fairbanks-sheaves-coordination/) |
+| DIGICAMS for CODAC: Vision and Plan for the Year | AFOSR Center of Excellence kickoff, Arlington, VA, 24 September 2026 | [`2026/09/codac-kickoff/fairbanks-digicams-vision/`](2026/09/codac-kickoff/fairbanks-digicams-vision/) |
+| Compositional Methods of Engineering Analysis | UF MAE Department Seminar, Fall 2026 | [`2026/08/mae-seminar/fairbanks-compositional-methods/`](2026/08/mae-seminar/fairbanks-compositional-methods/) |
+| Sheaves for Coordination Problems in Distributed Autonomous Systems | Georgia Tech DCL Seminar, 11 September 2026 | [`2026/09/gt-dcl/fairbanks-sheaves-coordination/`](2026/09/gt-dcl/fairbanks-sheaves-coordination/) |
 
 ## Where the decks come from
 
@@ -39,7 +39,8 @@ writes here.
 Rendering dependencies and slide assets are served from here rather than loaded
 from a CDN, so a deck presents with no network connection and does not break
 when an upstream version is withdrawn. They are pooled at the repository root
-and shared by every deck, which reaches them as `../assets/…`:
+and shared by every deck, which reaches them by a relative path (`../../../../assets/…`
+from a deck four folders down):
 
 ```
 assets/                     figures, photos, video, brand marks — kept here, not built
@@ -50,11 +51,9 @@ _ds/…-7193341c-…/           design system, keyed by its own id
 gatas-talks/                the theme's stylesheet and script
 css/site.css                the talks' own components (COE thrusts, plans, timeline)
 index.html                  the list of talks
-2026-fall-compositional-methods/index.html
-2026-fall-eml2920-building-big-systems/index.html
-2026-09-11-gt-dcl-sheaves-coordination/index.html
-2026-09-24-afosr-coe-kickoff/index.html
-2026-09-25-codac-kickoff-sheaves/index.html
+<yyyy>/<mm>/<event>/<surname>-<topic>/index.html
+                            a deck, filed by when and where it was given, e.g.
+                            2026/09/gt-dcl/fairbanks-sheaves-coordination/
 j0pprb/index.html           the COE kickoff's old unlisted address, redirecting
 ```
 
@@ -63,7 +62,8 @@ pooled `assets/` are the one source that lives here: a new figure for a deck goe
 straight into `assets/`, and the builder refers to it from the site root.
 
 A deck directory holds only its `index.html`, plus a `README.md` where a talk
-has details worth recording. Because the assets live a level up, a deck
+has details worth recording. Its path is its public URL, so it is settled before
+a talk is published and not renamed after. Because the assets live at the root, a deck
 directory is not portable on its own — serve or publish the repository root.
 
 ## Upgrading a vendored library
@@ -92,11 +92,15 @@ the same. External links are requested; hosts that refuse `HEAD` are retried wit
 
 ## Adding a deck
 
-1. In the talk sources, add the talk: a dated directory under `content/` holding an
-   `_index.md` that lists its slides, reusing the library's where it can.
+1. In the talk sources, add the talk: a directory
+   `content/<yyyy>/<mm>/<event>/<surname>-<topic>/` holding an `_index.md` that
+   lists its slides, reusing the library's where it can.
 2. Add any new asset to the pooled `assets/` here.
 3. Build, then add a row to the table above.
 4. Run `./link_check.py`, and commit the built pages here.
+
+Hugo only adds and overwrites here. A deck moved or dropped in the sources leaves
+its old directory behind, to be removed by hand (`git rm -r`).
 
 ## Viewing a deck
 
@@ -107,7 +111,7 @@ pooled a level up:
 python3 -m http.server 8000
 ```
 
-Then visit `http://localhost:8000/2026-fall-compositional-methods/`.
+Then visit `http://localhost:8000/2026/08/mae-seminar/fairbanks-compositional-methods/`.
 
 Decks are [reveal.js](https://revealjs.com): arrow keys navigate, `Esc` shows
 the slide overview, and `S` opens the speaker view.
