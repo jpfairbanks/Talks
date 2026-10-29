@@ -525,7 +525,52 @@ it is on the summary slide.
 </aside>
 </section>
 
-<section data-label="13 · Who Can Track Whom Is a Cohomological Question" data-background-color="#ffffff" class="slide-light">
+<section data-label="13 · Harmonic Extension: Fill In the Interior From the Boundary" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1 long">Harmonic Extension: Fill In the Interior From the Boundary</h1>
+    <div class="slide-body"><div class="ds-columns grow" style="grid-template-columns:minmax(0, 1.08fr) minmax(0, 1fr);column-gap:36px;align-items:stretch;">
+<div class="card blue">
+  <div class="text-lg"><b>The PDE you know.</b> Heat flow on the unit square <span class="katex-inline" data-tex="\Omega">\(\Omega\)</span>, its edges held fixed:</div>
+  <div class="ds-math-block ds-math-tight" data-tex="\begin{aligned} \partial_t u &amp;= \nabla^2 u \ \text{in}\ \Omega, \quad u = g \ \text{on}\ \partial\Omega \\ \xrightarrow{\;t \to \infty\;}\quad \nabla^2 u^\star &amp;= 0 \ \text{in}\ \Omega, \quad u^\star = g \ \text{on}\ \partial\Omega \end{aligned}">\[ \begin{aligned} \partial_t u &amp;= \nabla^2 u \ \text{in}\ \Omega, \quad u = g \ \text{on}\ \partial\Omega \\ \xrightarrow{\;t \to \infty\;}\quad \nabla^2 u^\star &amp;= 0 \ \text{in}\ \Omega, \quad u^\star = g \ \text{on}\ \partial\Omega \end{aligned} \]</div>
+  <figure class="ds-figure sized" style="height:300px;"><img src="../../../../assets/figures/harmonic-extension-heat.svg" alt="Three unit squares colored by temperature: at t = 0 only the top edge is warm, following sin(pi x); at t = 0.02 the heat has spread a little way down; as t goes to infinity it settles on the harmonic function sin(pi x) sinh(pi y) / sinh(pi)"><figcaption>From any start, heat flow settles on the one harmonic function with these boundary values: the <b>harmonic extension</b> of <span class="katex-inline" data-tex="g">\(g\)</span>.</figcaption></figure>
+</div>
+<div class="card orange">
+  <div class="text-lg"><b>On a graph, the targets are the boundary.</b> Hold <span class="katex-inline" data-tex="p">\(p\)</span> fixed on <span class="katex-inline" data-tex="B">\(B\)</span>, solve for the agents:</div>
+  <div class="ds-math-block ds-math-tight" data-tex="L_A\, q^\star = -L_{AB}\, p">\[ L_A\, q^\star = -L_{AB}\, p \]</div>
+  <div class="text-md">Whether it is unique is relative homology. Relative chains <span class="katex-inline" data-tex="C_\bullet(X, A) = C_\bullet(X) / C_\bullet(A)">\(C_\bullet(X, A) = C_\bullet(X) / C_\bullet(A)\)</span> forget everything in <span class="katex-inline" data-tex="A">\(A\)</span>, so <span class="katex-inline" data-tex="H_0(X, A)">\(H_0(X, A)\)</span> counts the pieces of <span class="katex-inline" data-tex="X">\(X\)</span> that <span class="katex-inline" data-tex="A">\(A\)</span> does not reach.</div>
+  <div class="ds-columns" style="grid-template-columns:repeat(2, minmax(0, 1fr));column-gap:16px;align-items:start;">
+    <figure class="ds-figure sized" style="height:190px;"><img src="../../../../assets/figures/relative-homology-pinned.svg" alt="A strip of four shaded triangles; its two end vertices, in orange, form the subcomplex A"><figcaption><span class="katex-inline" data-tex="H_0(X, A) = 0">\(H_0(X, A) = 0\)</span>: unique</figcaption></figure>
+    <figure class="ds-figure sized" style="height:190px;"><img src="../../../../assets/figures/relative-homology-floating.svg" alt="The same strip with five edges deleted, drawn dashed: its middle triangle, in blue, is cut off from both ends of A"><figcaption><span class="katex-inline" data-tex="H_0(X, A) \cong \mathbb{R}">\(H_0(X, A) \cong \mathbb{R}\)</span>: not unique</figcaption></figure>
+  </div>
+</div>
+</div>
+<div class="takeaway-flow" style="font-size:var(--text-2xl)">The extension is unique exactly when the boundary pins everything: <span class="katex-inline" data-tex="H_0(G, B) = 0">\(H_0(G, B) = 0\)</span> on a graph,
+  <span class="katex-inline" data-tex="H^0(G, B; \mathcal{F}) = 0">\(H^0(G, B; \mathcal{F}) = 0\)</span> for a sheaf.</div>
+</div>
+    <div class="ds-cite">[2] J. Hansen and R. Ghrist. <i>Journal of Applied and Computational Topology,</i> 3(4):315–358, 2019<span class="ds-cite-more"> &middot; Relative homology after V. Nanda</span></div>
+    <div class="ds-slide-num">13</div>
+  </div>
+  <aside class="notes">Start with the case everyone has seen. Hold the edges of the unit square at fixed temperatures: the top at
+sin(πx), the other three at zero. Start the interior anywhere, here at zero, and let heat flow. Whatever the
+start, it settles on the one harmonic function with those boundary values. That limit is the harmonic
+extension of the boundary data.
+
+On a graph the same thing happens with the graph Laplacian in place of ∇²: fix the values on a set of
+vertices B, which for us are the targets, and solve L q = 0 on the rest. That is one linear solve,
+L_A q* = −L_AB p, and it is sheaf diffusion run to convergence with B held fixed.
+
+When is the answer unique? Here the algebraic topology helps, in the style of Nanda's notes. Take a
+complex X and a subcomplex A, and quotient the chains of X by the chains of A. In degree zero, the relative
+homology H₀(X, A) has one generator for each connected piece of X that A does not touch. On the left, A
+meets everything, H₀(X, A) is zero, and the extension is unique. On the right, delete the five dashed edges and the blue middle triangle floats: no
+boundary value reaches it, so it can sit at any constant, and H₀(X, A) is one-dimensional.
+
+For a sheaf the question is the same with cohomology: the extension is unique exactly when
+H⁰(G, B; F) vanishes. That is the question the next slide asks about ships, submarines and quadcopters.
+</aside>
+</section>
+
+<section data-label="14 · Who Can Track Whom Is a Cohomological Question" data-background-color="#ffffff" class="slide-light">
   <div class="slide-canvas">
     <h1 class="slide-h1">Who Can Track Whom Is a Cohomological Question</h1>
     <div class="slide-body"><div class="ds-columns grow" style="grid-template-columns:repeat(2, minmax(0, 1fr));column-gap:40px;align-items:stretch;">
@@ -550,7 +595,7 @@ it is on the summary slide.
   counts the ones they miss.</div>
 </div>
     <div class="ds-cite">[<span class="cite-ours">7</span>] T. Hanks, C. F. Nino, J. Bou Barcelo, A. Copeland, W. E. Dixon, and J. Fairbanks. <i>European Control Conference,</i> 2026</div>
-    <div class="ds-slide-num">13</div>
+    <div class="ds-slide-num">14</div>
   </div>
   <aside class="notes">Third, ECC 2026. Whether a team can track a set of targets is a computable algebraic question:
 the relative cohomology. In both pictures the tracker is on top, trying to get over its target.
@@ -562,7 +607,7 @@ tracking ships leave each altitude free. The widget on the next slide computes i
 </aside>
 </section>
 
-<section data-label="14 · Live: Who Can Track Whom" data-background-color="#ffffff" class="slide-light">
+<section data-label="15 · Live: Who Can Track Whom" data-background-color="#ffffff" class="slide-light">
   <div class="slide-canvas">
     <h1 class="slide-h1">Live: Who Can Track Whom</h1>
     <div class="slide-body"><iframe src="../../../../assets/widgets/multi-domain-tracking.html" title="Multi-domain tracking sheaf widget"
@@ -573,7 +618,7 @@ tracking ships leave each altitude free. The widget on the next slide computes i
   altitude. Pin the ships and four degrees of freedom survive, one altitude per target; pin the targets and none do.</div>
 </div>
     <div class="ds-cite">[<span class="cite-ours">7</span>] T. Hanks, C. F. Nino, J. Bou Barcelo, A. Copeland, W. E. Dixon, and J. Fairbanks. <i>European Control Conference,</i> 2026<span class="ds-cite-more"> &middot; &middot; CODAC-Centers/SheafApps</span></div>
-    <div class="ds-slide-num">14</div>
+    <div class="ds-slide-num">15</div>
   </div>
   <aside class="notes">Pin the ships, and four degrees of freedom survive, one altitude per target. Pin the targets and
 none do. The readout is the dimension of the cohomology: a design-time test of a sensor and
@@ -581,7 +626,7 @@ communication plan before anything flies. Click outside the frame for the arrow 
 </aside>
 </section>
 
-<section data-label="15 · Sheaf-Laplacian Feedback and Its Guarantee" data-background-color="#ffffff" class="slide-light">
+<section data-label="16 · Sheaf-Laplacian Feedback and Its Guarantee" data-background-color="#ffffff" class="slide-light">
   <div class="slide-canvas">
     <h1 class="slide-h1">Sheaf-Laplacian Feedback and Its Guarantee</h1>
     <div class="slide-body"><div class="ds-columns" style="grid-template-columns:minmax(0, 730fr) minmax(0, 700fr);column-gap:10px;align-items:start;margin-top:8px">
@@ -634,7 +679,7 @@ communication plan before anything flies. Click outside the frame for the arrow 
 <div class="takeaway-flow" style="font-size:var(--text-lg)">The ordinary Lyapunov argument for Laplacian feedback, run in the sheaf&#8217;s coordinates.</div>
 </div>
     <div class="ds-cite">[<span class="cite-ours">7</span>] T. Hanks, C. F. Nino, J. Bou Barcelo, A. Copeland, W. E. Dixon, and J. Fairbanks. <i>European Control Conference,</i> 2026</div>
-    <div class="ds-slide-num">15</div>
+    <div class="ds-slide-num">16</div>
   </div>
   <aside class="notes">When the test passes, a decentralized feedback law built from the sheaf Laplacian tracks the
 targets: semi-global exponential convergence to a residual set that a larger gain shrinks. Each
@@ -642,7 +687,7 @@ agent uses only its neighbors' measurements.
 </aside>
 </section>
 
-<section data-label="16 · The Agents Reach and Hold the Formation" data-background-color="#ffffff" class="slide-light">
+<section data-label="17 · The Agents Reach and Hold the Formation" data-background-color="#ffffff" class="slide-light">
   <div class="slide-canvas">
     <h1 class="slide-h1">The Agents Reach and Hold the Formation</h1>
     <div class="slide-body"><div class="ds-columns" style="grid-template-columns:repeat(3, minmax(0, 1fr));column-gap:24px;align-items:stretch;">
@@ -682,14 +727,14 @@ agent uses only its neighbors' measurements.
   the targets move.</div>
 </div>
     <div class="ds-cite">[<span class="cite-ours">7</span>] T. Hanks, C. F. Nino, J. Bou Barcelo, A. Copeland, W. E. Dixon, and J. Fairbanks. <i>European Control Conference,</i> 2026</div>
-    <div class="ds-slide-num">16</div>
+    <div class="ds-slide-num">17</div>
   </div>
   <aside class="notes">Thirteen planar agents tracking four underwater targets through a projection, under disturbance.
 The error-versus-gain plot matches the bound.
 </aside>
 </section>
 
-<section data-label="17 · Coordination Is a Constrained Harmonic Extension" data-background-color="#ffffff" class="slide-light">
+<section data-label="18 · Coordination Is a Constrained Harmonic Extension" data-background-color="#ffffff" class="slide-light">
   <div class="slide-canvas">
     <h1 class="slide-h1">Coordination Is a Constrained Harmonic Extension</h1>
     <div class="slide-body"><div class="ds-columns grow" style="grid-template-columns:800px minmax(0, 1fr);column-gap:82px;align-items:stretch;">
@@ -741,7 +786,7 @@ The error-versus-gain plot matches the bound.
 <div class="takeaway-flow" style="font-size:var(--text-lg)">The formation is the <i>solution of an optimization problem</i>, not the output of a feedback law.</div>
 </div>
     <div class="ds-cite">[<span class="cite-ours">8</span>] I. Kadosh, R. Samuelson, and J. Fairbanks. <i>American Control Conference,</i> 2027, under review<span class="ds-cite-more"> &middot; [2, <span class="cite-ours">1</span>, <span class="cite-ours">7</span>]</span></div>
-    <div class="ds-slide-num">17</div>
+    <div class="ds-slide-num">18</div>
   </div>
   <aside class="notes">Fourth, Itay Kadosh's paper, under review at ACC 2027: safety. Make the fleet's formation the solution of a convex problem,
 and keep-out zones or actuator limits become constraints on it. One solve per control step; it
@@ -749,7 +794,7 @@ has a unique answer exactly when the cohomology test from before passes.
 </aside>
 </section>
 
-<section data-label="18 · Six Heterogeneous Quadrotors, Two Keep-Outs" data-background-color="#ffffff" class="slide-light">
+<section data-label="19 · Six Heterogeneous Quadrotors, Two Keep-Outs" data-background-color="#ffffff" class="slide-light">
   <div class="slide-canvas">
     <h1 class="slide-h1">Six Heterogeneous Quadrotors, Two Keep-Outs</h1>
     <div class="slide-body"><div class="ds-columns grow" style="grid-template-columns:900px minmax(0, 1fr);column-gap:17px;align-items:stretch;">
@@ -763,7 +808,7 @@ has a unique answer exactly when the cohomology test from before passes.
 <div class="takeaway-flow" style="font-size:var(--text-xl)">The keep-outs constrain the fleet&rsquo;s solve, so the whole formation moves around them.</div>
 </div>
     <div class="ds-cite">[<span class="cite-ours">8</span>] I. Kadosh, R. Samuelson, and J. Fairbanks. <i>American Control Conference,</i> 2027, under review<span class="ds-cite-more"> &middot; Lee, Leok &amp; McClamroch 2010</span></div>
-    <div class="ds-slide-num">18</div>
+    <div class="ds-slide-num">19</div>
   </div>
   <aside class="notes">Full rigid-body quadrotors, all tuned differently, only one sees the target. Without the
 constraint the formation sweeps through the obstacles; with it, the whole fleet deflects, clears
@@ -771,7 +816,7 @@ by ten centimeters, and holds the formation to two millimeters.
 </aside>
 </section>
 
-<section data-label="19 · From Theorem to Hardware" data-background-color="#ffffff" class="slide-light">
+<section data-label="20 · From Theorem to Hardware" data-background-color="#ffffff" class="slide-light">
   <div class="slide-canvas">
     <h1 class="slide-h1">From Theorem to Hardware</h1>
     <img class="ds-heading-logo" src="../../../../assets/brand/robotarium-logo.png" alt="">
@@ -796,7 +841,7 @@ by ten centimeters, and holds the formation to two millimeters.
 </div>
 <div class="takeaway-flow" style="font-size:var(--text-2xl)">In progress with the Robotarium team and Matt Hale’s lab.</div>
 </div>
-    <div class="ds-slide-num">19</div>
+    <div class="ds-slide-num">20</div>
   </div>
   <aside class="notes">Transition: the same sheaf and feedback law on physical robots at the Georgia Tech Robotarium,
 with Matt Hale's lab, including mixed drone and ground teams. Next is learning for unknown agent
@@ -804,7 +849,7 @@ dynamics.
 </aside>
 </section>
 
-<section data-label="20 · What Comes Next" data-background-color="#ffffff" class="slide-light">
+<section data-label="21 · What Comes Next" data-background-color="#ffffff" class="slide-light">
   <div class="slide-canvas">
     <h1 class="slide-h1">What Comes Next</h1>
     <div class="slide-body"><div class="ds-columns grow" style="grid-template-columns:repeat(2, minmax(0, 1fr));column-gap:24px;align-items:stretch;">
@@ -845,7 +890,7 @@ dynamics.
 </div>
 </div>
 </div>
-    <div class="ds-slide-num">20</div>
+    <div class="ds-slide-num">21</div>
   </div>
   <aside class="notes">Four directions. Riemannian sheaves: each agent's stalk is a manifold of its own, a sphere, a torus,
 a saddle, and the restriction maps are smooth maps onto the edges' manifolds, so agents whose states
@@ -860,7 +905,7 @@ energy-driven and cyber-physical models need.
 </aside>
 </section>
 
-<section data-label="21 · Key Results" data-background-color="#ffffff" class="slide-light">
+<section data-label="22 · Key Results" data-background-color="#ffffff" class="slide-light">
   <div class="slide-canvas">
     <h1 class="slide-h1">Key Results</h1>
     <div class="slide-body"><div class="ds-columns grow" style="grid-template-columns:repeat(2, minmax(0, 1fr));column-gap:32px;align-items:stretch;">
@@ -897,7 +942,7 @@ energy-driven and cyber-physical models need.
   test and the safety constraint.</div>
 </div>
     <div class="ds-cite">[<span class="cite-ours">1</span>] T. Hanks, H. Riess, S. Cohen, T. Gross, M. Hale, and J. Fairbanks. <i>IEEE Conference on Decision and Control,</i> 2025<span class="ds-cite-more"> &middot; [<span class="cite-ours">6</span>, <span class="cite-ours">7</span>, <span class="cite-ours">8</span>, <span class="cite-ours">9</span>]</span></div>
-    <div class="ds-slide-num">21</div>
+    <div class="ds-slide-num">22</div>
   </div>
   <aside class="notes">Leave this up for questions. Four results, each a paper, and the software. All four start from the
 same sheaf: the convex program, the convergence proof, the trackability test and the safety constraint.
@@ -905,7 +950,7 @@ None of them assumes the agents share a state space or a clock.
 </aside>
 </section>
 
-<section data-label="22 · References" data-background-color="#ffffff" class="slide-light">
+<section data-label="23 · References" data-background-color="#ffffff" class="slide-light">
   <div class="slide-canvas">
     <h1 class="slide-h1">References</h1>
     
@@ -926,7 +971,7 @@ None of them assumes the agents share a state space or a clock.
   </ol>
 </div>
 
-    <div class="ds-slide-num">22</div>
+    <div class="ds-slide-num">23</div>
   </div>
 </section>
 
