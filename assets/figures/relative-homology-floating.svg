@@ -1,35 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 490 210" width="490" height="210">
-<g transform="translate(0 0)">
-<path d="M40 150 L100 60 L160 150 z" fill="#B1B3B6" fill-opacity="0.35"/>
-<path d="M100 60 L160 150 L220 60 z" fill="#B1B3B6" fill-opacity="0.35"/>
-<path d="M160 150 L220 60 L280 150 z" fill="#B1B3B6" fill-opacity="0.35"/>
-<path d="M220 60 L280 150 L340 60 z" fill="#B1B3B6" fill-opacity="0.35"/>
-<line x1="40" y1="150" x2="100" y2="60" stroke="#002A54" stroke-width="2.5"/>
-<line x1="40" y1="150" x2="160" y2="150" stroke="#002A54" stroke-width="2.5"/>
-<line x1="100" y1="60" x2="160" y2="150" stroke="#002A54" stroke-width="2.5"/>
-<line x1="100" y1="60" x2="220" y2="60" stroke="#002A54" stroke-width="2.5"/>
-<line x1="160" y1="150" x2="220" y2="60" stroke="#002A54" stroke-width="2.5"/>
-<line x1="160" y1="150" x2="280" y2="150" stroke="#002A54" stroke-width="2.5"/>
-<line x1="220" y1="60" x2="280" y2="150" stroke="#002A54" stroke-width="2.5"/>
-<line x1="220" y1="60" x2="340" y2="60" stroke="#002A54" stroke-width="2.5"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 210" width="380" height="210">
+<path d="M100 60 L160 150 L220 60 z" fill="#4F7FAE" fill-opacity="0.35"/>
+<line x1="40" y1="150" x2="100" y2="60" stroke="#B1B3B6" stroke-width="1.5" stroke-dasharray="5 5"/>
+<line x1="40" y1="150" x2="160" y2="150" stroke="#B1B3B6" stroke-width="1.5" stroke-dasharray="5 5"/>
+<line x1="100" y1="60" x2="160" y2="150" stroke="#4F7FAE" stroke-width="2.5"/>
+<line x1="100" y1="60" x2="220" y2="60" stroke="#4F7FAE" stroke-width="2.5"/>
+<line x1="160" y1="150" x2="220" y2="60" stroke="#4F7FAE" stroke-width="2.5"/>
+<line x1="160" y1="150" x2="280" y2="150" stroke="#B1B3B6" stroke-width="1.5" stroke-dasharray="5 5"/>
+<line x1="220" y1="60" x2="280" y2="150" stroke="#B1B3B6" stroke-width="1.5" stroke-dasharray="5 5"/>
+<line x1="220" y1="60" x2="340" y2="60" stroke="#B1B3B6" stroke-width="1.5" stroke-dasharray="5 5"/>
 <line x1="280" y1="150" x2="340" y2="60" stroke="#002A54" stroke-width="2.5"/>
 <circle cx="40" cy="150" r="11" fill="#D35400" stroke="#A8431A" stroke-width="2.5"/>
-<circle cx="100" cy="60" r="6" fill="#002A54"/>
-<circle cx="160" cy="150" r="6" fill="#002A54"/>
-<circle cx="220" cy="60" r="6" fill="#002A54"/>
+<circle cx="100" cy="60" r="6" fill="#4F7FAE"/>
+<circle cx="160" cy="150" r="6" fill="#4F7FAE"/>
+<circle cx="220" cy="60" r="6" fill="#4F7FAE"/>
 <circle cx="280" cy="150" r="6" fill="#002A54"/>
 <circle cx="340" cy="60" r="11" fill="#D35400" stroke="#A8431A" stroke-width="2.5"/>
 <text x="40" y="190" text-anchor="middle" font-family="KaTeX_Math, Georgia, serif" font-size="32" fill="#A8431A">A</text>
 <text x="340" y="38" text-anchor="middle" font-family="KaTeX_Math, Georgia, serif" font-size="32" fill="#A8431A">A</text>
 <text x="8" y="40" font-family="KaTeX_Math, Georgia, serif" font-size="34" fill="#002A54">X</text>
-<path d="M400 70 L460 70 L430 140 z" fill="#4F7FAE" fill-opacity="0.35"/>
-<line x1="400" y1="70" x2="460" y2="70" stroke="#4F7FAE" stroke-width="2.5"/>
-<line x1="400" y1="70" x2="430" y2="140" stroke="#4F7FAE" stroke-width="2.5"/>
-<line x1="460" y1="70" x2="430" y2="140" stroke="#4F7FAE" stroke-width="2.5"/>
-<line x1="430" y1="140" x2="450" y2="190" stroke="#4F7FAE" stroke-width="2.5"/>
-<circle cx="400" cy="70" r="6" fill="#4F7FAE"/>
-<circle cx="460" cy="70" r="6" fill="#4F7FAE"/>
-<circle cx="430" cy="140" r="6" fill="#4F7FAE"/>
-<circle cx="450" cy="190" r="6" fill="#4F7FAE"/>
-</g>
 </svg>
