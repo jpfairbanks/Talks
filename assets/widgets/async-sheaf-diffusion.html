@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../vendored/fira-sans-2026-09/fira-sans.css">
+<title>Synchronous and asynchronous sheaf diffusion</title>
+<style>
+  html, body { height: 100%; margin: 0; background: #fff; overflow: hidden; }
+  body { font-family: "Fira Sans", system-ui, sans-serif; color: #002A54; }
+  canvas { display: block; width: 100%; height: 100%; }
+  button {
+    position: absolute; right: 10px; bottom: 8px;
+    font: 600 13px "Fira Sans", system-ui, sans-serif; color: #002A54;
+    background: #F4F5F6; border: 1px solid #E2E6EC; border-radius: 6px; padding: 4px 10px; cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<canvas id="view"></canvas>
+<button id="restart" type="button">New start</button>
+<script>
+// Sheaf diffusion on the 4-regular circulant graph C12(1, 2), run twice from the
+// same random start: synchronous rounds, and agents firing on their own clocks
+// with random packet delays.
+//
+// Stalks are RGBA colors, R^4, with RGB centered on mid-grey. The restriction
+// maps rotate hue about the grey axis by 30 degrees per step around the ring
+// (alpha passes through unchanged): edge (i, i+s) asks that x_{i+s} = R^s x_i.
+// Twelve steps make a full turn, so the holonomy is trivial and the global
+// sections are color wheels: one hue per agent, not one constant color.
+
+const AGENT_COUNT = 12;
+const RING_OFFSETS = [1, 2];
+const STEP_SIZE = 0.2;
+const HUE_STEP = 2 * Math.PI / AGENT_COUNT;
+
+const TRAVEL_SECONDS_SYNC = 0.7;
+const BLEND_SECONDS = 0.35;
+const ROUND_GAP_SECONDS = 0.15;
+const ASYNC_TRAVEL_SECONDS = [0.45, 1.15];
+const ASYNC_WAIT_SECONDS = [0.2, 1.4];
+const CONVERGED_RATIO = 1e-4;
+const MAX_RUN_SECONDS = 40;
+
+const COLORS = {
+  navy: "#002A54",
+  slate: "#2C4B6A",
+  orange: "#E28F41",
+  rust: "#D35400",
+  line: "#E2E6EC",
+  paper: "#F4F5F6",
+};
+
+// Rotation by angle t about the unit grey axis u = (1,1,1)/sqrt(3):
+// R = I + sin(t) [u]x + (1 - cos(t)) (u u^T - I).
+function hueRotation(angle) {
+  const c = Math.cos(angle), s = Math.sin(angle), a = 1 / Math.sqrt(3);
+  const cross = [[0, -a, a], [a, 0, -a], [-a, a, 0]];
+  const rotation = [];
+  for (let r = 0; r < 3; r++) {
+    rotation.push([]);
+    for (let col = 0; col < 3; col++) {
+      const identity = r === col ? 1 : 0;
+      const outer = 1 / 3 - identity;
+      rotation[r].push(identity + s * cross[r][col] + (1 - c) * outer);
+    }
+  }
+  return rotation;
+}
+
+function transport(color, steps) {
+  const rotation = hueRotation(steps * HUE_STEP);
+  const out = new Float64Array(4);
+  for (let r = 0; r < 3; r++) {
+    out[r] = rotation[r][0] * color[0] + rotation[r][1] * color[1] + rotation[r][2] * color[2];
+  }
+  out[3] = color[3];
+  return out;
+}
+
+// Each agent's neighbours, with the offset d that carries neighbour j's color
+// into the agent's frame as R^{-d} x_j.
+const NEIGHBOURS = [];
+for (let i = 0; i < AGENT_COUNT; i++) {
+  NEIGHBOURS.push([]);
+  for (const s of RING_OFFSETS) {
+    NEIGHBOURS[i].push({ agent: (i + s) % AGENT_COUNT, offset: s });
+    NEIGHBOURS[i].push({ agent: (i - s + AGENT_COUNT) % AGENT_COUNT, offset: -s });
+  }
+}
+
+function disagreement(state) {
+  let energy = 0;
+  for (let i = 0; i < AGENT_COUNT; i++) {
+    for (const s of RING_OFFSETS) {
+      const j = (i + s) % AGENT_COUNT;
+      const carried = transport(state[i], s);
+      for (let k = 0; k < 4; k++) energy += (carried[k] - state[j][k]) ** 2;
+    }
+  }
+  return energy;
+}
+
+function sheafStep(own, messages) {
+  const next = Float64Array.from(own);
+  for (const message of messages) {
+    for (let k = 0; k < 4; k++) next[k] -= STEP_SIZE * (own[k] - message[k]);
+  }
+  return next;
+}
+
+function uniform([low, high]) {
+  return low + Math.random() * (high - low);
+}
+
+// Uniformly random colors. Averaging twelve random colors leaves little
+// saturation in the section they diffuse to, so the display applies one fixed
+// gain to every color's chroma (its distance from grey), the same for every
+// agent at every moment: a contrast setting, not a change to the dynamics.
+let chromaGain = 1;
+
+function limitSection(state) {
+  const mean = new Float64Array(4);
+  state.forEach((color, i) => {
+    const back = transport(color, -i);
+    for (let k = 0; k < 4; k++) mean[k] += back[k] / AGENT_COUNT;
+  });
+  return mean;
+}
+
+function chroma(color) {
+  const grey = (color[0] + color[1] + color[2]) / 3;
+  return Math.hypot(color[0] - grey, color[1] - grey, color[2] - grey);
+}
+
+function randomStart() {
+  for (;;) {
+    const state = [];
+    for (let i = 0; i < AGENT_COUNT; i++) {
+      state.push(new Float64Array([uniform([-0.5, 0.5]), uniform([-0.5, 0.5]), uniform([-0.5, 0.5]), uniform([0.55, 1])]));
+    }
+    const limitChroma = chroma(limitSection(state));
+    if (limitChroma > 0.05) {
+      chromaGain = Math.min(5, 0.42 / limitChroma);
+      return state;
+    }
+  }
+}
+
+function displayColor(color) {
+  const grey = (color[0] + color[1] + color[2]) / 3;
+  const channel = (value) => Math.round(255 * Math.min(1, Math.max(0, grey + chromaGain * (value - grey) + 0.5)));
+  const alpha = Math.min(1, Math.max(0.05, color[3]));
+  return `rgba(${channel(color[0])}, ${channel(color[1])}, ${channel(color[2])}, ${alpha.toFixed(3)})`;
+}
+
+function lerpColor(from, to, t) {
+  const out = new Float64Array(4);
+  for (let k = 0; k < 4; k++) out[k] = from[k] + (to[k] - from[k]) * t;
+  return out;
+}
+
+function easeInOut(t) {
+  return t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2;
+}
+
+// One simulation: the true state, what is drawn for each agent, the packets in
+// flight, and the disagreement history.
+function makeRun(start, mode) {
+  const state = start.map((color) => Float64Array.from(color));
+  return {
+    mode,
+    state,
+    shown: state.map((color) => ({ from: color, to: color, startedAt: 0 })),
+    packets: [],
+    busy: new Array(AGENT_COUNT).fill(false),
+    nextFire: state.map(() => uniform([0, 1.2])),
+    roundStartedAt: 0,
+    roundPhase: "send",
+    updates: 0,
+    history: [],
+    initialEnergy: disagreement(state),
+  };
+}
+
+function sendPackets(run, agent, now, travelSeconds) {
+  const inbox = [];
+  for (const neighbour of NEIGHBOURS[agent]) {
+    const packet = {
+      to: agent,
+      from: neighbour.agent,
+      offset: neighbour.offset,
+      payload: Float64Array.from(run.state[neighbour.agent]),
+      sentAt: now,
+      arrivesAt: now + travelSeconds(),
+    };
+    run.packets.push(packet);
+    inbox.push(packet);
+  }
+  return inbox;
+}
+
+function applyUpdate(run, agent, messages, now) {
+  const before = shownColor(run, agent, now);
+  run.state[agent] = sheafStep(run.state[agent], messages);
+  run.shown[agent] = { from: before, to: run.state[agent], startedAt: now };
+  run.updates += 1;
+}
+
+function shownColor(run, agent, now) {
+  const shown = run.shown[agent];
+  const t = Math.min(1, (now - shown.startedAt) / BLEND_SECONDS);
+  return lerpColor(shown.from, shown.to, easeInOut(Math.max(0, t)));
+}
+
+function advanceSync(run, now) {
+  const elapsed = now - run.roundStartedAt;
+  if (run.roundPhase === "send") {
+    for (let i = 0; i < AGENT_COUNT; i++) sendPackets(run, i, now, () => TRAVEL_SECONDS_SYNC);
+    run.roundPhase = "travel";
+  } else if (run.roundPhase === "travel" && elapsed >= TRAVEL_SECONDS_SYNC) {
+    // Every agent updates from the same snapshot: a Jacobi round.
+    const inboxes = run.packets.map((packet) => packet);
+    run.packets = [];
+    const messages = Array.from({ length: AGENT_COUNT }, () => []);
+    for (const packet of inboxes) messages[packet.to].push(transport(packet.payload, -packet.offset));
+    for (let i = 0; i < AGENT_COUNT; i++) applyUpdate(run, i, messages[i], now);
+    run.roundPhase = "blend";
+  } else if (run.roundPhase === "blend" && elapsed >= TRAVEL_SECONDS_SYNC + BLEND_SECONDS + ROUND_GAP_SECONDS) {
+    run.roundStartedAt = now;
+    run.roundPhase = "send";
+  }
+}
+
+function advanceAsync(run, now) {
+  for (let i = 0; i < AGENT_COUNT; i++) {
+    if (!run.busy[i] && now >= run.nextFire[i]) {
+      run.busy[i] = true;
+      sendPackets(run, i, now, () => uniform(ASYNC_TRAVEL_SECONDS));
+    }
+  }
+  // An agent updates when the last of its four packets lands, using the
+  // neighbour values as they were when each packet left.
+  for (let i = 0; i < AGENT_COUNT; i++) {
+    if (!run.busy[i]) continue;
+    const inbox = run.packets.filter((packet) => packet.to === i);
+    if (inbox.every((packet) => now >= packet.arrivesAt)) {
+      const messages = inbox.map((packet) => transport(packet.payload, -packet.offset));
+      run.packets = run.packets.filter((packet) => packet.to !== i);
+      applyUpdate(run, i, messages, now);
+      run.busy[i] = false;
+      run.nextFire[i] = now + BLEND_SECONDS + uniform(ASYNC_WAIT_SECONDS);
+    }
+  }
+}
+
+const canvas = document.getElementById("view");
+const context = canvas.getContext("2d");
+let runs = [];
+let clockStart = 0;
+let finished = false;
+
+function restart() {
+  const start = randomStart();
+  runs = [makeRun(start, "sync"), makeRun(start, "async")];
+  clockStart = performance.now() / 1000;
+  finished = false;
+}
+
+function resize() {
+  const scale = Math.max(2, window.devicePixelRatio || 1);
+  canvas.width = Math.round(canvas.clientWidth * scale);
+  canvas.height = Math.round(canvas.clientHeight * scale);
+  context.setTransform(scale, 0, 0, scale, 0, 0);
+}
+
+function agentPosition(center, radius, agent) {
+  const angle = -Math.PI / 2 + agent * HUE_STEP;
+  return { x: center.x + radius * Math.cos(angle), y: center.y + radius * Math.sin(angle) };
+}
+
+function drawRing(run, box, now, title, subtitle) {
+  const textSize = Math.max(12, Math.min(22, box.width / 16));
+  context.fillStyle = COLORS.navy;
+  context.font = `700 ${textSize}px "Fira Sans", system-ui, sans-serif`;
+  context.textAlign = "center";
+  context.textBaseline = "top";
+  context.fillText(title, box.x + box.width / 2, box.y);
+  context.fillStyle = COLORS.slate;
+  context.font = `400 ${textSize * 0.78}px "Fira Sans", system-ui, sans-serif`;
+  context.fillText(subtitle, box.x + box.width / 2, box.y + textSize * 1.25);
+
+  const top = box.y + textSize * 2.5;
+  const footer = textSize * 1.4;
+  const size = Math.min(box.width, box.height - (top - box.y) - footer);
+  const center = { x: box.x + box.width / 2, y: top + size / 2 };
+  const ringRadius = size * 0.4;
+  const nodeRadius = size * 0.062;
+
+  context.strokeStyle = COLORS.line;
+  context.lineWidth = 1.5;
+  for (let i = 0; i < AGENT_COUNT; i++) {
+    for (const s of RING_OFFSETS) {
+      const a = agentPosition(center, ringRadius, i);
+      const b = agentPosition(center, ringRadius, (i + s) % AGENT_COUNT);
+      context.beginPath();
+      context.moveTo(a.x, a.y);
+      context.lineTo(b.x, b.y);
+      context.stroke();
+    }
+  }
+
+  // A packet leaves with its sender's color and arrives rotated into the
+  // receiver's frame: the restriction map, applied along the way.
+  for (const packet of run.packets) {
+    const span = packet.arrivesAt - packet.sentAt;
+    const progress = Math.min(1, Math.max(0, (now - packet.sentAt) / span));
+    const a = agentPosition(center, ringRadius, packet.from);
+    const b = agentPosition(center, ringRadius, packet.to);
+    const along = easeInOut(progress);
+    const x = a.x + (b.x - a.x) * along;
+    const y = a.y + (b.y - a.y) * along;
+    const carried = transport(packet.payload, -packet.offset * progress);
+    context.beginPath();
+    context.arc(x, y, nodeRadius * 0.42, 0, 2 * Math.PI);
+    context.fillStyle = "#fff";
+    context.fill();
+    context.fillStyle = displayColor(carried);
+    context.fill();
+    context.lineWidth = 1.2;
+    context.strokeStyle = COLORS.navy;
+    context.stroke();
+  }
+
+  for (let i = 0; i < AGENT_COUNT; i++) {
+    const p = agentPosition(center, ringRadius, i);
+    context.beginPath();
+    context.arc(p.x, p.y, nodeRadius, 0, 2 * Math.PI);
+    context.fillStyle = "#fff";
+    context.fill();
+    context.fillStyle = displayColor(shownColor(run, i, now));
+    context.fill();
+    const listening = run.mode === "async" ? run.busy[i] : run.roundPhase === "travel";
+    context.lineWidth = listening ? 3 : 1.5;
+    context.strokeStyle = listening ? COLORS.orange : COLORS.navy;
+    context.stroke();
+  }
+
+  const energy = disagreement(run.state);
+  context.fillStyle = COLORS.slate;
+  context.font = `400 ${textSize * 0.72}px "Fira Sans", system-ui, sans-serif`;
+  context.textBaseline = "bottom";
+  context.fillText(`${run.updates} updates · disagreement ${energy.toExponential(1)}`,
+    box.x + box.width / 2, box.y + box.height);
+}
+
+function drawHistory(box) {
+  const textSize = Math.max(11, Math.min(18, box.width / 34));
+  const plot = { x: box.x + textSize * 3.2, y: box.y + 6, width: box.width - textSize * 3.6, height: box.height - textSize * 2.2 };
+  const initial = Math.log10(runs[0].initialEnergy);
+  const floor = initial + Math.log10(CONVERGED_RATIO) - 0.5;
+  const ceiling = initial + 0.3;
+  const longest = Math.max(12, ...runs.map((run) => (run.history.length ? run.history[run.history.length - 1].t : 0)));
+  const toX = (t) => plot.x + (t / longest) * plot.width;
+  const toY = (logEnergy) => plot.y + (1 - (Math.max(floor, logEnergy) - floor) / (ceiling - floor)) * plot.height;
+
+  context.strokeStyle = COLORS.line;
+  context.lineWidth = 1;
+  context.strokeRect(plot.x, plot.y, plot.width, plot.height);
+  context.fillStyle = COLORS.slate;
+  context.font = `400 ${textSize}px "Fira Sans", system-ui, sans-serif`;
+  context.textAlign = "center";
+  context.textBaseline = "top";
+  context.fillText("time", plot.x + plot.width / 2, plot.y + plot.height + 4);
+  context.save();
+  context.translate(box.x + textSize * 0.9, plot.y + plot.height / 2);
+  context.rotate(-Math.PI / 2);
+  context.textBaseline = "middle";
+  context.fillText("log disagreement", 0, 0);
+  context.restore();
+
+  const series = [
+    { run: runs[0], color: COLORS.navy, label: "synchronous" },
+    { run: runs[1], color: COLORS.orange, label: "asynchronous" },
+  ];
+  series.forEach(({ run, color, label }, index) => {
+    context.strokeStyle = color;
+    context.lineWidth = 2.5;
+    context.beginPath();
+    run.history.forEach((point, k) => {
+      if (k === 0) context.moveTo(toX(point.t), toY(point.logEnergy));
+      else context.lineTo(toX(point.t), toY(point.logEnergy));
+    });
+    context.stroke();
+    context.fillStyle = color;
+    context.textAlign = "right";
+    context.textBaseline = "top";
+    context.font = `600 ${textSize}px "Fira Sans", system-ui, sans-serif`;
+    context.fillText(label, plot.x + plot.width - 8, plot.y + 6 + index * textSize * 1.25);
+  });
+}
+
+function frame() {
+  requestAnimationFrame(frame);
+  // The deck loads this frame while its slide is hidden, at zero size; size the
+  // canvas whenever its box changes rather than only on window resizes.
+  const scale = Math.max(2, window.devicePixelRatio || 1);
+  if (canvas.width !== Math.round(canvas.clientWidth * scale) || canvas.height !== Math.round(canvas.clientHeight * scale)) resize();
+  const now = performance.now() / 1000 - clockStart;
+  // Run once: when both have converged, stop and leave the final state up.
+  if (!finished) {
+    finished = runs.every((run) => disagreement(run.state) < run.initialEnergy * CONVERGED_RATIO) || now > MAX_RUN_SECONDS;
+  }
+
+  if (!finished) {
+    advanceSync(runs[0], now);
+    advanceAsync(runs[1], now);
+    for (const run of runs) {
+      const last = run.history[run.history.length - 1];
+      if (!last || now - last.t > 0.05) run.history.push({ t: now, logEnergy: Math.log10(disagreement(run.state)) });
+    }
+  }
+
+  const width = canvas.clientWidth, height = canvas.clientHeight;
+  if (width < 200 || height < 200) return;
+  context.clearRect(0, 0, width, height);
+  const historyHeight = Math.max(90, height * 0.27);
+  const ringHeight = height - historyHeight - 10;
+  const half = width / 2;
+  drawRing(runs[0], { x: 6, y: 6, width: half - 12, height: ringHeight }, now,
+    "Synchronous", "every agent updates each round");
+  drawRing(runs[1], { x: half + 6, y: 6, width: half - 12, height: ringHeight }, now,
+    "Asynchronous", "own clocks, random delays");
+  drawHistory({ x: 0, y: ringHeight + 10, width: width - 110, height: historyHeight - 6 });
+}
+
+document.getElementById("restart").addEventListener("click", restart);
+window.addEventListener("resize", resize);
+resize();
+restart();
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

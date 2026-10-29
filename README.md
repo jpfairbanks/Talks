@@ -11,6 +11,7 @@ Talks stay listed. Improve them, don't delete them.
 
 | Talk | Venue | Deck |
 | --- | --- | --- |
+| From Graph Laplacians to Sheaves: Coordination, Tracking and Safety for Heterogeneous Teams | Cross-Agency Dynamics Seminar (CADS), 29 October 2026 | [`2026/10/cads/fairbanks-sheaf-control/`](2026/10/cads/fairbanks-sheaf-control/) |
 | Decapodes and the Discrete Exterior Calculus | UF MAE Fluids Seminar, 15 October 2026 | [`2026/10/mae-fluids-seminar/fairbanks-decapodes/`](2026/10/mae-fluids-seminar/fairbanks-decapodes/) |
 | Building Big Systems from Small Pieces | UF EML 2920 (first-year MAE), Fall 2026 | [`2026/10/eml2920/fairbanks-building-big-systems/`](2026/10/eml2920/fairbanks-building-big-systems/) |
 | Sheaves for Coordination Problems in Distributed Autonomous Systems | CODAC Kickoff Meeting, 25 September 2026 | [`2026/09/codac-kickoff/fairbanks-sheaves-coordination/`](2026/09/codac-kickoff/fairbanks-sheaves-coordination/) |

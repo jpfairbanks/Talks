@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../vendored/fira-sans-2026-09/fira-sans.css">
+<title>One landscape, three semirings</title>
+<style>
+  html, body { height: 100%; margin: 0; background: #fff; overflow: hidden; }
+  body { position: relative; font-family: "Fira Sans", system-ui, sans-serif; color: #002A54; }
+  canvas { display: block; width: 100%; height: 100%; object-fit: contain; }
+  .chip {
+    position: absolute; left: 8px; top: 8px; padding: 3px 8px; border-radius: 6px;
+    background: rgb(255 255 255 / .88); font: 600 14px "Fira Sans", system-ui, sans-serif;
+  }
+  .chip code { font-family: "JuliaMono", ui-monospace, monospace; color: #2F4FC0; }
+</style>
+</head>
+<body>
+<canvas id="map" aria-label="North-central Florida colored by distance from a source cell under three semirings in turn"></canvas>
+<div class="chip" id="chip"></div>
+<script>
+// A standalone, self-playing port of PATHPACK.jl's "One Graph, Many Questions" map
+// (docs/src/components/LandscapeLive.vue and lib/{bin,graph,palette}.ts, MIT License,
+// Copyright (c) 2023 AlgebraicJulia). North-central Florida as 67,411 land-cover cells
+// (NLCD 2021, USGS, public domain), an 8-neighbour cost graph. "Cheapest route" (min-plus)
+// and "worst barrier" (min-max) are recomputed here by Dijkstra from each source in turn;
+// "wandering animal" (plus-times) is PATHPACK.jl's precomputed answer from the Ocala forest.
+
+const DATA = "../data/pathpack-landscape.bin.gz";
+const REVEAL_MS = 1300;
+const HOLD_MS = 1700;
+// The tour: the question, and the source as a fraction of the map (null: the Ocala forest).
+const TOUR = [
+  ["cost", null], ["cost", [0.25, 0.35]], ["cost", [0.7, 0.62]],
+  ["barrier", [0.7, 0.62]], ["barrier", [0.3, 0.7]],
+  ["walk", null],
+];
+const LABELS = {
+  cost: "<code>MinPlus</code> cheapest route",
+  barrier: "<code>MinMax</code> worst barrier",
+  walk: "<code>PlusProd</code> wandering animal",
+};
+const LAND_COVER = { 11: [141, 180, 212], 21: [216, 196, 196], 22: [201, 169, 169], 23: [176, 131, 131], 24: [138, 90, 90],
+  31: [217, 210, 196], 41: [143, 179, 131], 42: [111, 154, 107], 43: [130, 168, 120], 52: [200, 192, 138], 71: [220, 213, 158],
+  81: [227, 220, 150], 82: [217, 194, 122], 90: [127, 168, 146], 95: [156, 194, 180] };
+// Near = blue, far = gold: the site's light ramp, as 256 RGBA entries.
+const RAMP_STOPS = [[0, [47, 79, 192]], [0.3, [79, 111, 214]], [0.6, [149, 88, 178]], [0.82, [203, 60, 51]], [1, [232, 163, 61]]];
+const TYPES = { float32: Float32Array, float64: Float64Array, uint8: Uint8Array, uint16: Uint16Array,
+  uint32: Uint32Array, int8: Int8Array, int16: Int16Array, int32: Int32Array };
+
+function ramp() {
+  const table = new Uint8Array(256 * 4);
+  for (let i = 0; i < 256; i++) {
+    const u = Math.pow(i / 255, 0.75);
+    for (let k = 0; k < RAMP_STOPS.length - 1; k++) {
+      const [a, ca] = RAMP_STOPS[k], [b, cb] = RAMP_STOPS[k + 1];
+      if (u >= a && u <= b) {
+        const t = (u - a) / (b - a);
+        for (let c = 0; c < 3; c++) table[i * 4 + c] = ca[c] * (1 - t) + cb[c] * t;
+        table[i * 4 + 3] = 255;
+        break;
+      }
+    }
+  }
+  return table;
+}
+
+// The data file: uint32 header length, a JSON header, then 4-byte-aligned arrays.
+// Some servers send it with Content-Encoding: gzip, so check for the gzip magic first.
+async function loadData(url) {
+  const raw = await (await fetch(url)).arrayBuffer();
+  const head2 = new Uint8Array(raw, 0, 2);
+  const buf = head2[0] === 0x1f && head2[1] === 0x8b
+    ? await new Response(new Blob([raw]).stream().pipeThrough(new DecompressionStream("gzip"))).arrayBuffer()
+    : raw;
+  const headerLength = new Uint32Array(buf, 0, 1)[0];
+  const head = JSON.parse(new TextDecoder().decode(new Uint8Array(buf, 4, headerLength)));
+  const base = 4 + headerLength, arrays = {};
+  for (const [name, [type, offset, count]] of Object.entries(head.arrays)) {
+    const T = TYPES[type];
+    arrays[name] = new T(buf.slice(base + offset, base + offset + count * T.BYTES_PER_ELEMENT));
+  }
+  return { meta: head.meta, a: arrays };
+}
+
+const bit = (bytes, k) => (bytes[k >> 3] >> (7 - (k & 7))) & 1;
+
+function adjacency(n, I, J, W) {
+  const degree = new Int32Array(n + 1);
+  for (let k = 0; k < I.length; k++) { degree[I[k] + 1]++; degree[J[k] + 1]++; }
+  for (let i = 0; i < n; i++) degree[i + 1] += degree[i];
+  const ptr = degree.slice(), fill = degree.slice(0, n), adj = new Int32Array(2 * I.length), w = new Float32Array(2 * I.length);
+  for (let k = 0; k < I.length; k++) {
+    const a = I[k], b = J[k];
+    adj[fill[a]] = b; w[fill[a]++] = W[k]; adj[fill[b]] = a; w[fill[b]++] = W[k];
+  }
+  return { n, ptr, adj, w };
+}
+
+// Dijkstra over two semirings: "sum" (min-plus) and "max" (min-max, the mildest worst step).
+function dijkstra(g, sources, mode, d) {
+  const n = g.n;
+  d.fill(Infinity);
+  const keys = new Float64Array(n + g.adj.length), verts = new Int32Array(n + g.adj.length);
+  let size = 0;
+  const push = (k, v) => { let i = size++; while (i > 0) { const p = (i - 1) >> 1; if (keys[p] <= k) break; keys[i] = keys[p]; verts[i] = verts[p]; i = p; } keys[i] = k; verts[i] = v; };
+  const pop = () => {
+    const v = verts[0], lastKey = keys[--size], lastVert = verts[size];
+    let i = 0;
+    for (;;) { let c = 2 * i + 1; if (c >= size) break; if (c + 1 < size && keys[c + 1] < keys[c]) c++; if (keys[c] >= lastKey) break; keys[i] = keys[c]; verts[i] = verts[c]; i = c; }
+    keys[i] = lastKey; verts[i] = lastVert;
+    return v;
+  };
+  const zero = mode === "sum" ? 0 : -Infinity;
+  for (const s of sources) { d[s] = zero; push(zero, s); }
+  const done = new Uint8Array(n);
+  while (size > 0) {
+    const u = pop();
+    if (done[u]) continue;
+    done[u] = 1;
+    for (let k = g.ptr[u]; k < g.ptr[u + 1]; k++) {
+      const v = g.adj[k], nd = mode === "sum" ? d[u] + g.w[k] : Math.max(d[u], g.w[k]);
+      if (nd < d[v]) { d[v] = nd; push(nd, v); }
+    }
+  }
+}
+
+async function main() {
+  const { meta, a } = await loadData(DATA);
+  const n = meta.n, nx = meta.nx, ny = meta.ny;
+  const rc = new Uint16Array(2 * n);
+  for (let c = 0, i = 0; c < nx * ny; c++) if (bit(a.mask, c)) { rc[2 * i] = Math.floor(c / nx); rc[2 * i + 1] = c % nx; i++; }
+  const grid = new Int32Array(nx * ny).fill(-1);
+  for (let i = 0; i < n; i++) grid[rc[2 * i] * nx + rc[2 * i + 1]] = i;
+  const STEPS = [[0, 1], [1, 1], [1, 0], [1, -1]], I = [], J = [], W = [];
+  for (let i = 0; i < n; i++) for (let k = 0; k < 4; k++) {
+    const q = a.w4[4 * i + k];
+    if (!q) continue;
+    const j = grid[(rc[2 * i] + STEPS[k][0]) * nx + rc[2 * i + 1] + STEPS[k][1]];
+    if (j >= 0) { I.push(i); J.push(j); W.push(Math.exp(meta.wlo + ((q - 1) / 65534) * (meta.whi - meta.wlo))); }
+  }
+  const graph = adjacency(n, I, J, W);
+  const colors = ramp();
+  const ocala = Array.from(a.patch);
+
+  function cellNear(fx, fy) {
+    const cx = Math.floor(fx * nx), cy = Math.floor(fy * ny);
+    let best = -1, bestDistance = Infinity;
+    for (let dy = -12; dy <= 12; dy++) for (let dx = -12; dx <= 12; dx++) {
+      const y = cy + dy, x = cx + dx;
+      if (y < 0 || x < 0 || y >= ny || x >= nx) continue;
+      const i = grid[y * nx + x];
+      if (i >= 0 && dx * dx + dy * dy < bestDistance) { bestDistance = dx * dx + dy * dy; best = i; }
+    }
+    return best;
+  }
+
+  const canvas = document.getElementById("map"), context = canvas.getContext("2d");
+  const off = document.createElement("canvas");
+  off.width = nx; off.height = ny;
+  const offContext = off.getContext("2d"), image = offContext.createImageData(nx, ny), pixels = image.data;
+  const rank = new Uint8Array(n), distance = new Float64Array(n);
+  let mode = "cost", sources = ocala, startedAt = 0, step = 0;
+
+  function compute() {
+    if (mode === "walk") { rank.set(a.level); return; }
+    dijkstra(graph, sources, mode === "cost" ? "sum" : "max", distance);
+    const order = Array.from({ length: n }, (_, i) => i).sort((x, y) => distance[x] - distance[y]);
+    order.forEach((v, r) => { rank[v] = 1 + Math.floor((254 * r) / (n - 1)); });
+  }
+
+  function paint(cut) {
+    const white = [255, 255, 255], mix = 0.3;
+    pixels.fill(0);
+    for (let i = 0; i < n; i++) {
+      const q = 4 * (rc[2 * i] * nx + rc[2 * i + 1]), base = LAND_COVER[meta.classes[a.cls[i] - 1]] || [200, 200, 200], v = rank[i];
+      let r = base[0] + (white[0] - base[0]) * mix, g = base[1] + (white[1] - base[1]) * mix, b = base[2] + (white[2] - base[2]) * mix;
+      if (v <= cut) {
+        const k = (mode === "walk" ? 256 - v : v) * 4, f = cut - v < 10 && cut < 255 ? 0.97 : 0.84;
+        r += (colors[k] - r) * f; g += (colors[k + 1] - g) * f; b += (colors[k + 2] - b) * f;
+      }
+      pixels[q] = r; pixels[q + 1] = g; pixels[q + 2] = b; pixels[q + 3] = 255;
+    }
+    offContext.putImageData(image, 0, 0);
+    const scale = Math.max(2, devicePixelRatio || 1);
+    const width = Math.round(canvas.clientWidth * scale), height = Math.round(canvas.clientHeight * scale);
+    if (width < 10 || height < 10) return;
+    if (canvas.width !== width || canvas.height !== height) { canvas.width = width; canvas.height = height; }
+    // Fit the map inside the frame at its own aspect ratio.
+    const fit = Math.min(width / nx, height / ny), drawWidth = nx * fit, drawHeight = ny * fit;
+    const left = (width - drawWidth) / 2, top = (height - drawHeight) / 2;
+    context.clearRect(0, 0, width, height);
+    context.imageSmoothingEnabled = true;
+    context.imageSmoothingQuality = "high";
+    context.drawImage(off, left, top, drawWidth, drawHeight);
+    let sx = 0, sy = 0;
+    for (const s of sources) { sx += rc[2 * s + 1]; sy += rc[2 * s]; }
+    sx /= sources.length; sy /= sources.length;
+    context.lineWidth = 3 * scale; context.strokeStyle = "#1a1f2e"; context.fillStyle = "#ffffff";
+    context.beginPath();
+    context.arc(left + (sx + 0.5) * fit, top + (sy + 0.5) * fit, 7 * scale, 0, 2 * Math.PI);
+    context.fill(); context.stroke();
+  }
+
+  function begin(now) {
+    const [nextMode, at] = TOUR[step % TOUR.length];
+    mode = nextMode;
+    sources = at ? [cellNear(at[0], at[1])] : ocala;
+    document.getElementById("chip").innerHTML = LABELS[mode];
+    compute();
+    startedAt = now;
+  }
+
+  function frame(now) {
+    requestAnimationFrame(frame);
+    const elapsed = now - startedAt;
+    if (elapsed > REVEAL_MS + HOLD_MS) { step += 1; begin(now); }
+    const p = Math.min(1, (now - startedAt) / REVEAL_MS);
+    paint(Math.round((1 - Math.pow(1 - p, 3)) * 255));
+  }
+
+  begin(performance.now());
+  requestAnimationFrame(frame);
+}
+
+main();
+</script>
+</body>
+</html>

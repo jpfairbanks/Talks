@@ -1,10 +1,13 @@
 /* Components of the AFOSR COE kickoff deck: thrust colours and chips, the
-   thrust-slide pieces, the timeline, the team row and the plan lists.
+   thrust-slide pieces, the team row and the plan lists.
    Site-specific, so they live with the talks, not in the theme. */
 
 /* The theme's ink orange (#A85F19) reads as a burnt, Texas orange. Use the
    card orange instead, the accent behind the orange card tints. */
 :root { --ink-orange: #E28F41; }
+
+/* Part dividers set their titles at 110px; the CODAC ones copied here say 86. */
+:root { --part-title: 110px; }
 
 /* The five thrust colours, taken from the DIGICAMS program figure. */
 .t1 { --thrust: #4F7FAE; --thrust-tint: rgb(108 154 195 / .12); --rule: #4F7FAE; --tint: 108 154 195; }
@@ -26,57 +29,12 @@
   white-space: nowrap;
 }
 
-/* Thrust slides: leads row, question, two plan cards, figure column. */
-.leads {
-  position: absolute;
-  left: 48px;
-  top: 104px;
-  display: flex;
-  align-items: center;
-  gap: 26px;
-}
-
-.leads .chip {
-  font-size: 20px;
-  letter-spacing: 3px;
-  padding: 6px 14px;
-}
-
-.lead {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 23px;
-  color: #002A54;
-}
-
-.lead img {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid var(--thrust);
-}
-
+/* Plan slides: the question, plan cards and the figure column, in the flow. */
 .question {
-  position: absolute;
-  left: 48px;
-  top: 174px;
-  width: 850px;
   font-size: 29px;
   line-height: 1.22;
   text-wrap: pretty;
   color: #002A54;
-}
-
-.plan-col {
-  position: absolute;
-  left: 48px;
-  top: 290px;
-  width: 850px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
 }
 
 .plan-card {
@@ -84,27 +42,6 @@
   padding: 12px 22px 14px;
   border: 1px solid rgba(0, 42, 84, 0.13);
   box-shadow: 0 3px 10px rgba(0, 42, 84, 0.04);
-}
-
-.plan-card.start {
-  background: rgba(177, 179, 182, 0.12);
-  border-top: 4px solid #B1B3B6;
-}
-
-.plan-card.year {
-  background: var(--thrust-tint);
-  border-top: 5px solid var(--thrust);
-}
-
-.plan-card h3 {
-  margin: 0 0 8px;
-  font-family: var(--font-core);
-  font-size: 19px;
-  letter-spacing: 3px;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: #2C4B6A;
-  text-shadow: none;
 }
 
 .plan-card ul {
@@ -134,16 +71,8 @@
   color: var(--thrust, #6C9AC3);
 }
 
-.plan-card.start li::before {
-  color: #888B97;
-}
-
 .fig-col {
-  position: absolute;
-  left: 934px;
-  top: 104px;
-  width: 554px;
-  height: 690px;
+  align-self: stretch;
   margin: 0;
   display: flex;
   flex-direction: column;
@@ -168,59 +97,8 @@
   text-wrap: pretty;
 }
 
-/* Timeline grid. */
-.timeline {
-  position: absolute;
-  left: 48px;
-  top: 112px;
-  width: 1440px;
-  display: grid;
-  grid-template-columns: 190px repeat(4, 1fr);
-  gap: 10px;
-  font-size: 21px;
-  line-height: 1.24;
-  color: #002A54;
-}
-
-.timeline .q {
-  font-size: 22px;
-  font-weight: 700;
-  text-align: center;
-  padding: 8px 4px;
-  border-bottom: 3px solid #002A54;
-}
-
-.timeline .q span {
-  display: block;
-  font-size: 18px;
-  font-weight: 400;
-  color: #2C4B6A;
-}
-
-.timeline .lane {
-  font-size: 21px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  padding-left: 14px;
-  border-left: 6px solid var(--thrust, #002A54);
-}
-
-.timeline .cell {
-  background: rgba(108, 154, 195, 0.08);
-  border: 1px solid rgba(108, 154, 195, 0.25);
-  border-radius: 8px;
-  padding: 10px 12px;
-  min-height: 104px;
-  box-sizing: border-box;
-  text-wrap: pretty;
-}
-
 /* Team slide. */
 .people-row {
-  position: absolute;
-  left: 48px;
-  width: 1440px;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 8px;
@@ -264,10 +142,6 @@
 
 /* Plan slides: one row per work item, coloured by its lead thrust. */
 .plan-list {
-  position: absolute;
-  left: 48px;
-  top: 186px;
-  width: 900px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -313,17 +187,4 @@
 .plan-item .chips .chip {
   font-size: 17px;
   padding: 2px 7px;
-}
-
-.avatar {
-  border-radius: 50%;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #E9EDF2;
-  border: 2px solid #B1B3B6;
-  color: #2C4B6A;
-  font-weight: 700;
-  box-shadow: 0 3px 10px rgb(0 42 84 / .12);
 }

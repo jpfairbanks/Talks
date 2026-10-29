@@ -1,0 +1,946 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>From Graph Laplacians to Sheaves: Coordination, Tracking and Safety for Heterogeneous Teams — James Fairbanks</title>
+
+<meta name="author" content="James Fairbanks">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<link rel="stylesheet" href="../../../../reveal-js/dist/reveal.css">
+<link rel="stylesheet" href="../../../../vendored/katex-0.16.11/katex.min.css">
+<link rel="stylesheet" href="../../../../vendored/fira-sans-2026-09/fira-sans.css">
+<link rel="stylesheet" href="../../../../_ds/fairbanks-research-talk-design-system-7193341c-92ad-490d-a789-ef6442329aec/tokens/fonts.css">
+<link rel="stylesheet" href="../../../../_ds/fairbanks-research-talk-design-system-7193341c-92ad-490d-a789-ef6442329aec/tokens/colors.css">
+<link rel="stylesheet" href="../../../../_ds/fairbanks-research-talk-design-system-7193341c-92ad-490d-a789-ef6442329aec/tokens/typography.css">
+<link rel="stylesheet" href="../../../../_ds/fairbanks-research-talk-design-system-7193341c-92ad-490d-a789-ef6442329aec/tokens/spacing.css">
+<link rel="stylesheet" href="../../../../_ds/fairbanks-research-talk-design-system-7193341c-92ad-490d-a789-ef6442329aec/tokens/effects.css">
+<link rel="stylesheet" href="../../../../_ds/fairbanks-research-talk-design-system-7193341c-92ad-490d-a789-ef6442329aec/styles.css">
+<link rel="stylesheet" href="../../../../gatas-talks/talk.css">
+<link rel="stylesheet" href="../../../../css/site.css">
+
+  </head>
+  <body>
+    
+    <div class="reveal">
+      <div class="slides">
+<section data-label="1 · Title" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    
+<img src="../../../../assets/brand/uf-banner.jpg" alt="University of Florida" class="ds-title-banner">
+<div class="title-block">
+  <div class="title-main">From Graph Laplacians to Sheaves: Coordination, Tracking and Safety for Heterogeneous Teams</div>
+  <div class="title-speaker">James Fairbanks</div>
+  <div class="title-affiliation">Department of Mechanical &amp; Aerospace Engineering, University of Florida</div>
+  <div class="title-venue">Cross-Agency Dynamics Seminar (CADS) · 29 October 2026</div>
+</div>
+<div class="title-logos">
+  <img src="../../../../assets/brand/codac-digicams-shield.png" alt="CODAC DIGICAMS Shield" style="height:170px">
+  <img src="../../../../assets/brand/gatas-lockup.png" alt="UF · GATAS Lab" style="height:136px">
+</div>
+<div class="title-panel" style="top:180px;height:296px">
+  <video data-autoplay src="../../../../assets/video/robotarium.mp4#t=22" autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline" onloadedmetadata="this.currentTime=22"></video>
+</div>
+<div class="title-panel" style="top:500px;height:284px">
+  <video data-autoplay src="../../../../assets/video/formation-tracking.mp4" autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline"></video>
+</div>
+
+  </div>
+</section>
+
+<section data-label="2 · Optimal Parts, Suboptimal Whole" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">Optimal Parts, Suboptimal Whole</h1>
+    <div class="slide-body"><div class="ds-columns" style="grid-template-columns:minmax(0, 800fr) minmax(0, 598fr);column-gap:42px;align-items:start;">
+<div class="ds-column">
+<div class="text-xl" style="margin-top:6px;text-wrap:pretty">
+  A heterogeneous flock is sent to reach a stranded vehicle and observe its surroundings. Before
+  launch it must decide:</div>
+<svg viewBox="0 0 800 420" width="800" height="420" role="img"
+  aria-label="Four coupled decisions: fleet size constrains routes and communication; routes constrain communication; communication delays constrain adaptation"
+  style="display:block;font-family:var(--font-core);overflow:visible">
+  <defs><marker id="arr3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#2C4B6A"/></marker></defs>
+  <g stroke="#2C4B6A" stroke-width="3" fill="none" marker-end="url(#arr3)">
+    <line x1="304" y1="59" x2="494" y2="59"/>
+    <line x1="150" y1="122" x2="150" y2="294"/>
+    <line x1="560" y1="122" x2="262" y2="294"/>
+    <line x1="304" y1="359" x2="494" y2="359"/>
+  </g>
+  <g font-size="23" font-style="italic" fill="#2C4B6A" paint-order="stroke" stroke="#fff" stroke-width="6" stroke-linejoin="round">
+    <text x="400" y="46" text-anchor="middle">fleet size</text>
+    <text x="162" y="214">fleet size</text>
+    <text x="430" y="206" text-anchor="middle">routes</text>
+    <text x="400" y="346" text-anchor="middle">delays</text>
+  </g>
+  <rect x="0" y="0" width="300" height="118" rx="12" fill="#EFF6EB" stroke="#5E9E42" stroke-width="2"/><rect x="0" y="0" width="8" height="118" rx="4" fill="#5E9E42"/><text x="24" y="44" font-size="27" font-weight="700" fill="#002A54">How many drones</text><text x="24" y="76" font-size="23" fill="#2C4B6A">discrete optimization</text><rect x="500" y="0" width="300" height="118" rx="12" fill="#EFF6EB" stroke="#5E9E42" stroke-width="2"/><rect x="500" y="0" width="8" height="118" rx="4" fill="#5E9E42"/><text x="524" y="44" font-size="27" font-weight="700" fill="#002A54">Which routes</text><text x="524" y="76" font-size="23" fill="#2C4B6A">continuous optimization</text><rect x="0" y="300" width="300" height="118" rx="12" fill="#EDF2F8" stroke="#4F7FAE" stroke-width="2"/><rect x="0" y="300" width="8" height="118" rx="4" fill="#4F7FAE"/><text x="24" y="344" font-size="27" font-weight="700" fill="#002A54">Who talks to whom</text><text x="24" y="376" font-size="23" fill="#2C4B6A">communication pattern</text><rect x="500" y="300" width="300" height="118" rx="12" fill="#F6F1EA" stroke="#A5824F" stroke-width="2"/><rect x="500" y="300" width="8" height="118" rx="4" fill="#A5824F"/><text x="524" y="344" font-size="27" font-weight="700" fill="#002A54">How to adapt</text><text x="524" y="374" font-size="23" fill="#2C4B6A">weather, interlopers,</text><text x="524" y="401" font-size="23" fill="#2C4B6A">unmodeled effects</text>
+</svg>
+</div>
+<figure style="margin:6px 0 0">
+  <img src="../../../../assets/figures/multidomain-autonomy.png"
+    alt="Drones, surface vessels and submarines in three layers, joined by communication links"
+    style="width:100%;height:458px;object-fit:contain;display:block">
+  <figcaption class="text-sm slate" style="margin-top:10px;text-align:center;font-style:italic">
+    Agents differ in dynamics, sensing, communication and computation.</figcaption>
+</figure>
+</div>
+<div class="takeaway-flow" style="font-size:var(--text-xl)">
+  Each decision limits the others. Analyzed apart, optimal subsystems compose into a suboptimal
+  whole, and stable ones into an unstable one.</div>
+</div>
+    <div class="ds-slide-num">2</div>
+  </div>
+  <aside class="notes">The problem the services care about: a mixed team of air, surface and undersea vehicles, with
+different dynamics, sensors and radios, given one mission. The decisions are coupled, and each
+is usually analyzed alone. This talk is about the mathematics that lets us analyze them together
+and still compute locally.
+</aside>
+</section>
+
+<section data-label="3 · How We Got Here" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">How We Got Here</h1>
+    <div class="slide-body"><div class="ds-columns grow" style="grid-template-columns:repeat(4, minmax(0, 1fr));column-gap:20px;align-items:stretch;">
+<div class="ds-column">
+<div class="card blue soft tight" style="height:100%">
+  <div style="display:flex;align-items:center;gap:10px"><span class="text-sm" style="font-weight:700;color:#fff;background:var(--navy);border-radius:50%;width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center">1</span><span class="eyebrow">DARPA ASKE</span></div>
+  <img src="../../../../assets/figures/modeling-framework-layers.png" alt="A system specification, its model semantics, and the simulated solution"
+    style="display:block;width:100%;height:160px;object-fit:contain;background:#fff;border-radius:6px;margin:8px 0">
+  <div class="text-sm" style="line-height:1.25">Models are objects, relationships are morphisms; functors map model structure to behavior</div>
+</div>
+</div>
+<div class="ds-column">
+<div class="card blue soft tight" style="height:100%">
+  <div style="display:flex;align-items:center;gap:10px"><span class="text-sm" style="font-weight:700;color:#fff;background:var(--navy);border-radius:50%;width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center">2</span><span class="eyebrow">DARPA CompMods</span></div>
+  <div style="position:relative;height:160px;margin:8px 0;overflow:hidden;border-radius:6px;background:#fff"><video data-autoplay src="../../../../assets/video/dec-pressure-pulse.mp4"
+    autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline" aria-label="A pressure pulse spreading on a coarse mesh, simulated with discrete exterior calculus"
+    style="position:absolute;width:510px;max-width:none;height:auto;left:50%;margin-left:-388px;top:-22px"></video></div>
+  <div class="text-sm" style="line-height:1.25">ASKE ideas applied to PDE solvers: discrete differential geometry in Julia</div>
+</div>
+</div>
+<div class="ds-column">
+<div class="card blue soft tight" style="height:100%">
+  <div style="display:flex;align-items:center;gap:10px"><span class="text-sm" style="font-weight:700;color:#fff;background:var(--navy);border-radius:50%;width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center">3</span><span class="eyebrow">DARPA YFA</span></div>
+  <img src="../../../../assets/figures/decapode-composition-diagram-only.png" alt="An undirected wiring diagram gluing diffusion, advection, flux superposition, and mass conservation along shared variables"
+    style="display:block;width:100%;height:160px;object-fit:contain;background:#fff;border-radius:6px;margin:8px 0">
+  <div class="text-sm" style="line-height:1.25">Compositional structures in modeling frameworks</div>
+</div>
+</div>
+<div class="ds-column">
+<div class="card blue soft tight" style="height:100%">
+  <div style="display:flex;align-items:center;gap:10px"><span class="text-sm" style="font-weight:700;color:#fff;background:var(--navy);border-radius:50%;width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center">4</span><span class="eyebrow">DARPA ASKEM</span></div>
+  <img src="../../../../assets/figures/optimization-functor-hierarchy.png" alt="Functors from Euclidean saddle, Euclidean, Riemannian and general optimization problems into one category of dynamical systems"
+    style="display:block;width:100%;height:160px;object-fit:contain;background:#fff;border-radius:6px;margin:8px 0">
+  <div class="text-sm" style="line-height:1.25">Scaling to multiple modeling frameworks, and bringing in control</div>
+</div>
+</div>
+</div>
+<div class="ds-columns grow" style="grid-template-columns:repeat(4, minmax(0, 1fr));column-gap:20px;align-items:stretch;margin-top:12px">
+<div class="ds-column">
+<div class="card green soft tight" style="height:100%">
+  <div style="display:flex;align-items:center;gap:10px"><span class="text-sm" style="font-weight:700;color:#fff;background:var(--navy);border-radius:50%;width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center">5</span><span class="eyebrow">ONR Code 32</span></div>
+  <img src="../../../../assets/figures/two-semantics-gradient-descent.png" alt="One wiring diagram read two ways: as an objective function and as the dynamical system of its gradient descent"
+    style="display:block;width:100%;height:160px;object-fit:contain;background:#fff;border-radius:6px;margin:8px 0">
+  <div class="text-sm" style="line-height:1.25">Bringing diagrams to machine learning and optimization algorithms</div>
+</div>
+</div>
+<div class="ds-column">
+<div class="card orange soft tight" style="height:100%">
+  <div style="display:flex;align-items:center;gap:10px"><span class="text-sm" style="font-weight:700;color:#fff;background:var(--navy);border-radius:50%;width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center">6</span><span class="eyebrow">AFOSR CODAC</span></div>
+  <img src="../../../../assets/figures/local-to-global.png" alt="Sheaves from local to global: continuous functions on a topological space, 3-colorings on a graph, a cellular sheaf of vector spaces over a graph, and solutions to a PDE"
+    style="display:block;width:100%;height:160px;object-fit:contain;background:#fff;border-radius:6px;margin:8px 0">
+  <div class="text-sm" style="line-height:1.25">Sheaves for coordination and compositional optimization: this talk</div>
+</div>
+</div>
+<div class="ds-column">
+<div class="card tan soft tight" style="height:100%">
+  <div style="display:flex;align-items:center;gap:10px"><span class="text-sm" style="font-weight:700;color:#fff;background:var(--navy);border-radius:50%;width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center">7</span><span class="eyebrow">ARO / ARL</span></div>
+  <div style="height:160px;margin:8px 0;overflow:hidden;border-radius:6px;background:#fff"><video data-autoplay src="../../../../assets/video/kh-theta.mp4"
+    autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline" onloadedmetadata="this.currentTime=7"
+    style="display:block;width:100%;height:100%;object-fit:cover"></video></div>
+  <div class="text-sm" style="line-height:1.25">Scaling the PDE solvers to unstable MHD</div>
+</div>
+</div>
+<div class="ds-column">
+<div class="card blue soft tight" style="height:100%">
+  <div style="display:flex;align-items:center;gap:10px"><span class="text-sm" style="font-weight:700;color:#fff;background:var(--navy);border-radius:50%;width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center">8</span><span class="eyebrow">DARPA DISCORD</span></div>
+  <img src="../../../../assets/figures/lineage-swarm-disruption.svg" alt="A swarm of about five hundred agents and their local links, with a jammed region where the links are cut"
+    style="display:block;width:100%;height:160px;object-fit:contain;background:#fff;border-radius:6px;margin:8px 0">
+  <div class="text-sm" style="line-height:1.25">Scaling to 100k agents under hostile disruption of swarms</div>
+</div>
+</div>
+</div>
+</div>
+    <div class="ds-slide-num">3</div>
+  </div>
+  <aside class="notes">Eight programs, in order. ASKE set up the idea: models are objects, the relationships between them are
+morphisms, and a functor maps a model's structure to its behavior. CompMods applied it to PDE solvers and
+built discrete differential geometry in Julia. The YFA and ASKEM took it across modeling frameworks and
+into control; ONR took it to machine learning and optimization. CODAC, the work in this talk, is sheaves
+for coordination. ARO and ARL push the PDE side to unstable MHD; DISCORD pushes the coordination side to
+a hundred thousand agents under hostile disruption.
+</aside>
+</section>
+
+<section data-label="4 · Graph-Laplacian Control, and Its Assumptions" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">Graph-Laplacian Control, and Its Assumptions</h1>
+    <div class="slide-body"><div class="ds-columns" style="grid-template-columns:740px minmax(0, 1fr);column-gap:60px;align-items:start;margin-top:14px">
+<div class="ds-column">
+<div class="text-2xl" style="line-height:1.24;text-wrap:pretty">
+  Agents are nodes, sensing or communication links are edges. Each agent compares its state with its
+  neighbors', and local disagreement drives the network toward a global objective.</div>
+<ul class="ds-bullet-list" style="margin:8px 0 0 6px">
+  <li class="size-body" style=""><span class="bullet-mark">●</span><span class="bullet-text">Compatible state
+      spaces across every agent</span></li>
+  <li class="size-body" style=""><span class="bullet-mark">●</span><span class="bullet-text">A measurement
+      each pair of neighbors can compare directly</span></li>
+  <li class="size-body" style=""><span class="bullet-mark">●</span><span
+      class="bullet-text">Two planar robots comparing positions in the same frame</span></li>
+</ul>
+</div>
+<div class="ds-column" style="gap:24px">
+<figure class="ds-figure sized" style="height:200px;"><img src="../../../../assets/figures/ring-graph.png" alt="Sixteen agents arranged on a ring communication graph"></figure>
+<figure class="ds-figure sized" style="height:340px;"><img src="../../../../assets/figures/ring-consensus.gif" alt="The agent states on the ring evolving under Laplacian feedback"></figure>
+</div>
+</div>
+<div class="takeaway-flow" style="font-size:var(--text-2xl)">Natural for consensus, formation control, and leader–follower tracking — as long as the states are
+  comparable.</div>
+</div>
+    <div class="ds-slide-num">4</div>
+  </div>
+  <aside class="notes">The baseline: consensus on a graph. It assumes that neighbors can compare their states
+directly.
+</aside>
+</section>
+
+<section data-label="5 · Real Systems Are Heterogeneous" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">Real Systems Are Heterogeneous</h1>
+    <div class="slide-body"><div class="ds-columns" style="grid-template-columns:repeat(2, minmax(0, 1fr));column-gap:40px;align-items:start;">
+<ul class="ds-bullet-list" style="margin:28px 0 0">
+  <li class="size-body"><span class="bullet-mark">●</span><span class="bullet-text">Agents and
+      targets need not live in the same dimension</span></li>
+  <li class="size-body"><span class="bullet-mark">●</span><span class="bullet-text">Only partial or
+      projected measurements may be available</span></li>
+  <li class="size-body"><span class="bullet-mark">●</span><span class="bullet-text">Sensing models
+      differ across a fleet</span></li>
+  <li class="size-body"><span class="bullet-mark">●</span><span class="bullet-text">The graph
+      records who talks to whom, and nothing about what they can compare</span></li>
+</ul>
+<figure class="card roomy" style="margin:0">
+  <figcaption class="text-md" style="color:var(--navy);margin-bottom:16px">
+    Drones, surface vessels and submarines share a mission but not a state space. Measurements must be
+    translated to be compared.</figcaption>
+  <img src="../../../../assets/figures/vehicles-v2.svg"
+    alt="Drones in the air, surface vessels on the water and submarines below, linked across all three layers"
+    style="width:100%;height:500px;object-fit:contain;display:block">
+</figure>
+</div>
+</div>
+    <div class="ds-cite">[<span class="cite-ours">1</span>] T. Hanks, H. Riess, S. Cohen, T. Gross, M. Hale, and J. Fairbanks. <i>IEEE Conference on Decision and Control,</i> 2025</div>
+    <div class="ds-slide-num">5</div>
+  </div>
+  <aside class="notes">That assumption fails for multi-domain teams. A drone and a submarine do not share a state space;
+the graph says who talks, not what they can compare. Skip this slide if the clock is tight.
+</aside>
+</section>
+
+<section data-label="6 · Cellular Sheaves Over Graphs" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">Cellular Sheaves Over Graphs</h1>
+    <div class="slide-body"><div class="card blue roomy">
+  <div class="ds-theorem-block block" style="font-size:var(--text-md);line-height:1.36"><div class="theorem-head">Definition (Cellular Sheaf)</div><div class="theorem-body">A <strong>cellular sheaf</strong> <span class="katex-inline" data-tex="\mathcal{F}">\(\mathcal{F}\)</span> over a graph <span class="katex-inline" data-tex="G = (V, E)">\(G = (V, E)\)</span> consists of:
+    <ul class="text-md" style="margin:10px 0 0 28px;padding:0;list-style-type:disc;line-height:1.4">
+      <li>A <strong>vertex stalk</strong> (vector space) <span class="katex-inline" data-tex="\mathcal{F}(v)">\(\mathcal{F}(v)\)</span> for each vertex <span class="katex-inline" data-tex="v \in V">\(v \in V\)</span></li>
+      <li>An <strong>edge stalk</strong> (vector space) <span class="katex-inline" data-tex="\mathcal{F}(e)">\(\mathcal{F}(e)\)</span> for each edge <span class="katex-inline" data-tex="e \in E">\(e \in E\)</span></li>
+      <li>A linear <strong>restriction map</strong> <span class="katex-inline" data-tex="\mathcal{F}_{v \unlhd e}\colon \mathcal{F}(v) \to \mathcal{F}(e)">\(\mathcal{F}_{v \unlhd e}\colon \mathcal{F}(v) \to \mathcal{F}(e)\)</span> for each incident pair <span class="katex-inline" data-tex="v \unlhd e">\(v \unlhd e\)</span></li>
+    </ul></div></div>
+</div>
+
+<figure class="ds-figure sized grow" style="padding:0 52px"><img src="../../../../assets/figures/sheaf-over-graph-planes.svg" alt="Vector-space stalks drawn as planes standing over the vertices and edges of a base graph, connected by restriction maps"></figure>
+</div>
+    <div class="ds-cite">[2] J. Hansen and R. Ghrist. <i>Journal of Applied and Computational Topology,</i> 3(4):315–358, 2019</div>
+    <div class="ds-slide-num">6</div>
+  </div>
+  <aside class="notes">Put a vector space on every agent and every link, and a linear map that translates each agent's
+state into the link's space, where the two agents' states can be compared. That is a cellular sheaf.
+</aside>
+</section>
+
+<section data-label="7 · Three Agents Tracking One Target" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">Three Agents Tracking One Target</h1>
+    <div class="slide-body"><div class="ds-columns grow" style="grid-template-columns:minmax(0, 1fr) minmax(0, 2fr);column-gap:40px;align-items:stretch;">
+<div class="ds-column">
+  <figure style="margin:0;display:flex;flex-direction:column;gap:10px">
+    <svg viewBox="0 0 520 400" style="width:100%;height:auto;display:block">
+      <g stroke="#B1B3B6" stroke-width="2.5" stroke-dasharray="7 7">
+        <line x1="20" y1="330" x2="500" y2="330"></line>
+        <line x1="90" y1="20" x2="90" y2="390"></line>
+        <line x1="40" y1="31.8" x2="480" y2="368.2"></line>
+      </g>
+      <g stroke="#002A54" stroke-width="3">
+        <line x1="200" y1="230" x2="430" y2="330"></line>
+        <line x1="200" y1="230" x2="90" y2="330"></line>
+        <line x1="200" y1="230" x2="90" y2="70"></line>
+      </g>
+      <circle cx="430" cy="330" r="34" fill="rgb(108 154 195 / .28)"></circle>
+      <circle cx="90" cy="330" r="34" fill="rgb(226 143 65 / .28)"></circle>
+      <circle cx="90" cy="70" r="34" fill="rgb(128 190 99 / .28)"></circle>
+      <circle cx="200" cy="230" r="34" fill="rgb(190 155 105 / .28)"></circle>
+      <g fill="#fff" stroke="#002A54" stroke-width="3">
+        <circle cx="430" cy="330" r="12"></circle>
+        <circle cx="90" cy="330" r="12"></circle>
+        <circle cx="90" cy="70" r="12"></circle>
+        <circle cx="200" cy="230" r="12"></circle>
+      </g>
+      <g fill="#002A54" font-size="28" font-style="italic" text-anchor="middle"
+        font-family="var(--font-math)"><text x="477.7" y="360.7">ℝ²</text><text x="51.5"
+          y="375.0">ℝ²</text><text x="60.5" y="37.1">ℝ²</text><text x="200" y="192">ℝ²</text></g>
+      <g fill="#2C4B6A" font-size="26" font-style="italic" text-anchor="middle"
+        font-family="var(--font-math)"><text x="323.8" y="268.8">ℝ</text><text x="159.8"
+          y="305.3">ℝ</text><text x="126.9" y="171.5">ℝ</text></g><text x="200" y="160" text-anchor="middle"
+        font-family="var(--font-core)" font-style="italic" font-size="24"
+        fill="#2C4B6A">target</text>
+    </svg>
+    <figcaption class="text-md slate" style="font-style:italic">
+      Initial configuration: one agent per line, target inside</figcaption>
+  </figure>
+</div>
+<div class="ds-column">
+<iframe src="../../../../assets/widgets/three-agent-tracking-diffusion.html" title="Three agents tracking one target by sheaf diffusion"
+  class="grow" style="display:block;width:100%;border:0;background:#fff"></iframe>
+</div>
+</div>
+<div class="takeaway-flow" style="font-size:var(--text-2xl)">Every agent stalk is ℝ², every edge stalk ℝ: each edge compares the target against the line its agent moves
+  along. This is the sheaf behind a Robotarium demo.</div>
+</div>
+    <div class="ds-slide-num">7</div>
+  </div>
+  <aside class="notes">A concrete one: agents on three lines, a target inside. Each link compares the target with the
+line the agent moves on, so edge stalks are one-dimensional. Diffusion slides each agent along
+its line, and the Dirichlet energy falls to zero at the equilibrium: the perpendicular feet.
+This is the sheaf behind the Robotarium demo.
+</aside>
+</section>
+
+<section data-label="8 · The Cellular Sheaf Explorer" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">The Cellular Sheaf Explorer</h1>
+    <div class="slide-body" style="gap:8px"><iframe src="../../../../assets/widgets/cellular-sheaf-explorer.html" title="Cellular Sheaf Explorer"
+  class="grow" style="display:block;width:100%;margin-top:-12px;border:1px solid var(--line);border-radius:10px;background:var(--paper)"></iframe>
+<div class="text-md slate">
+  Six worked examples, a source editor for writing your own sheaf, and the spectrum and energy readouts. In the
+  browser, with nothing to install.</div>
+</div>
+    <div class="ds-slide-num">8</div>
+  </div>
+  <aside class="notes">Live, in the browser, nothing to install. Pick the bare square: deleting the brace adds one
+degree of freedom, and sweeping it shears the square into a rhombus. The spectrum readout counts
+the global sections. About a minute; click outside the frame to get the arrow keys back.
+</aside>
+</section>
+
+<section data-label="9 · Sheaf Laplacians Compute Global Sections" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">Sheaf Laplacians Compute Global Sections</h1>
+    <div class="slide-body">  <div class="text-xl" style="line-height:1.25;color:var(--navy)">
+    The sheaf Laplacian is <span class="katex-inline" data-tex="L_\mathcal{F} \triangleq \delta^\top \delta">\(L_\mathcal{F} \triangleq \delta^\top \delta\)</span> where <span class="katex-inline" data-tex="(\delta \mathbf{x})_{ij} \triangleq \mathcal{F}_{i \unlhd ij} x_i - \mathcal{F}_{j \unlhd ij} x_j">\((\delta \mathbf{x})_{ij} \triangleq \mathcal{F}_{i \unlhd ij} x_i - \mathcal{F}_{j \unlhd ij} x_j\)</span>
+  </div>
+
+  <div class="ds-columns" style="grid-template-columns:minmax(0, 1fr) minmax(0, 1.32fr);column-gap:28px;align-items:stretch;">
+    <div class="ds-outlined-region stroke-blue" style="padding:20px 24px;align-items:flex-start;justify-content:center;gap:10px;min-height:224px">
+      <div class="text-lg" style="font-weight:700;color:var(--navy)">Graph Laplacian:</div>
+      <div class="ds-math-block" data-tex="(L_G \mathbf{x})_i = \sum_{j \in N_i} (x_i - x_j)" style="width:100%;font-size:var(--text-lg);margin:auto 0">\[ (L_G \mathbf{x})_i = \sum_{j \in N_i} (x_i - x_j) \]</div>
+    </div>
+    <div class="ds-outlined-region stroke-orange" style="padding:20px 24px;align-items:flex-start;justify-content:center;gap:10px;min-height:224px;overflow:visible">
+      <div class="text-lg" style="font-weight:700;color:var(--navy)">Sheaf Laplacian:</div>
+      <div class="ds-math-block" data-tex="(L_\mathcal{F} \mathbf{x})_i = \sum_{j \in N_i} \mathcal{F}_{i \unlhd ij}^\top \left( \mathcal{F}_{i \unlhd ij}(x_i) - \mathcal{F}_{j \unlhd ij}(x_j) \right)" style="width:100%;font-size:var(--text-lg);margin:auto 0">\[ (L_\mathcal{F} \mathbf{x})_i = \sum_{j \in N_i} \mathcal{F}_{i \unlhd ij}^\top \left( \mathcal{F}_{i \unlhd ij}(x_i) - \mathcal{F}_{j \unlhd ij}(x_j) \right) \]</div>
+    </div>
+</div>
+
+  <div class="card blue">
+    <div class="ds-theorem-block" style="font-size:var(--text-md);line-height:1.3"><span class="theorem-head">Proposition (Global Sections as Kernel).</span> <span class="theorem-body">The space of <strong>global sections</strong> satisfies <span class="katex-inline" data-tex="\Gamma(G; \mathcal{F}) \triangleq \ker \delta = \ker L_\mathcal{F}">\(\Gamma(G; \mathcal{F}) \triangleq \ker \delta = \ker L_\mathcal{F}\)</span>.</span></div>
+  </div>
+
+  <div class="card green">
+    <div class="ds-theorem-block" style="font-size:var(--text-md);line-height:1.3"><span class="theorem-head">Theorem (Sheaf Diffusion Convergence).</span> <span class="theorem-body">Sheaf diffusion <span class="katex-inline" data-tex="\dot{\mathbf{x}} = -L_\mathcal{F} \mathbf{x}">\(\dot{\mathbf{x}} = -L_\mathcal{F} \mathbf{x}\)</span> converges to the orthogonal projection of <span class="katex-inline" data-tex="\mathbf{x}(0)">\(\mathbf{x}(0)\)</span> onto <span class="katex-inline" data-tex="\Gamma(G; \mathcal{F})">\(\Gamma(G; \mathcal{F})\)</span>.</span></div>
+  </div>
+
+<div class="text-2xl slate push-down" style="text-wrap:pretty">
+  The operator that drives consensus on a graph has an exact analogue for heterogeneous agents, and its kernel
+  is the space of global sections.</div>
+</div>
+    <div class="ds-cite">[3] J. Hansen. <i>Laplacians of Cellular Sheaves: Theory and Applications,</i> PhD dissertation, University of Pennsylvania, 2020</div>
+    <div class="ds-slide-num">9</div>
+  </div>
+  <aside class="notes">The sheaf Laplacian is the graph Laplacian with the translation maps in it. Its kernel is the set
+of globally consistent states, and diffusion converges to it. Every agent computes its own row.
+</aside>
+</section>
+
+<section data-label="10 · Coordination Sheaves" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">Coordination Sheaves</h1>
+    <div class="slide-body"><div class="text-xl slate" style="text-wrap:pretty">
+  Each part of a coordination sheaf has a meaning in the multi-agent system:</div>
+
+<div class="ds-columns" style="grid-template-columns:560px minmax(0, 1fr);column-gap:40px;align-items:start;">
+<div style="display:flex;flex-direction:column;gap:18px;margin-top:28px">
+  <div class="card blue">
+    <div class="ds-theorem-block" style="font-size:var(--text-md);line-height:1.28"><span class="theorem-head">Definition (Coordination Sheaf).</span> <span class="theorem-body">A <strong>coordination sheaf</strong> on a graph <span class="katex-inline" data-tex="G=(V,E)">\(G=(V,E)\)</span> is a cellular sheaf <span class="katex-inline" data-tex="\mathcal{F}">\(\mathcal{F}\)</span> over <span class="katex-inline" data-tex="G">\(G\)</span> together with differentiable potential functions <span class="katex-inline" data-tex="U_{ij}\colon \mathcal{F}(ij)\to \mathbb{R}">\(U_{ij}\colon \mathcal{F}(ij)\to \mathbb{R}\)</span> for each edge <span class="katex-inline" data-tex="ij \in E">\(ij \in E\)</span>.</span></div>
+  </div>
+</div>
+
+<div style="display:flex;flex-direction:column;align-items:center">
+  <div class="text-md slate" style="font-weight:700;font-style:italic;margin-bottom:14px;text-align:center">
+    MAS Interpretations for Coordination Sheaves
+  </div>
+  <table class="text-sm" style="width:100%;border-collapse:collapse;line-height:1.32;color:var(--navy)">
+    <thead>
+      <tr style="border-top:2.5px solid var(--navy);border-bottom:1.5px solid var(--navy)">
+        <th style="padding:12px 16px;text-align:left;font-family:var(--font-core);font-weight:700">Sheaf Concept</th>
+        <th style="padding:12px 16px;text-align:left;font-family:var(--font-core);font-weight:700">MAS Interpretation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid var(--line)">
+        <td style="padding:12px 16px">Graph <span class="katex-inline" data-tex="G">\(G\)</span></td>
+        <td style="padding:12px 16px">Bidirectional communication topology</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--line)">
+        <td style="padding:12px 16px">Vertex stalk <span class="katex-inline" data-tex="\mathcal{F}(i)">\(\mathcal{F}(i)\)</span></td>
+        <td style="padding:12px 16px">State space of agent <span class="katex-inline" data-tex="i">\(i\)</span></td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--line)">
+        <td style="padding:12px 16px">0-cochains <span class="katex-inline" data-tex="C^0(G;\mathcal{F})">\(C^0(G;\mathcal{F})\)</span></td>
+        <td style="padding:12px 16px">Global state space</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--line)">
+        <td style="padding:12px 16px">Edge stalk <span class="katex-inline" data-tex="\mathcal{F}(ij)">\(\mathcal{F}(ij)\)</span></td>
+        <td style="padding:12px 16px">Communication space between <span class="katex-inline" data-tex="i">\(i\)</span> and <span class="katex-inline" data-tex="j">\(j\)</span></td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--line)">
+        <td style="padding:12px 16px">Restriction map <span class="katex-inline" data-tex="\mathcal{F}_{i \unlhd ij}">\(\mathcal{F}_{i \unlhd ij}\)</span></td>
+        <td style="padding:12px 16px">Registers state between agents</td>
+      </tr>
+      <tr style="border-bottom:2.5px solid var(--navy)">
+        <td style="padding:12px 16px">Potential <span class="katex-inline" data-tex="U_{ij}">\(U_{ij}\)</span></td>
+        <td style="padding:12px 16px">Coordination goal between <span class="katex-inline" data-tex="i">\(i\)</span> and <span class="katex-inline" data-tex="j">\(j\)</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+</div>
+    <div class="ds-cite">[<span class="cite-ours">1</span>] T. Hanks, H. Riess, S. Cohen, T. Gross, M. Hale, and J. Fairbanks. <i>IEEE Conference on Decision and Control,</i> 2025</div>
+    <div class="ds-slide-num">10</div>
+  </div>
+  <aside class="notes">The dictionary from multi-agent systems to sheaves. The potentials on the edges are how an
+engineer writes the goal: consensus, a formation offset, a tracking objective.
+</aside>
+</section>
+
+<section data-label="11 · Homological Programs and Their Guarantees" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">Homological Programs and Their Guarantees</h1>
+    <div class="slide-body"><div class="ds-columns" style="grid-template-columns:repeat(2, minmax(0, 1fr));column-gap:40px;align-items:start;">
+<div style="display:flex;flex-direction:column;gap:16px">
+  <div class="card blue">
+    <div class="ds-theorem-block" style="font-size:var(--text-sm);line-height:1.24"><span class="theorem-head">Definition (Nonlinear Homological Program).</span> <span class="theorem-body">Data <span class="katex-inline" data-tex="\mathsf{P} = (V, E, \mathcal{F}, \{f_i\}, \{U_e\})">\(\mathsf{P} = (V, E, \mathcal{F}, \{f_i\}, \{U_e\})\)</span> with graph <span class="katex-inline" data-tex="G">\(G\)</span>, sheaf <span class="katex-inline" data-tex="\mathcal{F}">\(\mathcal{F}\)</span>, objectives <span class="katex-inline" data-tex="\{f_i\}">\(\{f_i\}\)</span>, and potentials <span class="katex-inline" data-tex="\{U_e\}">\(\{U_e\}\)</span>:</span></div>
+    <div class="ds-math-block" data-tex="\begin{aligned} \underset{\mathbf{x} \in C^0(G;\mathcal{F})}{\text{minimize}} \quad &amp; \sum_{i \in V} f_i(x_i) \\ \text{subject to} \quad &amp; L_\mathcal{F}^{\nabla U} \mathbf{x} = 0 \end{aligned}" style="margin:8px 0 2px;font-size:var(--text-md)">\[ \begin{aligned} \underset{\mathbf{x} \in C^0(G;\mathcal{F})}{\text{minimize}} \quad &amp; \sum_{i \in V} f_i(x_i) \\ \text{subject to} \quad &amp; L_\mathcal{F}^{\nabla U} \mathbf{x} = 0 \end{aligned} \]</div>
+  </div>
+
+</div>
+
+<div style="display:flex;flex-direction:column;gap:16px">
+  <div class="card green">
+    <div class="ds-theorem-block" style="font-size:var(--text-sm);line-height:1.26"><span class="theorem-head">Theorem (Convexity &amp; Tractability).</span> <span class="theorem-body">If each edge potential <span class="katex-inline" data-tex="U_e">\(U_e\)</span> is differentiable and convex, and each agent objective <span class="katex-inline" data-tex="f_i">\(f_i\)</span> is convex, then <span class="katex-inline" data-tex="\mathsf{P}">\(\mathsf{P}\)</span> is a convex optimization problem.</span></div>
+  </div>
+
+  <div class="card tan">
+    <div class="ds-theorem-block" style="font-size:var(--text-sm);line-height:1.26"><span class="theorem-head">Theorem (Nonlinear Sheaf Diffusion).</span> <span class="theorem-body">For single-integrator dynamics <span class="katex-inline" data-tex="\dot{\mathbf{x}} = \mathbf{u} = -L_\mathcal{F}^{\nabla U}\mathbf{x}">\(\dot{\mathbf{x}} = \mathbf{u} = -L_\mathcal{F}^{\nabla U}\mathbf{x}\)</span> with strongly convex edge potentials, trajectories converge exponentially to <span class="katex-inline" data-tex="\arg\min_{\mathbf{x} \in C^0(G;\mathcal{F})} U(\delta_\mathcal{F}\mathbf{x})">\(\arg\min_{\mathbf{x} \in C^0(G;\mathcal{F})} U(\delta_\mathcal{F}\mathbf{x})\)</span>.</span></div>
+  </div>
+
+  <div class="card orange">
+    <div class="ds-theorem-block" style="font-size:var(--text-sm);line-height:1.24"><span class="theorem-head">Theorem (Decentralized ADMM Convergence).</span> <span class="theorem-body">For convex <span class="katex-inline" data-tex="\mathsf{P}">\(\mathsf{P}\)</span> with quadratic potentials and a Lagrangian saddle point:</span></div>
+      <ul class="text-sm" style="margin:8px 0 0 0;padding-left:22px;font-style:normal;display:flex;flex-direction:column;gap:4px">
+        <li><strong>Residual convergence:</strong> <span class="katex-inline" data-tex="\mathbf{x}^k - \mathbf{z}^k \to 0">\(\mathbf{x}^k - \mathbf{z}^k \to 0\)</span></li>
+        <li><strong>Objective convergence:</strong> <span class="katex-inline" data-tex="\sum_i f_i(x_i^k) &#43; \chi_\mathcal{C}(\mathbf{z}^k) \to p^\star">\(\sum_i f_i(x_i^k) + \chi_\mathcal{C}(\mathbf{z}^k) \to p^\star\)</span></li>
+        <li><strong>Dual variable convergence:</strong> <span class="katex-inline" data-tex="\mathbf{y}^k \to \mathbf{y}^\star">\(\mathbf{y}^k \to \mathbf{y}^\star\)</span> (dual optimal point)</li>
+      </ul>
+  </div>
+</div>
+</div>
+
+<div class="takeaway-flow" style="font-size:var(--text-xl)">Local gradient flow on the sheaf potential computes the global coordination state with provable convergence.</div>
+</div>
+    <div class="ds-cite">[<span class="cite-ours">1</span>] T. Hanks, H. Riess, S. Cohen, T. Gross, M. Hale, and J. Fairbanks. <i>IEEE Conference on Decision and Control,</i> 2025<span class="ds-cite-more"> &middot; [4, 5]</span></div>
+    <div class="ds-slide-num">11</div>
+  </div>
+  <aside class="notes">First result, CDC 2025, Tyler Hanks's paper. Coordination for heterogeneous agents is a convex program when the parts
+are convex, and two decentralized algorithms solve it with guarantees: nonlinear sheaf diffusion,
+exponentially, and ADMM. One formulation covers consensus, formation and tracking.
+</aside>
+</section>
+
+<section data-label="12 · Sheaf Diffusion Is Robust to Asynchrony" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">Sheaf Diffusion Is Robust to Asynchrony</h1>
+    <div class="slide-body"><div class="ds-columns grow" style="grid-template-columns:minmax(0, 0.62fr) minmax(0, 1fr);column-gap:28px;align-items:stretch;">
+<div class="ds-column" style="gap:14px">
+<figure style="margin:0;display:flex;flex-direction:column;gap:8px">
+  <img src="../../../../assets/figures/asynch-convergence-vs-delay-4-regular.svg"
+    alt="Energy and relative error against time for maximum delay B in 1, 10, 50, 100 and 200, on a 4-regular graph. Every curve converges; larger B converges later."
+    style="display:block;width:100%;height:auto;max-height:430px;object-fit:contain">
+  <figcaption class="text-sm slate" style="line-height:1.24;font-style:italic">
+    Energy and relative error on a 4-regular graph, at maximum delay B = 1 to 200</figcaption>
+</figure>
+<ul class="ds-bullet-list" style="margin:0;gap:8px">
+  <li class="size-body" style="font-size:var(--text-md)"><span class="bullet-mark">&#9679;</span><span
+      class="bullet-text">Every agent updates and broadcasts on its own clock, with no shared round</span></li>
+  <li class="size-body" style="font-size:var(--text-md)"><span class="bullet-mark">&#9679;</span><span
+      class="bullet-text">Longer delays slow convergence but do not stop it</span></li>
+</ul>
+</div>
+<div class="ds-column" style="gap:8px">
+<iframe src="../../../../assets/widgets/async-sheaf-diffusion.html" title="Synchronous and asynchronous sheaf diffusion"
+  class="grow" style="display:block;width:100%;border:1px solid var(--line);border-radius:10px;background:#fff"></iframe>
+<div class="text-sm slate" style="line-height:1.24;text-wrap:pretty">
+  Stalks are RGBA colors. Each restriction map turns the hue 30&deg; per step around the ring, so the
+  global sections are color wheels, not one constant color.</div>
+</div>
+</div>
+</div>
+    <div class="ds-cite">[<span class="cite-ours">6</span>] Y. Zhao, T. Hanks, H. Riess, S. Cohen, M. Hale, and J. Fairbanks. <i>IEEE American Control Conference,</i> 2026<span class="ds-cite-more"> &middot; <a href="https://algebraicjulia.github.io/CellularSheaves.jl/stable/generated/asynch/convergence_vs_delay/" target="_blank" rel="noopener">the experiment in the CellularSheaves.jl docs</a></span></div>
+    <div class="ds-slide-num">12</div>
+  </div>
+  <aside class="notes">Second, ACC 2026: no shared clock is needed. Each agent updates on its own schedule with bounded
+delays; longer delays slow convergence and do not break it. This matters in contested or
+degraded communication. The animation runs both from the same random colors: on the left every
+agent updates each round, on the right each agent fires on its own clock and its packets arrive
+late. Both reach the same kind of color wheel; the asynchronous one takes longer. Skip if short;
+it is on the summary slide.
+</aside>
+</section>
+
+<section data-label="13 · Who Can Track Whom Is a Cohomological Question" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">Who Can Track Whom Is a Cohomological Question</h1>
+    <div class="slide-body"><div class="ds-columns grow" style="grid-template-columns:repeat(2, minmax(0, 1fr));column-gap:40px;align-items:stretch;">
+<div style="background:#fff;border:1px solid rgba(108,154,195,0.28);border-radius:12px;box-shadow:0 3px 10px rgba(0,42,84,0.05);padding:18px 20px;box-sizing:border-box;display:flex;flex-direction:column;gap:10px">
+  <div class="text-md slate" style="font-weight:700;text-align:center">Ships Tracking Submarines — Determined</div>
+  <div style="width:100%;height:290px">
+    <img src="../../../../assets/figures/usv-tracking-uuv-projections.svg" alt="Ships on the water above submarines in the volume below; a dotted arrow carries each submarine straight up to a dot on the water, and the tracking ships sit on or near their submarines' dots" style="width:100%;height:100%;object-fit:contain">
+  </div>
+  <div class="text-sm slate" style="text-align:center"><span style="display:inline-block;width:26px;height:10px;border-radius:50%;background:rgb(226 143 65 / .45);border:2px solid #D35400;vertical-align:1px"></span> each submarine fixes one point on the water: where its ship must be</div>
+  <div class="text-lg" style="flex:1;text-wrap:pretty">A ship is stuck on the surface, so the target’s three coordinates determine its two. The harmonic extension is unique and the relative cohomology vanishes.</div>
+</div>
+<div style="background:#fff;border:1px solid rgba(108,154,195,0.28);border-radius:12px;box-shadow:0 3px 10px rgba(0,42,84,0.05);padding:18px 20px;box-sizing:border-box;display:flex;flex-direction:column;gap:10px">
+  <div class="text-md slate" style="font-weight:700;text-align:center">Quadcopters Tracking Ships — Underdetermined</div>
+  <div style="width:100%;height:290px">
+    <img src="../../../../assets/figures/uav-tracking-usv-projections.svg" alt="Quadcopters in the air above ships on the water; a vertical line rises from each ship, and each tracking quadcopter sits on its ship's line, with faint copies at other heights that agree with the measurements just as well" style="width:100%;height:100%;object-fit:contain">
+  </div>
+  <div class="text-sm slate" style="text-align:center"><span style="display:inline-block;width:8px;height:22px;border-radius:4px;background:#E28F41;border:2px solid #D35400;vertical-align:-4px"></span> each ship fixes a whole line, a copy of &#8477;: its quadcopter can sit anywhere on it</div>
+  <div class="text-lg" style="flex:1;text-wrap:pretty">A quadcopter also has an altitude, which nothing it measures about a surface vessel constrains. That spare degree of freedom is the non-vanishing relative cohomology.</div>
+</div>
+</div>
+<div class="takeaway-flow" style="font-size:var(--text-2xl)">Trackability is whether the measurements pin down every degree of freedom the agents have. The cohomology
+  counts the ones they miss.</div>
+</div>
+    <div class="ds-cite">[<span class="cite-ours">7</span>] T. Hanks, C. F. Nino, J. Bou Barcelo, A. Copeland, W. E. Dixon, and J. Fairbanks. <i>European Control Conference,</i> 2026</div>
+    <div class="ds-slide-num">13</div>
+  </div>
+  <aside class="notes">Third, ECC 2026. Whether a team can track a set of targets is a computable algebraic question:
+the relative cohomology. In both pictures the tracker is on top, trying to get over its target.
+On the left, projecting a submarine up to the water gives one point, and its ship has to be there.
+On the right, the ship is the one on the water: every point on the vertical line above it agrees
+with what the quadcopter measures, so the quadcopter can sit at any altitude on that line. A point
+against a whole line, a copy of R: that free altitude is the relative cohomology. Ships tracking submarines are determined; quadcopters
+tracking ships leave each altitude free. The widget on the next slide computes it live.
+</aside>
+</section>
+
+<section data-label="14 · Live: Who Can Track Whom" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">Live: Who Can Track Whom</h1>
+    <div class="slide-body"><iframe src="../../../../assets/widgets/multi-domain-tracking.html" title="Multi-domain tracking sheaf widget"
+  class="grow" style="display:block;width:100%;margin-top:-20px;border:1px solid var(--line);border-radius:10px;background:var(--paper)"></iframe>
+<div class="text-md slate" style="margin:-14px 0 -10px;text-wrap:pretty">
+  Ships in <span class="katex-inline" data-tex="\mathbb{R}^2">\(\mathbb{R}^2\)</span>, targets in
+  <span class="katex-inline" data-tex="\mathbb{R}^3">\(\mathbb{R}^3\)</span>, linked by the projection that forgets
+  altitude. Pin the ships and four degrees of freedom survive, one altitude per target; pin the targets and none do.</div>
+</div>
+    <div class="ds-cite">[<span class="cite-ours">7</span>] T. Hanks, C. F. Nino, J. Bou Barcelo, A. Copeland, W. E. Dixon, and J. Fairbanks. <i>European Control Conference,</i> 2026<span class="ds-cite-more"> &middot; &middot; CODAC-Centers/SheafApps</span></div>
+    <div class="ds-slide-num">14</div>
+  </div>
+  <aside class="notes">Pin the ships, and four degrees of freedom survive, one altitude per target. Pin the targets and
+none do. The readout is the dimension of the cohomology: a design-time test of a sensor and
+communication plan before anything flies. Click outside the frame for the arrow keys.
+</aside>
+</section>
+
+<section data-label="15 · Sheaf-Laplacian Feedback and Its Guarantee" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">Sheaf-Laplacian Feedback and Its Guarantee</h1>
+    <div class="slide-body"><div class="ds-columns" style="grid-template-columns:minmax(0, 730fr) minmax(0, 700fr);column-gap:10px;align-items:start;margin-top:8px">
+<div style="display:flex;flex-direction:column;gap:20px">
+
+  <div class="card blue">
+    <div class="text-md" style="color:var(--navy);font-weight:700;letter-spacing:1px;margin-bottom:6px">Local Sheaf Disagreement</div>
+    <div class="ds-math-block" data-tex="\eta_i = \sum_{j \in \mathcal{N}_i} \mathcal{F}_{i \unlhd ij}^{\top}\big( \mathcal{F}_{i \unlhd ij} q_i - \mathcal{F}_{j \unlhd ij} x_j \big)" style="font-size:var(--text-lg);margin:14px 0">\[ \eta_i = \sum_{j \in \mathcal{N}_i} \mathcal{F}_{i \unlhd ij}^{\top}\big( \mathcal{F}_{i \unlhd ij} q_i - \mathcal{F}_{j \unlhd ij} x_j \big) \]</div>
+  </div>
+
+  <div class="card blue rule-green">
+    <div class="text-md" style="color:var(--green);font-weight:700;letter-spacing:1px;margin-bottom:6px">Decentralized Controller</div>
+    <div class="ds-math-block" data-tex="u_i = -k_1\, g_i^{&#43;} \eta_i" style="font-size:var(--text-lg);margin:14px 0">\[ u_i = -k_1\, g_i^{&#43;} \eta_i \]</div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+    <div class="card orange tight">
+      <div class="text-sm" style="color:var(--ink-rust);font-weight:700;letter-spacing:1px;margin-bottom:6px">Control Gain</div>
+      <div class="text-sm" style="color:var(--navy)"><span class="katex-inline" data-tex="k_1 &gt; 0">\(k_1 > 0\)</span> &mdash; a larger gain shrinks the residual tracking error.</div>
+    </div>
+    <div class="card tan tight">
+      <div class="text-sm" style="color:var(--ink-tan);font-weight:700;letter-spacing:1px;margin-bottom:6px">Input Map</div>
+      <div class="text-sm" style="color:var(--navy)"><span class="katex-inline" data-tex="g_i^{&#43;}">\(g_i^{+}\)</span> &mdash; maps the correction into agent <span class="katex-inline" data-tex="i">\(i\)</span>&#39;s control space.</div>
+    </div>
+  </div>
+
+</div>
+
+<div style="display:flex;flex-direction:column;gap:20px">
+
+  <div class="card green">
+    <div class="ds-theorem-block" style="font-size:var(--text-md);line-height:1.3"><span class="theorem-head">Theorem (Semi-global exponential convergence).</span> <span class="theorem-body">Under the standing
+        assumptions, the tracking error relative to the harmonic extension converges semi-globally uniformly
+        exponentially to a bounded residual set. A larger gain <span class="katex-inline" data-tex="k_1">\(k_1\)</span> shrinks the residual error arbitrarily.</span></div>
+  </div>
+
+  <div class="card blue">
+    <div class="text-sm" style="color:var(--navy)">The residual error comes from dynamics mismatch
+      and bounded disturbances, and has the same form as a singular perturbation bound.</div>
+  </div>
+
+  <div class="card blue rule-sky">
+    <div class="text-sm" style="color:var(--navy)">Each agent computes <span class="katex-inline" data-tex="u_i">\(u_i\)</span> from its neighbours&rsquo; measurements. No agent
+      needs the global state.</div>
+  </div>
+
+</div>
+</div>
+
+<div class="takeaway-flow" style="font-size:var(--text-lg)">The ordinary Lyapunov argument for Laplacian feedback, run in the sheaf&#8217;s coordinates.</div>
+</div>
+    <div class="ds-cite">[<span class="cite-ours">7</span>] T. Hanks, C. F. Nino, J. Bou Barcelo, A. Copeland, W. E. Dixon, and J. Fairbanks. <i>European Control Conference,</i> 2026</div>
+    <div class="ds-slide-num">15</div>
+  </div>
+  <aside class="notes">When the test passes, a decentralized feedback law built from the sheaf Laplacian tracks the
+targets: semi-global exponential convergence to a residual set that a larger gain shrinks. Each
+agent uses only its neighbors' measurements.
+</aside>
+</section>
+
+<section data-label="16 · The Agents Reach and Hold the Formation" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">The Agents Reach and Hold the Formation</h1>
+    <div class="slide-body"><div class="ds-columns" style="grid-template-columns:repeat(3, minmax(0, 1fr));column-gap:24px;align-items:stretch;">
+  <div class="card blue soft" style="display:flex;flex-direction:column;align-items:center;height:550px">
+    <div class="text-sm" style="color:var(--navy);font-weight:700;margin-bottom:8px;text-align:center">Formations, in the Plane</div>
+    <div style="width:100%;flex:1;min-height:0;overflow:hidden;border-radius:8px">
+      <video data-autoplay src="../../../../assets/video/formation-tracking.mp4" autoplay="autoplay" loop="loop" muted="muted"
+        playsinline="playsinline"
+        style="display:block;margin-left:-26px;width:112%;height:100%;object-fit:fill;background:#fff"></video>
+    </div>
+  </div>
+
+  <div class="card orange soft" style="display:flex;flex-direction:column;align-items:center;height:550px">
+    <div class="text-sm" style="color:var(--navy);font-weight:700;margin-bottom:8px;text-align:center">Agent and Target Trajectories</div>
+    <div style="width:100%;flex:1;display:flex;align-items:center;justify-content:center">
+      <img src="../../../../assets/figures/formation-3d-trajectories.png"
+        alt="Agent orbits above and target figure-eight paths below, in three dimensions"
+        style="max-width:100%;max-height:100%;object-fit:contain;border-radius:8px">
+    </div>
+  </div>
+
+  <div class="card green soft" style="display:flex;flex-direction:column;align-items:center;height:550px">
+    <div class="text-sm" style="color:var(--navy);font-weight:700;margin-bottom:8px;text-align:center">Tracking Error by Gain</div>
+    <div style="width:100%;height:320px;display:flex;align-items:center;justify-content:center">
+      <img src="../../../../assets/figures/tracking-error-gains-2x.png"
+        alt="Tracking error norm against time for six control gains from k = 0.001 to k = 100"
+        style="max-width:100%;max-height:100%;object-fit:contain;border-radius:8px">
+    </div>
+    <div class="text-sm" style="line-height:1.24;color:var(--navy);margin-top:10px;text-align:center;text-wrap:pretty">
+      A larger gain shrinks the residual error, as the convergence bound predicts.
+    </div>
+  </div>
+</div>
+
+<div class="text-xl slate push-down" style="text-wrap:pretty">
+  Agents converge from arbitrary initial positions into the square and triangle formations, and hold them as
+  the targets move.</div>
+</div>
+    <div class="ds-cite">[<span class="cite-ours">7</span>] T. Hanks, C. F. Nino, J. Bou Barcelo, A. Copeland, W. E. Dixon, and J. Fairbanks. <i>European Control Conference,</i> 2026</div>
+    <div class="ds-slide-num">16</div>
+  </div>
+  <aside class="notes">Thirteen planar agents tracking four underwater targets through a projection, under disturbance.
+The error-versus-gain plot matches the bound.
+</aside>
+</section>
+
+<section data-label="17 · Coordination Is a Constrained Harmonic Extension" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">Coordination Is a Constrained Harmonic Extension</h1>
+    <div class="slide-body"><div class="ds-columns grow" style="grid-template-columns:800px minmax(0, 1fr);column-gap:82px;align-items:stretch;">
+<div class="ds-column" style="gap:20px">
+<div class="text-lg" style="text-wrap:pretty">
+  Partition the vertices into <b>agents</b> <span class="katex-inline" data-tex="A">\(A\)</span> and
+  <b>targets</b> <span class="katex-inline" data-tex="B">\(B\)</span>. Targets are <i>oblivious</i>: they
+  carry no agent state.</div>
+
+<div class="card blue">
+  <div class="text-sm" style="font-weight:700;color:var(--navy);margin-bottom:8px">Minimize disagreement over the
+    agents, holding the targets fixed</div>
+  <div class="ds-math-block ds-math-tight" data-tex="E(\mathbf{q},\mathbf{p}) = \tfrac12\lVert \delta_A \mathbf{q} &#43; \delta_B \mathbf{p}\rVert^2
+              \;\;\longrightarrow\;\; L_A\, \mathbf{q}^\star = -\delta_A^{*}\delta_B\, \mathbf{p}" style="font-size:var(--text-lg)">\[ E(\mathbf{q},\mathbf{p}) = \tfrac12\lVert \delta_A \mathbf{q} &#43; \delta_B \mathbf{p}\rVert^2
+              \;\;\longrightarrow\;\; L_A\, \mathbf{q}^\star = -\delta_A^{*}\delta_B\, \mathbf{p} \]</div>
+</div>
+
+<div class="card green rule-green">
+  <div class="text-sm" style="font-weight:700;color:var(--green);margin-bottom:8px">Constrain the formation to a
+    convex <span class="katex-inline" data-tex="\mathcal{K}">\(\mathcal{K}\)</span>: a safe set, or actuator
+    limits</div>
+  <div class="ds-math-block ds-math-tight" data-tex="\mathbf{q}^\star_0 \;=\; \operatorname*{arg\,min}_{\mathbf{q}\,\in\,\mathcal{K}}\; E(\mathbf{q},\mathbf{p})" style="font-size:var(--text-lg)">\[ \mathbf{q}^\star_0 \;=\; \operatorname*{arg\,min}_{\mathbf{q}\,\in\,\mathcal{K}}\; E(\mathbf{q},\mathbf{p}) \]</div>
+</div>
+
+<ul class="ds-bullet-list" style="margin:0;gap:10px">
+  <li class="size-body-sub" style="font-size:var(--text-md)"><span class="bullet-mark">●</span><span
+      class="bullet-text"><span class="katex-inline" data-tex="L_A \succ 0">\(L_A \succ 0\)</span> exactly when
+      the relative cohomology vanishes, <span class="katex-inline" data-tex="\mathcal{H}^0(G, B; \mathcal{F}) = 0">\(\mathcal{H}^0(G, B; \mathcal{F}) = 0\)</span> &mdash;
+      the fleet is pinned enough to have a unique answer</span></li>
+  <li class="size-body-sub" style="font-size:var(--text-md)"><span class="bullet-mark">●</span><span
+      class="bullet-text">One solve per control step. Agent <span class="katex-inline" data-tex="i">\(i\)</span> then holds only its own block <span class="katex-inline" data-tex="\mathbf{q}^\star_{\mu,i}">\(\mathbf{q}^\star_{\mu,i}\)</span></span></li>
+</ul>
+</div>
+
+<figure
+  style="margin:0;display:flex;flex-direction:column;align-items:center;gap:10px;min-height:0">
+  <div
+    style="width:100%;flex:1 1 0;min-height:0;overflow:hidden;border:1px solid rgba(108,154,195,0.25);border-radius:12px;background:#fff">
+    <img src="../../../../assets/figures/layered-architecture-hero.png"
+      alt="Panels A and C of the layered architecture: a cellular sheaf over a ring formation with its clique tree, and the constrained formation deflecting around two pillars while the unconstrained one passes through them"
+      style="width:100%;display:block">
+  </div>
+  <figcaption class="text-xs slate"
+    style="text-align:center;font-style:italic">The sheaf and its
+    clique tree (A); the filter (B); constrained vs. unconstrained formation (C).</figcaption>
+</figure>
+</div>
+
+<div class="takeaway-flow" style="font-size:var(--text-lg)">The formation is the <i>solution of an optimization problem</i>, not the output of a feedback law.</div>
+</div>
+    <div class="ds-cite">[<span class="cite-ours">8</span>] I. Kadosh, R. Samuelson, and J. Fairbanks. <i>American Control Conference,</i> 2027, under review<span class="ds-cite-more"> &middot; [2, <span class="cite-ours">1</span>, <span class="cite-ours">7</span>]</span></div>
+    <div class="ds-slide-num">17</div>
+  </div>
+  <aside class="notes">Fourth, Itay Kadosh's paper, under review at ACC 2027: safety. Make the fleet's formation the solution of a convex problem,
+and keep-out zones or actuator limits become constraints on it. One solve per control step; it
+has a unique answer exactly when the cohomology test from before passes.
+</aside>
+</section>
+
+<section data-label="18 · Six Heterogeneous Quadrotors, Two Keep-Outs" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">Six Heterogeneous Quadrotors, Two Keep-Outs</h1>
+    <div class="slide-body"><div class="ds-columns grow" style="grid-template-columns:900px minmax(0, 1fr);column-gap:17px;align-items:stretch;">
+<div class="ds-column" style="gap:16px">
+<ul class="ds-bullet-list" style="margin:4px 0 0;gap:18px"><li class="size-body-sub" style="font-size:var(--text-lg)"><span class="bullet-mark">●</span><span class="bullet-text">Full rigid body on <span class="katex-inline" data-tex="SE(3)">\(SE(3)\)</span>, one-signed thrust, <b>no hover linearization</b>. No two tuned alike.</span></li><li class="size-body-sub" style="font-size:var(--text-lg)"><span class="bullet-mark">●</span><span class="bullet-text"><b>Only agent 1 observes the target.</b></span></li></ul>
+<div class="card orange rule-rust" style="margin-top:36px"><div class="text-xs" style="font-weight:700;color:var(--ink-rust);margin-bottom:4px">Unconstrained</div><div class="text-md" style="color:var(--ink-rust)">The ring sweeps <i>through</i> both obstacles &mdash; <b>0.194 m inside a surface</b>.</div></div><div class="card blue"><div class="text-xs" style="font-weight:700;color:var(--navy);margin-bottom:4px">Constrained</div><div class="text-md" style="color:var(--navy)">Clears both, the vehicle itself by <b>0.100 m</b>, and the formation still holds <b>2.0 mm</b> RMS.</div></div>
+</div>
+<figure class="ds-figure sized grow"><img src="../../../../assets/figures/conic-closed-loop.png" alt="Bird&#39;s eye and side views of the escort past a pillar and a sphere, with the unconstrained reference passing inside surfaces and the constrained one clearing them, and a clearance-versus-time panel where the constrained trace stays above the margin"><figcaption><i>Only the constrained layer stays above zero.</i></figcaption></figure>
+</div>
+
+<div class="takeaway-flow" style="font-size:var(--text-xl)">The keep-outs constrain the fleet&rsquo;s solve, so the whole formation moves around them.</div>
+</div>
+    <div class="ds-cite">[<span class="cite-ours">8</span>] I. Kadosh, R. Samuelson, and J. Fairbanks. <i>American Control Conference,</i> 2027, under review<span class="ds-cite-more"> &middot; Lee, Leok &amp; McClamroch 2010</span></div>
+    <div class="ds-slide-num">18</div>
+  </div>
+  <aside class="notes">Full rigid-body quadrotors, all tuned differently, only one sees the target. Without the
+constraint the formation sweeps through the obstacles; with it, the whole fleet deflects, clears
+by ten centimeters, and holds the formation to two millimeters.
+</aside>
+</section>
+
+<section data-label="19 · From Theorem to Hardware" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">From Theorem to Hardware</h1>
+    <img class="ds-heading-logo" src="../../../../assets/brand/robotarium-logo.png" alt="">
+    <div class="slide-body"><div class="ds-columns" style="grid-template-columns:minmax(0, 1fr) 660px;column-gap:66px;align-items:start;margin-top:18px">
+<div class="ds-column">
+<div class="text-3xl" style="line-height:1.2;text-wrap:pretty">
+  Next: the same sheaf and the same feedback law on physical differential-drive robots, using the Robotarium
+  at Georgia Tech.</div>
+<ul class="ds-bullet-list" style="margin:10px 0 0">
+  <li class="size-body" style=""><span class="bullet-mark">●</span><span class="bullet-text">Eight-agent wheel
+      and star sheaves under wind drift</span></li>
+  <li class="size-body" style=""><span class="bullet-mark">●</span><span class="bullet-text">Mixed drone and
+      ground-vehicle teams with a three-to-two dimensional projection</span></li>
+  <li class="size-body" style=""><span class="bullet-mark">●</span><span class="bullet-text">Next: integration
+      with reinforcement learning for unknown agent dynamics</span></li>
+</ul>
+</div>
+<div class="ds-column" style="gap:24px">
+<figure class="ds-figure sized" style="height:300px;"><video data-autoplay src="../../../../assets/video/robotarium.mp4#t=22" autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline" onloadedmetadata="this.currentTime=22" style="border-radius:4px;object-fit:cover;border:1px solid var(--grey)"></video></figure>
+<figure class="ds-figure sized" style="height:300px;"><video data-autoplay src="../../../../assets/video/robotarium-hexagon.mp4" autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline" style="border-radius:4px;object-fit:cover;border:1px solid var(--grey)"></video></figure>
+</div>
+</div>
+<div class="takeaway-flow" style="font-size:var(--text-2xl)">In progress with the Robotarium team and Matt Hale’s lab.</div>
+</div>
+    <div class="ds-slide-num">19</div>
+  </div>
+  <aside class="notes">Transition: the same sheaf and feedback law on physical robots at the Georgia Tech Robotarium,
+with Matt Hale's lab, including mixed drone and ground teams. Next is learning for unknown agent
+dynamics.
+</aside>
+</section>
+
+<section data-label="20 · What Comes Next" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">What Comes Next</h1>
+    <div class="slide-body"><div class="ds-columns grow" style="grid-template-columns:repeat(2, minmax(0, 1fr));column-gap:24px;align-items:stretch;">
+<div class="ds-column">
+<div class="card orange soft tight" style="height:100%;display:flex;gap:18px;align-items:center">
+  <img src="../../../../assets/figures/next-riemannian-sheaf.svg" alt="A diagram of manifolds: a sphere, a torus and a saddle at the vertices of a triangle, each mapping onto circles that sit on the edges"
+    style="display:block;width:300px;height:228px;object-fit:contain;background:#fff;border-radius:6px;flex:none">
+  <div><div class="text-md" style="font-weight:700;margin-bottom:6px">Riemannian sheaves</div>
+    <div class="text-sm" style="line-height:1.25">Each agent&rsquo;s stalk is its own manifold, for distributed optimization across them</div></div>
+</div>
+</div>
+<div class="ds-column">
+<div class="card blue soft tight" style="height:100%;display:flex;gap:18px;align-items:center">
+  <iframe src="../../../../assets/widgets/pathpack-semirings.html" title="North-central Florida colored by distance from a moving source under three semirings, from PATHPACK.jl"
+    style="display:block;width:300px;height:228px;border:0;border-radius:6px;background:#fff;flex:none"></iframe>
+  <div><div class="text-md" style="font-weight:700;margin-bottom:6px">Scaling on HPC</div>
+    <div class="text-sm" style="line-height:1.25">PATHPACK.jl: all 4.5 billion pairs of 67,411 cells in about 0.1&nbsp;s on one NVIDIA B200</div></div>
+</div>
+</div>
+</div>
+<div class="ds-columns grow" style="grid-template-columns:repeat(2, minmax(0, 1fr));column-gap:24px;align-items:stretch;margin-top:14px">
+<div class="ds-column">
+<div class="card green soft tight" style="height:100%;display:flex;gap:18px;align-items:center">
+  <div style="width:300px;height:228px;flex:none;overflow:hidden;border-radius:6px"><video data-autoplay src="../../../../assets/video/robotarium-hexagon.mp4"
+    autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline" onloadedmetadata="this.currentTime=6"
+    style="display:block;width:100%;height:100%;object-fit:cover"></video></div>
+  <div><div class="text-md" style="font-weight:700;margin-bottom:6px">Deploying on robots</div>
+    <div class="text-sm" style="line-height:1.25">The same controllers on the Georgia Tech Robotarium, with Matt Hale&rsquo;s lab</div></div>
+</div>
+</div>
+<div class="ds-column">
+<div class="card tan soft tight" style="height:100%;display:flex;gap:18px;align-items:center">
+  <img src="../../../../assets/figures/next-symplectic-metriplectic.svg" alt="A sphere of constant energy shaded by entropy; a trajectory circles along the dashed entropy levels while climbing to the entropy maximum at the top"
+    style="display:block;width:300px;height:228px;object-fit:contain;background:#fff;border-radius:6px;flex:none">
+  <div><div class="text-md" style="font-weight:700;margin-bottom:6px">Symplectic and metriplectic formulations</div>
+    <div class="text-sm" style="line-height:1.25">Total energy conserved, entropy increases over time, free energy decreases from dissipation</div></div>
+</div>
+</div>
+</div>
+</div>
+    <div class="ds-slide-num">20</div>
+  </div>
+  <aside class="notes">Four directions. Riemannian sheaves: each agent's stalk is a manifold of its own, a sphere, a torus,
+a saddle, and the restriction maps are smooth maps onto the edges' manifolds, so agents whose states
+live on different curved spaces can optimize together. Scale: PATHPACK.jl, the same algebra on GPUs. One landscape, three questions (cheapest
+route, worst barrier, where a wandering animal goes), each one semiring in the same solver; all 4.5
+billion pairs in about a tenth of a second on one B200. Hardware: the controllers on robots, with the
+Robotarium and Matt Hale's lab. Energy: symplectic and metriplectic formulations. The picture is one
+surface of constant energy, shaded by entropy. The symplectic part moves the state around the
+dashed entropy levels without changing either; the metric part pushes it up the entropy gradient
+inside the surface. So energy is conserved exactly and entropy only rises, which is what
+energy-driven and cyber-physical models need.
+</aside>
+</section>
+
+<section data-label="21 · Key Results" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">Key Results</h1>
+    <div class="slide-body"><div class="ds-columns grow" style="grid-template-columns:repeat(2, minmax(0, 1fr));column-gap:32px;align-items:stretch;">
+<div class="ds-column" style="gap:20px">
+<div class="card blue">
+  <div class="text-md"><b>Heterogeneous coordination is a convex program.</b> Consensus, formation and
+    tracking for agents with different state spaces, solved by local gradient flow or decentralized ADMM,
+    with convergence guarantees. CDC 2025 [1]</div>
+</div>
+<div class="card green">
+  <div class="text-md"><b>Robust to communication delay.</b> Sheaf diffusion still converges when each agent
+    runs on its own clock with bounded delays; longer delays only slow it.
+    ACC 2026 [6]</div>
+</div>
+<div class="card tan">
+  <div class="text-md"><b>Software, open source.</b> CellularSheaves.jl and the browser tools shown here;
+    the same controllers moving to Robotarium hardware with Matt Hale&rsquo;s lab. [9]</div>
+</div>
+</div>
+<div class="ds-column" style="gap:20px">
+<div class="card orange">
+  <div class="text-md"><b>Who can track whom is computable.</b> Trackability across domains (air,
+    surface, undersea) is a relative cohomology group, and decentralized sheaf feedback converges
+    semi-globally exponentially. ECC 2026 [7]</div>
+</div>
+<div class="card orange rule-rust">
+  <div class="text-md"><b>Keep-out zones are constraints on the fleet&rsquo;s solve.</b> One convex solve per
+    control step places the whole formation. Six heterogeneous quadrotors on <i>SE</i>(3) clear two obstacles by 0.100&nbsp;m and
+    hold formation to 2.0&nbsp;mm RMS. Under review at ACC 2027 [8]</div>
+</div>
+</div>
+</div>
+<div class="takeaway-flow" style="font-size:var(--text-xl)">One sheaf model gives the convex program, the convergence proof, the trackability
+  test and the safety constraint.</div>
+</div>
+    <div class="ds-cite">[<span class="cite-ours">1</span>] T. Hanks, H. Riess, S. Cohen, T. Gross, M. Hale, and J. Fairbanks. <i>IEEE Conference on Decision and Control,</i> 2025<span class="ds-cite-more"> &middot; [<span class="cite-ours">6</span>, <span class="cite-ours">7</span>, <span class="cite-ours">8</span>, <span class="cite-ours">9</span>]</span></div>
+    <div class="ds-slide-num">21</div>
+  </div>
+  <aside class="notes">Leave this up for questions. Four results, each a paper, and the software. All four start from the
+same sheaf: the convex program, the convergence proof, the trackability test and the safety constraint.
+None of them assumes the agents share a state space or a clock.
+</aside>
+</section>
+
+<section data-label="22 · References" data-background-color="#ffffff" class="slide-light">
+  <div class="slide-canvas">
+    <h1 class="slide-h1">References</h1>
+    
+    
+<div style="position:absolute;left:48px;top:112px;right:48px;display:grid;grid-template-columns:1fr 1fr;gap:20px 32px;align-items:start">
+  <ol style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px">
+    <li style="display:flex;gap:12px;font-size:20px;line-height:1.29;color:var(--navy)"><span class="cite-ours" style="flex:none;font-weight:700;color:#FA4616">[1]</span><span style="flex:1;min-width:0;text-wrap:pretty">T. Hanks, H. Riess, S. Cohen, T. Gross, M. Hale, and J. Fairbanks. Distributed multi-agent coordination over cellular sheaves. <em>IEEE Conference on Decision and Control,</em> 2025. arXiv:2504.02049.</span></li>
+    <li style="display:flex;gap:12px;font-size:20px;line-height:1.29;color:var(--navy)"><span style="flex:none;font-weight:700;color:#2C4B6A">[2]</span><span style="flex:1;min-width:0;text-wrap:pretty">J. Hansen and R. Ghrist. Toward a spectral theory of cellular sheaves. <em>Journal of Applied and Computational Topology,</em> 3(4):315–358, 2019.</span></li>
+    <li style="display:flex;gap:12px;font-size:20px;line-height:1.29;color:var(--navy)"><span style="flex:none;font-weight:700;color:#2C4B6A">[3]</span><span style="flex:1;min-width:0;text-wrap:pretty">J. Hansen. <em>Laplacians of Cellular Sheaves: Theory and Applications.</em> PhD dissertation, University of Pennsylvania, 2020. Advised by R. Ghrist.</span></li>
+    <li style="display:flex;gap:12px;font-size:20px;line-height:1.29;color:var(--navy)"><span style="flex:none;font-weight:700;color:#2C4B6A">[4]</span><span style="flex:1;min-width:0;text-wrap:pretty">J. Hansen and R. Ghrist. Distributed optimization with sheaf homological constraints. <em>Allerton Conference on Communication, Control, and Computing,</em> pp. 565–571, 2019.</span></li>
+    <li style="display:flex;gap:12px;font-size:20px;line-height:1.29;color:var(--navy)"><span style="flex:none;font-weight:700;color:#2C4B6A">[5]</span><span style="flex:1;min-width:0;text-wrap:pretty">S. Boyd, N. Parikh, E. Chu, B. Peleato, and J. Eckstein. Distributed optimization and statistical learning via the alternating direction method of multipliers. <em>Foundations and Trends in Machine Learning,</em> 3(1), 2011.</span></li>
+  </ol>
+  <ol style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px">
+    <li style="display:flex;gap:12px;font-size:20px;line-height:1.29;color:var(--navy)"><span class="cite-ours" style="flex:none;font-weight:700;color:#FA4616">[6]</span><span style="flex:1;min-width:0;text-wrap:pretty">Y. Zhao, T. Hanks, H. Riess, S. Cohen, M. Hale, and J. Fairbanks. Asynchronous nonlinear sheaf diffusion for multi-agent coordination. <em>IEEE American Control Conference,</em> 2026. arXiv:2510.00270.</span></li>
+    <li style="display:flex;gap:12px;font-size:20px;line-height:1.29;color:var(--navy)"><span class="cite-ours" style="flex:none;font-weight:700;color:#FA4616">[7]</span><span style="flex:1;min-width:0;text-wrap:pretty">T. Hanks, C. F. Nino, J. Bou Barcelo, A. Copeland, W. E. Dixon, and J. Fairbanks. Heterogeneous multi-agent multi-target tracking using cellular sheaves. <em>European Control Conference,</em> 2026. arXiv:2512.24886.</span></li>
+    <li style="display:flex;gap:12px;font-size:20px;line-height:1.29;color:var(--navy)"><span class="cite-ours" style="flex:none;font-weight:700;color:#FA4616">[8]</span><span style="flex:1;min-width:0;text-wrap:pretty">I. Kadosh, R. Samuelson, and J. Fairbanks. Layered control for distributed sheaf coordination. <em>American Control Conference,</em> 2027, under review.</span></li>
+    <li style="display:flex;gap:12px;font-size:20px;line-height:1.29;color:var(--navy)"><span class="cite-ours" style="flex:none;font-weight:700;color:#FA4616">[9]</span><span style="flex:1;min-width:0;text-wrap:pretty">AlgebraicJulia. CellularSheaves.jl, Decapodes.jl, and CombinatorialSpaces.jl. algebraicjulia.github.io</span></li>
+  </ol>
+</div>
+
+    <div class="ds-slide-num">22</div>
+  </div>
+</section>
+
+
+</div>
+      
+
+    </div><script src="../../../../reveal-js/dist/reveal.js"></script>
+<script src="../../../../reveal-js/plugin/notes/notes.js"></script>
+<script src="../../../../reveal-js/plugin/highlight/highlight.js"></script>
+<script src="../../../../vendored/katex-0.16.11/katex.min.js"></script>
+<script src="../../../../gatas-talks/talk.js"></script>
+
+    
+    
+  </body>
+</html>

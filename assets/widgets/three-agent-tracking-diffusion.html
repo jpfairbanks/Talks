@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../vendored/fira-sans-2026-09/fira-sans.css">
+<title>Three agents tracking one target by sheaf diffusion</title>
+<style>
+  html, body { height: 100%; margin: 0; background: #fff; overflow: hidden; }
+  body {
+    display: grid; grid-template-columns: 1fr 1fr; column-gap: 40px; align-items: start;
+    font-family: "Fira Sans", system-ui, sans-serif; color: #002A54;
+  }
+  figure { margin: 0; display: flex; flex-direction: column; gap: 10px; min-width: 0; min-height: 0; }
+  svg { display: block; width: 100%; height: auto; }
+  figcaption { font-size: 26px; font-style: italic; color: #2C4B6A; line-height: 1.25; }
+  .axis { stroke: #B1B3B6; stroke-width: 2; }
+  .tick { fill: #2C4B6A; font-size: 22px; }
+</style>
+</head>
+<body>
+<figure>
+  <svg id="scene" viewBox="0 0 520 400" aria-label="Three agents sliding along their lines toward the target's perpendicular feet"></svg>
+  <figcaption>Sheaf diffusion: each agent slides along its line to the perpendicular foot</figcaption>
+</figure>
+<figure>
+  <svg id="energy" viewBox="0 0 520 400" aria-label="Dirichlet energy against time, decaying to zero"></svg>
+  <figcaption>Dirichlet energy &frac12;&#8214;&delta;x&#8214;&sup2;, falling to zero at the equilibrium</figcaption>
+</figure>
+<script>
+// The sheaf of the library slide "Three Agents Tracking One Target", in its SVG
+// coordinates: the target is pinned, each agent stalk is R^2, and the edge to
+// agent i compares the target with agent i's line through the projection
+// d_i . x onto the line's direction. Diffusion moves agent i by
+// -k d_i (d_i . x_i - d_i . p), so it stays on its line and stops at the foot
+// of the perpendicular from the target.
+
+const TARGET = { x: 200, y: 230 };
+const DIAGONAL_LENGTH = Math.hypot(440, 336.4);
+const AGENTS = [
+  { start: { x: 430, y: 330 }, direction: { x: 1, y: 0 }, halo: "rgb(108 154 195 / .28)" },
+  { start: { x: 90, y: 330 }, direction: { x: 0, y: 1 }, halo: "rgb(226 143 65 / .28)" },
+  { start: { x: 90, y: 70 }, direction: { x: 440 / DIAGONAL_LENGTH, y: 336.4 / DIAGONAL_LENGTH }, halo: "rgb(128 190 99 / .28)" },
+];
+const LINES = [[20, 330, 500, 330], [90, 20, 90, 390], [40, 31.8, 480, 368.2]];
+
+const DIFFUSION_RATE = 0.9;      // per second
+const RUN_SECONDS = 6.5;
+const HOLD_SECONDS = 2.5;
+const SVG_NS = "http://www.w3.org/2000/svg";
+
+function element(parent, name, attributes, text) {
+  const node = document.createElementNS(SVG_NS, name);
+  for (const [key, value] of Object.entries(attributes)) node.setAttribute(key, value);
+  if (text !== undefined) node.textContent = text;
+  parent.appendChild(node);
+  return node;
+}
+
+// Signed disagreement on agent i's edge: d_i . (x_i - p).
+function disagreement(agent, position) {
+  return agent.direction.x * (position.x - TARGET.x) + agent.direction.y * (position.y - TARGET.y);
+}
+
+function positionAt(agent, seconds) {
+  const offset = disagreement(agent, agent.start) * Math.exp(-DIFFUSION_RATE * seconds);
+  const foot = {
+    x: agent.start.x - agent.direction.x * disagreement(agent, agent.start),
+    y: agent.start.y - agent.direction.y * disagreement(agent, agent.start),
+  };
+  return { x: foot.x + agent.direction.x * offset, y: foot.y + agent.direction.y * offset };
+}
+
+function dirichletEnergy(seconds) {
+  return AGENTS.reduce((sum, agent) => sum + 0.5 * disagreement(agent, positionAt(agent, seconds)) ** 2, 0);
+}
+
+// The scene: lines, edges, halos, agents, target, and right-angle marks that
+// appear as the agents settle.
+const scene = document.getElementById("scene");
+const lineGroup = element(scene, "g", { stroke: "#B1B3B6", "stroke-width": 2.5, "stroke-dasharray": "7 7" });
+for (const [x1, y1, x2, y2] of LINES) element(lineGroup, "line", { x1, y1, x2, y2 });
+const edges = AGENTS.map(() => element(scene, "line", { stroke: "#002A54", "stroke-width": 3 }));
+const halos = AGENTS.map((agent) => element(scene, "circle", { r: 34, fill: agent.halo }));
+element(scene, "circle", { cx: TARGET.x, cy: TARGET.y, r: 34, fill: "rgb(190 155 105 / .28)" });
+const marks = element(scene, "g", { fill: "none", stroke: "#2C4B6A", "stroke-width": 2.5, opacity: 0 });
+for (const agent of AGENTS) {
+  const foot = positionAt(agent, Infinity);
+  const toTarget = { x: TARGET.x - foot.x, y: TARGET.y - foot.y };
+  const length = Math.hypot(toTarget.x, toTarget.y);
+  const normal = { x: toTarget.x / length, y: toTarget.y / length };
+  const along = disagreement(agent, agent.start) > 0 ? agent.direction : { x: -agent.direction.x, y: -agent.direction.y };
+  const size = 24;
+  const a = { x: foot.x + along.x * size, y: foot.y + along.y * size };
+  const b = { x: a.x + normal.x * size, y: a.y + normal.y * size };
+  const c = { x: foot.x + normal.x * size, y: foot.y + normal.y * size };
+  element(marks, "path", { d: `M${a.x.toFixed(1)},${a.y.toFixed(1)} L${b.x.toFixed(1)},${b.y.toFixed(1)} L${c.x.toFixed(1)},${c.y.toFixed(1)}` });
+}
+const dots = AGENTS.map(() => element(scene, "circle", { r: 12, fill: "#fff", stroke: "#002A54", "stroke-width": 3 }));
+element(scene, "circle", { cx: TARGET.x, cy: TARGET.y, r: 12, fill: "#fff", stroke: "#002A54", "stroke-width": 3 });
+element(scene, "text", { x: TARGET.x, y: 160, "text-anchor": "middle", "font-style": "italic", "font-size": 24, fill: "#2C4B6A" }, "target");
+
+// The energy plot, drawn in full faintly and traced over as time runs.
+const energy = document.getElementById("energy");
+const plot = { left: 70, top: 20, right: 500, bottom: 340 };
+const initialEnergy = dirichletEnergy(0);
+const toX = (seconds) => plot.left + (seconds / RUN_SECONDS) * (plot.right - plot.left);
+const toY = (value) => plot.bottom - (value / initialEnergy) * (plot.bottom - plot.top);
+element(energy, "line", { class: "axis", x1: plot.left, y1: plot.bottom, x2: plot.right, y2: plot.bottom });
+element(energy, "line", { class: "axis", x1: plot.left, y1: plot.top, x2: plot.left, y2: plot.bottom });
+element(energy, "text", { class: "tick", x: (plot.left + plot.right) / 2, y: 384, "text-anchor": "middle" }, "time");
+element(energy, "text", { class: "tick", x: 22, y: (plot.top + plot.bottom) / 2, "text-anchor": "middle",
+  transform: `rotate(-90 22 ${(plot.top + plot.bottom) / 2})` }, "energy");
+const curvePoints = [];
+for (let k = 0; k <= 200; k++) {
+  const seconds = (k / 200) * RUN_SECONDS;
+  curvePoints.push(`${toX(seconds).toFixed(1)},${toY(dirichletEnergy(seconds)).toFixed(1)}`);
+}
+element(energy, "polyline", { points: curvePoints.join(" "), fill: "none", stroke: "#E2E6EC", "stroke-width": 3 });
+const trace = element(energy, "polyline", { fill: "none", stroke: "#002A54", "stroke-width": 3.5 });
+const marker = element(energy, "circle", { r: 8, fill: "#E28F41", stroke: "#002A54", "stroke-width": 2 });
+
+let clockStart = performance.now() / 1000;
+
+function draw(seconds) {
+  AGENTS.forEach((agent, i) => {
+    const p = positionAt(agent, seconds);
+    for (const node of [halos[i], dots[i]]) { node.setAttribute("cx", p.x); node.setAttribute("cy", p.y); }
+    edges[i].setAttribute("x1", TARGET.x); edges[i].setAttribute("y1", TARGET.y);
+    edges[i].setAttribute("x2", p.x); edges[i].setAttribute("y2", p.y);
+  });
+  const settled = Math.min(1, Math.max(0, (seconds - RUN_SECONDS + 1.5) / 1.5));
+  marks.setAttribute("opacity", settled.toFixed(2));
+  const shown = Math.round((seconds / RUN_SECONDS) * 200);
+  trace.setAttribute("points", curvePoints.slice(0, shown + 1).join(" "));
+  marker.setAttribute("cx", toX(seconds));
+  marker.setAttribute("cy", toY(dirichletEnergy(seconds)));
+}
+
+function frame() {
+  requestAnimationFrame(frame);
+  let seconds = performance.now() / 1000 - clockStart;
+  if (seconds > RUN_SECONDS + HOLD_SECONDS) {
+    clockStart = performance.now() / 1000;
+    seconds = 0;
+  }
+  draw(Math.min(seconds, RUN_SECONDS));
+}
+
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
