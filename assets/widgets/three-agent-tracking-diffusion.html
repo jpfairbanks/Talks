@@ -121,6 +121,7 @@ const trace = element(energy, "polyline", { fill: "none", stroke: "#002A54", "st
 const marker = element(energy, "circle", { r: 8, fill: "#E28F41", stroke: "#002A54", "stroke-width": 2 });
 
 let clockStart = performance.now() / 1000;
+let request = null;
 
 function draw(seconds) {
   AGENTS.forEach((agent, i) => {
@@ -138,7 +139,7 @@ function draw(seconds) {
 }
 
 function frame() {
-  requestAnimationFrame(frame);
+  request = requestAnimationFrame(frame);
   let seconds = performance.now() / 1000 - clockStart;
   if (seconds > RUN_SECONDS + HOLD_SECONDS) {
     clockStart = performance.now() / 1000;
@@ -147,7 +148,30 @@ function frame() {
   draw(Math.min(seconds, RUN_SECONDS));
 }
 
-requestAnimationFrame(frame);
+function play() {
+  clockStart = performance.now() / 1000;
+  if (request === null) request = requestAnimationFrame(frame);
+}
+
+function stop() {
+  if (request !== null) cancelAnimationFrame(request);
+  request = null;
+}
+
+// In a deck, reveal.js posts "slide:start" to this frame when its slide is
+// shown and "slide:stop" when it is left: the diffusion runs only in between,
+// from the start each time, and off its slide no frame is requested. Opened on
+// its own, it plays at once.
+draw(0);
+if (window.parent === window) {
+  play();
+} else {
+  addEventListener("message", (event) => {
+    if (event.source !== window.parent) return;
+    if (event.data === "slide:start") play();
+    if (event.data === "slide:stop") stop();
+  });
+}
 </script>
 </body>
 </html>

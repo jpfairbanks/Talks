@@ -213,15 +213,40 @@ async function main() {
   }
 
   function frame(now) {
-    requestAnimationFrame(frame);
+    request = requestAnimationFrame(frame);
     const elapsed = now - startedAt;
     if (elapsed > REVEAL_MS + HOLD_MS) { step += 1; begin(now); }
     const p = Math.min(1, (now - startedAt) / REVEAL_MS);
     paint(Math.round((1 - Math.pow(1 - p, 3)) * 255));
   }
 
+  let request = null;
+  play = () => {
+    step = 0;
+    begin(performance.now());
+    if (request === null) request = requestAnimationFrame(frame);
+  };
+  stop = () => {
+    if (request !== null) cancelAnimationFrame(request);
+    request = null;
+  };
   begin(performance.now());
-  requestAnimationFrame(frame);
+  paint(0);
+  if (shown) play();
+}
+
+// In a deck, reveal.js posts "slide:start" to this frame when its slide is
+// shown and "slide:stop" when it is left: the tour runs only in between, from
+// its first stop each time, and off its slide no frame is requested. Opened on
+// its own, it plays at once. A message can come before the data has loaded, so
+// remember whether the slide is shown.
+let shown = window.parent === window, play = () => {}, stop = () => {};
+if (window.parent !== window) {
+  addEventListener("message", (event) => {
+    if (event.source !== window.parent) return;
+    if (event.data === "slide:start") { shown = true; play(); }
+    if (event.data === "slide:stop") { shown = false; stop(); }
+  });
 }
 
 main();
