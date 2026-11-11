@@ -260,6 +260,7 @@ const context = canvas.getContext("2d");
 let runs = [];
 let clockStart = 0;
 let finished = false;
+let request = null;
 
 function restart() {
   const start = randomStart();
@@ -401,8 +402,7 @@ function drawHistory(box) {
   });
 }
 
-function frame() {
-  requestAnimationFrame(frame);
+function draw() {
   // The deck loads this frame while its slide is hidden, at zero size; size the
   // canvas whenever its box changes rather than only on window resizes.
   const scale = Math.max(2, window.devicePixelRatio || 1);
@@ -435,11 +435,39 @@ function frame() {
   drawHistory({ x: 0, y: ringHeight + 10, width: width - 110, height: historyHeight - 6 });
 }
 
-document.getElementById("restart").addEventListener("click", restart);
+function frame() {
+  request = requestAnimationFrame(frame);
+  draw();
+}
+
+function play() {
+  restart();
+  if (request === null) request = requestAnimationFrame(frame);
+}
+
+function stop() {
+  if (request !== null) cancelAnimationFrame(request);
+  request = null;
+}
+
+document.getElementById("restart").addEventListener("click", play);
 window.addEventListener("resize", resize);
 resize();
 restart();
-requestAnimationFrame(frame);
+// In a deck, reveal.js posts "slide:start" to this frame when its slide is
+// shown and "slide:stop" when it is left: the runs go only in between, from a
+// new start each time, and off its slide no frame is requested. Opened on its
+// own, it plays at once.
+draw();
+if (window.parent === window) {
+  play();
+} else {
+  addEventListener("message", (event) => {
+    if (event.source !== window.parent) return;
+    if (event.data === "slide:start") play();
+    if (event.data === "slide:stop") stop();
+  });
+}
 </script>
 </body>
 </html>

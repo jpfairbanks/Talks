@@ -1288,5 +1288,17 @@ smol-toml/dist/index.js:
 */
 
 </script>
+<script>
+// In a deck, reveal.js posts "slide:stop" to this frame when its slide is left:
+// stop a playback left running there, so that off its slide no frame is requested.
+if (window.parent !== window) {
+  const controls = (root) => [...root.querySelectorAll("*")].flatMap((node) =>
+    [...(node.localName === "sheaf-controls" ? [node] : []), ...(node.shadowRoot ? controls(node.shadowRoot) : [])]);
+  addEventListener("message", (event) => {
+    if (event.source !== window.parent || event.data !== "slide:stop") return;
+    for (const node of controls(document)) node.stop();
+  });
+}
+</script>
 </body>
 </html>
